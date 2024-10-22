@@ -4,7 +4,7 @@ import ProgrammerImage from "@/app/assets/image/about/Programmer.png";
 
 const About = () => {
   return (
-    <section className="py-14 p-4">
+    <section className="py-20 px-4 md:px-8" id="about">
       <div className="flex flex-col md:flex-row gap-6 justify-between">
         <div>
           <div className="inline-block border-2 border-brand-500 p-2 rounded-tl-xl rounded-br-xl mb-8">

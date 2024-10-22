@@ -63,7 +63,7 @@ export const TypewriterEffect = ({
     );
   };
   return (
-    <div className={cn("text-4xl md:text-4xl lg:text-5xl font-bold text-start", className)}>
+    <div className={cn("text-4xl md:text-4xl font-bold text-start", className)}>
       {renderWords()}
       <motion.span
         initial={{
@@ -159,7 +159,7 @@ export const TypewriterEffectSmooth = ({
           repeat: Infinity,
           repeatType: "reverse",
         }}
-        className={cn("block rounded-sm w-[4px]  h-4 sm:h-6 xl:h-12 bg-blue-500", cursorClassName)}
+        className={cn("block rounded-sm w-[4px] h-4 sm:h-6 xl:h-12 bg-blue-500", cursorClassName)}
       ></motion.span>
     </div>
   );

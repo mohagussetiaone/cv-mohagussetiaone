@@ -7,7 +7,7 @@ import reactImage from "@/app/assets/image/skills/react.png";
 
 const Skills = () => {
   return (
-    <section className="py-20">
+    <section className="py-20" id="skills">
       <div className="relative">
         <div className="flex flex-col gap-4 justify-center items-center">
           <h1 className="text-center text-4xl text-brand-500 underline">Skills</h1>

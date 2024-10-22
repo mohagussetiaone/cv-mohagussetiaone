@@ -1,45 +1,32 @@
 import { FloatingDock } from "@/components/ui/floating-dock";
-import { IconBrandGithub, IconBrandX, IconExchange, IconHome, IconNewSection, IconTerminal2 } from "@tabler/icons-react";
-import Image from "next/image";
+import { House, User, Rocket, BookmarkCheck, ContactRound } from "lucide-react";
 
 export default function NavHome() {
   const links = [
     {
       title: "Home",
-      icon: <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      href: "#",
-    },
-
-    {
-      title: "Products",
-      icon: <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      href: "#",
+      icon: <House className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: "#home",
     },
     {
-      title: "Components",
-      icon: <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      href: "#",
+      title: "About",
+      icon: <User className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: "#about",
     },
     {
-      title: "Aceternity UI",
-      icon: <Image src="https://assets.aceternity.com/logo-dark.png" width={20} height={20} alt="Aceternity Logo" />,
-      href: "#",
+      title: "Skills",
+      icon: <Rocket className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: "#skills",
     },
     {
-      title: "Changelog",
-      icon: <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      href: "#",
-    },
-
-    {
-      title: "Twitter",
-      icon: <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      href: "#",
+      title: "Portfolio",
+      icon: <BookmarkCheck className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: "#portfolio",
     },
     {
-      title: "GitHub",
-      icon: <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
-      href: "#",
+      title: "Contact",
+      icon: <ContactRound className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: "#contact",
     },
   ];
 
