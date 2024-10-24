@@ -22,7 +22,7 @@ const Banner = () => {
   ];
 
   return (
-    <section className="w-full py-4 md:py-20 md:px-8" id="home">
+    <section className="w-full py-4 md:pb-20 md:px-8" id="home">
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-3 md:col-span-1 p-4 md:pr-10">
           <HoverBorderGradient>
