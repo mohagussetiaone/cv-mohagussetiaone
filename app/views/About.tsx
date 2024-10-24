@@ -12,20 +12,19 @@ const About = () => {
           </div>
           <div className="rounded-xl bg-black">
             <div className="text-white p-5">
-              <div className="text-sm text-brand-500 py-4">{`<p>`}</div>
-              <h1 className="text-5xl text-brand-500">Halo !</h1>
-              <p className="text-lg">My name is Moh Agus Setiawan and I specialize in web developement that utilizes HTML, CSS, JS, and REACT etc. </p>
-              <p>
-                I am a highly motivated individual and eternal optimist dedicated to writing clear, concise, robust code that works. Striving to never stop learning and improving. When I&apos;m not coding, I am writing bolgs, reading, or
-                picking up some new hands-on art project like photography.
+              <span className="text-sm text-brand-500">{`<p>`}</span>
+              <p className="text-2xl">My name is Moh Agus Setiawan</p>
+              <p className="text-lg">
+                A frontend developer specializing in building responsive, high-performance web applications using technologies like HTML, CSS, JavaScript, and React. I am passionate about crafting clean, maintainable, and scalable code that
+                delivers great user experiences. I am a lifelong learner, driven by curiosity and a desire to continuously improve my skills and adapt to the ever-evolving web development landscape. Outside of coding, I enjoy sharing
+                knowledge through writing blogs, staying active by playing badminton, and embracing challenges that broaden my perspective.
               </p>
-              <p>I like to have my perspective and belief systems challenged so that I see the world through new eyes.</p>
-              <div className="text-sm text-brand-500 py-4">{`<p>`}</div>
+              <span className="text-sm text-brand-500">{`<p/>`}</span>
             </div>
           </div>
         </div>
         <div className="flex justify-end items-center">
-          <Image src={ProgrammerImage} alt="Programmer" width={1000} height={1000} />
+          <Image src={ProgrammerImage} alt="Programmer" width={1300} height={1200} />
         </div>
       </div>
     </section>

@@ -26,7 +26,7 @@ const Banner = () => {
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-3 md:col-span-1 p-4 md:pr-10">
           <HoverBorderGradient>
-            <div className="border border-gray-500 p-6 rounded-tl-[10rem] rounded-br-[10rem]">
+            <div className="border border-gray-500 p-6 rounded-tl-[8rem] rounded-br-[8rem]">
               <div className="flex flex-col items-center justify-center mx-auto text-white py-6">
                 <Image src={MohAgusImage} width={120} height={80} alt={"BannerImage.jpg"} className="object-contain rounded-full" />
               </div>
@@ -47,11 +47,11 @@ const Banner = () => {
                   <Link2 className="w-6 h-6 text-brand-500" />
                   <h1 className="text-white">https://mohagussetiaone.vercel.app</h1>
                 </div>
-                <div className="flex gap-2">
-                  <span className="bg-brand-500 text-xs md:text-sm rounded-full px-2">HTML+CSS</span>
-                  <span className="bg-brand-500 text-xs md:text-sm rounded-full px-2">JS</span>
-                  <span className="bg-brand-500 text-xs md:text-sm rounded-full px-2">REACT</span>
-                  <span className="bg-brand-500 text-xs md:text-sm rounded-full px-2">TAILWIND</span>
+                <div className="flex gap-2 text-xs md:text-sm text-black">
+                  <span className="bg-brand-500 rounded-full px-2">HTML+CSS</span>
+                  <span className="bg-brand-500 rounded-full px-2">JS</span>
+                  <span className="bg-brand-500 rounded-full px-2">REACT</span>
+                  <span className="bg-brand-500 rounded-full px-2">TAILWIND</span>
                 </div>
               </div>
               <Button className="bg-white hover:bg-gray-300 text-black p-4 rounded-full text-lg my-4">
@@ -77,7 +77,7 @@ const Banner = () => {
               <div className="py-4 text-brand-500">
                 <Link href="https://wa.me/6287885159098" className="flex gap-2 text-3xl" target="_blank">
                   Let&apos;s Talk
-                  <span className="flex flex-col items-center justify-center bg-gray-500 rounded-full px-2">
+                  <span className="flex flex-col items-center justify-center bg-black rounded-full px-2">
                     <Phone className="w-6 h-6" />
                   </span>
                 </Link>
