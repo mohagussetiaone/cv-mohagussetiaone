@@ -8,8 +8,11 @@ import { Mail, MapPin, Briefcase, Link2, Download, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TypewriterEffect } from "@/components/ui/typewritter-effect";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { useTranslations } from "next-intl";
 
 const Banner = () => {
+  const t = useTranslations("Banner");
+
   const words = [
     {
       text: "Front End",
@@ -65,18 +68,18 @@ const Banner = () => {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex flex-col gap-4 items-start justify-start md:mx-6">
               <span className="text-sm text-brand-500">{`<h1>`}</span>
-              <h1 className="text-5xl text-white">Halo</h1>
-              <h1 className="text-4xl text-white">I&apos;m Moh Agus Setiawan</h1>
+              <h1 className="text-5xl text-white">{t("greeting")}</h1>
+              <h1 className="text-4xl text-white">{t("name")}</h1>
               <TypewriterEffect words={words} />
               <span className="text-sm text-brand-500">{`<h1/>`}</span>
               <div className="py-6">
                 <span className="text-sm text-brand-500">{`<p>`}</span>
-                <p className="text-lg text-white">I help business grow by crafting amazing web experiences. If you&apos;re looking for a developer that likes to get stuff done, look no further.</p>
+                <p className="text-lg text-white">{t("description")}</p>
                 <span className="text-sm text-brand-500">{`<p/>`}</span>
               </div>
               <div className="py-4 text-brand-500">
                 <Link href="https://wa.me/6287885159098" className="flex gap-2 text-3xl" target="_blank">
-                  Let&apos;s Talk
+                  {t("lets_talk")}
                   <span className="flex flex-col items-center justify-center bg-black rounded-full px-2">
                     <Phone className="w-6 h-6" />
                   </span>
@@ -89,8 +92,8 @@ const Banner = () => {
                   <h1 className="text-4xl text-brand-500">1</h1>
                 </div>
                 <div className="flex flex-col text-white">
-                  <h2>Years Of</h2>
-                  <h2>Experience</h2>
+                  <h2>{t("years")}</h2>
+                  <h2>{t("experience")}</h2>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -98,8 +101,8 @@ const Banner = () => {
                   <h1 className="text-4xl text-brand-500">3</h1>
                 </div>
                 <div className="flex flex-col text-white">
-                  <h2>Programming</h2>
-                  <h2>Language</h2>
+                  <h2>{t("programming")}</h2>
+                  <h2>{t("language")}</h2>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -107,8 +110,8 @@ const Banner = () => {
                   <h1 className="text-4xl text-brand-500">6</h1>
                 </div>
                 <div className="flex flex-col text-white">
-                  <h2>Development</h2>
-                  <h2>Tools</h2>
+                  <h2>{t("development")}</h2>
+                  <h2>{t("tools")}</h2>
                 </div>
               </div>
             </div>

@@ -4,6 +4,7 @@ import htmllimaImage from "@/app/assets/image/skills/html5.png";
 import cssImage from "@/app/assets/image/skills/css.png";
 import jsImage from "@/app/assets/image/skills/js.png";
 import reactImage from "@/app/assets/image/skills/react.png";
+import { useTranslations } from "next-intl";
 
 const skillData = [
   {
@@ -33,12 +34,14 @@ const skillData = [
 ];
 
 const Skills = () => {
+  const t = useTranslations("Skills");
+
   return (
     <section className="py-20" id="skills">
       <div className="relative">
         <div className="flex flex-col gap-4 justify-center items-center">
-          <h1 className="text-center text-4xl text-brand-500 underline">Skills</h1>
-          <p className="text-white">I am striving to never stop learning and improving</p>
+          <h1 className="text-center text-4xl text-brand-500 underline">{t("title")}</h1>
+          <p className="text-white">{t("description")}</p>
         </div>
         <div className="absolute text-brand-500 -top-4 md:-top-10 right-5 md:right-24 text-[3rem] md:text-[5rem]">{`</>`}</div>
       </div>

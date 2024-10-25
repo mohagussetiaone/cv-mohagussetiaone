@@ -1,0 +1,43 @@
+{
+  "Banner": {
+    "greeting": "Hello",
+    "name": "My Name is Moh Agus Setiawan",
+    "description": "Frontend developer with 1 year experience specializing in React.js and tailwindcss, ready to contribute to creating website applications with modern technology that are responsive and dynamic, in order to achieve business solutions and good user experience",
+    "lets_talk": "Let's Talk",
+    "years": "Years",
+    "experience": "Experience",
+    "programming": "Programming",
+    "language": "Language",
+    "development": "Development",
+    "tools": "Tools"
+  },
+  "About": {
+    "title": "About Me",
+    "name": "My Name is Moh Agus Setiawan",
+    "description": "A frontend developer specializing in building responsive, high-performance web applications using technologies like HTML, CSS, JavaScript, and React. I am passionate about crafting clean, maintainable, and scalable code that delivers great user experiences. I am a lifelong learner, driven by curiosity and a desire to continuously improve my skills and adapt to the ever-evolving web development landscape. Outside of coding, I enjoy sharing knowledge through writing blogs, staying active by playing badminton, and embracing challenges that broaden my perspective."
+  },
+  "Skills": {
+    "title": "Skills",
+    "description": "I am striving to never stop learning and improving"
+  },
+  "Works": {
+    "title": "Projects",
+    "description": "I had the pleasure of working with these awesome projects",
+    "description_project_1": "Client Area Nethome is a comprehensive customer portal designed to enhance the Nethome experience. From seamless transactions and service management to convenient monthly bill tracking and responsive support access, it delivers an all-in-one solution for Nethome customers to control their services effortlessly.",
+    "description_project_2": "The WEB OLT Management system is engineered for precision in customer onboarding and network activation. With powerful tools for job scheduling and role-based access, it streamlines complex workflows, ensuring efficient management of customer connections.",
+    "description_project_3": "Jajanian is a vibrant e-commerce platform designed for snack lovers. It allows easy ordering via WhatsApp and integrates various payment methods, making snack shopping more accessible. Currently, new features are in the pipeline to further enhance the customer experience.",
+    "description_project_4": "Jvalleyverse is an all-inclusive online learning platform offering free courses. It features structured learning paths, interactive forums, hands-on projects, and certificates for course completion, making it an ideal space for learners to grow and showcase their skills.",
+    "description_project_5": "Laundrivy revolutionizes the laundry experience by providing customers with real-time order tracking, seamless transaction management, and live support chat. Its user-centric design makes laundry more convenient, efficient, and transparent for every user.",
+    "description_project_6": "The Jajanian Dashboard empowers businesses to optimize operations with its intuitive product and inventory management tools, detailed sales insights, and stock monitoring. It’s the ultimate solution for snack business owners to streamline and scale their operations.",
+    "image": "/project/dashboard-jajanian.png",
+    "description_project_7": "The Jvalleyverse Dashboard offers comprehensive course management with user monitoring, notification systems, and dynamic blog and project showcase capabilities. It's the perfect tool for educators to manage online learning and provide a rich educational experience.",
+    "description_project_8": "Tani Deals App bridges the gap between farmers and distributors, facilitating easier access to markets. With built-in payment solutions and agricultural knowledge resources, it empowers farmers to sell their produce efficiently while learning key industry practices."
+  },
+  "Contact": {
+    "title": "Send Me A Message",
+    "title_form_1": "Your Name",
+    "title_form_2": "Your Email",
+    "title_form_3": "Your Message",
+    "submit": "Submit"
+  }
+}

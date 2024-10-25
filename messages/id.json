@@ -1,0 +1,43 @@
+{
+  "Banner": {
+    "greeting": "Halo",
+    "name": "Nama Saya Moh Agus Setiawan",
+    "description": "Frontend developer berpengalaman 1 tahun dengan spesialisasi React.js dan tailwindcss, siap berkontribusi menciptakan aplikasi website dengan teknologi modern yang responsif dan dinamis, guna mencapai solusi bisnis serta pengalaman pengguna yang baik",
+    "lets_talk": "Mari Mengobrol",
+    "years": "Tahun",
+    "experience": "Pengalaman",
+    "programming": "Bahasa",
+    "language": "Pemrograman",
+    "development": "Alat",
+    "tools": "Pengembangan"
+  },
+  "About": {
+    "title": "Tentang Saya",
+    "name": "Nama saya Moh Agus Setiawan",
+    "description": "Pengembang frontend yang berspesialisasi dalam membangun aplikasi web yang responsif dan berkinerja tinggi menggunakan teknologi seperti HTML, CSS, JavaScript, dan React. Saya bersemangat membuat kode yang bersih, mudah dipelihara, dan terukur yang memberikan pengalaman pengguna yang luar biasa. Saya adalah pembelajar seumur hidup, didorong oleh rasa ingin tahu dan keinginan untuk terus meningkatkan keterampilan saya dan beradaptasi dengan lanskap pengembangan web yang terus berkembang. Di luar coding, saya senang berbagi pengetahuan melalui menulis blog, tetap aktif bermain bulu tangkis, dan menerima tantangan yang memperluas perspektif saya."
+  },
+  "Skills": {
+    "title": "Ketrampilan",
+    "description": "Saya berusaha untuk tidak pernah berhenti belajar dan berkembang"
+  },
+  "Works": {
+    "title": "Proyek",
+    "description": "Saya berkesempatan untuk bekerja dengan proyek-proyek hebat ini",
+    "description_project_1": "Client Area Nethome adalah portal pelanggan yang komprehensif yang dirancang untuk meningkatkan pengalaman Nethome. Dari transaksi yang mulus dan manajemen layanan hingga pelacakan tagihan bulanan yang mudah serta akses dukungan yang responsif, portal ini menawarkan solusi all-in-one bagi pelanggan Nethome untuk mengontrol layanan mereka dengan mudah.",
+    "description_project_2": "Sistem Manajemen WEB OLT dirancang untuk ketelitian dalam onboarding pelanggan dan aktivasi jaringan. Dengan alat-alat canggih untuk penjadwalan pekerjaan dan akses berbasis peran, sistem ini menyederhanakan alur kerja yang kompleks, memastikan manajemen koneksi pelanggan yang efisien.",
+    "description_project_3": "Jajanian adalah platform e-commerce yang penuh warna dan dirancang bagi para pecinta camilan. Platform ini memungkinkan pemesanan dengan mudah melalui WhatsApp dan mengintegrasikan berbagai metode pembayaran, membuat belanja camilan menjadi lebih mudah diakses. Saat ini, fitur-fitur baru sedang dalam proses untuk lebih meningkatkan pengalaman pelanggan.",
+    "description_project_4": "Jvalleyverse adalah platform pembelajaran daring yang menawarkan kursus gratis secara menyeluruh. Dengan jalur pembelajaran yang terstruktur, forum interaktif, proyek langsung, dan sertifikat untuk penyelesaian kursus, platform ini menjadi tempat yang ideal bagi para pelajar untuk berkembang dan memamerkan keterampilan mereka.",
+    "description_project_5": "Laundrivy merevolusi pengalaman laundry dengan menyediakan pelacakan pesanan secara real-time, manajemen transaksi yang mulus, dan dukungan obrolan langsung. Desainnya yang berpusat pada pengguna membuat laundry menjadi lebih mudah, efisien, dan transparan untuk setiap pengguna.",
+    "description_project_6": "Jajanian Dashboard memberdayakan bisnis untuk mengoptimalkan operasionalnya dengan alat manajemen produk dan inventaris yang intuitif, wawasan penjualan yang mendetail, serta pemantauan stok. Ini adalah solusi terbaik bagi pemilik bisnis camilan untuk menyederhanakan dan meningkatkan skala operasional mereka.",
+    "image": "/project/dashboard-jajanian.png",
+    "description_project_7": "Jvalleyverse Dashboard menawarkan manajemen kursus yang komprehensif dengan pemantauan pengguna, sistem notifikasi, serta kemampuan dinamis untuk blog dan tampilan proyek. Ini adalah alat yang sempurna bagi para pendidik untuk mengelola pembelajaran daring dan menyediakan pengalaman pendidikan yang kaya.",
+    "description_project_8": "Aplikasi Tani Deals menjembatani petani dan distributor, memudahkan akses pasar. Dengan solusi pembayaran bawaan dan sumber daya pengetahuan pertanian, aplikasi ini memberdayakan petani untuk menjual hasil panen mereka dengan efisien sambil mempelajari praktik industri yang penting."
+  },
+  "Contact": {
+    "title": "Hubungi Saya",
+    "title_form_1": "Nama Lengkap",
+    "title_form_2": "Email Anda",
+    "title_form_3": "Pesan Anda",
+    "submit": "Kirim"
+  }
+}

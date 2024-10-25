@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useProjectStore } from "@/app/store/projectStore";
+import { useTranslations } from "next-intl";
 
 enum Technology {
   REACT = "React",
@@ -33,110 +34,103 @@ interface Project {
   internal: boolean;
 }
 
-const projectData: Project[] = [
-  {
-    product_id: 1,
-    project_name: "Client Area Nethome",
-    description:
-      "Client Area Nethome is a comprehensive customer portal designed to enhance the Nethome experience. From seamless transactions and service management to convenient monthly bill tracking and responsive support access, it delivers an all-in-one solution for Nethome customers to control their services effortlessly.",
-    image: "/project/nethome.png",
-    technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS],
-    urlPreview: null,
-    githubUrl: null,
-    figmaUrl: null,
-    internal: true,
-  },
-  {
-    product_id: 2,
-    project_name: "WEB OLT Management",
-    description:
-      "The WEB OLT Management system is engineered for precision in customer onboarding and network activation. With powerful tools for job scheduling and role-based access, it streamlines complex workflows, ensuring efficient management of customer connections.",
-    image: "/project/webolt.png",
-    technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS],
-    urlPreview: null,
-    githubUrl: null,
-    figmaUrl: null,
-    internal: true,
-  },
-  {
-    product_id: 3,
-    project_name: "Jajanian",
-    description:
-      "Jajanian is a vibrant e-commerce platform designed for snack lovers. It allows easy ordering via WhatsApp and integrates various payment methods, making snack shopping more accessible. Currently, new features are in the pipeline to further enhance the customer experience.",
-    image: "/project/jajanian.png",
-    technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.SUPABASE],
-    urlPreview: "https://jajanian.vercel.app",
-    githubUrl: "https://github.com/mohagussetiaone/jajanian.git",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    product_id: 4,
-    project_name: "Jvalleyverse",
-    description:
-      "Jvalleyverse is an all-inclusive online learning platform offering free courses. It features structured learning paths, interactive forums, hands-on projects, and certificates for course completion, making it an ideal space for learners to grow and showcase their skills.",
-    image: "/project/jvalleyverse.png",
-    technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.SUPABASE],
-    urlPreview: "https://jvalleyverse.vercel.app",
-    githubUrl: "https://github.com/mohagussetiaone/jvalleyverse.git",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    product_id: 5,
-    project_name: "Laundrivy",
-    description:
-      "Laundrivy revolutionizes the laundry experience by providing customers with real-time order tracking, seamless transaction management, and live support chat. Its user-centric design makes laundry more convenient, efficient, and transparent for every user.",
-    image: "/project/laundrivy.png",
-    technologies: [Technology.NEXT_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.PRISMA],
-    urlPreview: "https://laundrivy.vercel.app",
-    githubUrl: "https://github.com/mohagussetiaone/laundrivy.git",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    product_id: 6,
-    project_name: "Jajanian Dashboard",
-    description:
-      "The Jajanian Dashboard empowers businesses to optimize operations with its intuitive product and inventory management tools, detailed sales insights, and stock monitoring. It’s the ultimate solution for snack business owners to streamline and scale their operations.",
-    image: "/project/dashboard-jajanian.png",
-    technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.SUPABASE],
-    urlPreview: "https://jajanian-dashboard.vercel.app/",
-    githubUrl: "https://github.com/mohagussetiaone/jajanian-dashboard.git",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    product_id: 7,
-    project_name: "Jvalleyverse Dashboard",
-    description:
-      "The Jvalleyverse Dashboard offers comprehensive course management with user monitoring, notification systems, and dynamic blog and project showcase capabilities. It's the perfect tool for educators to manage online learning and provide a rich educational experience.",
-    image: "/project/jvalleyverse-dashboard.png",
-    technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.SUPABASE],
-    urlPreview: "https://jvalleyverse-dashboard.vercel.app",
-    githubUrl: "https://github.com/mohagussetiaone/jvalleyverse-dashboard.git",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    product_id: 8,
-    project_name: "Tani Deals App",
-    description:
-      "Tani Deals App bridges the gap between farmers and distributors, facilitating easier access to markets. With built-in payment solutions and agricultural knowledge resources, it empowers farmers to sell their produce efficiently while learning key industry practices.",
-    image: "/project/tanidealsapp.png",
-    technologies: [Technology.FIGMA],
-    urlPreview: "https://www.figma.com/proto/vV1zYKypYPe8bBS5mWyyP8/Tani-Deals-App-UI?node-id=7-3&node-type=canvas&t=roF7vYPt7FGuCZPq-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=75%3A2029",
-    githubUrl: null,
-    figmaUrl: "https://www.figma.com/design/vV1zYKypYPe8bBS5mWyyP8/Tani-Deals-App-UI?node-id=0-1&t=roF7vYPt7FGuCZPq-1",
-    internal: false,
-  },
-];
-
 const Works: React.FC = () => {
   const router = useRouter();
+  const t = useTranslations("Works");
   const { setSelectedProject } = useProjectStore();
   const [visibleProducts, setVisibleProducts] = useState(10);
   const [loading, setLoading] = useState(false);
+
+  const projectData: Project[] = [
+    {
+      product_id: 1,
+      project_name: "Client Area Nethome",
+      description: `${t("description_project_1")}`,
+      image: "/project/nethome.png",
+      technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS],
+      urlPreview: null,
+      githubUrl: null,
+      figmaUrl: null,
+      internal: true,
+    },
+    {
+      product_id: 2,
+      project_name: "WEB OLT Management",
+      description: `${t("description_project_2")}`,
+      image: "/project/webolt.png",
+      technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS],
+      urlPreview: null,
+      githubUrl: null,
+      figmaUrl: null,
+      internal: true,
+    },
+    {
+      product_id: 3,
+      project_name: "Jajanian",
+      description: `${t("description_project_3")}`,
+      image: "/project/jajanian.png",
+      technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.SUPABASE],
+      urlPreview: "https://jajanian.vercel.app",
+      githubUrl: "https://github.com/mohagussetiaone/jajanian.git",
+      figmaUrl: null,
+      internal: false,
+    },
+    {
+      product_id: 4,
+      project_name: "Jvalleyverse",
+      description: `${t("description_project_4")}`,
+      image: "/project/jvalleyverse.png",
+      technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.SUPABASE],
+      urlPreview: "https://jvalleyverse.vercel.app",
+      githubUrl: "https://github.com/mohagussetiaone/jvalleyverse.git",
+      figmaUrl: null,
+      internal: false,
+    },
+    {
+      product_id: 5,
+      project_name: "Laundrivy",
+      description: `${t("description_project_5")}`,
+      image: "/project/laundrivy.png",
+      technologies: [Technology.NEXT_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.PRISMA],
+      urlPreview: "https://laundrivy.vercel.app",
+      githubUrl: "https://github.com/mohagussetiaone/laundrivy.git",
+      figmaUrl: null,
+      internal: false,
+    },
+    {
+      product_id: 6,
+      project_name: "Jajanian Dashboard",
+      description: `${t("description_project_6")}`,
+      image: "/project/dashboard-jajanian.png",
+      technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.SUPABASE],
+      urlPreview: "https://jajanian-dashboard.vercel.app/",
+      githubUrl: "https://github.com/mohagussetiaone/jajanian-dashboard.git",
+      figmaUrl: null,
+      internal: false,
+    },
+    {
+      product_id: 7,
+      project_name: "Jvalleyverse Dashboard",
+      description: `${t("description_project_7")}`,
+      image: "/project/jvalleyverse-dashboard.png",
+      technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.SUPABASE],
+      urlPreview: "https://jvalleyverse-dashboard.vercel.app",
+      githubUrl: "https://github.com/mohagussetiaone/jvalleyverse-dashboard.git",
+      figmaUrl: null,
+      internal: false,
+    },
+    {
+      product_id: 8,
+      project_name: "Tani Deals App",
+      description: `${t("description_project_8")}`,
+      image: "/project/tanidealsapp.png",
+      technologies: [Technology.FIGMA],
+      urlPreview: "https://www.figma.com/proto/vV1zYKypYPe8bBS5mWyyP8/Tani-Deals-App-UI?node-id=7-3&node-type=canvas&t=roF7vYPt7FGuCZPq-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=75%3A2029",
+      githubUrl: null,
+      figmaUrl: "https://www.figma.com/design/vV1zYKypYPe8bBS5mWyyP8/Tani-Deals-App-UI?node-id=0-1&t=roF7vYPt7FGuCZPq-1",
+      internal: false,
+    },
+  ];
 
   const showMoreProducts = () => {
     setLoading(true);
@@ -158,8 +152,8 @@ const Works: React.FC = () => {
     <div className="py-4 md:py-24 px-4 md:px-24" id="portfolio">
       <div className="py-10 relative">
         <div className="flex flex-col gap-4 justify-center items-center">
-          <h1 className="text-center text-4xl text-brand-500 underline">Work</h1>
-          <p className="text-white">I had the pleasure of working with these awesome projects</p>
+          <h1 className="text-center text-4xl text-brand-500 underline">{t("title")}</h1>
+          <p className="text-white">{t("description")}</p>
         </div>
         <div className="absolute text-brand-500 -top-4 md:-top-10 left-5 md:right-24 text-[3rem] md:text-[5rem]">{`</>`}</div>
       </div>
