@@ -19,7 +19,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Moh Agus Setiawan",
+  title: "Moh Agus Setiawan | Frontend React Developer",
   description: "Frontend Web Developer",
 };
 
@@ -31,24 +31,23 @@ export default async function RootLayout({
   const message = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={message}>
-      <html lang="en">
-        <head>
-          <meta name="google-site-verification" content="rfHxt49m6Pm8OYRF_sbphjX7fCLLlfY_RibGFeNQuzs" />
-          <title>Moh Agus Setiaone - Frontend React Developer</title>
-          <meta
-            name="description"
-            content="Moh Agus Setiaone adalah Frontend Developer berpengalaman yang mahir dalam React.js dan bekerja di Remala Abadi. Spesialisasi dalam membangun aplikasi web interaktif dan performa tinggi menggunakan teknologi modern seperti Next.js, Tailwind CSS, dan React. Jelajahi portofolio untuk melihat proyek dan pengalaman terkini."
-          />
-          <meta name="keywords" content="Moh Agus Setiaone, Frontend Developer, React Developer, Remala Abadi, Next.js, Tailwind CSS, pengembangan web, portofolio, aplikasi web" />
-          <meta name="robots" content="index, follow" />
-        </head>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-6xl mx-auto`}>
+    <html lang="id">
+      <head>
+        <meta name="google-site-verification" content="rfHxt49m6Pm8OYRF_sbphjX7fCLLlfY_RibGFeNQuzs" />
+        <meta
+          name="description"
+          content="Moh Agus Setiaone adalah Frontend Developer berpengalaman yang mahir dalam React.js dan bekerja di Remala Abadi. Spesialisasi dalam membangun aplikasi web interaktif dan performa tinggi menggunakan teknologi modern seperti Next.js, Tailwind CSS, dan React. Jelajahi portofolio untuk melihat proyek dan pengalaman terkini."
+        />
+        <meta name="keywords" content="Moh Agus Setiawan, Frontend Developer, React Developer, Remala Abadi, Next.js, Tailwind CSS, pengembangan web, portofolio, aplikasi web" />
+        <meta name="robots" content="index, follow" />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-6xl mx-auto`}>
+        <NextIntlClientProvider messages={message}>
           <Navbar />
           {children}
           <Footer />
-        </body>
-      </html>
-    </NextIntlClientProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

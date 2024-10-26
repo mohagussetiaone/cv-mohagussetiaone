@@ -39,9 +39,9 @@ const Skills = () => {
   return (
     <section className="py-20" id="skills">
       <div className="relative">
-        <div className="flex flex-col gap-4 justify-center items-center">
+        <div className="flex flex-col gap-4 justify-center items-center px-4">
           <h1 className="text-center text-4xl text-brand-500 underline">{t("title")}</h1>
-          <p className="text-white">{t("description")}</p>
+          <p className="text-white text-center">{t("description")}</p>
         </div>
         <div className="absolute text-brand-500 -top-4 md:-top-10 right-5 md:right-24 text-[3rem] md:text-[5rem]">{`</>`}</div>
       </div>
@@ -51,9 +51,7 @@ const Skills = () => {
             <div className={`p-8 rounded-full`} style={{ backgroundColor: skill.bgColor }}>
               <Image src={skill.image} alt={skill.name} width={30} height={30} />
             </div>
-            <h2 className="text-xl" style={{ color: skill.textColor }}>
-              {skill.name}
-            </h2>
+            <h2 className="text-xl text-white">{skill.name}</h2>
           </div>
         ))}
       </div>

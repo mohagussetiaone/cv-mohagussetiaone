@@ -1,12 +1,32 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Github, View, Figma } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useProjectStore } from "@/app/store/projectStore";
 
 const ShowCaseDetail: React.FC = () => {
+  const t = useTranslations("Works");
   const { selectedProject } = useProjectStore();
+
+  // Terjemahkan data proyek menggunakan t()
+  const translatedProject = useMemo(() => {
+    if (!selectedProject) return null;
+
+    return {
+      project_name: selectedProject.project_name,
+      description: t(selectedProject.description),
+      technologies: selectedProject.technologies.map((tech) => t(tech)),
+      internal: selectedProject.internal,
+      urlPreview: selectedProject.urlPreview,
+      githubUrl: selectedProject.githubUrl,
+      figmaUrl: selectedProject.figmaUrl,
+    };
+  }, [selectedProject, t]);
+
+  if (!translatedProject) return null;
 
   return (
     <section className="body-font overflow-hidden p-4">
@@ -22,7 +42,7 @@ const ShowCaseDetail: React.FC = () => {
             <p className="text-base font-normal text-justify">{selectedProject?.description}</p>
             <div className="mt-4">
               <div className="mb-2">
-                <h2 className="text-neutral-200 title-font font-medium">Teknologi yang dipakai :</h2>
+                <h2 className="text-neutral-200 title-font font-medium">{t("tech_used")} :</h2>
               </div>
               {selectedProject?.technologies?.map((tech, index) => (
                 <span key={index} className="bg-gray-300 dark:bg-secondaryDark text-black dark:text-neutral-200 text-xs font-semibold py-1 px-2 mx-1 rounded">
@@ -32,9 +52,7 @@ const ShowCaseDetail: React.FC = () => {
             </div>
             {selectedProject?.internal === true && (
               <div className="py-6">
-                <p className="text-yellow-500 text-lg">
-                  <strong>Catatan:</strong> Proyek ini bersifat <em>internal</em> dan tidak tersedia untuk publik. Hanya instansi terkait yang dapat mengakses pratinjau atau sumber proyek.
-                </p>
+                <p className="text-yellow-500 text-lg">{t("internalNote")}</p>
               </div>
             )}
             {selectedProject?.internal !== true && (

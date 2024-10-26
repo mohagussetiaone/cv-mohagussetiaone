@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useProjectStore } from "@/app/store/projectStore";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 enum Technology {
   REACT = "React",
@@ -36,6 +36,7 @@ interface Project {
 
 const Works: React.FC = () => {
   const router = useRouter();
+  const locale = useLocale();
   const t = useTranslations("Works");
   const { setSelectedProject } = useProjectStore();
   const [visibleProducts, setVisibleProducts] = useState(10);
@@ -145,7 +146,8 @@ const Works: React.FC = () => {
     if (selectedProject) {
       setSelectedProject(selectedProject); // Menyimpan project ke store
     }
-    router.push(`/project/${productId}`);
+
+    router.push(`/${locale}/project/${productId}`);
   };
 
   return (
@@ -153,7 +155,7 @@ const Works: React.FC = () => {
       <div className="py-10 relative">
         <div className="flex flex-col gap-4 justify-center items-center">
           <h1 className="text-center text-4xl text-brand-500 underline">{t("title")}</h1>
-          <p className="text-white">{t("description")}</p>
+          <p className="text-white text-center">{t("description")}</p>
         </div>
         <div className="absolute text-brand-500 -top-4 md:-top-10 left-5 md:right-24 text-[3rem] md:text-[5rem]">{`</>`}</div>
       </div>

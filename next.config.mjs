@@ -1,13 +1,8 @@
 import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin("./app/i18n/request.ts");
 
 const nextConfig = {
-  i18n: {
-    locales: ["en-MY", "id-ID", "en-US"],
-    defaultLocale: "id-ID",
-    localeDetection: false,
-  },
   images: {
     remotePatterns: [
       {

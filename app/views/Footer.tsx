@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="mt-20 pb-24 md:pb-4 px-4">
+    <section className="mt-20 pb-24 md:pb-4 px-4">
       <div className="mx-auto max-w-screen-xl">
         <hr className="mb-4 border-gray-200 sm:mx-auto dark:border-gray-700" />
         <div className="sm:flex sm:items-center sm:justify-between">
@@ -13,7 +13,7 @@ const Footer = () => {
           </span>
         </div>
       </div>
-    </footer>
+    </section>
   );
 };
 
