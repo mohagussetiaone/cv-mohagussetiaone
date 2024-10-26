@@ -173,7 +173,7 @@ const Works: React.FC = () => {
               <div className="mt-2 md:mt-2 px-2 md:px-2 pb-2 md:pb-2">
                 <div>
                   <div className="flex flex-col text-left text-neutral-100">
-                    <h5 className="text-sm md:text-base font-bold ">{project.project_name}</h5>
+                    <h2 className="text-sm md:text-base font-bold ">{project.project_name}</h2>
                     <p className="line-clamp-2 text-xs md:text-sm">{project.description}</p>
                   </div>
                   {/* Render technology tags */}

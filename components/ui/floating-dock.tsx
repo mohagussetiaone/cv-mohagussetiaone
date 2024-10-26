@@ -28,7 +28,10 @@ const FloatingDockMobile = ({ items, className }: { items: { title: string; icon
               transition={{ delay: idx * 0.05 }}
             >
               <Link href={item.href} className="h-14 w-14 rounded-full flex items-center justify-center bg-black">
-                <div className="h-6 w-6">{item.icon}</div>
+                <div className="h-6 w-6">
+                  {item.icon}
+                  <span className="sr-only">Deskripsi Tautan</span>
+                </div>
               </Link>
             </motion.div>
           ))}
@@ -58,13 +61,16 @@ function IconContainer({ icon, href }: { title: string; icon: React.ReactNode; h
       <motion.div
         ref={ref}
         className="aspect-square rounded-full bg-black flex items-center justify-center relative p-4"
-        whileHover={{ scale: 1.2 }} // Zoom saat hover
-        initial={{ scale: 0.8, opacity: 0 }} // Zoom out saat awal
-        animate={{ scale: 1, opacity: 1 }} // Zoom in saat muncul
-        exit={{ scale: 0.8, opacity: 0 }} // Zoom out saat hilang
-        transition={{ type: "spring", stiffness: 300 }} // Animasi smooth
+        whileHover={{ scale: 1.2 }}
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300 }}
       >
-        <div className="flex items-center justify-center">{icon}</div>
+        <div className="flex items-center justify-center">
+          {icon}
+          <span className="sr-only">Deskripsi Tautan</span>
+        </div>
       </motion.div>
     </Link>
   );
