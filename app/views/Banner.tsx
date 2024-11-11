@@ -107,11 +107,11 @@ const Banner = () => {
               </div>
               <div className="flex gap-3">
                 <div className="h-full flex justify-center items-center">
-                  <h1 className="text-4xl text-brand-500">6</h1>
+                  <h1 className="text-4xl text-brand-500">8</h1>
                 </div>
                 <div className="flex flex-col text-white">
                   <h2>{t("development")}</h2>
-                  <h2>{t("tools")}</h2>
+                  <h2>{t("project")}</h2>
                 </div>
               </div>
             </div>

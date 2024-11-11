@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
           </div>
           {/* URL Links */}
           <div className="md:w-auto" id="navbar-default">
-            <ul className="font-medium flex gap-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="font-medium flex rounded-lg md:flex-row md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li className="flex gap-2">
                 <Link href="https://www.instagram.com/mohagussetiaone" className="flex gap-2 text-white rounded" aria-current="page" target="_blank">
                   <Instagram className="text-brand-500" />

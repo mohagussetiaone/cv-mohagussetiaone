@@ -5,20 +5,24 @@ import Link from "next/link";
 import Image from "next/image";
 import { Github, View, Figma } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useProjectStore } from "@/app/store/projectStore";
+import { useParams } from "next/navigation";
+import { projectData } from "@/app/constant/project";
 
 const ShowCaseDetail: React.FC = () => {
   const t = useTranslations("Works");
-  const { selectedProject } = useProjectStore();
+  const { projectId } = useParams();
 
-  // Terjemahkan data proyek menggunakan t()
+  const selectedProject = useMemo(() => {
+    const id = projectId ? parseInt(projectId as string, 10) : null;
+    return projectData.find((project) => project.product_id === id);
+  }, [projectId]);
+
   const translatedProject = useMemo(() => {
     if (!selectedProject) return null;
-
     return {
       project_name: selectedProject.project_name,
-      description: t(selectedProject.description),
-      technologies: selectedProject.technologies.map((tech) => t(tech)),
+      description: selectedProject.description,
+      technologies: selectedProject.technologies.map((tech) => t(tech)).join(", "),
       internal: selectedProject.internal,
       urlPreview: selectedProject.urlPreview,
       githubUrl: selectedProject.githubUrl,
@@ -39,7 +43,7 @@ const ShowCaseDetail: React.FC = () => {
           </div>
           <div className="lg:w-1/2 w-full lg:pl-6 mt-6 lg:mt-0 text-neutral-200">
             <h1 className="text-3xl title-font font-medium mb-1">{selectedProject?.project_name}</h1>
-            <p className="text-base font-normal text-justify">{selectedProject?.description}</p>
+            <p className="text-base font-normal text-justify">{t(translatedProject.description)}</p>
             <div className="mt-4">
               <div className="mb-2">
                 <h2 className="text-neutral-200 title-font font-medium">{t("tech_used")} :</h2>
@@ -50,12 +54,12 @@ const ShowCaseDetail: React.FC = () => {
                 </span>
               ))}
             </div>
-            {selectedProject?.internal === true && (
+            {selectedProject?.internal && (
               <div className="py-6">
                 <p className="text-yellow-500 text-lg">{t("internalNote")}</p>
               </div>
             )}
-            {selectedProject?.internal !== true && (
+            {!selectedProject?.internal && (
               <div className="flex gap-4 mt-4 md:mt-6">
                 <Link
                   href={selectedProject?.urlPreview || ""}
@@ -65,14 +69,14 @@ const ShowCaseDetail: React.FC = () => {
                   <View className="w-5 h-5 mt-1" />
                   Preview
                 </Link>
-                {selectedProject?.githubUrl !== null && (
-                  <Link href={selectedProject?.githubUrl || ""} target="_blank" className="flex gap-2 mt-6 text-white bg-black dark:bg-brand-700 border-0 py-2 px-8 focus:outline-none hover:bg-black/90 hover:text-white rounded text-lg">
+                {selectedProject?.githubUrl && (
+                  <Link href={selectedProject?.githubUrl} target="_blank" className="flex gap-2 mt-6 text-white bg-black dark:bg-brand-700 border-0 py-2 px-8 focus:outline-none hover:bg-black/90 hover:text-white rounded text-lg">
                     <Github className="w-5 h-5 mt-1" />
                     Github
                   </Link>
                 )}
-                {selectedProject?.figmaUrl !== null && (
-                  <Link href={selectedProject?.figmaUrl || ""} target="_blank" className="flex gap-2 mt-6 text-white bg-black dark:bg-brand-700 border-0 py-2 px-8 focus:outline-none hover:bg-black/90 hover:text-white rounded text-lg">
+                {selectedProject?.figmaUrl && (
+                  <Link href={selectedProject?.figmaUrl} target="_blank" className="flex gap-2 mt-6 text-white bg-black dark:bg-brand-700 border-0 py-2 px-8 focus:outline-none hover:bg-black/90 hover:text-white rounded text-lg">
                     <Figma className="w-5 h-5 mt-1" />
                     Figma
                   </Link>
