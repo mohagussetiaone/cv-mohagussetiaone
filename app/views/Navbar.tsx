@@ -13,7 +13,7 @@ const locales = ["en", "id"];
 
 const { useRouter: useIntlRouter, Link: IntlLink } = createSharedPathnamesNavigation({ locales });
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const locale = useLocale();
   const router = useIntlRouter();
   const pathname = usePathname();
@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50">
+    <nav className="sticky -top-2 z-50">
       <div className="flex flex-wrap bg-dark border-b border-gray-600 items-center justify-between mx-auto p-4">
         <IntlLink href="/" className="flex gap-4 justify-start cursor-pointer">
           <Image src={LogoImg} alt="Logo" width={40} height={40} className="md:hidden" />
@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
           </div>
           {/* URL Links */}
           <div className="md:w-auto" id="navbar-default">
-            <ul className="font-medium flex rounded-lg md:flex-row md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="font-medium flex gap-2 rounded-lg md:flex-row md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li className="flex gap-2">
                 <Link href="https://www.instagram.com/mohagussetiaone" className="flex gap-2 text-white rounded" aria-current="page" target="_blank">
                   <Instagram className="text-brand-500" />

@@ -2,7 +2,7 @@
   "Banner": {
     "greeting": "Hello",
     "name": "My Name is Moh Agus Setiawan",
-    "description": "Frontend developer with 1 year experience specializing in React.js and tailwindcss, ready to contribute to creating website applications with modern technology that are responsive and dynamic, in order to achieve business solutions and good user experience",
+    "description": "Frontend Developer with 2 years of experience building interactive web applications using React.js and Tailwind CSS. Developing and optimizing responsive and user-friendly interfaces, including projects that increased user engagement by up to 30%. Focused on applying modern technologies to create effective business solutions and deliver optimal user experiences.",
     "lets_talk": "Let's Talk",
     "years": "Years",
     "experience": "Experience",
@@ -14,7 +14,7 @@
   "About": {
     "title": "About Me",
     "name": "My Name is Moh Agus Setiawan",
-    "description": "A frontend developer specializing in building responsive, high-performance web applications using technologies like HTML, CSS, JavaScript, and React. I am passionate about crafting clean, maintainable, and scalable code that delivers great user experiences. I am a lifelong learner, driven by curiosity and a desire to continuously improve my skills and adapt to the ever-evolving web development landscape. Outside of coding, I enjoy sharing knowledge through writing blogs, staying active by playing badminton, and embracing challenges that broaden my perspective."
+    "description": "A Frontend Developer with experience building responsive and high-performance web applications using HTML, CSS, JavaScript, and React. I prioritize the implementation of best development practices to produce clean, structured, maintainable, and scalable code.\n\nIn my professional experience, I have contributed to the development and optimization of user interfaces that directly improve application performance and the quality of the user experience. I have the ability to work collaboratively in cross-functional teams, adapt quickly to new technologies, and maintain focus on solving problems with effective solutions.\n\nOutside of work, I actively deepen my knowledge in the field of web development, maintain fitness through badminton, and explore new challenges that broaden my perspective and skills."
   },
   "Skills": {
     "title": "Skills",

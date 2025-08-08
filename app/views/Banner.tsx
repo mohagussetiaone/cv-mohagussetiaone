@@ -31,7 +31,7 @@ const Banner = () => {
           <HoverBorderGradient>
             <div className="border border-gray-500 p-6 rounded-tl-[8rem] rounded-br-[8rem]">
               <div className="flex flex-col items-center justify-center mx-auto text-white py-6">
-                <Image src={MohAgusImage} width={120} height={80} alt={"BannerImage.jpg"} className="object-contain rounded-full" />
+                <Image src={MohAgusImage} width={220} height={180} alt={"BannerImage.jpg"} className="object-contain rounded-full" />
               </div>
               <div className="flex flex-col gap-4 py-4">
                 <div className="flex gap-2">
@@ -50,16 +50,18 @@ const Banner = () => {
                   <Link2 className="w-6 h-6 text-brand-500" />
                   <h1 className="text-white">https://mohagussetiaone.vercel.app</h1>
                 </div>
-                <div className="flex gap-2 text-xs md:text-sm text-black">
+                {/* <div className="flex gap-2 text-xs md:text-sm text-black">
                   <span className="bg-brand-500 rounded-full px-2">HTML+CSS</span>
                   <span className="bg-brand-500 rounded-full px-2">JS</span>
                   <span className="bg-brand-500 rounded-full px-2">REACT</span>
                   <span className="bg-brand-500 rounded-full px-2">TAILWIND</span>
-                </div>
+                </div> */}
               </div>
-              <Button className="bg-white hover:bg-gray-300 text-black p-4 rounded-full text-lg my-4">
-                Download CV
-                <Download className="w-6 h-6" />
+              <Button asChild className="bg-white hover:bg-gray-300 text-black p-4 rounded-full text-lg my-4">
+                <a href="/cv/cv-moh-agus-setiawan.pdf" download="CV-Moh-Agus-Setiawan.pdf">
+                  Download CV
+                  <Download className="w-6 h-6 ml-2" />
+                </a>
               </Button>
             </div>
           </HoverBorderGradient>
@@ -72,7 +74,7 @@ const Banner = () => {
               <h1 className="text-4xl text-white">{t("name")}</h1>
               <TypewriterEffect words={words} />
               <span className="text-sm text-brand-500">{`<h1/>`}</span>
-              <div className="py-6">
+              <div>
                 <span className="text-sm text-brand-500">{`<p>`}</span>
                 <p className="text-lg text-white">{t("description")}</p>
                 <span className="text-sm text-brand-500">{`<p/>`}</span>
@@ -89,7 +91,7 @@ const Banner = () => {
             <div className="flex w-full md:w-auto flex-col gap-8 md:gap-10 items-start md:items-center justify-start bg-black h-auto self-center p-6 rounded-3xl">
               <div className="flex gap-3">
                 <div className="h-full flex justify-center items-center">
-                  <h1 className="text-4xl text-brand-500">1</h1>
+                  <h1 className="text-4xl text-brand-500">2</h1>
                 </div>
                 <div className="flex flex-col text-white">
                   <h2>{t("years")}</h2>
