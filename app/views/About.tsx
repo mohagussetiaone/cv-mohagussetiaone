@@ -17,7 +17,8 @@ const About = () => {
             <div className="text-white p-5">
               <span className="text-sm text-brand-500">{`<p>`}</span>
               {/* <p className="text-2xl">{t("name")}</p> */}
-              <p className="text-lg">{t("description")}</p>
+              <p className="text-lg indent-8">{t("description")}</p>
+              <p className="text-lg indent-8">{t("description_1")}</p>
               <span className="text-sm text-brand-500">{`<p/>`}</span>
             </div>
           </div>

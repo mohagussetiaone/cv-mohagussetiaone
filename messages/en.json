@@ -6,15 +6,16 @@
     "lets_talk": "Let's Talk",
     "years": "Years",
     "experience": "Experience",
-    "programming": "Programming",
-    "language": "Language",
+    "programming": "Project",
+    "language": "Amount",
     "development": "Development",
     "project": "Project"
   },
   "About": {
     "title": "About Me",
     "name": "My Name is Moh Agus Setiawan",
-    "description": "A Frontend Developer with experience building responsive and high-performance web applications using HTML, CSS, JavaScript, and React. I prioritize the implementation of best development practices to produce clean, structured, maintainable, and scalable code.\n\nIn my professional experience, I have contributed to the development and optimization of user interfaces that directly improve application performance and the quality of the user experience. I have the ability to work collaboratively in cross-functional teams, adapt quickly to new technologies, and maintain focus on solving problems with effective solutions.\n\nOutside of work, I actively deepen my knowledge in the field of web development, maintain fitness through badminton, and explore new challenges that broaden my perspective and skills."
+    "description": "A Frontend Developer with experience building responsive and high-performance web applications using HTML, CSS, JavaScript, and React. I prioritize the implementation of best development practices to produce clean, structured, maintainable, and scalable code.\n\nIn my professional experience,",
+    "description_1": "I have contributed to the development and optimization of user interfaces that directly improve application performance and the quality of the user experience. I have the ability to work collaboratively in cross-functional teams, adapt quickly to new technologies, and maintain focus on solving problems with effective solutions.\n\nOutside of work, I actively deepen my knowledge in the field of web development, maintain fitness through badminton, and explore new challenges that broaden my perspective and skills."
   },
   "Skills": {
     "title": "Skills",
@@ -23,15 +24,17 @@
   "Works": {
     "title": "Projects",
     "description": "I had the pleasure of working with these awesome projects",
-    "description_project_1": "Client Area Nethome is a comprehensive customer portal designed to enhance the Nethome experience. From seamless transactions and service management to convenient monthly bill tracking and responsive support access, it delivers an all-in-one solution for Nethome customers to control their services effortlessly.",
-    "description_project_2": "The WEB OLT Management system is engineered for precision in customer onboarding and network activation. With powerful tools for job scheduling and role-based access, it streamlines complex workflows, ensuring efficient management of customer connections.",
-    "description_project_3": "Jajanian is a vibrant e-commerce platform designed for snack lovers. It allows easy ordering via WhatsApp and integrates various payment methods, making snack shopping more accessible. Currently, new features are in the pipeline to further enhance the customer experience.",
-    "description_project_4": "Jvalleyverse is an all-inclusive online learning platform offering free courses. It features structured learning paths, interactive forums, hands-on projects, and certificates for course completion, making it an ideal space for learners to grow and showcase their skills.",
-    "description_project_5": "Laundrivy revolutionizes the laundry experience by providing customers with real-time order tracking, seamless transaction management, and live support chat. Its user-centric design makes laundry more convenient, efficient, and transparent for every user.",
-    "description_project_6": "The Jajanian Dashboard empowers businesses to optimize operations with its intuitive product and inventory management tools, detailed sales insights, and stock monitoring. It’s the ultimate solution for snack business owners to streamline and scale their operations.",
+    "description_project_1": "Company profile PT Fortuna Teknik Mandiri - Sebuah platform digital yang saya bangun untuk memamerkan koleksi furniture perusahaan dan memperkuat kehadiran online mereka di pasar furniture Indonesia.",
+    "description_project_2": "Company profile PT Solusi Aplikasi Andalan Semesta (SAAS) - Website yang memperkenalkan layanan IT lengkap perusahaan mulai dari pengembangan web, aplikasi SaaS, hingga solusi ISP sebagai bagian dari Remala Abadi Group.",
+    "description_project_3": "Client Area Nethome is a comprehensive customer portal designed to enhance the Nethome experience. From seamless transactions and service management to convenient monthly bill tracking and responsive support access, it delivers an all-in-one solution for Nethome customers to control their services effortlessly.",
+    "description_project_4": "The WEB OLT Management system is engineered for precision in customer onboarding and network activation. With powerful tools for job scheduling and role-based access, it streamlines complex workflows, ensuring efficient management of customer connections.",
+    "description_project_5": "Jajanian is a vibrant e-commerce platform designed for snack lovers. It allows easy ordering via WhatsApp and integrates various payment methods, making snack shopping more accessible. Currently, new features are in the pipeline to further enhance the customer experience.",
+    "description_project_6": "Jvalleyverse is an all-inclusive online learning platform offering free courses. It features structured learning paths, interactive forums, hands-on projects, and certificates for course completion, making it an ideal space for learners to grow and showcase their skills.",
+    "description_project_7": "Laundrivy revolutionizes the laundry experience by providing customers with real-time order tracking, seamless transaction management, and live support chat. Its user-centric design makes laundry more convenient, efficient, and transparent for every user.",
+    "description_project_8": "The Jajanian Dashboard empowers businesses to optimize operations with its intuitive product and inventory management tools, detailed sales insights, and stock monitoring. It’s the ultimate solution for snack business owners to streamline and scale their operations.",
     "image": "/project/dashboard-jajanian.png",
-    "description_project_7": "The Jvalleyverse Dashboard offers comprehensive course management with user monitoring, notification systems, and dynamic blog and project showcase capabilities. It's the perfect tool for educators to manage online learning and provide a rich educational experience.",
-    "description_project_8": "Tani Deals App bridges the gap between farmers and distributors, facilitating easier access to markets. With built-in payment solutions and agricultural knowledge resources, it empowers farmers to sell their produce efficiently while learning key industry practices.",
+    "description_project_9": "The Jvalleyverse Dashboard offers comprehensive course management with user monitoring, notification systems, and dynamic blog and project showcase capabilities. It's the perfect tool for educators to manage online learning and provide a rich educational experience.",
+    "description_project_10": "Tani Deals App bridges the gap between farmers and distributors, facilitating easier access to markets. With built-in payment solutions and agricultural knowledge resources, it empowers farmers to sell their produce efficiently while learning key industry practices.",
     "internalNote": "Note: This project is internal and not publicly available. Only the relevant agency can access project satisfaction or resources..",
     "tech_used": "Teknologi used"
   },

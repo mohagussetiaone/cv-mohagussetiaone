@@ -91,7 +91,7 @@ const Banner = () => {
             <div className="flex w-full md:w-auto flex-col gap-8 md:gap-10 items-start md:items-center justify-start bg-black h-auto self-center p-6 rounded-3xl">
               <div className="flex gap-3">
                 <div className="h-full flex justify-center items-center">
-                  <h1 className="text-4xl text-brand-500">2</h1>
+                  <h1 className="text-4xl text-brand-500">2+</h1>
                 </div>
                 <div className="flex flex-col text-white">
                   <h2>{t("years")}</h2>
@@ -100,7 +100,7 @@ const Banner = () => {
               </div>
               <div className="flex gap-3">
                 <div className="h-full flex justify-center items-center">
-                  <h1 className="text-4xl text-brand-500">3</h1>
+                  <h1 className="text-4xl text-brand-500">2</h1>
                 </div>
                 <div className="flex flex-col text-white">
                   <h2>{t("programming")}</h2>
@@ -109,7 +109,7 @@ const Banner = () => {
               </div>
               <div className="flex gap-3">
                 <div className="h-full flex justify-center items-center">
-                  <h1 className="text-4xl text-brand-500">8</h1>
+                  <h1 className="text-4xl text-brand-500">8+</h1>
                 </div>
                 <div className="flex flex-col text-white">
                   <h2>{t("development")}</h2>
