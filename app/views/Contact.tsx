@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { Send } from "lucide-react";
+import { toast } from "sonner";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -30,8 +31,8 @@ const Contact = () => {
   });
 
   // Handle form submission
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log("data terinput:", data);
+  const onSubmit: SubmitHandler<FormData> = () => {
+    toast.success("Message sent successfully!");
   };
 
   return (

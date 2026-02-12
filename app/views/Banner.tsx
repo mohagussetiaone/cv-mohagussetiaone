@@ -10,6 +10,25 @@ import { TypewriterEffect } from "@/components/ui/typewritter-effect";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { useTranslations } from "next-intl";
 
+const handleDownload = async () => {
+  try {
+    const response = await fetch("/CV_2026021211100687.pdf");
+    const blob = await response.blob();
+
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "CV_2026021211100687";
+    document.body.appendChild(a);
+    a.click();
+
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Download failed:", error);
+  }
+};
+
 const Banner = () => {
   const t = useTranslations("Banner");
 
@@ -57,11 +76,9 @@ const Banner = () => {
                   <span className="bg-brand-500 rounded-full px-2">TAILWIND</span>
                 </div> */}
               </div>
-              <Button asChild className="bg-white hover:bg-gray-300 text-black p-4 rounded-full text-lg my-4">
-                <a href="/cv/cv-moh-agus-setiawan.pdf" download="CV-Moh-Agus-Setiawan.pdf">
-                  Download CV
-                  <Download className="w-6 h-6 ml-2" />
-                </a>
+              <Button onClick={handleDownload} className="bg-white hover:bg-gray-300 text-black p-4 rounded-full text-lg my-4">
+                Download CV
+                <Download className="w-6 h-6 ml-2" />
               </Button>
             </div>
           </HoverBorderGradient>

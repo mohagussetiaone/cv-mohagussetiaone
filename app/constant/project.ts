@@ -27,6 +27,17 @@ interface Project {
 
 export const projectData: Project[] = [
   {
+    product_id: 0,
+    project_name: "Kaftan Brautmode",
+    description: "description_project_0",
+    image: "/project/kaftan.png",
+    technologies: [Technology.NEXT_JS, Technology.TAILWIND_CSS],
+    urlPreview: "https://kaftan-brautmode.de/de",
+    githubUrl: "https://github.com/mohagussetiaone/kaftan-brautmode",
+    figmaUrl: null,
+    internal: false,
+  },
+  {
     product_id: 1,
     project_name: "PT Fortuna Teknik Mandiri",
     description: "description_project_1",
@@ -115,17 +126,6 @@ export const projectData: Project[] = [
     figmaUrl: null,
     internal: false,
   },
-  // {
-  //   product_id: 7,
-  //   project_name: "Jajanian Dashboard",
-  //   description: "description_project_7",
-  //   image: "/project/dashboard-jajanian.png",
-  //   technologies: [Technology.VITE_JS, Technology.TAILWIND_CSS, Technology.AXIOS, Technology.SUPABASE],
-  //   urlPreview: "https://jajanian-dashboard.vercel.app/",
-  //   githubUrl: "https://github.com/mohagussetiaone/jajanian-dashboard.git",
-  //   figmaUrl: null,
-  //   internal: false,
-  // },
   {
     product_id: 9,
     project_name: "Jvalleyverse Dashboard",
