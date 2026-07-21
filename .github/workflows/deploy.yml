@@ -38,6 +38,9 @@ jobs:
                       echo "📦 Install dependencies"
                       /home/mohagus/.bun/bin/bun install
 
+                      echo "🗄️ Generate Prisma client"
+                      /home/mohagus/.bun/bin/bun x prisma generate
+
                       echo "🏗️ Build project"
                       /home/mohagus/.bun/bin/bun run build
 
