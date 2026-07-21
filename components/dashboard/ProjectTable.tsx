@@ -1,12 +1,24 @@
 "use client";
 
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+  DndContext,
+  type DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
   ChevronLeft,
   ChevronRight,
@@ -14,8 +26,12 @@ import {
   ExternalLink,
   Eye,
   FilePenLine,
+  GripVertical,
   PlusCircle,
+  Save,
+  Search,
   Trash2,
+  X,
 } from "lucide-react";
 import type {
   ProjectPaginationMeta,
@@ -24,27 +40,12 @@ import type {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { DeleteButton } from "./DeleteButton";
 
 type ProjectTableProps = {
@@ -53,6 +54,8 @@ type ProjectTableProps = {
   pagination: ProjectPaginationMeta;
   isLoading?: boolean;
   onDeleted?: () => void;
+  onReorder?: (items: { productId: number; sortOrder: number }[]) => void;
+  isReordering?: boolean;
 };
 
 const createQueryString = (
@@ -63,128 +66,131 @@ const createQueryString = (
   const page = params.page ?? current.page;
   const pageSize = params.pageSize ?? current.pageSize;
   const search = params.search ?? current.search;
-
   query.set("page", String(page));
   query.set("pageSize", String(pageSize));
-
   if (search.trim()) {
     query.set("search", search.trim());
   }
-
   return query.toString();
 };
 
-export function ProjectTable({
+function SortableRow({
+  project,
   locale,
-  projects,
   pagination,
-  isLoading = false,
   onDeleted,
-}: ProjectTableProps) {
-  const columns: ColumnDef<ProjectRecord>[] = [
-    {
-      accessorKey: "productId",
-      header: "ID",
-      cell: ({ row }) => (
-        <span className="font-medium text-slate-600">
-          #{row.original.productId}
-        </span>
-      ),
-    },
-    {
-      accessorKey: "projectName",
-      header: "Project",
-      cell: ({ row }) => (
-        <div className="min-w-[240px] space-y-1">
-          <p className="font-medium text-slate-900">{row.original.projectName}</p>
-          <p className="line-clamp-2 text-xs text-slate-500">
-            {row.original.description}
-          </p>
+}: {
+  project: ProjectRecord;
+  locale: string;
+  pagination: ProjectPaginationMeta;
+  onDeleted?: () => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: project.productId });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 50 : "auto",
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`group flex items-center gap-3 border-b border-white/5 px-4 py-3 transition-colors last:border-b-0 hover:bg-white/[0.02] ${isDragging ? "rounded-xl bg-white/10 shadow-xl shadow-black/30" : ""}`}
+    >
+      {/* Drag Handle */}
+      <button
+        {...attributes}
+        {...listeners}
+        className="flex cursor-grab touch-none items-center text-white/20 transition-colors hover:text-white/50 active:cursor-grabbing"
+      >
+        <GripVertical className="h-4 w-4" />
+      </button>
+
+      {/* ID */}
+      <div className="w-14 shrink-0">
+        <span className="text-xs font-mono text-white/40">#{project.productId}</span>
+      </div>
+
+      {/* Project Info */}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <p className="truncate text-sm font-medium text-white">{project.projectName}</p>
+          {project.internal && (
+            <Badge className="shrink-0 border-amber-500/20 bg-amber-500/10 px-1.5 py-0 text-[10px] text-amber-400">
+              Internal
+            </Badge>
+          )}
         </div>
-      ),
-    },
-    {
-      id: "categories",
-      header: "Category",
-      cell: ({ row }) => (
-        <div className="flex max-w-[220px] flex-wrap gap-2">
-          {row.original.categories.map((category) => (
+        <p className="mt-0.5 line-clamp-1 text-xs text-white/40">{project.description}</p>
+      </div>
+
+      {/* Categories */}
+      <div className="hidden w-36 shrink-0 xl:block">
+        <div className="flex flex-wrap gap-1">
+          {project.categories.map((cat) => (
             <Badge
-              key={category}
+              key={cat}
               variant="outline"
-              className="border-slate-200 bg-white text-slate-600"
+              className="border-white/10 bg-white/5 px-1.5 py-0 text-[10px] text-white/50"
             >
-              {category}
+              {cat}
             </Badge>
           ))}
         </div>
-      ),
-    },
-    {
-      id: "stack",
-      header: "Stack",
-      cell: ({ row }) => (
-        <div className="flex max-w-[240px] flex-wrap gap-2">
-          {row.original.technologies.slice(0, 4).map((tech) => (
+      </div>
+
+      {/* Stack */}
+      <div className="hidden w-40 shrink-0 lg:block">
+        <div className="flex flex-wrap gap-1">
+          {project.technologies.slice(0, 3).map((tech) => (
             <Badge
               key={tech}
-              className="bg-slate-900 text-white hover:bg-slate-900"
+              className="bg-brand-500/15 text-brand-400 hover:bg-brand-500/20 px-1.5 py-0 text-[10px]"
             >
               {tech}
             </Badge>
           ))}
-          {row.original.technologies.length > 4 ? (
-            <Badge variant="secondary">
-              +{row.original.technologies.length - 4}
-            </Badge>
-          ) : null}
+          {project.technologies.length > 3 && (
+            <span className="text-[10px] text-white/30">+{project.technologies.length - 3}</span>
+          )}
         </div>
-      ),
-    },
-    {
-      id: "status",
-      header: "Status",
-      cell: ({ row }) => (
-        <Badge
-          variant="outline"
-          className={
-            row.original.internal
-              ? "border-rose-200 bg-rose-50 text-rose-600"
-              : "border-emerald-200 bg-emerald-50 text-emerald-600"
-          }
-        >
-          {row.original.internal ? "Internal" : "Public"}
-        </Badge>
-      ),
-    },
-    {
-      id: "actions",
-      header: "Action",
-      cell: ({ row }) => (
+      </div>
+
+      {/* Actions */}
+      <div className="shrink-0" onClick={(e) => e.stopPropagation()}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+              className="h-8 w-8 text-white/40 hover:bg-white/10 hover:text-white"
             >
               <Ellipsis className="h-4 w-4" />
-              <span className="sr-only">Open actions</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-44">
-            <DropdownMenuItem asChild>
+          <DropdownMenuContent align="end" className="w-44 border-white/10 bg-[#12121a] text-white">
+            <DropdownMenuItem asChild className="text-white/70 hover:text-white focus:text-white focus:bg-white/5">
               <Link
-                href={`/${locale}/project/${row.original.productId}`}
+                href={`/${locale}/project/${project.productId}`}
                 className="inline-flex w-full items-center gap-2"
               >
                 <Eye className="h-4 w-4" />
                 Detail
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem asChild className="text-white/70 hover:text-white focus:text-white focus:bg-white/5">
               <Link
-                href={`/${locale}/dashboard?edit=${row.original.productId}&page=${pagination.page}&pageSize=${pagination.pageSize}${pagination.search ? `&search=${encodeURIComponent(pagination.search)}` : ""}`}
+                href={`/${locale}/dashboard?edit=${project.productId}&page=${pagination.page}&pageSize=${pagination.pageSize}${pagination.search ? `&search=${encodeURIComponent(pagination.search)}` : ""}`}
                 scroll={false}
                 className="inline-flex w-full items-center gap-2"
               >
@@ -192,10 +198,10 @@ export function ProjectTable({
                 Edit
               </Link>
             </DropdownMenuItem>
-            {row.original.urlPreview ? (
-              <DropdownMenuItem asChild>
+            {project.urlPreview ? (
+              <DropdownMenuItem asChild className="text-white/70 hover:text-white focus:text-white focus:bg-white/5">
                 <Link
-                  href={row.original.urlPreview}
+                  href={project.urlPreview}
                   target="_blank"
                   className="inline-flex w-full items-center gap-2"
                 >
@@ -204,13 +210,13 @@ export function ProjectTable({
                 </Link>
               </DropdownMenuItem>
             ) : null}
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator className="bg-white/10" />
             <DeleteButton
-              productId={row.original.productId}
-              projectName={row.original.projectName}
+              productId={project.productId}
+              projectName={project.projectName}
               onDeleted={onDeleted}
               trigger={
-                <button className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm text-rose-600 outline-none transition-colors hover:bg-rose-50 focus:bg-rose-50">
+                <button className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm text-rose-400 outline-none transition-colors hover:bg-rose-500/10 focus:bg-rose-500/10">
                   <Trash2 className="h-4 w-4" />
                   Delete
                 </button>
@@ -218,17 +224,75 @@ export function ProjectTable({
             />
           </DropdownMenuContent>
         </DropdownMenu>
-      ),
-    },
-  ];
+      </div>
+    </div>
+  );
+}
 
-  const table = useReactTable({
-    data: projects,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
-    pageCount: pagination.totalPages,
-  });
+export function ProjectTable({
+  locale,
+  projects,
+  pagination,
+  isLoading = false,
+  onDeleted,
+  onReorder,
+  isReordering = false,
+}: ProjectTableProps) {
+  const [localProjects, setLocalProjects] = useState(projects);
+
+  // Sync localProjects when projects prop changes
+  useEffect(() => {
+    setLocalProjects(projects);
+  }, [projects]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 5 },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const projectIds = useMemo(
+    () => localProjects.map((p) => p.productId),
+    [localProjects]
+  );
+
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event;
+      if (!over || active.id === over.id) return;
+
+      let reorderedItems: { productId: number; sortOrder: number }[] = [];
+
+      setLocalProjects((prev) => {
+        const oldIndex = prev.findIndex((p) => p.productId === active.id);
+        const newIndex = prev.findIndex((p) => p.productId === over.id);
+        if (oldIndex === -1 || newIndex === -1) return prev;
+
+        const updated = [...prev];
+        const [moved] = updated.splice(oldIndex, 1);
+        updated.splice(newIndex, 0, moved);
+
+        reorderedItems = updated.map((p, i) => ({
+          productId: p.productId,
+          sortOrder: (i + 1) * 10,
+        }));
+
+        return updated.map((p, i) => ({
+          ...p,
+          sortOrder: (i + 1) * 10,
+        }));
+      });
+
+      // Call onReorder outside state updater
+      if (reorderedItems.length > 0) {
+        onReorder?.(reorderedItems);
+      }
+    },
+    [onReorder]
+  );
 
   const previousQuery = createQueryString(pagination, {
     page: Math.max(1, pagination.page - 1),
@@ -238,140 +302,195 @@ export function ProjectTable({
   });
 
   return (
-    <Card
-      id="projects"
-      className="overflow-hidden border-slate-200 bg-white shadow-sm"
-    >
-      <CardHeader className="border-b border-slate-100 bg-slate-50/70">
+    <div id="projects" className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+      {/* Header */}
+      <div className="border-b border-white/10 px-5 py-4">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-400">
               Project Table
             </p>
-            <CardTitle className="mt-1 text-2xl text-slate-900">
+            <h2 className="mt-1 text-xl font-semibold text-white">
               Portfolio entries
-            </CardTitle>
-            <CardDescription className="mt-1 text-slate-500">
-              TanStack Table dengan pagination server-side dari App Router.
-            </CardDescription>
+            </h2>
+            <p className="mt-0.5 text-sm text-white/40">
+              Drag rows to reorder. Click <strong className="text-white/60">Add</strong> to create a new entry.
+            </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <form action={`/${locale}/dashboard`} className="flex gap-2">
               <input type="hidden" name="page" value="1" />
               <input type="hidden" name="pageSize" value={pagination.pageSize} />
-              <input
-                type="search"
-                name="search"
-                defaultValue={pagination.search}
-                placeholder="Cari project, stack, kategori..."
-                className="flex h-10 w-full min-w-[240px] rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-offset-background placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-slate-950"
-              />
-              <Button type="submit" variant="outline" className="border-slate-200">
+              <div className="relative">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+                <input
+                  type="search"
+                  name="search"
+                  defaultValue={pagination.search}
+                  placeholder="Cari project..."
+                  className="flex h-10 w-full min-w-[220px] rounded-xl border border-white/10 bg-white/5 py-2 pl-10 pr-3 text-sm text-white outline-none ring-offset-background placeholder:text-white/30 focus-visible:ring-2 focus-visible:ring-brand-500/50"
+                />
+              </div>
+              <Button
+                type="submit"
+                variant="outline"
+                className="border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+              >
                 Cari
               </Button>
+              {pagination.search && (
+                <Link
+                  href={`/${locale}/dashboard`}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/50 transition hover:bg-white/10 hover:text-white"
+                >
+                  <X className="h-4 w-4" />
+                </Link>
+              )}
             </form>
 
             <Link href={`/${locale}/dashboard?add=true`} scroll={false}>
-              <Button className="bg-slate-950 text-white hover:bg-slate-800">
+              <Button className="rounded-xl bg-brand-500 text-black hover:bg-brand-400 font-medium">
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Add Project
               </Button>
             </Link>
           </div>
         </div>
-      </CardHeader>
 
-      <CardContent className="p-0">
-        <Table>
-          <TableHeader className="bg-white">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="hover:bg-transparent">
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className="whitespace-nowrap text-slate-500">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} className="border-slate-100 hover:bg-slate-50/60">
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-28 text-center text-slate-500"
-                >
-                  {isLoading
-                    ? "Memuat data project..."
-                    : "Belum ada data yang cocok dengan filter ini."}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-
-        <div className="flex flex-col gap-4 border-t border-slate-100 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-sm text-slate-500">
-            Menampilkan{" "}
-            <span className="font-medium text-slate-900">
-              {projects.length}
-            </span>{" "}
-            dari{" "}
-            <span className="font-medium text-slate-900">
-              {pagination.totalItems}
-            </span>{" "}
-            project.
+        {/* Reorder indicator */}
+        {isReordering && (
+          <div className="mt-3 flex items-center gap-2 rounded-xl border border-brand-500/20 bg-brand-500/5 px-4 py-2 text-sm text-brand-400">
+            <Save className="h-4 w-4 animate-pulse" />
+            Saving new order...
           </div>
+        )}
+      </div>
 
-          <div className="flex items-center gap-2">
-            <Link
-              href={`/${locale}/dashboard?${previousQuery}`}
-              aria-disabled={pagination.page <= 1}
-              className={pagination.page <= 1 ? "pointer-events-none opacity-50" : ""}
-            >
-              <Button variant="outline" className="border-slate-200">
-                <ChevronLeft className="mr-2 h-4 w-4" />
-                Previous
-              </Button>
-            </Link>
+      {/* Table Header */}
+      <div className="hidden border-b border-white/5 px-4 py-2 text-xs font-medium uppercase tracking-wider text-white/30 md:flex md:items-center md:gap-3">
+        <div className="w-8 shrink-0" />
+        <div className="w-14 shrink-0">ID</div>
+        <div className="min-w-0 flex-1">Project</div>
+        <div className="hidden w-36 shrink-0 xl:block">Category</div>
+        <div className="hidden w-40 shrink-0 lg:block">Stack</div>
+        <div className="w-12 shrink-0" />
+      </div>
 
-            <div className="rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-600">
-              Page {pagination.page} of {pagination.totalPages}
-            </div>
-
-            <Link
-              href={`/${locale}/dashboard?${nextQuery}`}
-              aria-disabled={pagination.page >= pagination.totalPages}
-              className={
-                pagination.page >= pagination.totalPages
-                  ? "pointer-events-none opacity-50"
-                  : ""
-              }
-            >
-              <Button variant="outline" className="border-slate-200">
-                Next
-                <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+      {/* Rows */}
+      {isLoading ? (
+        <div className="flex items-center justify-center py-20">
+          <div className="flex flex-col items-center gap-3">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-500/30 border-t-brand-500" />
+            <p className="text-sm text-white/40">Memuat data project...</p>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      ) : localProjects.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <FolderOpenIcon />
+          <p className="mt-4 text-sm text-white/40">Belum ada data yang cocok dengan filter ini.</p>
+          <Link href={`/${locale}/dashboard`}>
+            <Button variant="outline" className="mt-4 border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white">
+              Reset Filter
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+          modifiers={[restrictToVerticalAxis]}
+        >
+          <SortableContext
+            items={projectIds}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className="divide-y divide-white/5">
+              {localProjects.map((project) => (
+                <SortableRow
+                  key={project.productId}
+                  project={project}
+                  locale={locale}
+                  pagination={pagination}
+                  onDeleted={onDeleted}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
+      )}
+
+      {/* Pagination */}
+      <div className="flex flex-col gap-4 border-t border-white/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="text-sm text-white/40">
+          Menampilkan{" "}
+          <span className="font-medium text-white">
+            {localProjects.length}
+          </span>{" "}
+          dari{" "}
+          <span className="font-medium text-white">
+            {pagination.totalItems}
+          </span>{" "}
+          project.
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/${locale}/dashboard?${previousQuery}`}
+            aria-disabled={pagination.page <= 1}
+            className={pagination.page <= 1 ? "pointer-events-none opacity-50" : ""}
+          >
+            <Button
+              variant="outline"
+              className="border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+            >
+              <ChevronLeft className="mr-2 h-4 w-4" />
+              Previous
+            </Button>
+          </Link>
+
+          <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/60">
+            Page {pagination.page} of {pagination.totalPages}
+          </div>
+
+          <Link
+            href={`/${locale}/dashboard?${nextQuery}`}
+            aria-disabled={pagination.page >= pagination.totalPages}
+            className={
+              pagination.page >= pagination.totalPages
+                ? "pointer-events-none opacity-50"
+                : ""
+            }
+          >
+            <Button
+              variant="outline"
+              className="border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+            >
+              Next
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FolderOpenIcon() {
+  return (
+    <svg
+      className="h-12 w-12 text-white/20"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+      />
+    </svg>
   );
 }

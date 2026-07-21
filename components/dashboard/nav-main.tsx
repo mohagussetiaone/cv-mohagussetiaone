@@ -31,7 +31,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
                   scroll={!item.url.includes("/dashboard?")}
                 >
                   <item.icon />
-                  <span>{item.title}</span>
+                  <span className="group-data-[collapsible=icon]:hidden">{item.title}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

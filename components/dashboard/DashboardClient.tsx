@@ -2,12 +2,13 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { KeyRound, LayoutDashboard } from "lucide-react";
+import { KeyRound } from "lucide-react";
 import type { ProjectDashboardSummary, ProjectLocale, ProjectPaginationMeta, ProjectRecord } from "@/app/types/project";
 import { ProjectEditor } from "@/components/dashboard/ProjectEditor";
 import { ProjectStats } from "@/components/dashboard/ProjectStats";
 import { ProjectTable } from "@/components/dashboard/ProjectTable";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 type DashboardClientProps = {
   locale: string;
@@ -42,6 +43,7 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
   const [summary, setSummary] = useState<ProjectDashboardSummary>(emptySummary);
   const [pagination, setPagination] = useState<ProjectPaginationMeta>(emptyPagination(searchParams.get("search") ?? ""));
   const [isLoading, setIsLoading] = useState(true);
+  const [isReordering, setIsReordering] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -124,18 +126,82 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
     return projects.find((project) => project.productId === productId) ?? null;
   }, [editProductId, projects]);
 
+  const handleReorder = useCallback(
+    async (items: { productId: number; sortOrder: number }[]) => {
+      setIsReordering(true);
+      try {
+        const response = await fetch("/api/projects/reorder", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items }),
+        });
+
+        if (!response.ok) {
+          const payload = await response.json();
+          toast.error(payload.message || "Gagal menyimpan urutan.");
+          return;
+        }
+
+        toast.success("Urutan project berhasil disimpan.");
+      } catch {
+        toast.error("Gagal menyimpan urutan project.");
+      } finally {
+        setIsReordering(false);
+      }
+    },
+    []
+  );
+
   return (
-    <main className="flex flex-1 flex-col gap-6">
-      <div className="px-4 lg:px-6">
-        <ProjectStats totalProjects={summary.totalProjects} internalProjects={summary.internalProjects} publicProjects={summary.publicProjects} totalSkills={summary.totalSkills} totalCategories={summary.totalCategories} />
+    <main className="flex flex-1 flex-col gap-8">
+      {/* Welcome Banner */}
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.02] p-6">
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand-500/10 blur-3xl" />
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-xl font-semibold text-white">Welcome back, Admin</h1>
+            <p className="mt-1 text-sm text-white/40">
+              Kelola portfolio project CV kamu di sini. Tambah, edit, urutkan, atau hapus project dengan mudah.
+            </p>
+          </div>
+          <Badge variant="outline" className="flex items-center gap-1.5 border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/50">
+            <KeyRound className="h-3 w-3" />
+            {userEmail}
+          </Badge>
+        </div>
       </div>
 
-      <div className="px-4 lg:px-6">
-        {error ? <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div> : null}
-        <ProjectTable locale={locale} projects={projects} pagination={pagination} isLoading={isLoading} onDeleted={refetchProjects} />
-      </div>
+      {/* Stats */}
+      <ProjectStats
+        totalProjects={summary.totalProjects}
+        internalProjects={summary.internalProjects}
+        publicProjects={summary.publicProjects}
+        totalSkills={summary.totalSkills}
+        totalCategories={summary.totalCategories}
+      />
 
-      <ProjectEditor project={editingProject} isOpen={isAdding || editingProject !== null} onSaved={refetchProjects} />
+      {/* Error & Table */}
+      {error && (
+        <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+          {error}
+        </div>
+      )}
+
+      <ProjectTable
+        locale={locale}
+        projects={projects}
+        pagination={pagination}
+        isLoading={isLoading}
+        onDeleted={refetchProjects}
+        onReorder={handleReorder}
+        isReordering={isReordering}
+      />
+
+      <ProjectEditor
+        project={editingProject}
+        isOpen={isAdding || editingProject !== null}
+        onSaved={refetchProjects}
+      />
     </main>
   );
 }

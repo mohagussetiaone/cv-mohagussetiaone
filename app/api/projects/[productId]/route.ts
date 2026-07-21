@@ -41,7 +41,7 @@ export async function PATCH(request: Request, { params }: RouteContext) {
       return NextResponse.json({ message: "Project tidak ditemukan." }, { status: 404 });
     }
 
-    if (payload.productId !== currentProductId) {
+    if (payload.productId !== undefined && payload.productId !== currentProductId) {
       const conflictProject = await prisma.project.findUnique({
         where: {
           productId: payload.productId,
@@ -68,7 +68,7 @@ export async function PATCH(request: Request, { params }: RouteContext) {
         productId: currentProductId,
       },
       data: {
-        productId: payload.productId,
+        productId: payload.productId ?? currentProductId,
         image: payload.image,
         urlPreview: payload.urlPreview,
         githubUrl: payload.githubUrl,

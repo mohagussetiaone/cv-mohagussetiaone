@@ -19,6 +19,7 @@ const mapProject = (
   project: {
     id: number;
     productId: number;
+    sortOrder: number;
     image: string | null;
     urlPreview: string | null;
     githubUrl: string | null;
@@ -57,6 +58,7 @@ const mapProject = (
   return {
     id: project.id,
     productId: project.productId,
+    sortOrder: project.sortOrder,
     projectName: activeTranslation?.projectName ?? "",
     description: activeTranslation?.description ?? "",
     image: project.image,
@@ -73,9 +75,10 @@ const mapProject = (
 export async function getProjects(locale: ProjectLocale) {
   const projects = await prisma.project.findMany({
     include: projectInclude,
-    orderBy: {
-      productId: "asc",
-    },
+    orderBy: [
+      { sortOrder: "asc" },
+      { productId: "asc" },
+    ],
   });
 
   return projects.map((project) => mapProject(project, locale));
@@ -154,9 +157,10 @@ export async function getProjectsPage({ locale, page = 1, pageSize = 10, search 
     prisma.project.findMany({
       where,
       include: projectInclude,
-      orderBy: {
-        productId: "asc",
-      },
+      orderBy: [
+        { sortOrder: "asc" },
+        { productId: "asc" },
+      ],
       skip: (safePage - 1) * safePageSize,
       take: safePageSize,
     }),

@@ -9,9 +9,10 @@ type DashboardShellProps = {
   children: ReactNode;
   locale: string;
   userEmail: string;
+  userName?: string;
 };
 
-export function DashboardShell({ children, locale, userEmail }: DashboardShellProps) {
+export function DashboardShell({ children, locale, userEmail, userName }: DashboardShellProps) {
   useEffect(() => {
     const previousHtmlOverflow = document.documentElement.style.overflow;
     const previousBodyOverflow = document.body.style.overflow;
@@ -29,19 +30,24 @@ export function DashboardShell({ children, locale, userEmail }: DashboardShellPr
     <SidebarProvider
       style={
         {
-          "--sidebar-width": "18rem",
-          "--header-height": "3rem",
+          "--sidebar-width": "16rem",
+          "--header-height": "3.5rem",
         } as CSSProperties
       }
       className="fixed inset-0 z-0 h-svh w-full overflow-hidden overscroll-none"
     >
-      <AppSidebar locale={locale} variant="inset" />
+      <AppSidebar locale={locale} userEmail={userEmail} userName={userName} />
       <SidebarInset className="h-svh overflow-hidden overscroll-none">
         <SiteHeader locale={locale} userEmail={userEmail} />
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-size-[44px_44px]">
-          <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden">
-            <div data-dashboard-scroll-area className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain py-4 md:gap-6 md:py-6 ">
-              {children}
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-gradient-to-br from-[#0a0a0f] via-[#0f0f1a] to-[#1a1a2e]">
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+            <div
+              data-dashboard-scroll-area
+              className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
+            >
+              <div className="mx-auto w-full max-w-[1600px] px-4 py-6 md:px-8 lg:px-10">
+                {children}
+              </div>
             </div>
           </div>
         </div>

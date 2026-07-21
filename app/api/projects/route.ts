@@ -34,19 +34,28 @@ export async function POST(request: Request) {
     const json = await request.json();
     const payload = projectPayloadSchema.parse(json);
 
-    const existingProject = await prisma.project.findUnique({
-      where: {
-        productId: payload.productId,
-      },
-    });
+    // Auto-generate productId if not provided
+    let productId = payload.productId;
 
-    if (existingProject) {
-      return NextResponse.json(
-        {
-          message: `Project dengan productId ${payload.productId} sudah ada.`,
-        },
-        { status: 409 }
-      );
+    if (productId === undefined) {
+      const lastProject = await prisma.project.findFirst({
+        orderBy: { productId: "desc" },
+        select: { productId: true },
+      });
+      productId = (lastProject?.productId ?? -1) + 1;
+    } else {
+      const existingProject = await prisma.project.findUnique({
+        where: { productId },
+      });
+
+      if (existingProject) {
+        return NextResponse.json(
+          {
+            message: `Project dengan productId ${productId} sudah ada.`,
+          },
+          { status: 409 }
+        );
+      }
     }
 
     await prisma.skill.createMany({
@@ -61,7 +70,7 @@ export async function POST(request: Request) {
 
     const project = await prisma.project.create({
       data: {
-        productId: payload.productId,
+        productId,
         image: payload.image,
         urlPreview: payload.urlPreview,
         githubUrl: payload.githubUrl,

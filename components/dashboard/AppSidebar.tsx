@@ -4,7 +4,8 @@ import type { ComponentProps } from "react";
 import Link from "next/link";
 import { FolderIcon, LayoutDashboardIcon, PlusCircleIcon } from "lucide-react";
 import { NavMain } from "@/components/dashboard/nav-main";
-import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail } from "@/components/ui/sidebar";
+import { NavUser } from "@/components/dashboard/nav-user";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail } from "@/components/ui/sidebar";
 
 const createSidebarData = (locale: string) => ({
   navMain: [
@@ -28,9 +29,11 @@ const createSidebarData = (locale: string) => ({
 
 type AppSidebarProps = ComponentProps<typeof Sidebar> & {
   locale: string;
+  userEmail?: string;
+  userName?: string;
 };
 
-export function AppSidebar({ locale, ...props }: AppSidebarProps) {
+export function AppSidebar({ locale, userEmail, userName, ...props }: AppSidebarProps) {
   const data = createSidebarData(locale);
 
   return (
@@ -43,7 +46,7 @@ export function AppSidebar({ locale, ...props }: AppSidebarProps) {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-sidebar-border bg-sidebar-accent text-sidebar-foreground">
                   <span className="text-sm font-semibold">MA</span>
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
+                <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                   <span className="truncate font-semibold">Moh Agus CV</span>
                   <span className="truncate text-xs text-sidebar-foreground/70">Private workspace</span>
                 </div>

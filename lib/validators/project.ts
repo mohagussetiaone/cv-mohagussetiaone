@@ -30,7 +30,7 @@ const csvToArray = z
   );
 
 export const projectPayloadSchema = z.object({
-  productId: z.coerce.number().int().nonnegative(),
+  productId: z.coerce.number().int().nonnegative().optional(),
   image: optionalString,
   urlPreview: optionalUrl,
   githubUrl: optionalUrl,

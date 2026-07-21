@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState, useTransition, useEffect, useRef } from "react";
+import { useMemo, useState, useTransition, useEffect, useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { Globe2, ImageUp, Languages, PencilLine, PlusCircle } from "lucide-react";
+import { Check, Globe2, ImageUp, Languages, PencilLine, PlusCircle, X } from "lucide-react";
 import type { ProjectRecord } from "@/app/types/project";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,9 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+import { cn } from "@/lib/utils";
 
 type ProjectEditorProps = {
   project?: ProjectRecord | null;
@@ -19,14 +22,18 @@ type ProjectEditorProps = {
   onSaved?: () => void;
 };
 
+type OptionsData = {
+  skills: string[];
+  categories: string[];
+};
+
 const createInitialState = (project?: ProjectRecord | null) => ({
-  productId: project?.productId?.toString() ?? "",
   image: project?.image ?? "",
   urlPreview: project?.urlPreview ?? "",
   githubUrl: project?.githubUrl ?? "",
   figmaUrl: project?.figmaUrl ?? "",
-  technologies: project?.technologies.join(", ") ?? "",
-  categories: project?.categories.join(", ") ?? "Frontend App",
+  technologies: project?.technologies ?? [],
+  categories: project?.categories ?? [],
   internal: project?.internal ?? false,
   translations: {
     id: {
@@ -48,14 +55,30 @@ export function ProjectEditor({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const dialogContentRef = useRef<HTMLDivElement | null>(null);
   const [isPending, startTransition] = useTransition();
   const [isUploading, startUploadTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [form, setForm] = useState(() => createInitialState(project));
+  const [options, setOptions] = useState<OptionsData>({ skills: [], categories: [] });
+  const [techInput, setTechInput] = useState("");
+  const [techOpen, setTechOpen] = useState(false);
 
-  // Update form when project prop changes (e.g. switching between edit items)
+  // Fetch options from DB
+  useEffect(() => {
+    if (!isOpen) return;
+    fetch("/api/dashboard/options")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch options");
+        return res.json();
+      })
+      .then((data) => {
+        if (data?.skills) setOptions(data);
+      })
+      .catch((err) => console.error("Failed to load editor options:", err));
+  }, [isOpen]);
+
+  // Update form when project prop changes
   useEffect(() => {
     setForm(createInitialState(project));
     setError(null);
@@ -64,25 +87,19 @@ export function ProjectEditor({
 
   useEffect(() => {
     const scrollArea = document.querySelector<HTMLElement>("[data-dashboard-scroll-area]");
+    if (!scrollArea) return;
 
-    if (!scrollArea) {
-      return;
-    }
-
-    const previousOverflow = scrollArea.style.overflowY;
-    const previousOverscrollBehavior = scrollArea.style.overscrollBehavior;
+    const prevOverflow = scrollArea.style.overflowY;
+    const prevBehavior = scrollArea.style.overscrollBehavior;
 
     if (isOpen) {
       scrollArea.style.overflowY = "hidden";
       scrollArea.style.overscrollBehavior = "contain";
-    } else {
-      scrollArea.style.overflowY = previousOverflow;
-      scrollArea.style.overscrollBehavior = previousOverscrollBehavior;
     }
 
     return () => {
-      scrollArea.style.overflowY = previousOverflow;
-      scrollArea.style.overscrollBehavior = previousOverscrollBehavior;
+      scrollArea.style.overflowY = prevOverflow;
+      scrollArea.style.overscrollBehavior = prevBehavior;
     };
   }, [isOpen]);
 
@@ -93,16 +110,11 @@ export function ProjectEditor({
     params.delete("edit");
     params.delete("add");
     const query = params.toString();
-    router.replace(`${pathname}${query ? `?${query}` : ""}`, {
-      scroll: false,
-    });
+    router.replace(`${pathname}${query ? `?${query}` : ""}`, { scroll: false });
   };
 
-  const updateField = (key: keyof Omit<typeof form, "translations">, value: string | boolean) => {
-    setForm((current) => ({
-      ...current,
-      [key]: value,
-    }));
+  const updateField = (key: keyof Omit<typeof form, "translations">, value: string | boolean | string[]) => {
+    setForm((current) => ({ ...current, [key]: value }));
   };
 
   const updateTranslation = (locale: "id" | "en", field: "projectName" | "description", value: string) => {
@@ -110,20 +122,14 @@ export function ProjectEditor({
       ...current,
       translations: {
         ...current.translations,
-        [locale]: {
-          ...current.translations[locale],
-          [field]: value,
-        },
+        [locale]: { ...current.translations[locale], [field]: value },
       },
     }));
   };
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
     setError(null);
     setSuccess(null);
@@ -131,12 +137,7 @@ export function ProjectEditor({
     startUploadTransition(async () => {
       const payload = new FormData();
       payload.append("file", file);
-
-      const response = await fetch("/api/uploads/project-image", {
-        method: "POST",
-        body: payload,
-      });
-
+      const response = await fetch("/api/uploads/project-image", { method: "POST", body: payload });
       const result = await response.json().catch(() => null);
 
       if (!response.ok) {
@@ -151,6 +152,47 @@ export function ProjectEditor({
     });
   };
 
+  // Filter out already selected technologies for the dropdown
+  const availableTechs = useMemo(
+    () => options.skills.filter((s) => !form.technologies.includes(s)),
+    [options.skills, form.technologies]
+  );
+
+  const techSearchResults = useMemo(
+    () => availableTechs.filter((s) => s.toLowerCase().includes(techInput.toLowerCase())),
+    [availableTechs, techInput]
+  );
+
+  const handleAddTech = useCallback(
+    (tech: string) => {
+      if (!form.technologies.includes(tech)) {
+        setForm((prev) => ({
+          ...prev,
+          technologies: [...prev.technologies, tech],
+        }));
+      }
+      setTechInput("");
+    },
+    [form.technologies]
+  );
+
+  const handleRemoveTech = useCallback((tech: string) => {
+    setForm((prev) => ({
+      ...prev,
+      technologies: prev.technologies.filter((t) => t !== tech),
+    }));
+  }, []);
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter" && techInput.trim()) {
+        e.preventDefault();
+        handleAddTech(techInput.trim());
+      }
+    },
+    [techInput, handleAddTech]
+  );
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
@@ -160,12 +202,21 @@ export function ProjectEditor({
       const endpoint = mode === "edit" && project ? `/api/projects/${project.productId}` : "/api/projects";
       const method = mode === "edit" ? "PATCH" : "POST";
 
+      const body = {
+        image: form.image,
+        urlPreview: form.urlPreview,
+        githubUrl: form.githubUrl,
+        figmaUrl: form.figmaUrl,
+        internal: form.internal,
+        categories: form.categories.join(", "),
+        technologies: form.technologies.join(", "),
+        translations: form.translations,
+      };
+
       const response = await fetch(endpoint, {
         method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
 
       const payload = await response.json().catch(() => null);
@@ -175,7 +226,7 @@ export function ProjectEditor({
         return;
       }
 
-      setSuccess(mode === "edit" ? "Project berhasil diperbarui." : "Project berhasil ditambahkan ke database.");
+      setSuccess(mode === "edit" ? "Project berhasil diperbarui." : "Project berhasil ditambahkan.");
       onSaved?.();
 
       if (mode === "create") {
@@ -183,7 +234,6 @@ export function ProjectEditor({
       }
 
       router.refresh();
-      // Optionally close on success after a delay
       setTimeout(handleClose, 1500);
     });
   };
@@ -191,11 +241,6 @@ export function ProjectEditor({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent
-        ref={dialogContentRef}
-        onOpenAutoFocus={(event) => {
-          event.preventDefault();
-          dialogContentRef.current?.focus({ preventScroll: true });
-        }}
         className="max-h-[90svh] max-w-4xl overflow-y-auto overscroll-contain border-white/10 bg-[#0a0a0a] text-white"
       >
         <DialogHeader>
@@ -213,32 +258,118 @@ export function ProjectEditor({
             {mode === "edit" ? "Perbarui project bilingual" : "Tambah project bilingual"}
           </DialogTitle>
           <DialogDescription className="text-white/60">
-            Simpan konten dinamis project per locale. Nama dan deskripsi wajib diisi untuk kedua bahasa.
+            {mode === "edit"
+              ? `Edit project #${project?.productId ?? ""}`
+              : "Simpan konten dinamis project per locale."}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="grid gap-6 py-4">
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <div className="space-y-2">
-              <Label htmlFor="productId" className="text-white/80">Product ID</Label>
-              <Input id="productId" value={form.productId} onChange={(e) => updateField("productId", e.target.value)} className="border-white/10 bg-white/5" placeholder="11" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="image" className="text-white/80">Image URL</Label>
-              <Input id="image" value={form.image} onChange={(e) => updateField("image", e.target.value)} className="border-white/10 bg-white/5" placeholder="https://minio-domain/bucket/projects/example.webp" />
-            </div>
+          {/* Categories (Select) + Technologies (Creatable Multi-Select) */}
+          <div className="grid gap-4 md:grid-cols-2">
+            {/* Categories */}
             <div className="space-y-2">
               <Label htmlFor="categories" className="text-white/80">Categories</Label>
-              <Input id="categories" value={form.categories} onChange={(e) => updateField("categories", e.target.value)} className="border-white/10 bg-white/5" placeholder="Frontend, Fullstack" />
+              <Select
+                value={form.categories[0] ?? ""}
+                onValueChange={(val) => updateField("categories", [val])}
+              >
+                <SelectTrigger className="border-white/10 bg-white/5 text-white">
+                  <SelectValue placeholder="Pilih kategori..." />
+                </SelectTrigger>
+                <SelectContent className="z-[60] border-white/10 bg-[#1a1a2e] text-white">
+                  {options.categories.length === 0 && (
+                    <SelectItem value="__loading" disabled>
+                      Memuat...
+                    </SelectItem>
+                  )}
+                  {options.categories.map((cat) => (
+                    <SelectItem key={cat} value={cat} className="hover:bg-white/10 focus:bg-white/10">
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
+
+            {/* Technologies - Creatable Multi-Select */}
             <div className="space-y-2">
               <Label htmlFor="technologies" className="text-white/80">Technologies</Label>
-              <Input id="technologies" value={form.technologies} onChange={(e) => updateField("technologies", e.target.value)} className="border-white/10 bg-white/5" placeholder="Next.js, Tailwind" />
+              <div className="relative">
+                <div className="flex flex-wrap items-center gap-1 rounded-lg border border-white/10 bg-white/5 p-1.5">
+                  {/* Selected techs as chips */}
+                  {form.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="inline-flex items-center gap-1 rounded-md bg-brand-500/15 px-2 py-0.5 text-xs font-medium text-brand-400"
+                    >
+                      {tech}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTech(tech)}
+                        className="inline-flex items-center text-brand-400/60 hover:text-brand-300"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </span>
+                  ))}
+                  {/* Single input for search & typing */}
+                  <input
+                    type="text"
+                    value={techInput}
+                    onChange={(e) => setTechInput(e.target.value)}
+                    onFocus={() => setTechOpen(true)}
+                    onBlur={() => setTimeout(() => setTechOpen(false), 200)}
+                    onKeyDown={handleKeyDown}
+                    placeholder={form.technologies.length === 0 ? "Ketik untuk mencari atau tambah teknologi..." : ""}
+                    className="min-w-[120px] flex-1 bg-transparent px-1 py-1 text-sm text-white outline-none placeholder:text-white/40"
+                  />
+                </div>
+
+                {/* Floating options list */}
+                {(techOpen || techInput) && (
+                  <div className="absolute left-0 right-0 z-50 mt-1 max-h-[200px] overflow-y-auto rounded-lg border border-white/10 bg-[#1a1a2e] shadow-xl">
+                    {techSearchResults.length === 0 && techInput.trim() ? (
+                      <button
+                        type="button"
+                        onClick={() => handleAddTech(techInput.trim())}
+                        className="flex w-full items-center gap-2 px-3 py-2.5 text-left text-sm text-brand-400 hover:bg-white/5"
+                      >
+                        <PlusCircle className="h-4 w-4" />
+                        Tambah &quot;{techInput.trim()}&quot;
+                      </button>
+                    ) : techSearchResults.length === 0 && !techInput.trim() ? (
+                      <p className="px-3 py-6 text-center text-sm text-white/40">
+                        {options.skills.length === 0 ? "Memuat..." : "Ketik untuk mencari teknologi"}
+                      </p>
+                    ) : (
+                      techSearchResults.map((tech) => (
+                        <button
+                          key={tech}
+                          type="button"
+                          onClick={() => handleAddTech(tech)}
+                          className="flex w-full items-center gap-2 px-3 py-2.5 text-left text-sm text-white transition hover:bg-white/10"
+                        >
+                          <Check
+                            className={cn(
+                              "h-4 w-4 shrink-0",
+                              form.technologies.includes(tech) ? "opacity-100 text-brand-400" : "opacity-0"
+                            )}
+                          />
+                          <span>{tech}</span>
+                        </button>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-white/40">Klik option atau Enter untuk menambah</p>
             </div>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px]">
-            <div className="space-y-3 rounded-2xl border border-dashed border-white/15 bg-white/[0.03] p-4">
+          {/* Upload + Preview - Larger area */}
+          <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+            <div className="space-y-3 rounded-2xl border border-dashed border-white/15 bg-white/[0.03] p-5">
               <div className="flex items-center gap-2 text-sm font-medium text-white">
                 <ImageUp className="h-4 w-4 text-amber-300" />
                 Upload image project ke MinIO
@@ -259,42 +390,84 @@ export function ProjectEditor({
               </p>
             </div>
 
+            {/* Preview - Larger */}
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/20">
-              <div className="flex h-full min-h-[180px] items-center justify-center">
+              <div className="flex h-full min-h-[240px] items-center justify-center">
                 {form.image ? (
                   <Image
                     src={form.image}
                     alt="Preview image project"
-                    width={220}
-                    height={180}
-                    className="h-full min-h-[180px] w-full object-cover"
+                    width={400}
+                    height={280}
+                    className="h-full min-h-[240px] w-full object-cover"
                   />
                 ) : (
-                  <div className="px-4 text-center text-sm text-white/45">
-                    Preview image akan tampil di sini setelah URL diisi atau upload selesai.
+                  <div className="flex flex-col items-center gap-3 px-4 py-10 text-center">
+                    <div className="rounded-xl border border-dashed border-white/10 bg-white/5 p-4">
+                      <ImageUp className="mx-auto h-8 w-8 text-white/20" />
+                    </div>
+                    <p className="text-sm text-white/35">
+                      Preview akan muncul di sini
+                    </p>
                   </div>
                 )}
               </div>
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
+          {/* Image URL Field - always visible */}
+          <div className="space-y-2">
+            <Label htmlFor="image" className="text-white/80">Image URL</Label>
+            <Input
+              id="image"
+              value={form.image}
+              onChange={(e) => updateField("image", e.target.value)}
+              className="border-white/10 bg-white/5"
+              placeholder="https://cdn.domain.com/projects/..."
+            />
+          </div>
+
+          {/* URL Fields - Single Column */}
+          <div className="grid gap-4">
             <div className="space-y-2">
               <Label htmlFor="urlPreview" className="text-white/80">Preview URL</Label>
-              <Input id="urlPreview" value={form.urlPreview} onChange={(e) => updateField("urlPreview", e.target.value)} className="border-white/10 bg-white/5" placeholder="https://..." />
+              <Input
+                id="urlPreview"
+                value={form.urlPreview}
+                onChange={(e) => updateField("urlPreview", e.target.value)}
+                className="border-white/10 bg-white/5"
+                placeholder="https://kaftan-brautmode.de/de"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="githubUrl" className="text-white/80">Github URL</Label>
-              <Input id="githubUrl" value={form.githubUrl} onChange={(e) => updateField("githubUrl", e.target.value)} className="border-white/10 bg-white/5" placeholder="https://github.com/..." />
+              <Input
+                id="githubUrl"
+                value={form.githubUrl}
+                onChange={(e) => updateField("githubUrl", e.target.value)}
+                className="border-white/10 bg-white/5"
+                placeholder="https://github.com/mohagussetiaone/..."
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="figmaUrl" className="text-white/80">Figma URL</Label>
-              <Input id="figmaUrl" value={form.figmaUrl} onChange={(e) => updateField("figmaUrl", e.target.value)} className="border-white/10 bg-white/5" placeholder="https://figma.com/..." />
+              <Input
+                id="figmaUrl"
+                value={form.figmaUrl}
+                onChange={(e) => updateField("figmaUrl", e.target.value)}
+                className="border-white/10 bg-white/5"
+                placeholder="https://figma.com/..."
+              />
             </div>
           </div>
 
           <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/75 transition-colors hover:bg-white/10">
-            <input type="checkbox" checked={form.internal} onChange={(e) => updateField("internal", e.target.checked)} className="h-4 w-4 rounded border-white/10" />
+            <input
+              type="checkbox"
+              checked={form.internal}
+              onChange={(e) => updateField("internal", e.target.checked)}
+              className="h-4 w-4 rounded border-white/10"
+            />
             Tandai sebagai internal project
           </label>
 
@@ -308,11 +481,21 @@ export function ProjectEditor({
               </div>
               <div className="space-y-2">
                 <Label htmlFor="projectNameId" className="text-white/70">Nama Project</Label>
-                <Input id="projectNameId" value={form.translations.id.projectName} onChange={(e) => updateTranslation("id", "projectName", e.target.value)} className="border-white/10 bg-black/20" />
+                <Input
+                  id="projectNameId"
+                  value={form.translations.id.projectName}
+                  onChange={(e) => updateTranslation("id", "projectName", e.target.value)}
+                  className="border-white/10 bg-black/20"
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="descriptionId" className="text-white/70">Deskripsi</Label>
-                <Textarea id="descriptionId" value={form.translations.id.description} onChange={(e) => updateTranslation("id", "description", e.target.value)} className="border-white/10 bg-black/20 min-h-[100px]" />
+                <Textarea
+                  id="descriptionId"
+                  value={form.translations.id.description}
+                  onChange={(e) => updateTranslation("id", "description", e.target.value)}
+                  className="border-white/10 bg-black/20 min-h-[100px]"
+                />
               </div>
             </div>
 
@@ -323,11 +506,21 @@ export function ProjectEditor({
               </div>
               <div className="space-y-2">
                 <Label htmlFor="projectNameEn" className="text-white/70">Project Name</Label>
-                <Input id="projectNameEn" value={form.translations.en.projectName} onChange={(e) => updateTranslation("en", "projectName", e.target.value)} className="border-white/10 bg-black/20" />
+                <Input
+                  id="projectNameEn"
+                  value={form.translations.en.projectName}
+                  onChange={(e) => updateTranslation("en", "projectName", e.target.value)}
+                  className="border-white/10 bg-black/20"
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="descriptionEn" className="text-white/70">Description</Label>
-                <Textarea id="descriptionEn" value={form.translations.en.description} onChange={(e) => updateTranslation("en", "description", e.target.value)} className="border-white/10 bg-black/20 min-h-[100px]" />
+                <Textarea
+                  id="descriptionEn"
+                  value={form.translations.en.description}
+                  onChange={(e) => updateTranslation("en", "description", e.target.value)}
+                  className="border-white/10 bg-black/20 min-h-[100px]"
+                />
               </div>
             </div>
           </div>

@@ -14,7 +14,7 @@ export default async function DashboardLayout({ children, params }: { children: 
   }
 
   return (
-    <DashboardShell locale={locale} userEmail={session.user.email}>
+    <DashboardShell locale={locale} userEmail={session.user.email} userName={session.user.name ?? "Admin"}>
       {children}
     </DashboardShell>
   );

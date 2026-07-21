@@ -13,6 +13,7 @@ datasource db {
 model Project {
   id          Int        @id @default(autoincrement())
   productId   Int        @unique
+  sortOrder   Int        @default(0)
   image       String?
   urlPreview  String?
   githubUrl   String?

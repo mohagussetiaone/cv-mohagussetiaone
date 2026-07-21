@@ -15,6 +15,7 @@ const prisma = new PrismaClient({
 const projectData = [
   {
     productId: 0,
+    sortOrder: 1,
     translations: {
       id: {
         projectName: "Kaftan Brautmode",
@@ -34,6 +35,7 @@ const projectData = [
   },
   {
     productId: 1,
+    sortOrder: 2,
     translations: {
       id: {
         projectName: "PT Fortuna Teknik Mandiri",
@@ -53,6 +55,7 @@ const projectData = [
   },
   {
     productId: 2,
+    sortOrder: 3,
     translations: {
       id: {
         projectName: "PT Solusi Aplikasi Andalan Semesta",
@@ -72,6 +75,7 @@ const projectData = [
   },
   {
     productId: 3,
+    sortOrder: 4,
     translations: {
       id: {
         projectName: "Selaras Invite",
@@ -91,6 +95,7 @@ const projectData = [
   },
   {
     productId: 4,
+    sortOrder: 5,
     translations: {
       id: {
         projectName: "Jajanian",
@@ -110,6 +115,7 @@ const projectData = [
   },
   {
     productId: 5,
+    sortOrder: 6,
     translations: {
       id: {
         projectName: "Client Area Nethome",
@@ -129,6 +135,7 @@ const projectData = [
   },
   {
     productId: 6,
+    sortOrder: 7,
     translations: {
       id: {
         projectName: "WEB OLT Management",
@@ -148,6 +155,7 @@ const projectData = [
   },
   {
     productId: 7,
+    sortOrder: 8,
     translations: {
       id: {
         projectName: "Jvalleyverse",
@@ -167,6 +175,7 @@ const projectData = [
   },
   {
     productId: 8,
+    sortOrder: 9,
     translations: {
       id: {
         projectName: "Laundrivy",
@@ -186,6 +195,7 @@ const projectData = [
   },
   {
     productId: 9,
+    sortOrder: 10,
     translations: {
       id: {
         projectName: "Jvalleyverse Dashboard",
@@ -205,6 +215,7 @@ const projectData = [
   },
   {
     productId: 10,
+    sortOrder: 11,
     translations: {
       id: {
         projectName: "Tani Deals App",
@@ -255,6 +266,7 @@ async function main() {
       where: { productId: project.productId },
       create: {
         productId: project.productId,
+        sortOrder: project.sortOrder,
         image: project.image,
         urlPreview: project.urlPreview,
         githubUrl: project.githubUrl,
@@ -282,6 +294,7 @@ async function main() {
         },
       },
       update: {
+        sortOrder: project.sortOrder,
         image: project.image,
         urlPreview: project.urlPreview,
         githubUrl: project.githubUrl,
