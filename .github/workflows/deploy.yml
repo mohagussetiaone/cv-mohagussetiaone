@@ -8,8 +8,6 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        env:
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
         steps:
             - name: Deploy to VPS
@@ -19,10 +17,10 @@ jobs:
                   username: ${{ secrets.VPS_USER }}
                   key: ${{ secrets.VPS_SSH_KEY }}
                   port: ${{ secrets.VPS_PORT }}
-                  envs: DATABASE_URL
 
                   script: |
                       set -e
+                      export DATABASE_URL="${{ secrets.DATABASE_URL }}"
 
                       echo "===== DEBUG ====="
                       whoami
@@ -58,4 +56,3 @@ jobs:
 
                       echo "✅ Check service status"
                       systemctl is-active mycv
-
