@@ -17,6 +17,7 @@ jobs:
                   username: ${{ secrets.VPS_USER }}
                   key: ${{ secrets.VPS_SSH_KEY }}
                   port: ${{ secrets.VPS_PORT }}
+                  envs: DATABASE_URL
 
                   script: |
                       set -e
@@ -40,6 +41,12 @@ jobs:
 
                       echo "🗄️ Generate Prisma client"
                       /home/mohagus/.bun/bin/bun x prisma generate
+
+                      echo "🗄️ Run database migrations"
+                      /home/mohagus/.bun/bin/bun x prisma migrate deploy
+
+                      echo "🌱 Seed database"
+                      /home/mohagus/.bun/bin/bun run prisma:seed
 
                       echo "🏗️ Build project"
                       /home/mohagus/.bun/bin/bun run build
