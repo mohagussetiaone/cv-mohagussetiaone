@@ -21,6 +21,23 @@ jobs:
                   script: |
                       set -e
                       export DATABASE_URL="${{ secrets.DATABASE_URL }}"
+                      export NEXTAUTH_URL="${{ secrets.NEXTAUTH_URL }}"
+                      export AUTH_GOOGLE_ID="${{ secrets.AUTH_GOOGLE_ID }}"
+                      export AUTH_GOOGLE_SECRET="${{ secrets.AUTH_GOOGLE_SECRET }}"
+                      export NEXTAUTH_SECRET="${{ secrets.NEXTAUTH_SECRET }}"
+                      export ADMIN_EMAILS="${{ secrets.ADMIN_EMAILS }}"
+                      export MINIO_ENABLED="${{ secrets.MINIO_ENABLED }}"
+                      export MINIO_ENDPOINT="${{ secrets.MINIO_ENDPOINT }}"
+                      export MINIO_PORT="${{ secrets.MINIO_PORT }}"
+                      export MINIO_USE_SSL="${{ secrets.MINIO_USE_SSL }}"
+                      export MINIO_ACCESS_KEY="${{ secrets.MINIO_ACCESS_KEY }}"
+                      export MINIO_SECRET_KEY="${{ secrets.MINIO_SECRET_KEY }}"
+                      export MINIO_BUCKET="${{ secrets.MINIO_BUCKET }}"
+                      export MINIO_REGION="${{ secrets.MINIO_REGION }}"
+                      export MINIO_AUTO_CREATE_BUCKET="${{ secrets.MINIO_AUTO_CREATE_BUCKET }}"
+                      export MINIO_PROJECT_IMAGE_FOLDER="${{ secrets.MINIO_PROJECT_IMAGE_FOLDER }}"
+                      export MINIO_PUBLIC_BASE_URL="${{ secrets.MINIO_PUBLIC_BASE_URL }}"
+                      export MENU_IMAGE_MAX_BYTES="${{ secrets.MENU_IMAGE_MAX_BYTES }}"
 
                       echo "===== DEBUG ====="
                       whoami
