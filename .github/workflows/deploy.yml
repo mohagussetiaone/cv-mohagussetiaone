@@ -1,0 +1,41 @@
+name: Deploy Moh Agus CV
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Deploy to VPS
+              uses: appleboy/ssh-action@v1.2.0
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  port: ${{ secrets.VPS_PORT }}
+
+                  script: |
+                      set -e
+
+                      echo "📂 Enter project directory"
+                      cd /var/www/mycv
+
+                      echo "⬇️ Pull latest code"
+                      git fetch origin
+                      git reset --hard origin/master
+
+                      echo "📦 Install dependencies"
+                      bun install
+
+                      echo "🏗️ Build project"
+                      bun run build
+
+                      echo "🔄 Restart service"
+                      sudo systemctl restart mycv
+
+                      echo "✅ Check service status"
+                      systemctl is-active mycv
