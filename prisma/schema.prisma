@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Project {
+  id          Int        @id @default(autoincrement())
+  productId   Int        @unique
+  image       String?
+  urlPreview  String?
+  githubUrl   String?
+  figmaUrl    String?
+  internal    Boolean    @default(false)
+  categories  Category[] @relation("ProjectCategories")
+  skills      Skill[]    @relation("ProjectSkills")
+  translations ProjectTranslation[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model ProjectTranslation {
+  id          Int     @id @default(autoincrement())
+  locale      String
+  projectName String
+  description String
+  projectId   Int
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, locale])
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  projects Project[] @relation("ProjectCategories")
+}
+
+model Skill {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  projects Project[] @relation("ProjectSkills")
+}

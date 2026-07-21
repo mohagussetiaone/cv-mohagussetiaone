@@ -1,0 +1,741 @@
+$ next dev
+ ⚠ Port 3000 is in use, trying 3001 instead.
+ ⚠ Port 3001 is in use, trying 3002 instead.
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\myproject\moh-agus-cv\.next\cache\webpack\client-development\2.pack.gz_' -> 'C:\myproject\moh-agus-cv\.next\cache\webpack\client-development\2.pack.gz'
+ ⨯ ./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+Error: ENOENT: no such file or directory, open 'C:\myproject\moh-agus-cv\node_modules\next-intl\dist\esm\shared\NextIntlClientProvider.js'
+
+Import trace for requested module:
+./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+Error: ENOENT: no such file or directory, open 'C:\myproject\moh-agus-cv\node_modules\next-intl\dist\esm\shared\NextIntlClientProvider.js'
+
+Import trace for requested module:
+./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+Error: ENOENT: no such file or directory, open 'C:\myproject\moh-agus-cv\node_modules\next-intl\dist\esm\shared\NextIntlClientProvider.js'
+
+Import trace for requested module:
+./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+ ⨯ ./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+Error: ENOENT: no such file or directory, open 'C:\myproject\moh-agus-cv\node_modules\next-intl\dist\esm\shared\NextIntlClientProvider.js'
+
+Import trace for requested module:
+./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+ ⨯ ./app/[locale]/globals.css.webpack[javascript/auto]!=!./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[3]!./app/[locale]/globals.css
+Error: ENOENT: no such file or directory, open 'C:\myproject\moh-agus-cv\node_modules\tailwindcss\lib\css\preflight.css'
+Import trace for requested module:
+./app/[locale]/globals.css.webpack[javascript/auto]!=!./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[3]!./app/[locale]/globals.css
+./app/[locale]/globals.css
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+ ⨯ ./app/[locale]/globals.css:20:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer utilities` is used but no matching `@tailwind utilities` directive is present.
+
+ [90m 18 | [39m[33m}[39m
+ [90m 19 | [39m
+[1m[31m>[39m[22m[90m 20 | [39m[36m@layer[39m utilities [33m{[39m
+ [90m    | [39m[1m[31m^[39m[22m
+ [90m 21 | [39m  [33m.text-balance[39m [33m{[39m
+ [90m 22 | [39m    text-wrap[33m:[39m balance[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+Error: ENOENT: no such file or directory, open 'C:\myproject\moh-agus-cv\node_modules\next-intl\dist\esm\shared\NextIntlClientProvider.js'
+
+Import trace for requested module:
+./node_modules/next-intl/dist/esm/shared/NextIntlClientProvider.js
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:124:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 122 | [39m[33m}[39m
+ [90m 123 | [39m
+[1m[31m>[39m[22m[90m 124 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 125 | [39m  * [33m{[39m
+ [90m 126 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:125:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 123 | [39m[33m}[39m
+ [90m 124 | [39m
+[1m[31m>[39m[22m[90m 125 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 126 | [39m  * [33m{[39m
+ [90m 127 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:133:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 131 | [39m[33m}[39m
+ [90m 132 | [39m
+[1m[31m>[39m[22m[90m 133 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 134 | [39m  * [33m{[39m
+ [90m 135 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\myproject\moh-agus-cv\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ⨯ ./app/[locale]/globals.css:133:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 131 | [39m[33m}[39m
+ [90m 132 | [39m
+[1m[31m>[39m[22m[90m 133 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 134 | [39m  * [33m{[39m
+ [90m 135 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+ ⨯ ./app/[locale]/globals.css:133:1
+Syntax error: C:\myproject\moh-agus-cv\app\[locale]\globals.css `@layer base` is used but no matching `@tailwind base` directive is present.
+
+ [90m 131 | [39m[33m}[39m
+ [90m 132 | [39m
+[1m[31m>[39m[22m[90m 133 | [39m[36m@layer[39m base [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 134 | [39m  * [33m{[39m
+ [90m 135 | [39m    [36m@apply[39m border-border outline-ring/50[33m;[39m
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[2]!C:\myproject\moh-agus-cv\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[14].oneOf[12].use[3]!C:\myproject\moh-agus-cv\app\[locale]\globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
