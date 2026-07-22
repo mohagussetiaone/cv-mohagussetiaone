@@ -46,28 +46,28 @@
 }
 
 /* ═══════════════════════════════════════════════
-   THEME: Default (Dark Modern)
+   THEME: Default (Dark Modern) — All text = WHITE
    ═══════════════════════════════════════════════ */
 :root,
 [data-theme="default"] {
   --brand: #12F7D6;
   --radius: 0.625rem;
   --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
+  --foreground: 0 0% 100%;
   --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
+  --card-foreground: 0 0% 100%;
   --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 222.2 84% 4.9%;
   --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
+  --secondary-foreground: 0 0% 100%;
   --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
+  --muted-foreground: 0 0% 100%;
   --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive-foreground: 0 0% 100%;
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
   --ring: 212.7 26.8% 83.9%;
@@ -77,20 +77,20 @@
   --chart-4: 280 65% 60%;
   --chart-5: 340 75% 55%;
   --sidebar-background: 224 36% 12%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-primary: 217.2 91.2% 59.8%;
-  --sidebar-primary-foreground: 222.2 47.4% 11.2%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 0 0% 100%;
+  --sidebar-primary-foreground: 222.2 84% 4.9%;
   --sidebar-accent: 222 32% 18%;
-  --sidebar-accent-foreground: 210 40% 98%;
+  --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-border: 222 32% 18%;
   --sidebar-ring: 217.2 91.2% 59.8%;
 }
 
 /* ═══════════════════════════════════════════════
-   THEME: Retro (HTML Jadul)
+   THEME: Retro (HTML Jadul) — light bg, serif font, blue accent, black text
    ═══════════════════════════════════════════════ */
 [data-theme="retro"] {
-  --brand: #0000FF;
+  --brand: #6699ff;
   --radius: 0px;
   --background: 0 0% 96%;
   --foreground: 0 0% 0%;
@@ -104,35 +104,35 @@
   --secondary-foreground: 0 0% 0%;
   --muted: 0 0% 90%;
   --muted-foreground: 0 0% 40%;
-  --accent: 0 0% 85%;
+  --accent: 210 40% 90%;
   --accent-foreground: 0 0% 0%;
   --destructive: 0 84% 50%;
   --destructive-foreground: 0 0% 100%;
-  --border: 0 0% 0%;
-  --input: 0 0% 0%;
+  --border: 0 0% 80%;
+  --input: 0 0% 80%;
   --ring: 0 0% 0%;
-  --chart-1: 221 83% 53%;
-  --chart-2: 212 95% 48%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
   --chart-3: 30 80% 55%;
-  --chart-4: 240 100% 50%;
-  --chart-5: 0 0% 0%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
   --sidebar-background: 0 0% 96%;
   --sidebar-foreground: 0 0% 0%;
   --sidebar-primary: 0 0% 0%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 0 0% 85%;
   --sidebar-accent-foreground: 0 0% 0%;
-  --sidebar-border: 0 0% 0%;
+  --sidebar-border: 0 0% 80%;
   --sidebar-ring: 0 0% 0%;
 }
 
 /* ═══════════════════════════════════════════════
-   THEME: Neobrutalism
+   THEME: Neobrutalism — light bg, warm gold accents, thick borders, black text
    ═══════════════════════════════════════════════ */
 [data-theme="neobrutalism"] {
-  --brand: #FFD700;
+  --brand: #D4A843;
   --radius: 0px;
-  --background: 0 0% 100%;
+  --background: 0 0% 96%;
   --foreground: 0 0% 0%;
   --card: 0 0% 100%;
   --card-foreground: 0 0% 0%;
@@ -140,29 +140,29 @@
   --popover-foreground: 0 0% 0%;
   --primary: 0 0% 0%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 47 100% 50%;
+  --secondary: 0 0% 85%;
   --secondary-foreground: 0 0% 0%;
   --muted: 0 0% 85%;
   --muted-foreground: 0 0% 40%;
-  --accent: 180 100% 35%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 0 0% 85%;
+  --accent-foreground: 0 0% 0%;
   --destructive: 0 84% 50%;
   --destructive-foreground: 0 0% 100%;
-  --border: 0 0% 0%;
-  --input: 0 0% 0%;
+  --border: 0 0% 80%;
+  --input: 0 0% 80%;
   --ring: 0 0% 0%;
-  --chart-1: 47 100% 50%;
+  --chart-1: 42 62% 55%;
   --chart-2: 330 100% 55%;
   --chart-3: 180 100% 35%;
   --chart-4: 0 0% 0%;
   --chart-5: 0 0% 15%;
-  --sidebar-background: 47 100% 50%;
+  --sidebar-background: 0 0% 96%;
   --sidebar-foreground: 0 0% 0%;
   --sidebar-primary: 0 0% 0%;
-  --sidebar-primary-foreground: 47 100% 50%;
-  --sidebar-accent: 0 0% 15%;
-  --sidebar-accent-foreground: 0 0% 100%;
-  --sidebar-border: 0 0% 0%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 0 0% 85%;
+  --sidebar-accent-foreground: 0 0% 0%;
+  --sidebar-border: 0 0% 80%;
   --sidebar-ring: 0 0% 0%;
 }
 
@@ -207,7 +207,7 @@ html:not([data-theme]) body {
 }
 
 /* ═══════════════════════════════════════════════
-   Theme-specific body styles
+   Theme-specific body styles — default keeps DARK bg, retro/neo use LIGHT bg
    ═══════════════════════════════════════════════ */
 
 [data-theme="default"] body,
@@ -218,7 +218,7 @@ html:not([data-theme]) body {
 
 [data-theme="retro"] body,
 [data-theme="retro"] .theme-body {
-  background-color: #f5f0e8;
+  background-color: #F5F5F5;
   color: #000000;
 }
 
@@ -227,260 +227,321 @@ html:not([data-theme]) body {
 }
 
 [data-theme="retro"] a {
-  color: #0000ff;
+  color: #6699ff;
   text-decoration: underline;
 }
 
 [data-theme="retro"] a:hover {
-  color: #800080;
+  color: #99bbff;
 }
 
-[data-theme="neobrutalism"] body,
-[data-theme="neobrutalism"] .theme-body {
-  background-color: #ffffff;
-  color: #000000;
+[data-theme="retro"] .text-brand-500,
+[data-theme="retro"] .text-brand-400 {
+  color: #6699ff !important;
 }
 
-/* Neobrutalism override for hard shadows */
-[data-theme="neobrutalism"] .shadow-brutal {
-  box-shadow: 4px 4px 0px 0px #000000 !important;
-}
-
-[data-theme="neobrutalism"] .rounded-2xl,
-[data-theme="neobrutalism"] .rounded-xl,
-[data-theme="neobrutalism"] .rounded-lg,
-[data-theme="neobrutalism"] .rounded-md,
-[data-theme="neobrutalism"] .rounded-sm {
-  border-radius: 0px !important;
-}
-
-[data-theme="neobrutalism"] .border {
-  border-width: 3px !important;
-}
-
-[data-theme="neobrutalism"] .border-2 {
-  border-width: 4px !important;
-}
-
-/* ═══════════════════════════════════════════════
-   Theme-aware overrides for hardcoded view classes
-   ═══════════════════════════════════════════════ */
-
-[data-theme="retro"] .bg-black {
-  background-color: #ffffff !important;
-}
-
-[data-theme="retro"] .bg-dark {
-  background-color: #f5f0e8 !important;
-}
-
-[data-theme="retro"] .text-brand-500 {
-  color: #0000ff !important;
-}
-
-[data-theme="retro"] .border-gray-500,
-[data-theme="retro"] .border-gray-100,
-[data-theme="retro"] .border-gray-600,
-[data-theme="retro"] .border-white\/10,
-[data-theme="retro"] .border-white\/5,
-[data-theme="retro"] .border-white\/\[0\.03\],
-[data-theme="retro"] .border-white\/\[0\.05\] {
-  border-color: #000000 !important;
-}
-
-[data-theme="retro"] .bg-white\/5,
-[data-theme="retro"] .bg-white\/\[0\.03\],
-[data-theme="retro"] .bg-white\/\[0\.05\] {
-  background-color: #ffffff !important;
-}
-
-[data-theme="retro"] .hover\:bg-white\/10:hover {
-  background-color: #e0d8c8 !important;
-}
-
-[data-theme="retro"] .hover\:bg-white\/\[0\.02\]:hover {
-  background-color: #e8e0d0 !important;
-}
-
-[data-theme="retro"] .text-white {
-  color: #000000 !important;
-}
-
-[data-theme="retro"] .text-white\/40,
-[data-theme="retro"] .text-white\/50,
-[data-theme="retro"] .text-white\/60,
-[data-theme="retro"] .text-white\/70,
-[data-theme="retro"] .text-white\/80 {
-  color: #666666 !important;
-}
-
-[data-theme="retro"] .text-rose-300,
-[data-theme="retro"] .text-rose-400 {
-  color: #cc0000 !important;
-}
-
-[data-theme="retro"] .border-rose-500\/20 {
-  border-color: #cc0000 !important;
-}
-
-[data-theme="retro"] .bg-rose-500\/10 {
-  background-color: #ffe0e0 !important;
-}
-
-[data-theme="retro"] .bg-emerald-500\/10 {
-  background-color: #d0ffd0 !important;
-}
-
-[data-theme="retro"] .text-emerald-200 {
-  color: #006600 !important;
-}
-
-[data-theme="retro"] .bg-gradient-to-br,
-[data-theme="retro"] .bg-gradient,
-[data-theme="retro"] .from-\[\#0a0a0f\],
-[data-theme="retro"] .via-\[\#0f0f1a\],
-[data-theme="retro"] .to-\[\#1a1a2e\] {
-  background: #f5f0e8 !important;
-}
-
-[data-theme="retro"] .from-brand-500\/10,
-[data-theme="retro"] .from-brand-500\/15,
-[data-theme="retro"] .from-brand-500\/20,
+[data-theme="retro"] .bg-brand-500,
 [data-theme="retro"] .bg-brand-500\/15,
 [data-theme="retro"] .bg-brand-500\/5,
-[data-theme="retro"] .bg-brand-500 {
-  background-color: transparent !important;
-}
-
-[data-theme="retro"] .text-brand-400 {
-  color: #0000ff !important;
+[data-theme="retro"] .bg-amber-300,
+[data-theme="retro"] .bg-amber-400,
+[data-theme="retro"] .bg-amber-500 {
+  background-color: #dce6f5 !important;
+  color: #000000 !important;
+  border: 1px solid #6699ff !important;
 }
 
 [data-theme="retro"] .text-amber-300,
 [data-theme="retro"] .text-amber-400 {
-  color: #cc8800 !important;
+  color: #6699ff !important;
 }
 
-[data-theme="retro"] .border-amber-500\/20 {
-  border-color: #cc8800 !important;
-}
-
-[data-theme="retro"] .from-amber-500\/20,
-[data-theme="retro"] .bg-amber-500\/10 {
-  background-color: #fff0d0 !important;
-}
-
-[data-theme="retro"] .bg-amber-300,
-[data-theme="retro"] .bg-amber-400,
-[data-theme="retro"] .bg-amber-500 {
-  background-color: #ffffff !important;
+/* ── Retro text & bg overrides for light mode ── */
+[data-theme="retro"] .text-white {
   color: #000000 !important;
-  border: 1px solid #000 !important;
+}
+[data-theme="retro"] .bg-black,
+[data-theme="retro"] .bg-dark {
+  background-color: #ffffff !important;
 }
 
-[data-theme="retro"] .from-sky-500\/20 {
-  background-color: #d0f0ff !important;
+/* ── Retro Navbar ── */
+[data-theme="retro"] .border-gray-600 {
+  border-color: #6699ff !important;
+  border-width: 1px !important;
+}
+[data-theme="retro"] .dark\:bg-gray-800 {
+  background-color: #ffffff !important;
+}
+[data-theme="retro"] .dark\:bg-gray-900,
+[data-theme="retro"] .md\:dark\:bg-gray-900 {
+  background-color: #ffffff !important;
+}
+[data-theme="retro"] .dark\:border-gray-700 {
+  border-color: #6699ff !important;
 }
 
-[data-theme="retro"] .from-white\/\[0\.05\],
-[data-theme="retro"] .from-white\/\[0\.02\] {
-  background: transparent !important;
+/* Neobrutalism — light bg, gold accents, thick borders, black text */
+[data-theme="neobrutalism"] body,
+[data-theme="neobrutalism"] .theme-body {
+  background-color: #F5F5F5;
+  color: #000000;
 }
 
-/* Neobrutalism overrides */
+[data-theme="neobrutalism"] .text-brand-500,
+[data-theme="neobrutalism"] .text-brand-400 {
+  color: #D4A843 !important;
+}
+
+/* ── Neo text & bg overrides for light mode ── */
+[data-theme="neobrutalism"] .text-white {
+  color: #000000 !important;
+}
 [data-theme="neobrutalism"] .bg-black {
   background-color: #ffffff !important;
-  border: 3px solid #000 !important;
 }
-
 [data-theme="neobrutalism"] .bg-dark {
-  background-color: #ffffff !important;
+  background-color: #fbbf24 !important;
+  box-shadow: 5px 5px 0px 0px #000000 !important;
+}
+[data-theme="neobrutalism"] section#home .bg-yellow-400 .text-brand-500 {
+  color: #000000 !important;
+}
+[data-theme="neobrutalism"] .text-gray-100,
+[data-theme="neobrutalism"] .text-neutral-100,
+[data-theme="neobrutalism"] .text-neutral-200 {
+  color: #000000 !important;
 }
 
-[data-theme="neobrutalism"] .text-brand-500 {
-  color: #FFD700 !important;
+/* ── Neo Navbar ── */
+[data-theme="neobrutalism"] nav .text-brand-500 {
+  color: #000000 !important;
 }
-
-[data-theme="neobrutalism"] .border-gray-500,
-[data-theme="neobrutalism"] .border-gray-100,
 [data-theme="neobrutalism"] .border-gray-600 {
   border-color: #000000 !important;
   border-width: 3px !important;
 }
-
-[data-theme="neobrutalism"] .text-white {
-  color: #000000 !important;
+[data-theme="neobrutalism"] .dark\:bg-gray-800 {
+  background-color: #fbbf24 !important;
 }
-
-[data-theme="neobrutalism"] .text-white\/40,
-[data-theme="neobrutalism"] .text-white\/50,
-[data-theme="neobrutalism"] .text-white\/60 {
-  color: #555555 !important;
+[data-theme="neobrutalism"] .dark\:bg-gray-900,
+[data-theme="neobrutalism"] .md\:dark\:bg-gray-900 {
+  background-color: #fbbf24 !important;
 }
-
-[data-theme="neobrutalism"] .bg-gradient-to-br,
-[data-theme="neobrutalism"] .from-\[\#0a0a0f\],
-[data-theme="neobrutalism"] .via-\[\#0f0f1a\],
-[data-theme="neobrutalism"] .to-\[\#1a1a2e\] {
-  background: #ffffff !important;
-}
-
-[data-theme="neobrutalism"] .bg-white\/5,
-[data-theme="neobrutalism"] .bg-white\/\[0\.03\] {
-  background-color: #f5f5f5 !important;
-  border: 3px solid #000 !important;
+[data-theme="neobrutalism"] .dark\:border-gray-700 {
+  border-color: #D4A843 !important;
 }
 
 [data-theme="neobrutalism"] .border-white\/10,
 [data-theme="neobrutalism"] .border-white\/5,
 [data-theme="neobrutalism"] .border-white\/\[0\.03\],
 [data-theme="neobrutalism"] .border-white\/\[0\.05\] {
-  border-color: #000000 !important;
+  border-color: #D4A843 !important;
   border-width: 3px !important;
 }
 
+[data-theme="neobrutalism"] .bg-white\/5,
+[data-theme="neobrutalism"] .bg-white\/\[0\.03\],
+[data-theme="neobrutalism"] .bg-white\/\[0\.05\] {
+  background-color: #f0f0f0 !important;
+  border: 3px solid #D4A843 !important;
+}
+
 [data-theme="neobrutalism"] .bg-brand-500 {
-  background-color: #FFD700 !important;
+  background-color: #D4A843 !important;
   color: #000000 !important;
   border: 3px solid #000 !important;
 }
 
 [data-theme="neobrutalism"] .bg-brand-500\/15,
 [data-theme="neobrutalism"] .bg-brand-500\/5 {
-  background-color: #FFF3CD !important;
-}
-
-[data-theme="neobrutalism"] .text-brand-400 {
-  color: #000000 !important;
-}
-
-[data-theme="neobrutalism"] .hover\:bg-white\/10:hover {
-  background-color: #e0e0e0 !important;
+  background-color: #f5f0d0 !important;
 }
 
 [data-theme="neobrutalism"] .bg-amber-300,
 [data-theme="neobrutalism"] .bg-amber-400,
 [data-theme="neobrutalism"] .bg-amber-500 {
-  background-color: #FFD700 !important;
+  background-color: #D4A843 !important;
   color: #000000 !important;
   border: 3px solid #000 !important;
 }
 
 [data-theme="neobrutalism"] .text-amber-300,
 [data-theme="neobrutalism"] .text-amber-400 {
+  color: #D4A843 !important;
+}
+
+/* ═══════════════════════════════════════════════
+   Neobrutalism — card, border & shadow overrides
+   ═══════════════════════════════════════════════ */
+
+/* Square corners everywhere */
+[data-theme="neobrutalism"] .rounded-2xl,
+[data-theme="neobrutalism"] .rounded-xl,
+[data-theme="neobrutalism"] .rounded-lg,
+[data-theme="neobrutalism"] .rounded-md,
+[data-theme="neobrutalism"] .rounded-sm,
+[data-theme="neobrutalism"] .rounded-3xl,
+[data-theme="neobrutalism"] .rounded {
+  border-radius: 0px !important;
+}
+
+/* Thicker borders */
+[data-theme="neobrutalism"] .border {
+  border-width: 3px !important;
+}
+[data-theme="neobrutalism"] .border-2 {
+  border-width: 4px !important;
+}
+
+/* Shadow → hard offset (black) */
+[data-theme="neobrutalism"] .shadow-md,
+[data-theme="neobrutalism"] .shadow-lg,
+[data-theme="neobrutalism"] .shadow-sm,
+[data-theme="neobrutalism"] .shadow-xl {
+  box-shadow: 5px 5px 0px 0px #000000 !important;
+}
+
+/* About text card & title box */
+[data-theme="neobrutalism"] section#about .rounded-xl {
+  background-color: #fbbf24 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 5px 5px 0px 0px #000000 !important;
+}
+[data-theme="neobrutalism"] section#about .inline-block {
+  background-color: #fbbf24 !important;
+  border: 3px solid #000000 !important;
+}
+
+/* Works cards — yellow bg, black border, black shadow */
+[data-theme="neobrutalism"] div#portfolio div.rounded-xl {
+  background-color: #fbbf24 !important;
+}
+[data-theme="neobrutalism"] .border-gray-100 {
+  border-color: #000000 !important;
+  border-width: 3px !important;
+}
+
+/* About section image */
+[data-theme="neobrutalism"] section#about img {
+  border: 3px solid #000000 !important;
+  box-shadow: 5px 5px 0px 0px #000000 !important;
+}
+
+/* Project card images bottom border */
+[data-theme="neobrutalism"] div#portfolio [class*="overflow-hidden"] img {
+  border-bottom: 3px solid #000000 !important;
+}
+
+/* Title underline in neobrutalism */
+[data-theme="neobrutalism"] .underline {
+  text-decoration-color: #D4A843 !important;
+  text-decoration-thickness: 3px !important;
+}
+
+/* Tech badges in Works */
+[data-theme="neobrutalism"] .bg-gray-300 {
+  background-color: #e5e7eb !important;
+  color: #000000 !important;
+  border: 2px solid #000 !important;
+}
+
+/* About/Contact section title border */
+[data-theme="neobrutalism"] .border-brand-500 {
+  border-color: #D4A843 !important;
+  border-width: 3px !important;
+}
+
+[data-theme="neobrutalism"] .bg-white.text-black {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px 0px #000000 !important;
+}
+
+/* ── Project detail page buttons ── */
+
+/* Neo — both buttons get card-like shadow & square corners */
+[data-theme="neobrutalism"] section.body-font a[target="_blank"] {
+  box-shadow: 4px 4px 0px 0px #000000 !important;
+}
+/* Neo — Github/Figma buttons (border-0 → add black 3px border) */
+[data-theme="neobrutalism"] section.body-font a.border-0 {
+  border: 3px solid #000000 !important;
+}
+
+/* Retro — both buttons get blue border & square corners */
+[data-theme="retro"] section.body-font a[target="_blank"] {
+  border-color: #6699ff !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+/* Retro — Github/Figma buttons (border-0 → add blue 1px border) */
+[data-theme="retro"] section.body-font a.border-0 {
+  border: 1px solid #6699ff !important;
+}
+
+/* Contact section input fields */
+[data-theme="neobrutalism"] section#contact input,
+[data-theme="neobrutalism"] section#contact .border-white {
+  border: 3px solid #000000 !important;
+  background-color: #fbbf24 !important;
+  box-shadow: 4px 4px 0px 0px #000000 !important;
+}  
+
+[data-theme="neobrutalism"] section#contact input {
   color: #000000 !important;
 }
 
-[data-theme="neobrutalism"] .text-rose-400 {
-  color: #cc0000 !important;
+[data-theme="neobrutalism"] section#contact label {
+  color: #000000 !important;
 }
 
-[data-theme="neobrutalism"] .bg-rose-500\/10 {
-  background-color: #ffe0e0 !important;
-  border: 3px solid #cc0000 !important;
+[data-theme="neobrutalism"] section#contact button[type="submit"] {
+  background-color: #fbbf24 !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px 0px #000000 !important;
 }
 
-/* Common override for rounded corners in retro + neobrutalism */
+/* ── Retro About section card ── */
+[data-theme="retro"] section#about .rounded-xl {
+  background-color: #ffffff !important;
+  border: 1px solid #6699ff !important;
+}
+
+/* ── Retro card borders & faded text (visible on light bg) ── */
+[data-theme="retro"] .border-gray-100 {
+  border-color: #6699ff !important;
+}
+[data-theme="retro"] .text-gray-100,
+[data-theme="retro"] .text-neutral-100,
+[data-theme="retro"] .text-neutral-200 {
+  color: #000000 !important;
+}
+
+/* ── Retro tech badges ── */
+[data-theme="retro"] section.body-font .bg-gray-300 {
+  background-color: #dce6f5 !important;
+  color: #000000 !important;
+  border: 1px solid #6699ff !important;
+}
+[data-theme="retro"] div#portfolio .bg-gray-300 {
+  background-color: #dce6f5 !important;
+  color: #000000 !important;
+  border: 1px solid #6699ff !important;
+}
+
+/* ── Retro Contact inputs ── */
+[data-theme="retro"] section#contact input,
+[data-theme="retro"] section#contact .border-white {
+  border-color: #6699ff !important;
+}
+[data-theme="retro"] section#contact input {
+  color: #000000 !important;
+}
+
+/* Common override for rounded corners in retro */
 [data-theme="retro"] .rounded-2xl,
 [data-theme="retro"] .rounded-xl,
 [data-theme="retro"] .rounded-lg,
@@ -488,7 +549,6 @@ html:not([data-theme]) body {
 [data-theme="retro"] .rounded-sm,
 [data-theme="retro"] .rounded-3xl,
 [data-theme="retro"] .rounded-\[2rem\],
-[data-theme="retro"] .rounded-tl-\[8rem\],
-[data-theme="retro"] .rounded-br-\[8rem\] {
+[data-theme="retro"] .rounded {
   border-radius: 0px !important;
 }
