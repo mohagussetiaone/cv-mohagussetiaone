@@ -16,11 +16,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <div className="pointer-events-none absolute inset-0 -z-10" />
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-size-[44px_44px]" />
       <div className="mx-auto w-full max-w-6xl">
-        <Banner />
-        <About />
-        <Skills />
+        <Banner locale={locale} />
+        <About locale={locale} />
+        <Skills locale={locale} />
         <Works locale={locale} projects={projects} />
-        <Contact />
+        <Contact locale={locale} />
         <NavHome />
       </div>
     </main>

@@ -4,6 +4,8 @@ import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { RootShell } from "@/components/layout/RootShell";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import Script from "next/script";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -32,7 +34,7 @@ export default async function RootLayout({
   const message = await getMessages();
 
   return (
-    <html lang="id" className="dark" suppressHydrationWarning>
+    <html lang="id" suppressHydrationWarning>
       <head>
         <meta name="google-site-verification" content="rfHxt49m6Pm8OYRF_sbphjX7fCLLlfY_RibGFeNQuzs" />
         <meta
@@ -43,8 +45,30 @@ export default async function RootLayout({
         <meta name="robots" content="index, follow" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem("cv-theme");
+                  if (theme === "retro" || theme === "neobrutalism" || theme === "default") {
+                    document.documentElement.setAttribute("data-theme", theme);
+                  } else {
+                    document.documentElement.setAttribute("data-theme", "default");
+                  }
+                } catch(e) {
+                  document.documentElement.setAttribute("data-theme", "default");
+                }
+              })();
+            `,
+          }}
+        />
         <NextIntlClientProvider messages={message}>
-          <RootShell>{children}</RootShell>
+          <ThemeProvider>
+            <RootShell>{children}</RootShell>
+          </ThemeProvider>
           <Toaster position="top-right" expand={false} richColors />
         </NextIntlClientProvider>
       </body>

@@ -2,11 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { KeyRound } from "lucide-react";
+import { KeyRound, LayoutDashboard, FileText } from "lucide-react";
 import type { ProjectDashboardSummary, ProjectLocale, ProjectPaginationMeta, ProjectRecord } from "@/app/types/project";
 import { ProjectEditor } from "@/components/dashboard/ProjectEditor";
 import { ProjectStats } from "@/components/dashboard/ProjectStats";
 import { ProjectTable } from "@/components/dashboard/ProjectTable";
+import { SiteContentManager } from "@/components/dashboard/SiteContentManager";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 
@@ -126,43 +127,38 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
     return projects.find((project) => project.productId === productId) ?? null;
   }, [editProductId, projects]);
 
-  const handleReorder = useCallback(
-    async (items: { productId: number; sortOrder: number }[]) => {
-      setIsReordering(true);
-      try {
-        const response = await fetch("/api/projects/reorder", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items }),
-        });
+  const handleReorder = useCallback(async (items: { productId: number; sortOrder: number }[]) => {
+    setIsReordering(true);
+    try {
+      const response = await fetch("/api/projects/reorder", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
 
-        if (!response.ok) {
-          const payload = await response.json();
-          toast.error(payload.message || "Gagal menyimpan urutan.");
-          return;
-        }
-
-        toast.success("Urutan project berhasil disimpan.");
-      } catch {
-        toast.error("Gagal menyimpan urutan project.");
-      } finally {
-        setIsReordering(false);
+      if (!response.ok) {
+        const payload = await response.json();
+        toast.error(payload.message || "Gagal menyimpan urutan.");
+        return;
       }
-    },
-    []
-  );
+
+      toast.success("Urutan project berhasil disimpan.");
+    } catch {
+      toast.error("Gagal menyimpan urutan project.");
+    } finally {
+      setIsReordering(false);
+    }
+  }, []);
 
   return (
     <main className="flex flex-1 flex-col gap-8">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.02] p-6">
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-white/2 p-6">
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand-500/10 blur-3xl" />
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-xl font-semibold text-white">Welcome back, Admin</h1>
-            <p className="mt-1 text-sm text-white/40">
-              Kelola portfolio project CV kamu di sini. Tambah, edit, urutkan, atau hapus project dengan mudah.
-            </p>
+            <p className="mt-1 text-sm text-white/40">Kelola portfolio project CV kamu di sini. Tambah, edit, urutkan, atau hapus project dengan mudah.</p>
           </div>
           <Badge variant="outline" className="flex items-center gap-1.5 border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/50">
             <KeyRound className="h-3 w-3" />
@@ -171,37 +167,34 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
         </div>
       </div>
 
+      {/* Section Navigation */}
+      <div className="flex gap-2 border-b border-white/10 pb-2">
+        <a href="#overview" className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-white/50 hover:text-white hover:bg-white/5 transition-colors">
+          <LayoutDashboard className="h-4 w-4" />
+          Overview
+        </a>
+        <a href="#projects" className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-white/50 hover:text-white hover:bg-white/5 transition-colors">
+          <FileText className="h-4 w-4" />
+          Projects
+        </a>
+        <a href="#content-editor" className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-white/50 hover:text-white hover:bg-white/5 transition-colors">
+          <LayoutDashboard className="h-4 w-4" />
+          Content
+        </a>
+      </div>
+
       {/* Stats */}
-      <ProjectStats
-        totalProjects={summary.totalProjects}
-        internalProjects={summary.internalProjects}
-        publicProjects={summary.publicProjects}
-        totalSkills={summary.totalSkills}
-        totalCategories={summary.totalCategories}
-      />
+      <ProjectStats totalProjects={summary.totalProjects} internalProjects={summary.internalProjects} publicProjects={summary.publicProjects} totalSkills={summary.totalSkills} totalCategories={summary.totalCategories} />
 
       {/* Error & Table */}
-      {error && (
-        <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
-          {error}
-        </div>
-      )}
+      {error && <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">{error}</div>}
 
-      <ProjectTable
-        locale={locale}
-        projects={projects}
-        pagination={pagination}
-        isLoading={isLoading}
-        onDeleted={refetchProjects}
-        onReorder={handleReorder}
-        isReordering={isReordering}
-      />
+      <ProjectTable locale={locale} projects={projects} pagination={pagination} isLoading={isLoading} onDeleted={refetchProjects} onReorder={handleReorder} isReordering={isReordering} />
 
-      <ProjectEditor
-        project={editingProject}
-        isOpen={isAdding || editingProject !== null}
-        onSaved={refetchProjects}
-      />
+      <ProjectEditor project={editingProject} isOpen={isAdding || editingProject !== null} onSaved={refetchProjects} />
+
+      {/* Site Content Editor */}
+      <SiteContentManager locale={locale} />
     </main>
   );
 }

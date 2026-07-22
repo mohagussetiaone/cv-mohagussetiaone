@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
@@ -9,7 +10,8 @@ import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { useSiteContent, getLocalizedContent } from "@/hooks/use-site-content";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -23,8 +25,20 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-const Contact = () => {
+type ContactProps = {
+  locale?: string;
+};
+
+const Contact = ({ locale: propLocale }: ContactProps) => {
+  const locale = propLocale ?? useLocale();
   const t = useTranslations("Contact");
+  const content = useSiteContent("contact", locale);
+
+  const t2 = useMemo(() => {
+    const get = (key: string) => getLocalizedContent(content, locale, key) ?? t(key);
+    return get;
+  }, [content, locale, t]);
+
   // Use the useForm hook with the schema
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -39,7 +53,7 @@ const Contact = () => {
     <div className="py-10 md:py-20 px-4 md:px-20" id="contact">
       <div className="flex justify-start">
         <div className="inline-block border-2 border-brand-500 p-2 rounded-tl-xl rounded-br-xl mb-8">
-          <h1 className="text-2xl font-bold text-brand-500 px-4">{t("title")}</h1>
+          <h1 className="text-2xl font-bold text-brand-500 px-4">{t2("title")}</h1>
         </div>
       </div>
       <Form {...form}>
@@ -50,7 +64,7 @@ const Contact = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-white">{t("title_form_1")}</FormLabel>
+                  <FormLabel className="text-white">{t2("title_form_1")}</FormLabel>
                   <FormControl>
                     <Input {...field} className="text-white border-white bg-black rounded-lg" placeholder="John Doe" />
                   </FormControl>
@@ -63,7 +77,7 @@ const Contact = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-white">{t("title_form_2")}</FormLabel>
+                  <FormLabel className="text-white">{t2("title_form_2")}</FormLabel>
                   <FormControl>
                     <Input {...field} className="text-white border-white bg-black rounded-lg" placeholder="jondoe@example.com" />
                   </FormControl>
@@ -77,7 +91,7 @@ const Contact = () => {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white">{t("title_form_3")}</FormLabel>
+                <FormLabel className="text-white">{t2("title_form_3")}</FormLabel>
                 <FormControl>
                   <Input {...field} type="message" className="text-white border-white bg-black rounded-lg" placeholder="I Think You Can Follow me" />
                 </FormControl>
@@ -87,7 +101,7 @@ const Contact = () => {
           />
           <div className="flex justify-end py-4 md:py-8">
             <Button type="submit" size={"lg"} className="bg-brand-500 hover:bg-brand-500/60 rounded-xl text-black">
-              {t("submit")}
+              {t2("submit")}
               <Send className="ml-2 h-4 w-4" />
             </Button>
           </div>

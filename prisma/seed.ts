@@ -326,7 +326,137 @@ async function main() {
   }
 }
 
+// ──────────────────────────────────────────────
+// Site Content Seed
+// ──────────────────────────────────────────────
+
+const siteContentData: { section: string; key: string; locale: string; value: string; sortOrder: number }[] = [
+  // ── Banner (localized) ──
+  { section: "banner", key: "greeting", locale: "id", value: "Halo", sortOrder: 1 },
+  { section: "banner", key: "greeting", locale: "en", value: "Hello", sortOrder: 1 },
+  { section: "banner", key: "name", locale: "id", value: "Nama Saya Moh Agus Setiawan", sortOrder: 2 },
+  { section: "banner", key: "name", locale: "en", value: "My Name is Moh Agus Setiawan", sortOrder: 2 },
+  {
+    section: "banner", key: "description", locale: "id",
+    value: "Frontend Developer dengan pengalaman 2 tahun membangun aplikasi web interaktif menggunakan React.js dan Tailwind CSS. Berhasil mengembangkan dan mengoptimalkan antarmuka yang responsif dan ramah pengguna, termasuk proyek yang meningkatkan user engagement hingga 30%. Berfokus pada penerapan teknologi modern untuk menciptakan solusi bisnis yang efektif dan memberikan pengalaman pengguna yang optimal.",
+    sortOrder: 3,
+  },
+  {
+    section: "banner", key: "description", locale: "en",
+    value: "Frontend Developer with 2 years of experience building interactive web applications using React.js and Tailwind CSS. Developing and optimizing responsive and user-friendly interfaces, including projects that increased user engagement by up to 30%. Focused on applying modern technologies to create effective business solutions and deliver optimal user experiences.",
+    sortOrder: 3,
+  },
+
+  // ── Banner (non-localized) ──
+  { section: "banner", key: "email", locale: "", value: "mohagussetiaone@gmail.com", sortOrder: 10 },
+  { section: "banner", key: "address", locale: "", value: "Menteng dalam, Kec tebet, Kota Jakarta Selatan", sortOrder: 11 },
+  { section: "banner", key: "jobTitle", locale: "", value: "Front End React Developer", sortOrder: 12 },
+  { section: "banner", key: "websiteUrl", locale: "", value: "https://mohagussetiaone.vercel.app", sortOrder: 13 },
+  { section: "banner", key: "whatsappNumber", locale: "", value: "6287885159098", sortOrder: 14 },
+  { section: "banner", key: "yearsExperience", locale: "", value: "2+", sortOrder: 15 },
+  { section: "banner", key: "programmingLanguages", locale: "", value: "2", sortOrder: 16 },
+  { section: "banner", key: "developmentProjects", locale: "", value: "8+", sortOrder: 17 },
+  { section: "banner", key: "cvFileUrl", locale: "", value: "/CV_2026021211100687.pdf", sortOrder: 18 },
+  { section: "banner", key: "bannerImage", locale: "", value: "/assets/image/profile/mohagus.jpeg", sortOrder: 19 },
+  { section: "banner", key: "letsTalk", locale: "id", value: "Mari Mengobrol", sortOrder: 5 },
+  { section: "banner", key: "letsTalk", locale: "en", value: "Let's Talk", sortOrder: 5 },
+  { section: "banner", key: "years", locale: "id", value: "Tahun", sortOrder: 6 },
+  { section: "banner", key: "years", locale: "en", value: "Years", sortOrder: 6 },
+  { section: "banner", key: "experience", locale: "id", value: "Pengalaman", sortOrder: 7 },
+  { section: "banner", key: "experience", locale: "en", value: "Experience", sortOrder: 7 },
+  { section: "banner", key: "programming", locale: "id", value: "Bahasa", sortOrder: 8 },
+  { section: "banner", key: "programming", locale: "en", value: "Programming", sortOrder: 8 },
+  { section: "banner", key: "language", locale: "id", value: "Pemrograman", sortOrder: 9 },
+  { section: "banner", key: "language", locale: "en", value: "Language", sortOrder: 9 },
+  { section: "banner", key: "development", locale: "id", value: "Pengembangan", sortOrder: 10 },
+  { section: "banner", key: "development", locale: "en", value: "Development", sortOrder: 10 },
+  { section: "banner", key: "project", locale: "id", value: "Project", sortOrder: 11 },
+  { section: "banner", key: "project", locale: "en", value: "Project", sortOrder: 11 },
+
+  // ── About (localized) ──
+  { section: "about", key: "title", locale: "id", value: "Tentang Saya", sortOrder: 1 },
+  { section: "about", key: "title", locale: "en", value: "About Me", sortOrder: 1 },
+  {
+    section: "about", key: "description", locale: "id",
+    value: "Frontend Developer dengan pengalaman membangun aplikasi web responsif dan berkinerja tinggi menggunakan HTML, CSS, JavaScript, dan React. Saya mengutamakan penerapan praktik pengembangan terbaik untuk menghasilkan kode yang bersih, terstruktur, mudah dipelihara, dan siap untuk skala lebih besar.\n\nDalam pengalaman profesional saya, saya telah berkontribusi pada pengembangan dan optimalisasi antarmuka pengguna yang secara langsung meningkatkan kinerja aplikasi serta kualitas pengalaman pengguna.",
+    sortOrder: 2,
+  },
+  {
+    section: "about", key: "description", locale: "en",
+    value: "A Frontend Developer with experience building responsive and high-performance web applications using HTML, CSS, JavaScript, and React. I prioritize the implementation of best development practices to produce clean, structured, maintainable, and scalable code.\n\nIn my professional experience,",
+    sortOrder: 2,
+  },
+  {
+    section: "about", key: "description_1", locale: "id",
+    value: "Saya memiliki kemampuan untuk bekerja secara kolaboratif dalam tim lintas fungsi, beradaptasi dengan cepat terhadap teknologi baru, dan menjaga fokus pada penyelesaian masalah dengan solusi yang efektif.\n\nDi luar pekerjaan, saya aktif memperdalam pengetahuan di bidang pengembangan web, menjaga kebugaran melalui olahraga bulu tangkis, dan mengeksplorasi tantangan baru yang memperluas perspektif serta keterampilan saya.",
+    sortOrder: 3,
+  },
+  {
+    section: "about", key: "description_1", locale: "en",
+    value: "I have contributed to the development and optimization of user interfaces that directly improve application performance and the quality of the user experience. I have the ability to work collaboratively in cross-functional teams, adapt quickly to new technologies, and maintain focus on solving problems with effective solutions.\n\nOutside of work, I actively deepen my knowledge in the field of web development, maintain fitness through badminton, and explore new challenges that broaden my perspective and skills.",
+    sortOrder: 3,
+  },
+
+  // ── Skills (localized) ──
+  { section: "skills", key: "title", locale: "id", value: "Ketrampilan", sortOrder: 1 },
+  { section: "skills", key: "title", locale: "en", value: "Skills", sortOrder: 1 },
+  { section: "skills", key: "description", locale: "id", value: "Saya berusaha untuk tidak pernah berhenti belajar dan berkembang", sortOrder: 2 },
+  { section: "skills", key: "description", locale: "en", value: "I am striving to never stop learning and improving", sortOrder: 2 },
+
+  // ── Skills items (stored as JSON array) ──
+  {
+    section: "skills", key: "items", locale: "",
+    value: JSON.stringify([
+      { name: "HTML", image: "/assets/image/skills/html5.png", bgColor: "#E54F26", textColor: "#E54F26" },
+      { name: "CSS", image: "/assets/image/skills/css.png", bgColor: "#0C73B8", textColor: "#0C73B8" },
+      { name: "JAVASCRIPT", image: "/assets/image/skills/js.png", bgColor: "#E7A020", textColor: "#E7A020" },
+      { name: "REACT JS", image: "/assets/image/skills/react.png", bgColor: "#28A9E0", textColor: "#28A9E0" },
+    ]),
+    sortOrder: 3,
+  },
+
+  // ── Contact (localized) ──
+  { section: "contact", key: "title", locale: "id", value: "Kirim Saya Pesan", sortOrder: 1 },
+  { section: "contact", key: "title", locale: "en", value: "Send Me A Message", sortOrder: 1 },
+  { section: "contact", key: "title_form_1", locale: "id", value: "Nama Anda", sortOrder: 2 },
+  { section: "contact", key: "title_form_1", locale: "en", value: "Your Name", sortOrder: 2 },
+  { section: "contact", key: "title_form_2", locale: "id", value: "Email Anda", sortOrder: 3 },
+  { section: "contact", key: "title_form_2", locale: "en", value: "Your Email", sortOrder: 3 },
+  { section: "contact", key: "title_form_3", locale: "id", value: "Pesan Anda", sortOrder: 4 },
+  { section: "contact", key: "title_form_3", locale: "en", value: "Your Message", sortOrder: 4 },
+  { section: "contact", key: "submit", locale: "id", value: "Kirim", sortOrder: 5 },
+  { section: "contact", key: "submit", locale: "en", value: "Submit", sortOrder: 5 },
+
+  // ── Navbar (non-localized) ──
+  { section: "navbar", key: "brandName", locale: "", value: "Moh Agus Setiawan", sortOrder: 1 },
+  { section: "navbar", key: "logoImage", locale: "", value: "/assets/image/logo/mohagus.jpg", sortOrder: 2 },
+  { section: "navbar", key: "instagramUrl", locale: "", value: "https://www.instagram.com/mohagussetiaone", sortOrder: 3 },
+  { section: "navbar", key: "githubUrl", locale: "", value: "https://github.com/mohagussetiaone", sortOrder: 4 },
+  { section: "navbar", key: "linkedinUrl", locale: "", value: "https://www.linkedin.com/in/moh-agus-setiawan-464960167/", sortOrder: 5 },
+];
+
+async function seedSiteContent() {
+  for (const item of siteContentData) {
+    await prisma.siteContent.upsert({
+      where: {
+        section_key_locale: {
+          section: item.section,
+          key: item.key,
+          locale: item.locale,
+        },
+      },
+      create: item,
+      update: {
+        value: item.value,
+        sortOrder: item.sortOrder,
+      },
+    });
+  }
+  console.log(`  ✓ ${siteContentData.length} site content entries seeded`);
+}
+
 main()
+  .then(seedSiteContent)
   .catch((error) => {
     console.error(error);
     process.exit(1);

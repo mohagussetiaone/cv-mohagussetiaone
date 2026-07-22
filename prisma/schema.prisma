@@ -48,3 +48,16 @@ model Skill {
   name     String    @unique
   projects Project[] @relation("ProjectSkills")
 }
+
+model SiteContent {
+  id        Int      @id @default(autoincrement())
+  section   String   // e.g., "banner", "about", "skills", "contact", "navbar"
+  key       String   // e.g., "greeting", "description", "email"
+  locale    String   @default("") // "id", "en", or "" for non-localized
+  value     String   // text or JSON for complex data
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([section, key, locale])
+}
