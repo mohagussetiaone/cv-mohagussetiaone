@@ -63,7 +63,7 @@ const Banner = ({ locale: propLocale }: BannerProps) => {
   const cvFileUrl = t2.getGlobal("cvFileUrl") ?? "/CV_2026021211100687.pdf";
 
   const profileCard = (
-    <div className={`${isNeo ? "border-[3px] border-black bg-yellow-400 p-6 shadow-[6px_6px_0px_0px_black] rounded-tl-[8rem] rounded-br-[8rem]" : isRetro ? "border border-gray-300 p-6 rounded-tl-[8rem] rounded-br-[8rem]" : "border border-gray-500 p-6 rounded-tl-[8rem] rounded-br-[8rem]"}`}>
+    <div className={`${isNeo ? "border-[3px] border-black bg-amber-400 p-6 shadow-[6px_6px_0px_0px_black] rounded-tl-[8rem] rounded-br-[8rem]" : isRetro ? "border border-gray-300 p-6 rounded-tl-[8rem] rounded-br-[8rem]" : "border border-gray-500 p-6 rounded-tl-[8rem] rounded-br-[8rem]"}`}>
       <div className="flex flex-col items-center justify-center mx-auto py-6">
         <Image src={MohAgusImage} width={220} height={180} alt="BannerImage.jpg" className="object-contain rounded-full" />
       </div>
@@ -85,7 +85,7 @@ const Banner = ({ locale: propLocale }: BannerProps) => {
           <span className="text-white text-sm break-all">{websiteUrl}</span>
         </div>
       </div>
-      <Button onClick={() => handleDownload(cvFileUrl)} className={`${isNeo ? "border-[3px] border-black bg-yellow-400 text-black shadow-[4px_4px_0px_0px_black] hover:bg-yellow-300" : isRetro ? "border border-gray-300 bg-white text-black hover:bg-gray-100" : "bg-white hover:bg-gray-300 text-black"} p-4 rounded-full text-lg my-4`}>
+      <Button onClick={() => handleDownload(cvFileUrl)} className={`${isNeo ? "border-[3px] border-black bg-amber-400 text-black shadow-[4px_4px_0px_0px_black] hover:brightness-110" : isRetro ? "border border-gray-300 bg-white text-black hover:bg-gray-100" : "bg-white hover:bg-gray-300 text-black"} p-4 rounded-full text-lg my-4`}>
         Download CV
         <Download className="w-6 h-6 ml-2" />
       </Button>
@@ -114,13 +114,13 @@ const Banner = ({ locale: propLocale }: BannerProps) => {
               <div className="py-4 text-brand-500">
                 <Link href={`https://wa.me/${whatsappNumber}`} className="flex gap-2 text-3xl" target="_blank">
                   {t2.get("lets_talk")}
-                  <span className={`flex flex-col items-center justify-center rounded-full px-2 ${isNeo ? "border-2 border-black bg-yellow-400" : isRetro ? "bg-white border border-gray-300" : "bg-black"}`}>
+                  <span className={`flex flex-col items-center justify-center rounded-full px-2 ${isNeo ? "border-2 border-black bg-amber-400" : isRetro ? "bg-white border border-gray-300" : "bg-black"}`}>
                     <Phone className="w-6 h-6" />
                   </span>
                 </Link>
               </div>
             </div>
-            <div className={`flex w-full md:w-auto flex-col gap-8 md:gap-10 items-start md:items-center justify-start h-auto self-center p-6 ${isNeo ? "border-2 border-black bg-yellow-400" : isRetro ? "bg-white border border-gray-300" : "bg-black rounded-3xl"}`}>
+            <div className={`flex w-full md:w-auto flex-col gap-8 md:gap-10 items-start md:items-center justify-start h-auto self-center p-6 ${isNeo ? "border-2 border-black bg-amber-400" : isRetro ? "bg-white border border-gray-300" : "bg-black rounded-3xl"}`}>
               <div className="flex gap-3">
                 <div className="h-full flex justify-center items-center">
                   <h1 className="text-4xl text-brand-500">{yearsExperience}</h1>

@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useTranslations, useLocale } from "next-intl";
 import { useSiteContent, getLocalizedContent } from "@/hooks/use-site-content";
+import { useTheme } from "@/components/theme/ThemeProvider";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -33,6 +35,7 @@ const Contact = ({ locale: propLocale }: ContactProps) => {
   const locale = propLocale ?? useLocale();
   const t = useTranslations("Contact");
   const content = useSiteContent("contact", locale);
+  const { theme } = useTheme();
 
   const t2 = useMemo(() => {
     const get = (key: string) => getLocalizedContent(content, locale, key) ?? t(key);
@@ -52,8 +55,18 @@ const Contact = ({ locale: propLocale }: ContactProps) => {
   return (
     <div className="py-10 md:py-20 px-4 md:px-20" id="contact">
       <div className="flex justify-start">
-        <div className="inline-block border-2 border-brand-500 p-2 rounded-tl-xl rounded-br-xl mb-8">
-          <h1 className="text-2xl font-bold text-brand-500 px-4">{t2("title")}</h1>
+        <div className={cn(
+          "inline-block border-2 p-2 rounded-tl-xl rounded-br-xl mb-8",
+          theme === "neobrutalism" && "border-amber-400",
+          theme === "retro" && "border-[#6699ff]",
+          theme !== "neobrutalism" && theme !== "retro" && "border-brand-500",
+        )}>
+          <h1 className={cn(
+            "text-2xl font-bold px-4",
+            theme === "neobrutalism" && "text-amber-400",
+            theme === "retro" && "text-[#6699ff]",
+            theme !== "neobrutalism" && theme !== "retro" && "text-brand-500",
+          )}>{t2("title")}</h1>
         </div>
       </div>
       <Form {...form}>
@@ -100,7 +113,16 @@ const Contact = ({ locale: propLocale }: ContactProps) => {
             )}
           />
           <div className="flex justify-end py-4 md:py-8">
-            <Button type="submit" size={"lg"} className="bg-brand-500 hover:bg-brand-500/60 rounded-xl text-black">
+            <Button
+              type="submit"
+              size={"lg"}
+              className={cn(
+                "rounded-xl text-black",
+                theme === "neobrutalism" && "bg-amber-400 hover:bg-amber-400/80 border-[2px] border-black shadow-[3px_3px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] active:shadow-none active:translate-x-0.5 active:translate-y-0.5",
+                theme === "retro" && "bg-[#6699ff] hover:bg-[#6699ff]/80 text-white",
+                theme !== "neobrutalism" && theme !== "retro" && "bg-brand-500 hover:bg-brand-500/60",
+              )}
+            >
               {t2("submit")}
               <Send className="ml-2 h-4 w-4" />
             </Button>

@@ -40,14 +40,14 @@ export function ThemeSwitcher() {
   }, [open]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-100">
+    <div className="fixed bottom-28 md:bottom-6 right-6 z-100">
       {/* Floating button */}
       <button
         type="button"
         onClick={() => setOpen(!open)}
         className={cn(
           "group flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300",
-          isNeo && "border-[3px] border-black bg-yellow-400 text-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] hover:-translate-y-0.5 active:shadow-none active:translate-x-0 active:translate-y-0",
+          isNeo && "border-[3px] border-black bg-amber-400 text-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] hover:-translate-y-0.5 active:shadow-none active:translate-x-0 active:translate-y-0",
           isRetro && "border-2 border-[#6699ff] bg-[#1a1a2e] text-[#6699ff]",
           !isNeo && !isRetro && "border border-white/20 bg-black/60 text-white/80 backdrop-blur-md hover:bg-white/20 hover:text-white",
         )}
@@ -65,6 +65,7 @@ export function ThemeSwitcher() {
           <div
             className={cn(
               "absolute bottom-20 right-0 z-50 w-72 overflow-hidden rounded-2xl border p-2 shadow-lg",
+              // Panel always opens upward now, since the button is positioned above the floating dock
               isNeo && "border-[3px] border-black bg-[#1a1a1a] shadow-[6px_6px_0px_0px_black]",
               isRetro && "border-2 border-[#6699ff] bg-[#1a1a2e]",
               !isNeo && !isRetro && "border border-white/10 bg-[#1a1a2e]/95 backdrop-blur-xl",
@@ -72,8 +73,8 @@ export function ThemeSwitcher() {
           >
             {/* Header */}
             <div className="px-3 py-3">
-              <h3 className={cn("text-sm font-semibold", isNeo && "text-yellow-400", isRetro && "text-[#6699ff]", !isNeo && !isRetro && "text-white")}>Theme</h3>
-              <p className={cn("mt-0.5 text-xs", isNeo && "text-white/60", isRetro && "text-white/60", !isNeo && !isRetro && "text-white/40")}>Pilih tampilan halaman</p>
+              <h3 className={cn("text-sm font-semibold", isNeo && "text-amber-400", isRetro && "text-[#6699ff]", !isNeo && !isRetro && "text-white")}>Theme</h3>
+              <p className={cn("mt-0.5 text-xs", isNeo && "text-neutral-400", isRetro && "text-neutral-400", !isNeo && !isRetro && "text-white/40")}>Pilih tampilan halaman</p>
             </div>
 
             {/* Theme options */}
@@ -90,10 +91,10 @@ export function ThemeSwitcher() {
                     }}
                     className={cn(
                       "flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm transition-all",
-                      isNeo && isActive && "border-2 border-yellow-400 bg-yellow-400/10 text-yellow-400",
-                      isNeo && !isActive && "border-2 border-transparent text-white/60 hover:bg-white/5 hover:text-white",
+                      isNeo && isActive && "border-2 border-amber-400 bg-amber-400/10 text-amber-400",
+                      isNeo && !isActive && "border-2 border-transparent text-neutral-400 hover:bg-white/5 hover:text-amber-400",
                       isRetro && isActive && "border-2 border-[#6699ff] bg-[#6699ff]/10 text-[#6699ff]",
-                      isRetro && !isActive && "border-2 border-transparent text-white/60 hover:bg-white/5 hover:text-white",
+                      isRetro && !isActive && "border-2 border-transparent text-neutral-400 hover:bg-white/5 hover:text-[#6699ff]",
                       !isNeo && !isRetro && isActive && "border border-brand-500/30 bg-brand-500/10 text-brand-500",
                       !isNeo && !isRetro && !isActive && "border border-transparent text-white/60 hover:bg-white/5 hover:text-white",
                     )}
@@ -103,17 +104,17 @@ export function ThemeSwitcher() {
                         "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
                         key === "default" && "bg-zinc-800 text-teal-400",
                         key === "retro" && "bg-[#1a1a2e] text-[#6699ff] border border-[#6699ff]",
-                        key === "neobrutalism" && "bg-yellow-400 text-black border border-black font-bold",
+                        key === "neobrutalism" && "bg-amber-400 text-black border border-black font-bold",
                       )}
                     >
                       {detail.icon}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <div className={cn("font-medium", isActive && (isNeo ? "text-yellow-400" : isRetro ? "text-[#6699ff]" : "text-brand-500"), !isActive && "text-white")}>{detail.label}</div>
-                      <div className={cn("mt-0.5 text-xs", isNeo && "text-white/40", isRetro && "text-white/40", !isNeo && !isRetro && "text-white/30")}>{detail.description}</div>
+                      <div className={cn("font-medium", isActive && (isNeo ? "text-amber-400" : isRetro ? "text-[#6699ff]" : "text-brand-500"), isNeo && !isActive && "text-neutral-300", isRetro && !isActive && "text-neutral-300", !isNeo && !isRetro && !isActive && "text-white")}>{detail.label}</div>
+                      <div className={cn("mt-0.5 text-xs", isNeo && "text-neutral-500", isRetro && "text-neutral-500", !isNeo && !isRetro && "text-white/30")}>{detail.description}</div>
                     </div>
                     {isActive && (
-                      <span className={cn("flex h-5 w-5 shrink-0 items-center justify-center rounded-full", isNeo && "bg-yellow-400 text-black", isRetro && "bg-[#6699ff] text-white", !isNeo && !isRetro && "bg-brand-500 text-black")}>
+                      <span className={cn("flex h-5 w-5 shrink-0 items-center justify-center rounded-full", isNeo && "bg-amber-400 text-black", isRetro && "bg-[#6699ff] text-white", !isNeo && !isRetro && "bg-brand-500 text-black")}>
                         <Check className="h-3 w-3" />
                       </span>
                     )}

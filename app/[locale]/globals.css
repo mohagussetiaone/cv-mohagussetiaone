@@ -127,10 +127,10 @@
 }
 
 /* ═══════════════════════════════════════════════
-   THEME: Neobrutalism — light bg, warm gold accents, thick borders, black text
+   THEME: Neobrutalism — light bg, yellow accents, thick borders, black text
    ═══════════════════════════════════════════════ */
 [data-theme="neobrutalism"] {
-  --brand: #D4A843;
+  --brand: #fbbf24;
   --radius: 0px;
   --background: 0 0% 96%;
   --foreground: 0 0% 0%;
@@ -281,7 +281,7 @@ html:not([data-theme]) body {
   border-color: #6699ff !important;
 }
 
-/* Neobrutalism — light bg, gold accents, thick borders, black text */
+/* Neobrutalism — light bg, amber accents, thick borders, black text */
 [data-theme="neobrutalism"] body,
 [data-theme="neobrutalism"] .theme-body {
   background-color: #F5F5F5;
@@ -290,7 +290,7 @@ html:not([data-theme]) body {
 
 [data-theme="neobrutalism"] .text-brand-500,
 [data-theme="neobrutalism"] .text-brand-400 {
-  color: #D4A843 !important;
+  color: #fbbf24 !important;
 }
 
 /* ── Neo text & bg overrides for light mode ── */
@@ -304,7 +304,7 @@ html:not([data-theme]) body {
   background-color: #fbbf24 !important;
   box-shadow: 5px 5px 0px 0px #000000 !important;
 }
-[data-theme="neobrutalism"] section#home .bg-yellow-400 .text-brand-500 {
+[data-theme="neobrutalism"] section#home .bg-amber-400 .text-brand-500 {
   color: #000000 !important;
 }
 [data-theme="neobrutalism"] .text-gray-100,
@@ -329,14 +329,14 @@ html:not([data-theme]) body {
   background-color: #fbbf24 !important;
 }
 [data-theme="neobrutalism"] .dark\:border-gray-700 {
-  border-color: #D4A843 !important;
+  border-color: #fbbf24 !important;
 }
 
 [data-theme="neobrutalism"] .border-white\/10,
 [data-theme="neobrutalism"] .border-white\/5,
 [data-theme="neobrutalism"] .border-white\/\[0\.03\],
 [data-theme="neobrutalism"] .border-white\/\[0\.05\] {
-  border-color: #D4A843 !important;
+  border-color: #fbbf24 !important;
   border-width: 3px !important;
 }
 
@@ -344,11 +344,11 @@ html:not([data-theme]) body {
 [data-theme="neobrutalism"] .bg-white\/\[0\.03\],
 [data-theme="neobrutalism"] .bg-white\/\[0\.05\] {
   background-color: #f0f0f0 !important;
-  border: 3px solid #D4A843 !important;
+  border: 3px solid #fbbf24 !important;
 }
 
 [data-theme="neobrutalism"] .bg-brand-500 {
-  background-color: #D4A843 !important;
+  background-color: #fbbf24 !important;
   color: #000000 !important;
   border: 3px solid #000 !important;
 }
@@ -361,14 +361,14 @@ html:not([data-theme]) body {
 [data-theme="neobrutalism"] .bg-amber-300,
 [data-theme="neobrutalism"] .bg-amber-400,
 [data-theme="neobrutalism"] .bg-amber-500 {
-  background-color: #D4A843 !important;
+  background-color: #fbbf24 !important;
   color: #000000 !important;
   border: 3px solid #000 !important;
 }
 
 [data-theme="neobrutalism"] .text-amber-300,
 [data-theme="neobrutalism"] .text-amber-400 {
-  color: #D4A843 !important;
+  color: #fbbf24 !important;
 }
 
 /* ═══════════════════════════════════════════════
@@ -435,7 +435,7 @@ html:not([data-theme]) body {
 
 /* Title underline in neobrutalism */
 [data-theme="neobrutalism"] .underline {
-  text-decoration-color: #D4A843 !important;
+  text-decoration-color: #fbbf24 !important;
   text-decoration-thickness: 3px !important;
 }
 
@@ -448,7 +448,7 @@ html:not([data-theme]) body {
 
 /* About/Contact section title border */
 [data-theme="neobrutalism"] .border-brand-500 {
-  border-color: #D4A843 !important;
+  border-color: #fbbf24 !important;
   border-width: 3px !important;
 }
 

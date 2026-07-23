@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { useSiteContent, getLocalizedContent } from "@/hooks/use-site-content";
@@ -42,13 +42,7 @@ const Skills = ({ locale: propLocale }: SkillsProps) => {
         {skillData.map((skill, index) => (
           <div key={index} className="flex flex-col justify-center items-center col-span-2 md:col-span-1 gap-4">
             <div className="p-8 rounded-full" style={{ backgroundColor: skill.bgColor }}>
-              <Image
-                src={skill.image}
-                alt={skill.name}
-                width={30}
-                height={30}
-                style={{ width: "30px", height: "auto" }}
-              />
+              <Image src={skill.image} alt={skill.name} width={30} height={30} style={{ width: "30px", height: "auto" }} />
             </div>
             <h2 className="text-xl text-white">{skill.name}</h2>
           </div>

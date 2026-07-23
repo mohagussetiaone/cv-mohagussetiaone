@@ -5,27 +5,27 @@ export default function NavHome() {
   const links = [
     {
       title: "Home",
-      icon: <House className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: <House className="h-full w-full" />,
       href: "#home",
     },
     {
       title: "About",
-      icon: <User className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: <User className="h-full w-full" />,
       href: "#about",
     },
     {
       title: "Skills",
-      icon: <Rocket className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: <Rocket className="h-full w-full" />,
       href: "#skills",
     },
     {
       title: "Portfolio",
-      icon: <BookmarkCheck className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: <BookmarkCheck className="h-full w-full" />,
       href: "#portfolio",
     },
     {
       title: "Contact",
-      icon: <ContactRound className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      icon: <ContactRound className="h-full w-full" />,
       href: "#contact",
     },
   ];
