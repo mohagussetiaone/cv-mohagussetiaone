@@ -1,4 +1,4 @@
-export type SiteContentSection = "banner" | "about" | "skills" | "contact" | "navbar";
+export type SiteContentSection = "banner" | "about" | "skills" | "contact" | "navbar" | "works" | "footer" | "navhome" | "certificates" | "education";
 
 export interface SiteContentRecord {
   id: number;
@@ -21,4 +21,43 @@ export interface SkillItem {
   image: string;
   bgColor: string;
   textColor: string;
+}
+
+export interface WorkExperience {
+  id: string;
+  company: string;
+  position: string;
+  location: string;
+  type: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  logo?: string;
+}
+
+export interface Education {
+  id: string;
+  school: string;
+  degree: string;
+  field: string;
+  startDate: string;
+  endDate: string;
+  description?: string;
+  logo?: string;
+}
+
+export interface Certification {
+  id: string;
+  name: string;
+  organization: string;
+  issueDate: string;
+  expiryDate?: string;
+  credentialUrl?: string;
+  logo?: string;
+}
+
+export interface WorksData {
+  experiences: WorkExperience[];
+  education: Education[];
+  certifications: Certification[];
 }

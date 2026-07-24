@@ -20,7 +20,7 @@ export function clearSiteContentCache() {
 export function useSiteContent(section: string, locale: string = "id"): SiteContentState {
   const [refreshKey, setRefreshKey] = useState(0);
   const [state, setState] = useState<SiteContentState>(() => {
-    const key = `${section}:${refreshKey}`;
+    const key = `${section}:${locale}:${refreshKey}`;
     return cache.get(key) ?? {
       localized: {},
       global: {},
@@ -30,7 +30,7 @@ export function useSiteContent(section: string, locale: string = "id"): SiteCont
   });
 
   useEffect(() => {
-    const key = `${section}:${refreshKey}`;
+    const key = `${section}:${locale}:${refreshKey}`;
 
     // If already cached, skip fetch
     if (cache.has(key) && !cache.get(key)!.isLoading) {

@@ -184,6 +184,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Default Dashboard sidebar active item ── */
+[data-theme="default"] [data-sidebar="sidebar"] [data-sidebar="menu-button"][data-active="true"] {
+  background-color: rgba(18, 247, 214, 0.12) !important;
+  border-left: 3px solid #12F7D6 !important;
+  color: #12F7D6 !important;
+  font-weight: 600 !important;
+}
+
 /* SSR safeguard: default theme until JS hydrates */
 html:not([data-theme]) body {
   background-color: #292f36;
@@ -260,9 +268,153 @@ html:not([data-theme]) body {
 [data-theme="retro"] .text-white {
   color: #000000 !important;
 }
+[data-theme="retro"] .text-white\/5 { color: rgba(0,0,0,0.08) !important; }
+[data-theme="retro"] .text-white\/10 { color: rgba(0,0,0,0.15) !important; }
+[data-theme="retro"] .text-white\/15 { color: rgba(0,0,0,0.22) !important; }
+[data-theme="retro"] .text-white\/20 { color: rgba(0,0,0,0.28) !important; }
+[data-theme="retro"] .text-white\/30 { color: rgba(0,0,0,0.38) !important; }
+[data-theme="retro"] .text-white\/35 { color: rgba(0,0,0,0.42) !important; }
+[data-theme="retro"] .text-white\/40 { color: rgba(0,0,0,0.48) !important; }
+[data-theme="retro"] .text-white\/50 { color: rgba(0,0,0,0.55) !important; }
+[data-theme="retro"] .text-white\/60 { color: rgba(0,0,0,0.65) !important; }
+[data-theme="retro"] .text-white\/70 { color: rgba(0,0,0,0.75) !important; }
+[data-theme="retro"] .text-white\/80 { color: rgba(0,0,0,0.85) !important; }
+[data-theme="retro"] .text-white\/90 { color: rgba(0,0,0,0.93) !important; }
+[data-theme="retro"] .text-white\/\[0\.5\],
+[data-theme="retro"] .text-white\/\[0\.6\] { color: rgba(0,0,0,0.7) !important; }
+[data-theme="retro"] .text-white\/\[0\.03\],
+[data-theme="retro"] .text-white\/\[0\.05\] { color: rgba(0,0,0,0.08) !important; }
 [data-theme="retro"] .bg-black,
 [data-theme="retro"] .bg-dark {
   background-color: #ffffff !important;
+}
+
+/* ── Retro Dashboard container ── */
+[data-theme="retro"] .bg-\[\#0a0a0f\]\/80 {
+  background-color: rgba(245, 240, 232, 0.8) !important;
+}
+[data-theme="retro"] .bg-\[\#12121a\] {
+  background-color: #faf6ef !important;
+}
+[data-theme="retro"] .bg-\[\#0a0a0a\] {
+  background-color: #ffffff !important;
+}
+[data-theme="retro"] .bg-\[\#1a1a2e\] {
+  background-color: #f5f0e8 !important;
+}
+[data-theme="retro"] .from-\[\#0a0a0f\] {
+  --tw-gradient-from: #f5f0e8 !important;
+}
+[data-theme="retro"] .via-\[\#0f0f1a\] {
+  --tw-gradient-via: #faf6ef !important;
+}
+[data-theme="retro"] .to-\[\#1a1a2e\] {
+  --tw-gradient-to: #ffffff !important;
+}
+[data-theme="retro"] .bg-black\/40,
+[data-theme="retro"] .bg-black\/50,
+[data-theme="retro"] .bg-black\/60,
+[data-theme="retro"] .bg-black\/80 {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+[data-theme="retro"] .from-white\/5 {
+  --tw-gradient-from: rgba(200, 200, 200, 0.3) !important;
+}
+[data-theme="retro"] .to-white\/2 {
+  --tw-gradient-to: rgba(245, 240, 232, 0.5) !important;
+}
+
+/* ── Retro Dashboard borders & surfaces ── */
+[data-theme="retro"] .border-white\/5,
+[data-theme="retro"] .border-white\/10 {
+  border-color: rgba(102, 153, 255, 0.3) !important;
+}
+[data-theme="retro"] .border-white\/\[0\.06\],
+[data-theme="retro"] .border-white\/\[0\.08\] {
+  border-color: rgba(102, 153, 255, 0.2) !important;
+}
+[data-theme="retro"] .bg-white\/5,
+[data-theme="retro"] .bg-white\/\[0\.03\],
+[data-theme="retro"] .bg-white\/\[0\.05\] {
+  background-color: rgba(245, 240, 232, 0.8) !important;
+  border: 1px solid rgba(102, 153, 255, 0.2) !important;
+}
+[data-theme="retro"] .bg-white\/10 {
+  background-color: rgba(245, 240, 232, 0.9) !important;
+  border: 1px solid rgba(102, 153, 255, 0.3) !important;
+}
+[data-theme="retro"] .bg-white\/\[0\.02\] {
+  background-color: rgba(245, 240, 232, 0.5) !important;
+}
+
+/* ── Retro Dialog & Dropdown ── */
+[data-theme="retro"] .border-white\/15 {
+  border-color: rgba(102, 153, 255, 0.3) !important;
+}
+[data-theme="retro"] .bg-white\/8 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ── Retro Dashboard stats cards (ProjectStats) ── */
+[data-theme="retro"] section#overview > div {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border: 1px solid #6699ff !important;
+}
+[data-theme="retro"] section#overview > div .text-white\/60 {
+  color: #000000 !important;
+}
+[data-theme="retro"] section#overview > div .text-white\/40 {
+  color: rgba(0,0,0,0.55) !important;
+}
+[data-theme="retro"] section#overview > div .text-emerald-400,
+[data-theme="retro"] section#overview > div .text-sky-400,
+[data-theme="retro"] section#overview > div .text-violet-400,
+[data-theme="retro"] section#overview > div .text-rose-400,
+[data-theme="retro"] section#overview > div .text-amber-400 {
+  color: #6699ff !important;
+}
+[data-theme="retro"] section#overview > div .bg-white\/5 {
+  background-color: rgba(102, 153, 255, 0.1) !important;
+}
+
+/* ── Retro Sidebar ── */
+[data-theme="retro"] [data-sidebar="sidebar"] {
+  background-color: #f5f0e8 !important;
+  border-right: 2px solid #6699ff !important;
+}
+[data-theme="retro"] [data-sidebar="sidebar"] .border-sidebar-border,
+[data-theme="retro"] [data-sidebar="sidebar"] [data-sidebar="separator"] {
+  border-color: #6699ff !important;
+}
+[data-theme="retro"] [data-sidebar="sidebar"] .bg-sidebar-accent {
+  background-color: #ede4d4 !important;
+  border: 1px solid #6699ff !important;
+  color: #000000 !important;
+}
+[data-theme="retro"] [data-sidebar="sidebar"] .text-sidebar-foreground {
+  color: #000000 !important;
+}
+[data-theme="retro"] [data-sidebar="sidebar"] .text-sidebar-foreground\/70 {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+[data-theme="retro"] [data-sidebar="sidebar"] [data-sidebar="menu-button"]:hover,
+[data-theme="retro"] [data-sidebar="sidebar"] [data-sidebar="menu-button"]:active,
+[data-theme="retro"] [data-sidebar="sidebar"] [data-sidebar="menu-button"]:focus-visible {
+  background-color: #ede4d4 !important;
+  border: 1px solid #6699ff !important;
+  color: #000000 !important;
+}
+[data-theme="retro"] [data-sidebar="sidebar"] [data-sidebar="menu-button"][data-active="true"] {
+  background-color: #dce6f5 !important;
+  border: 2px solid #6699ff !important;
+  border-left: 4px solid #6699ff !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+[data-theme="retro"] [data-sidebar="sidebar"] [data-sidebar="group-label"] {
+  color: #6699ff !important;
+  font-weight: 700 !important;
 }
 
 /* ── Retro Navbar ── */
@@ -297,6 +449,22 @@ html:not([data-theme]) body {
 [data-theme="neobrutalism"] .text-white {
   color: #000000 !important;
 }
+[data-theme="neobrutalism"] .text-white\/5 { color: rgba(0,0,0,0.08) !important; }
+[data-theme="neobrutalism"] .text-white\/10 { color: rgba(0,0,0,0.15) !important; }
+[data-theme="neobrutalism"] .text-white\/15 { color: rgba(0,0,0,0.22) !important; }
+[data-theme="neobrutalism"] .text-white\/20 { color: rgba(0,0,0,0.28) !important; }
+[data-theme="neobrutalism"] .text-white\/30 { color: rgba(0,0,0,0.38) !important; }
+[data-theme="neobrutalism"] .text-white\/35 { color: rgba(0,0,0,0.42) !important; }
+[data-theme="neobrutalism"] .text-white\/40 { color: rgba(0,0,0,0.48) !important; }
+[data-theme="neobrutalism"] .text-white\/50 { color: rgba(0,0,0,0.55) !important; }
+[data-theme="neobrutalism"] .text-white\/60 { color: rgba(0,0,0,0.65) !important; }
+[data-theme="neobrutalism"] .text-white\/70 { color: rgba(0,0,0,0.75) !important; }
+[data-theme="neobrutalism"] .text-white\/80 { color: rgba(0,0,0,0.85) !important; }
+[data-theme="neobrutalism"] .text-white\/90 { color: rgba(0,0,0,0.93) !important; }
+[data-theme="neobrutalism"] .text-white\/\[0\.5\],
+[data-theme="neobrutalism"] .text-white\/\[0\.6\] { color: rgba(0,0,0,0.7) !important; }
+[data-theme="neobrutalism"] .text-white\/\[0\.03\],
+[data-theme="neobrutalism"] .text-white\/\[0\.05\] { color: rgba(0,0,0,0.08) !important; }
 [data-theme="neobrutalism"] .bg-black {
   background-color: #ffffff !important;
 }
@@ -311,6 +479,133 @@ html:not([data-theme]) body {
 [data-theme="neobrutalism"] .text-neutral-100,
 [data-theme="neobrutalism"] .text-neutral-200 {
   color: #000000 !important;
+}
+
+/* ── Neo Dashboard container ── */
+[data-theme="neobrutalism"] .bg-\[\#0a0a0f\]\/80 {
+  background-color: rgba(245, 245, 245, 0.8) !important;
+}
+[data-theme="neobrutalism"] .bg-\[\#12121a\] {
+  background-color: #f5f5f5 !important;
+}
+[data-theme="neobrutalism"] .bg-\[\#0a0a0a\] {
+  background-color: #ffffff !important;
+}
+[data-theme="neobrutalism"] .bg-\[\#1a1a2e\] {
+  background-color: #f0f0f0 !important;
+}
+[data-theme="neobrutalism"] .from-\[\#0a0a0f\] {
+  --tw-gradient-from: #f5f5f5 !important;
+}
+[data-theme="neobrutalism"] .via-\[\#0f0f1a\] {
+  --tw-gradient-via: #fafafa !important;
+}
+[data-theme="neobrutalism"] .to-\[\#1a1a2e\] {
+  --tw-gradient-to: #ffffff !important;
+}
+[data-theme="neobrutalism"] .bg-black\/40,
+[data-theme="neobrutalism"] .bg-black\/50,
+[data-theme="neobrutalism"] .bg-black\/60,
+[data-theme="neobrutalism"] .bg-black\/80 {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+[data-theme="neobrutalism"] .from-white\/5 {
+  --tw-gradient-from: #fbbf24 !important;
+}
+[data-theme="neobrutalism"] .to-white\/2 {
+  --tw-gradient-to: #fbbf24 !important;
+}
+
+/* ── Neo Dashboard borders & surfaces ── */
+[data-theme="neobrutalism"] .bg-white\/\[0\.02\] {
+  background-color: #fbbf24 !important;
+  border: 3px solid #000000 !important;
+  color: #000000 !important;
+}
+[data-theme="neobrutalism"] .bg-white\/8 {
+  background-color: #fbbf24 !important;
+  border: 3px solid #000000 !important;
+  color: #000000 !important;
+}
+[data-theme="neobrutalism"] .bg-white\/10 {
+  background-color: #fbbf24 !important;
+  border: 3px solid #000000 !important;
+  color: #000000 !important;
+}
+[data-theme="neobrutalism"] .border-white\/15 {
+  border-color: #000000 !important;
+  border-width: 3px !important;
+}
+
+/* ── Neo Dashboard form inputs ── */
+[data-theme="neobrutalism"] .bg-black\/20 {
+  background-color: #fbbf24 !important;
+  border: 3px solid #000000 !important;
+  color: #000000 !important;
+}
+
+/* ── Neo Dashboard stats cards (ProjectStats) ── */
+[data-theme="neobrutalism"] section#overview > div {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px 0px #000000 !important;
+}
+[data-theme="neobrutalism"] section#overview > div .text-white\/60 {
+  color: #000000 !important;
+}
+[data-theme="neobrutalism"] section#overview > div .text-white\/40 {
+  color: rgba(0,0,0,0.55) !important;
+}
+[data-theme="neobrutalism"] section#overview > div .text-emerald-400,
+[data-theme="neobrutalism"] section#overview > div .text-sky-400,
+[data-theme="neobrutalism"] section#overview > div .text-violet-400,
+[data-theme="neobrutalism"] section#overview > div .text-rose-400,
+[data-theme="neobrutalism"] section#overview > div .text-amber-400 {
+  color: #000000 !important;
+}
+[data-theme="neobrutalism"] section#overview > div .bg-white\/5 {
+  display: none !important;
+}
+
+/* ── Neo Sidebar ── */
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] {
+  background-color: #ffffff !important;
+  border-right: 3px solid #000000 !important;
+}
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] .border-sidebar-border,
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] [data-sidebar="separator"] {
+  border-color: #000000 !important;
+}
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] .bg-sidebar-accent {
+  background-color: #f0f0f0 !important;
+  border: 2px solid #000000 !important;
+}
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] .text-sidebar-foreground {
+  color: #000000 !important;
+}
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] .text-sidebar-foreground\/70 {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] [data-sidebar="menu-button"]:hover,
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] [data-sidebar="menu-button"]:active,
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] [data-sidebar="menu-button"]:focus-visible {
+  background-color: #f0f0f0 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0px 0px #000000 !important;
+  color: #000000 !important;
+}
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] [data-sidebar="menu-button"][data-active="true"] {
+  background-color: #fbbf24 !important;
+  border: 3px solid #000000 !important;
+  border-left: 6px solid #000000 !important;
+  box-shadow: 4px 4px 0px 0px #000000 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+[data-theme="neobrutalism"] [data-sidebar="sidebar"] [data-sidebar="group-label"] {
+  color: #fbbf24 !important;
+  font-weight: 700 !important;
 }
 
 /* ── Neo Navbar ── */
@@ -335,16 +630,18 @@ html:not([data-theme]) body {
 [data-theme="neobrutalism"] .border-white\/10,
 [data-theme="neobrutalism"] .border-white\/5,
 [data-theme="neobrutalism"] .border-white\/\[0\.03\],
-[data-theme="neobrutalism"] .border-white\/\[0\.05\] {
-  border-color: #fbbf24 !important;
+[data-theme="neobrutalism"] .border-white\/\[0\.05\],
+[data-theme="neobrutalism"] .border-white\/\[0\.06\],
+[data-theme="neobrutalism"] .border-white\/\[0\.08\] {
+  border-color: #000000 !important;
   border-width: 3px !important;
 }
 
 [data-theme="neobrutalism"] .bg-white\/5,
 [data-theme="neobrutalism"] .bg-white\/\[0\.03\],
 [data-theme="neobrutalism"] .bg-white\/\[0\.05\] {
-  background-color: #f0f0f0 !important;
-  border: 3px solid #fbbf24 !important;
+  background-color: #fbbf24 !important;
+  border: 3px solid #000000 !important;
 }
 
 [data-theme="neobrutalism"] .bg-brand-500 {
@@ -355,7 +652,13 @@ html:not([data-theme]) body {
 
 [data-theme="neobrutalism"] .bg-brand-500\/15,
 [data-theme="neobrutalism"] .bg-brand-500\/5 {
-  background-color: #f5f0d0 !important;
+  background-color: #fbbf24 !important;
+  border: 3px solid #000000 !important;
+  color: #000000 !important;
+}
+[data-theme="neobrutalism"] .bg-brand-500\/15 .text-brand-400,
+[data-theme="neobrutalism"] .bg-brand-500\/5 .text-brand-400 {
+  color: #000000 !important;
 }
 
 [data-theme="neobrutalism"] .bg-amber-300,

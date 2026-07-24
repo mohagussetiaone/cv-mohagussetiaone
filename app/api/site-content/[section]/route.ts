@@ -29,7 +29,7 @@ export async function PUT(request: Request, { params }: RouteContext) {
     }
 
     const { section } = await params;
-    const validSections: SiteContentSection[] = ["banner", "about", "skills", "contact", "navbar"];
+    const validSections: SiteContentSection[] = ["banner", "about", "skills", "contact", "navbar", "works", "footer", "navhome", "certificates", "education"];
 
     if (!validSections.includes(section as SiteContentSection)) {
       return NextResponse.json({ message: "Section tidak valid." }, { status: 400 });

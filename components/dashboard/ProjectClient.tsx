@@ -2,31 +2,22 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { KeyRound, LayoutDashboard, FileText } from "lucide-react";
-import type { ProjectDashboardSummary, ProjectLocale, ProjectPaginationMeta, ProjectRecord } from "@/app/types/project";
+import { ArrowLeft, KeyRound } from "lucide-react";
+import Link from "next/link";
+import type { ProjectLocale, ProjectPaginationMeta, ProjectRecord } from "@/app/types/project";
 import { ProjectEditor } from "@/components/dashboard/ProjectEditor";
-import { ProjectStats } from "@/components/dashboard/ProjectStats";
 import { ProjectTable } from "@/components/dashboard/ProjectTable";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 
-type DashboardClientProps = {
+type ProjectClientProps = {
   locale: string;
   userEmail: string;
 };
 
-type DashboardApiResponse = {
+type ProjectApiResponse = {
   data: ProjectRecord[];
   pagination: ProjectPaginationMeta;
-  summary: ProjectDashboardSummary;
-};
-
-const emptySummary: ProjectDashboardSummary = {
-  totalProjects: 0,
-  internalProjects: 0,
-  publicProjects: 0,
-  totalSkills: 0,
-  totalCategories: 0,
 };
 
 const emptyPagination = (search: string): ProjectPaginationMeta => ({
@@ -37,10 +28,9 @@ const emptyPagination = (search: string): ProjectPaginationMeta => ({
   search,
 });
 
-export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
+export function ProjectClient({ locale, userEmail }: ProjectClientProps) {
   const searchParams = useSearchParams();
   const [projects, setProjects] = useState<ProjectRecord[]>([]);
-  const [summary, setSummary] = useState<ProjectDashboardSummary>(emptySummary);
   const [pagination, setPagination] = useState<ProjectPaginationMeta>(emptyPagination(searchParams.get("search") ?? ""));
   const [isLoading, setIsLoading] = useState(true);
   const [isReordering, setIsReordering] = useState(false);
@@ -82,29 +72,19 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
           signal: controller.signal,
         });
 
-        const payload = (await response.json()) as DashboardApiResponse;
+        const payload = (await response.json()) as ProjectApiResponse;
 
-        if (!response.ok) {
-          throw new Error("Gagal mengambil data dashboard dari API.");
-        }
+        if (!response.ok) throw new Error("Gagal mengambil data project.");
 
-        if (!isMounted) {
-          return;
-        }
+        if (!isMounted) return;
 
         setProjects(payload.data);
-        setSummary(payload.summary);
         setPagination(payload.pagination);
       } catch (fetchError) {
-        if (controller.signal.aborted || !isMounted) {
-          return;
-        }
-
-        setError(fetchError instanceof Error ? fetchError.message : "Gagal mengambil data dashboard dari API.");
+        if (controller.signal.aborted || !isMounted) return;
+        setError(fetchError instanceof Error ? fetchError.message : "Gagal mengambil data project.");
       } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
+        if (isMounted) setIsLoading(false);
       }
     }
 
@@ -118,11 +98,7 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
 
   const editingProject = useMemo(() => {
     const productId = Number.parseInt(editProductId ?? "", 10);
-
-    if (!editProductId || Number.isNaN(productId)) {
-      return null;
-    }
-
+    if (!editProductId || Number.isNaN(productId)) return null;
     return projects.find((project) => project.productId === productId) ?? null;
   }, [editProductId, projects]);
 
@@ -151,13 +127,24 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
 
   return (
     <main className="flex flex-1 flex-col gap-8">
-      {/* Welcome Banner */}
+      {/* Header */}
       <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-white/2 p-6">
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand-500/10 blur-3xl" />
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-white">Welcome back, Admin</h1>
-            <p className="mt-1 text-sm text-white/40">Kelola portfolio project CV kamu di sini. Tambah, edit, urutkan, atau hapus project dengan mudah.</p>
+            <div className="flex items-center gap-3">
+              <Link
+                href={`/${locale}/dashboard`}
+                className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-white/50 transition-colors hover:bg-white/5 hover:text-white"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" />
+                Back
+              </Link>
+            </div>
+            <h1 className="mt-3 text-xl font-semibold text-white">Project Management</h1>
+            <p className="mt-1 text-sm text-white/40">
+              Tambah, edit, urutkan, atau hapus project portfolio dengan mudah.
+            </p>
           </div>
           <Badge variant="outline" className="flex items-center gap-1.5 border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/50">
             <KeyRound className="h-3 w-3" />
@@ -166,15 +153,30 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
         </div>
       </div>
 
-      {/* Stats */}
-      <ProjectStats totalProjects={summary.totalProjects} internalProjects={summary.internalProjects} publicProjects={summary.publicProjects} totalSkills={summary.totalSkills} totalCategories={summary.totalCategories} />
+      {/* Error */}
+      {error && (
+        <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+          {error}
+        </div>
+      )}
 
-      {/* Error & Table */}
-      {error && <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">{error}</div>}
+      {/* Project Table */}
+      <ProjectTable
+        locale={locale}
+        projects={projects}
+        pagination={pagination}
+        isLoading={isLoading}
+        onDeleted={refetchProjects}
+        onReorder={handleReorder}
+        isReordering={isReordering}
+      />
 
-      <ProjectTable locale={locale} projects={projects} pagination={pagination} isLoading={isLoading} onDeleted={refetchProjects} onReorder={handleReorder} isReordering={isReordering} />
-
-      <ProjectEditor project={editingProject} isOpen={isAdding || editingProject !== null} onSaved={refetchProjects} />
+      {/* Editor */}
+      <ProjectEditor
+        project={editingProject}
+        isOpen={isAdding || editingProject !== null}
+        onSaved={refetchProjects}
+      />
     </main>
   );
 }

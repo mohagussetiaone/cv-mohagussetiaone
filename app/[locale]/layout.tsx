@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
 import { RootShell } from "@/components/layout/RootShell";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import Script from "next/script";
+import { LocaleProvider } from "@/components/providers/LocaleProvider";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -28,13 +26,17 @@ import { Toaster } from "sonner";
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
-  const message = await getMessages();
+  const { locale } = await params;
+  const { default: enMessages } = await import("../../messages/en.json");
+  const { default: idMessages } = await import("../../messages/id.json");
 
   return (
-    <html lang="id" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <meta name="google-site-verification" content="rfHxt49m6Pm8OYRF_sbphjX7fCLLlfY_RibGFeNQuzs" />
         <meta
@@ -48,18 +50,6 @@ export default async function RootLayout({
             __html: `
               (function(){
                 try {
-                  // Remove bis_skin_checked attributes added by browser extensions (e.g. Bisheng)
-                  // that cause React hydration mismatches. Uses a MutationObserver to
-                  // catch the attribute the moment it gets added at any timing.
-                  var cleanAttrs = function() {
-                    var els = document.querySelectorAll("[bis_skin_checked]");
-                    for (var i = 0; i < els.length; i++) {
-                      els[i].removeAttribute("bis_skin_checked");
-                    }
-                  };
-                  // Clean any that were already added
-                  cleanAttrs();
-                  // Watch for new additions by browser extensions
                   var observer = new MutationObserver(function(mutations) {
                     for (var i = 0; i < mutations.length; i++) {
                       var m = mutations[i];
@@ -73,7 +63,10 @@ export default async function RootLayout({
                     attributeFilter: ["bis_skin_checked"],
                     subtree: true,
                   });
-                  // Disconnect observer after 3s to avoid permanent perf impact
+                  var els = document.querySelectorAll("[bis_skin_checked]");
+                  for (var i = 0; i < els.length; i++) {
+                    els[i].removeAttribute("bis_skin_checked");
+                  }
                   setTimeout(function() { observer.disconnect(); }, 3000);
                 } catch(e){}
               })();
@@ -82,32 +75,12 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var theme = localStorage.getItem("cv-theme");
-                  if (theme === "retro" || theme === "neobrutalism" || theme === "default") {
-                    document.documentElement.setAttribute("data-theme", theme);
-                  } else {
-                    document.documentElement.setAttribute("data-theme", "default");
-                  }
-                } catch(e) {
-                  document.documentElement.setAttribute("data-theme", "default");
-                }
-              })();
-            `,
-          }}
-        />
-        <NextIntlClientProvider messages={message}>
+        <LocaleProvider initialLocale={locale} enMessages={enMessages} idMessages={idMessages}>
           <ThemeProvider>
             <RootShell>{children}</RootShell>
           </ThemeProvider>
           <Toaster position="top-right" expand={false} richColors />
-        </NextIntlClientProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

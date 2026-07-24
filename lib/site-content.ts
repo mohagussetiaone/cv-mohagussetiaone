@@ -25,7 +25,7 @@ export async function getSiteContentBySection(section: SiteContentSection): Prom
 }
 
 export async function getAllSiteContent(locale: string = "id"): Promise<Record<SiteContentSection, SiteContentGrouped>> {
-  const sections: SiteContentSection[] = ["banner", "about", "skills", "contact", "navbar"];
+  const sections: SiteContentSection[] = ["banner", "about", "skills", "contact", "navbar", "works", "footer", "navhome", "certificates", "education"];
   const results: Record<string, SiteContentGrouped> = {};
 
   for (const section of sections) {

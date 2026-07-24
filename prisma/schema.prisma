@@ -49,6 +49,17 @@ model Skill {
   projects Project[] @relation("ProjectSkills")
 }
 
+model Message {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  read      Boolean   @default(false)
+  repliedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
 model SiteContent {
   id        Int      @id @default(autoincrement())
   section   String   // e.g., "banner", "about", "skills", "contact", "navbar"

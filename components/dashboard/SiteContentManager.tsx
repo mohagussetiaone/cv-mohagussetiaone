@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState, useTransition } from "react";
-import { Globe2, Plus, Save, Trash2 } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
+import { FileText, Globe2, Home, Mail, Navigation, Plus, Puzzle, Save, Trash2, User, Zap } from "lucide-react";
 import type { SiteContentGrouped, SkillItem } from "@/app/types/site-content";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,8 +36,8 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
     nameEn: enT.name ?? "",
     descriptionId: idT.description ?? "",
     descriptionEn: enT.description ?? "",
-    letsTalkId: idT.letsTalk ?? "",
-    letsTalkEn: enT.letsTalk ?? "",
+    letsTalkId: idT.lets_talk ?? "",
+    letsTalkEn: enT.lets_talk ?? "",
     yearsId: idT.years ?? "",
     yearsEn: enT.years ?? "",
     experienceId: idT.experience ?? "",
@@ -72,7 +72,7 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
       greetingId: idT.greeting ?? "", greetingEn: enT.greeting ?? "",
       nameId: idT.name ?? "", nameEn: enT.name ?? "",
       descriptionId: idT.description ?? "", descriptionEn: enT.description ?? "",
-      letsTalkId: idT.letsTalk ?? "", letsTalkEn: enT.letsTalk ?? "",
+      letsTalkId: idT.lets_talk ?? "", letsTalkEn: enT.lets_talk ?? "",
       yearsId: idT.years ?? "", yearsEn: enT.years ?? "",
       experienceId: idT.experience ?? "", experienceEn: enT.experience ?? "",
       programmingId: idT.programming ?? "", programmingEn: enT.programming ?? "",
@@ -95,9 +95,8 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
       { key: "name", locale: "id", value: form.nameId },
       { key: "name", locale: "en", value: form.nameEn },
       { key: "description", locale: "id", value: form.descriptionId },
-      { key: "description", locale: "en", value: form.descriptionEn },
-      { key: "letsTalk", locale: "id", value: form.letsTalkId },
-      { key: "letsTalk", locale: "en", value: form.letsTalkEn },
+      { key: "description", locale: "en", value: form.descriptionEn },          { key: "lets_talk", locale: "id", value: form.letsTalkId },
+          { key: "lets_talk", locale: "en", value: form.letsTalkEn },
       { key: "years", locale: "id", value: form.yearsId },
       { key: "years", locale: "en", value: form.yearsEn },
       { key: "experience", locale: "id", value: form.experienceId },
@@ -234,6 +233,154 @@ function AboutEditor({ data }: { data: SiteContentGrouped | null }) {
         <Field label="Title" value={form.titleEn} onChange={(v) => setForm((p) => ({ ...p, titleEn: v }))} />
         <TextareaField label="Description" value={form.descriptionEn} onChange={(v) => setForm((p) => ({ ...p, descriptionEn: v }))} />
         <TextareaField label="Description (cont.)" value={form.description_1En} onChange={(v) => setForm((p) => ({ ...p, description_1En: v }))} />
+      </LocalizedBlock>
+    </SectionWrapper>
+  );
+}
+
+// ─── JSONBlock helper component ──────────────────────────────
+
+function JSONBlock({ title, count, onAdd, showAdd, children }: { title: string; count: number; onAdd: () => void; showAdd: boolean; children: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-white font-semibold text-sm">
+          {title}
+          <span className="text-xs text-white/40 bg-white/5 px-2 py-0.5 rounded-full">{count}</span>
+        </div>
+        <Button type="button" variant="outline" size="sm" onClick={onAdd} className="border-white/10 bg-white/5 text-white/70 hover:bg-white/10 h-7 text-xs">
+          <Plus className="mr-1 h-3 w-3" />
+          {showAdd ? "Close" : "Add"}
+        </Button>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// ─── Footer Editor ───────────────────────────────────────────
+
+function FooterEditor({ data }: { data: SiteContentGrouped | null }) {
+  const idT = data?.localized?.["id"] ?? {};
+  const enT = data?.localized?.["en"] ?? {};
+  const g = data?.global ?? {};
+  const [form, setForm] = useState({
+    copyrightTextId: idT.copyrightText ?? "", copyrightTextEn: enT.copyrightText ?? "",
+    brandName: g.brandName ?? "", brandUrl: g.brandUrl ?? "",
+  });
+  const [isSaving, startSave] = useTransition();
+
+  useEffect(() => {
+    if (!data) return;
+    const idT = data.localized?.["id"] ?? {};
+    const enT = data.localized?.["en"] ?? {};
+    const g = data.global ?? {};
+    setForm({
+      copyrightTextId: idT.copyrightText ?? "", copyrightTextEn: enT.copyrightText ?? "",
+      brandName: g.brandName ?? "", brandUrl: g.brandUrl ?? "",
+    });
+  }, [data]);
+
+  const handleSave = () => {
+    startSave(async () => {
+      try {
+        await saveSection("footer", [
+          { key: "copyrightText", locale: "id", value: form.copyrightTextId },
+          { key: "copyrightText", locale: "en", value: form.copyrightTextEn },
+          { key: "brandName", locale: "", value: form.brandName },
+          { key: "brandUrl", locale: "", value: form.brandUrl },
+        ]);
+        toast.success("Footer content saved!");
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "Failed to save");
+      }
+    });
+  };
+
+  return (
+    <SectionWrapper title="Footer" onSave={handleSave} isSaving={isSaving}>
+      <LocalizedBlock locale="id" accent="amber">
+        <Field label="Teks Hak Cipta" value={form.copyrightTextId} onChange={(v) => setForm((p) => ({ ...p, copyrightTextId: v }))} />
+      </LocalizedBlock>
+      <LocalizedBlock locale="en" accent="sky">
+        <Field label="Copyright Text" value={form.copyrightTextEn} onChange={(v) => setForm((p) => ({ ...p, copyrightTextEn: v }))} />
+      </LocalizedBlock>
+      <SeparateBlock title="Brand Info">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Field label="Brand Name" value={form.brandName} onChange={(v) => setForm((p) => ({ ...p, brandName: v }))} />
+          <Field label="Brand URL" value={form.brandUrl} onChange={(v) => setForm((p) => ({ ...p, brandUrl: v }))} />
+        </div>
+      </SeparateBlock>
+    </SectionWrapper>
+  );
+}
+
+// ─── NavHome Editor ──────────────────────────────────────────
+
+function NavHomeEditor({ data }: { data: SiteContentGrouped | null }) {
+  const idT = data?.localized?.["id"] ?? {};
+  const enT = data?.localized?.["en"] ?? {};
+  const [form, setForm] = useState({
+    homeId: idT.home ?? "", homeEn: enT.home ?? "",
+    aboutId: idT.about ?? "", aboutEn: enT.about ?? "",
+    skillsId: idT.skills ?? "", skillsEn: enT.skills ?? "",
+    portfolioId: idT.portfolio ?? "", portfolioEn: enT.portfolio ?? "",
+    contactId: idT.contact ?? "", contactEn: enT.contact ?? "",
+  });
+  const [isSaving, startSave] = useTransition();
+
+  useEffect(() => {
+    if (!data) return;
+    const idT = data.localized?.["id"] ?? {};
+    const enT = data.localized?.["en"] ?? {};
+    setForm({
+      homeId: idT.home ?? "", homeEn: enT.home ?? "",
+      aboutId: idT.about ?? "", aboutEn: enT.about ?? "",
+      skillsId: idT.skills ?? "", skillsEn: enT.skills ?? "",
+      portfolioId: idT.portfolio ?? "", portfolioEn: enT.portfolio ?? "",
+      contactId: idT.contact ?? "", contactEn: enT.contact ?? "",
+    });
+  }, [data]);
+
+  const handleSave = () => {
+    startSave(async () => {
+      try {
+        await saveSection("navhome", [
+          { key: "home", locale: "id", value: form.homeId }, { key: "home", locale: "en", value: form.homeEn },
+          { key: "about", locale: "id", value: form.aboutId }, { key: "about", locale: "en", value: form.aboutEn },
+          { key: "skills", locale: "id", value: form.skillsId }, { key: "skills", locale: "en", value: form.skillsEn },
+          { key: "portfolio", locale: "id", value: form.portfolioId }, { key: "portfolio", locale: "en", value: form.portfolioEn },
+          { key: "contact", locale: "id", value: form.contactId }, { key: "contact", locale: "en", value: form.contactEn },
+        ]);
+        toast.success("NavHome content saved!");
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "Failed to save");
+      }
+    });
+  };
+
+  return (
+    <SectionWrapper title="NavHome (Floating Dock)" onSave={handleSave} isSaving={isSaving}>
+      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+        <p className="text-sm text-white/50">Labels untuk navigasi floating dock di bagian bawah layar.</p>
+      </div>
+      <LocalizedBlock locale="id" accent="amber">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Field label="Beranda" value={form.homeId} onChange={(v) => setForm((p) => ({ ...p, homeId: v }))} />
+          <Field label="Tentang" value={form.aboutId} onChange={(v) => setForm((p) => ({ ...p, aboutId: v }))} />
+          <Field label="Kemampuan" value={form.skillsId} onChange={(v) => setForm((p) => ({ ...p, skillsId: v }))} />
+          <Field label="Portofolio" value={form.portfolioId} onChange={(v) => setForm((p) => ({ ...p, portfolioId: v }))} />
+          <Field label="Kontak" value={form.contactId} onChange={(v) => setForm((p) => ({ ...p, contactId: v }))} />
+        </div>
+      </LocalizedBlock>
+      <LocalizedBlock locale="en" accent="sky">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Field label="Home" value={form.homeEn} onChange={(v) => setForm((p) => ({ ...p, homeEn: v }))} />
+          <Field label="About" value={form.aboutEn} onChange={(v) => setForm((p) => ({ ...p, aboutEn: v }))} />
+          <Field label="Skills" value={form.skillsEn} onChange={(v) => setForm((p) => ({ ...p, skillsEn: v }))} />
+          <Field label="Portfolio" value={form.portfolioEn} onChange={(v) => setForm((p) => ({ ...p, portfolioEn: v }))} />
+          <Field label="Contact" value={form.contactEn} onChange={(v) => setForm((p) => ({ ...p, contactEn: v }))} />
+        </div>
       </LocalizedBlock>
     </SectionWrapper>
   );
@@ -527,19 +674,24 @@ function TextareaField({ label, value, onChange }: { label: string; value: strin
 // ─── Main Exported Component ─────────────────────────────────
 
 const SECTIONS = [
-  { id: "banner", label: "Banner", icon: "🏠" },
-  { id: "about", label: "About", icon: "👤" },
-  { id: "skills", label: "Skills", icon: "⚡" },
-  { id: "contact", label: "Contact", icon: "✉️" },
-  { id: "navbar", label: "Navbar", icon: "🧭" },
+  { id: "banner", label: "Banner", icon: Home },
+  { id: "about", label: "About", icon: User },
+  { id: "skills", label: "Skills", icon: Zap },
+  { id: "contact", label: "Contact", icon: Mail },
+  { id: "navbar", label: "Navbar", icon: Navigation },
+  { id: "footer", label: "Footer", icon: FileText },
+  { id: "navhome", label: "NavHome", icon: Puzzle },
 ] as const;
+
+export type SiteContentSectionId = "banner" | "about" | "skills" | "works" | "education" | "certificates" | "contact" | "navbar" | "navhome" | "footer";
 
 type SiteContentManagerProps = {
   locale: string;
+  defaultSection?: SiteContentSectionId;
 };
 
-export function SiteContentManager({ locale }: SiteContentManagerProps) {
-  const [activeSection, setActiveSection] = useState<string>("banner");
+export function SiteContentManager({ locale, defaultSection }: SiteContentManagerProps) {
+  const [activeSection, setActiveSection] = useState<string>(defaultSection ?? "banner");
   const [data, setData] = useState<Record<string, SiteContentGrouped> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -572,6 +724,8 @@ export function SiteContentManager({ locale }: SiteContentManagerProps) {
       case "skills": return <SkillsEditor data={sectionData} />;
       case "contact": return <ContactEditor data={sectionData} />;
       case "navbar": return <NavbarEditor data={sectionData} />;
+      case "footer": return <FooterEditor data={sectionData} />;
+      case "navhome": return <NavHomeEditor data={sectionData} />;
       default: return null;
     }
   };
@@ -594,7 +748,7 @@ export function SiteContentManager({ locale }: SiteContentManagerProps) {
               activeSection === section.id ? "bg-brand-500/15 text-brand-400" : "text-white/50 hover:text-white hover:bg-white/5"
             }`}
           >
-            <span>{section.icon}</span> {section.label}
+            <section.icon className="h-4 w-4" /> {section.label}
           </button>
         ))}
       </div>

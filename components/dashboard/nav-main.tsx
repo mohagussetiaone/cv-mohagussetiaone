@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ComponentType } from "react";
 import {
   SidebarGroup,
@@ -18,6 +19,13 @@ type NavItem = {
 };
 
 export function NavMain({ items }: { items: NavItem[] }) {
+  const pathname = usePathname();
+
+  const isActive = (url: string) => {
+    if (url.startsWith("#")) return false;
+    return url === pathname;
+  };
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -25,7 +33,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild tooltip={item.title}>
+              <SidebarMenuButton asChild tooltip={item.title} isActive={isActive(item.url)}>
                 <Link
                   href={item.url}
                   scroll={!item.url.includes("/dashboard?")}

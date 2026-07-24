@@ -433,6 +433,222 @@ const siteContentData: { section: string; key: string; locale: string; value: st
   { section: "navbar", key: "instagramUrl", locale: "", value: "https://www.instagram.com/mohagussetiaone", sortOrder: 3 },
   { section: "navbar", key: "githubUrl", locale: "", value: "https://github.com/mohagussetiaone", sortOrder: 4 },
   { section: "navbar", key: "linkedinUrl", locale: "", value: "https://www.linkedin.com/in/moh-agus-setiawan-464960167/", sortOrder: 5 },
+
+  // ── Works (localized) ──
+  { section: "works", key: "title", locale: "id", value: "Pengalaman Kerja", sortOrder: 1 },
+  { section: "works", key: "title", locale: "en", value: "Work Experience", sortOrder: 1 },
+  { section: "works", key: "description", locale: "id", value: "Perjalanan karir profesional saya sebagai Frontend Developer", sortOrder: 2 },
+  { section: "works", key: "description", locale: "en", value: "My professional career journey as a Frontend Developer", sortOrder: 2 },
+
+  // ── Works Experience (stored as JSON per locale) ──
+  {
+    section: "works", key: "experience", locale: "en",
+    value: JSON.stringify([
+      {
+        id: "exp-1",
+        company: "PT Remala Abadi",
+        position: "Frontend Developer",
+        location: "Jakarta, Indonesia",
+        type: "Full-time",
+        startDate: "2024-01",
+        endDate: "Present",
+        description: "Developing and maintaining web applications using React.js, Next.js, and Tailwind CSS. Building responsive and performant user interfaces for client projects and internal systems. Collaborating with cross-functional teams to deliver high-quality software solutions.",
+        logo: "/assets/image/logo/remala-abadi.png"
+      },
+      {
+        id: "exp-2",
+        company: "PT Solusi Aplikasi Andalan Semesta",
+        position: "Junior Frontend Developer",
+        location: "Jakarta, Indonesia",
+        type: "Full-time",
+        startDate: "2023-01",
+        endDate: "2023-12",
+        description: "Built company profile websites and web applications using Vite.js and Tailwind CSS. Implemented responsive designs and integrated REST APIs. Collaborated on UI/UX improvements and optimized application performance.",
+        logo: "/assets/image/logo/pt-saas.png"
+      },
+      {
+        id: "exp-3",
+        company: "Freelance",
+        position: "Frontend Developer",
+        location: "Remote",
+        type: "Freelance",
+        startDate: "2022-06",
+        endDate: "2022-12",
+        description: "Developed responsive websites and landing pages for various clients. Used React.js, HTML, CSS, and JavaScript to create engaging user experiences. Managed client communication and project timelines independently.",
+        logo: "/assets/image/logo/freelance.png"
+      },
+    ]),
+    sortOrder: 4,
+  },
+  {
+    section: "works", key: "experience", locale: "id",
+    value: JSON.stringify([
+      {
+        id: "exp-1",
+        company: "PT Remala Abadi",
+        position: "Frontend Developer",
+        location: "Jakarta, Indonesia",
+        type: "Full-time",
+        startDate: "2024-01",
+        endDate: "Sekarang",
+        description: "Mengembangkan dan memelihara aplikasi web menggunakan React.js, Next.js, dan Tailwind CSS. Membangun antarmuka pengguna yang responsif dan berperforma tinggi untuk proyek klien dan sistem internal. Berkolaborasi dengan tim lintas fungsi untuk memberikan solusi perangkat lunak berkualitas tinggi.",
+        logo: "/assets/image/logo/remala-abadi.png"
+      },
+      {
+        id: "exp-2",
+        company: "PT Solusi Aplikasi Andalan Semesta",
+        position: "Junior Frontend Developer",
+        location: "Jakarta, Indonesia",
+        type: "Full-time",
+        startDate: "2023-01",
+        endDate: "2023-12",
+        description: "Membangun website company profile dan aplikasi web menggunakan Vite.js dan Tailwind CSS. Mengimplementasikan desain responsif dan mengintegrasikan REST API. Berkolaborasi dalam perbaikan UI/UX dan mengoptimalkan performa aplikasi.",
+        logo: "/assets/image/logo/pt-saas.png"
+      },
+      {
+        id: "exp-3",
+        company: "Freelance",
+        position: "Frontend Developer",
+        location: "Remote",
+        type: "Freelance",
+        startDate: "2022-06",
+        endDate: "2022-12",
+        description: "Mengembangkan website responsif dan landing page untuk berbagai klien. Menggunakan React.js, HTML, CSS, dan JavaScript untuk menciptakan pengalaman pengguna yang menarik. Mengelola komunikasi klien dan jadwal proyek secara mandiri.",
+        logo: "/assets/image/logo/freelance.png"
+      },
+    ]),
+    sortOrder: 5,
+  },
+
+  // ── Works section heading labels (localized) ──
+  { section: "works", key: "experience_label", locale: "id", value: "Pengalaman", sortOrder: 7 },
+  { section: "works", key: "experience_label", locale: "en", value: "Experience", sortOrder: 7 },
+
+  // ── Certificates (localized) ──
+  { section: "certificates", key: "title", locale: "id", value: "Sertifikasi", sortOrder: 1 },
+  { section: "certificates", key: "title", locale: "en", value: "Certifications", sortOrder: 1 },
+  { section: "certificates", key: "description", locale: "id", value: "Sertifikasi profesional yang telah saya raih", sortOrder: 2 },
+  { section: "certificates", key: "description", locale: "en", value: "Professional certifications I have achieved", sortOrder: 2 },
+
+  // ── Certificates items (stored as JSON per locale) ──
+  {
+    section: "certificates", key: "items", locale: "en",
+    value: JSON.stringify([
+      {
+        id: "cert-1",
+        name: "Learn to Build Web Applications with React",
+        organization: "Dicoding",
+        issueDate: "2024",
+        credentialUrl: "https://www.dicoding.com/certificates/..."
+      },
+      {
+        id: "cert-2",
+        name: "Learn JavaScript Programming Basics",
+        organization: "Dicoding",
+        issueDate: "2023",
+        credentialUrl: "https://www.dicoding.com/certificates/..."
+      },
+    ]),
+    sortOrder: 3,
+  },
+  {
+    section: "certificates", key: "items", locale: "id",
+    value: JSON.stringify([
+      {
+        id: "cert-1",
+        name: "Belajar Membuat Aplikasi Web dengan React",
+        organization: "Dicoding",
+        issueDate: "2024",
+        credentialUrl: "https://www.dicoding.com/certificates/..."
+      },
+      {
+        id: "cert-2",
+        name: "Belajar Dasar Pemrograman JavaScript",
+        organization: "Dicoding",
+        issueDate: "2023",
+        credentialUrl: "https://www.dicoding.com/certificates/..."
+      },
+    ]),
+    sortOrder: 4,
+  },
+
+  // ── Footer (localized) ──
+  { section: "footer", key: "copyrightText", locale: "id", value: "Hak Cipta Dilindungi.", sortOrder: 1 },
+  { section: "footer", key: "copyrightText", locale: "en", value: "All Rights Reserved.", sortOrder: 1 },
+  { section: "footer", key: "brandName", locale: "", value: "Moh Agus Setiawan", sortOrder: 2 },
+  { section: "footer", key: "brandUrl", locale: "", value: "https://mohagussetiaone.my.id", sortOrder: 3 },
+
+  // ── Education (localized) ──
+  { section: "education", key: "title", locale: "id", value: "Pendidikan", sortOrder: 1 },
+  { section: "education", key: "title", locale: "en", value: "Education", sortOrder: 1 },
+  { section: "education", key: "description", locale: "id", value: "Riwayat pendidikan formal saya", sortOrder: 2 },
+  { section: "education", key: "description", locale: "en", value: "My formal education background", sortOrder: 2 },
+
+  // ── Education Items (stored as JSON per locale) ──
+  {
+    section: "education", key: "items", locale: "en",
+    value: JSON.stringify([
+      {
+        id: "edu-1",
+        school: "Universitas Bina Sarana Informatika",
+        degree: "Bachelor",
+        field: "Computer Science",
+        startDate: "2023",
+        endDate: "2025",
+        description: "Focusing on software development, web technologies, and information systems.",
+        logo: "/assets/image/logo/ubsi.jpg"
+      },
+      {
+        id: "edu-2",
+        school: "SMK Negeri 1 Jakarta",
+        degree: "Vocational High School",
+        field: "Software Engineering",
+        startDate: "2018",
+        endDate: "2021",
+        description: "Studied software engineering fundamentals, web development, and database management.",
+        logo: ""
+      },
+    ]),
+    sortOrder: 3,
+  },
+  {
+    section: "education", key: "items", locale: "id",
+    value: JSON.stringify([
+      {
+        id: "edu-1",
+        school: "Universitas Bina Sarana Informatika",
+        degree: "Sarjana",
+        field: "Ilmu Komputer",
+        startDate: "2023",
+        endDate: "2025",
+        description: "Berfokus pada pengembangan perangkat lunak, teknologi web, dan sistem informasi.",
+        logo: "/assets/image/logo/ubsi.jpg"
+      },
+      {
+        id: "edu-2",
+        school: "SMK Negeri 1 Jakarta",
+        degree: "Sekolah Menengah Kejuruan",
+        field: "Rekayasa Perangkat Lunak",
+        startDate: "2018",
+        endDate: "2021",
+        description: "Mempelajari dasar-dasar rekayasa perangkat lunak, pengembangan web, dan manajemen basis data.",
+        logo: ""
+      },
+    ]),
+    sortOrder: 4,
+  },
+
+  // ── NavHome (localized) ──
+  { section: "navhome", key: "home", locale: "id", value: "Beranda", sortOrder: 1 },
+  { section: "navhome", key: "home", locale: "en", value: "Home", sortOrder: 1 },
+  { section: "navhome", key: "about", locale: "id", value: "Tentang", sortOrder: 2 },
+  { section: "navhome", key: "about", locale: "en", value: "About", sortOrder: 2 },
+  { section: "navhome", key: "skills", locale: "id", value: "Kemampuan", sortOrder: 3 },
+  { section: "navhome", key: "skills", locale: "en", value: "Skills", sortOrder: 3 },
+  { section: "navhome", key: "portfolio", locale: "id", value: "Portofolio", sortOrder: 4 },
+  { section: "navhome", key: "portfolio", locale: "en", value: "Portfolio", sortOrder: 4 },
+  { section: "navhome", key: "contact", locale: "id", value: "Kontak", sortOrder: 5 },
+  { section: "navhome", key: "contact", locale: "en", value: "Contact", sortOrder: 5 },
 ];
 
 async function seedSiteContent() {

@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from "react";
 import Link from "next/link";
-import { FolderIcon, LayoutDashboardIcon, PlusCircleIcon } from "lucide-react";
+import { Award, BookOpen, Briefcase, FileText, FolderIcon, LayoutDashboardIcon, MessageSquare } from "lucide-react";
 import { NavMain } from "@/components/dashboard/nav-main";
 import { NavUser } from "@/components/dashboard/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail } from "@/components/ui/sidebar";
@@ -16,13 +16,33 @@ const createSidebarData = (locale: string) => ({
     },
     {
       title: "Projects",
-      url: "#projects",
+      url: `/${locale}/dashboard/project`,
       icon: FolderIcon,
     },
     {
-      title: "New Project",
-      url: `/${locale}/dashboard?add=true`,
-      icon: PlusCircleIcon,
+      title: "Content",
+      url: `/${locale}/dashboard/content`,
+      icon: FileText,
+    },
+    {
+      title: "Works",
+      url: `/${locale}/dashboard/works`,
+      icon: Briefcase,
+    },
+    {
+      title: "Education",
+      url: `/${locale}/dashboard/education`,
+      icon: BookOpen,
+    },
+    {
+      title: "Certification",
+      url: `/${locale}/dashboard/certification`,
+      icon: Award,
+    },
+    {
+      title: "Messages",
+      url: `/${locale}/dashboard/messages`,
+      icon: MessageSquare,
     },
   ],
 });

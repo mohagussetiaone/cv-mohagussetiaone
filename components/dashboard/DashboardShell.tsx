@@ -4,6 +4,7 @@ import { useEffect, type CSSProperties, type ReactNode } from "react";
 import { AppSidebar } from "./AppSidebar";
 import { SiteHeader } from "./SiteHeader";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 type DashboardShellProps = {
   children: ReactNode;
@@ -13,6 +14,9 @@ type DashboardShellProps = {
 };
 
 export function DashboardShell({ children, locale, userEmail, userName }: DashboardShellProps) {
+  const { theme } = useTheme();
+  const isDefault = theme === "default";
+
   useEffect(() => {
     const previousHtmlOverflow = document.documentElement.style.overflow;
     const previousBodyOverflow = document.body.style.overflow;
@@ -39,7 +43,7 @@ export function DashboardShell({ children, locale, userEmail, userName }: Dashbo
       <AppSidebar locale={locale} userEmail={userEmail} userName={userName} />
       <SidebarInset className="h-svh overflow-hidden overscroll-none">
         <SiteHeader locale={locale} userEmail={userEmail} />
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-gradient-to-br from-[#0a0a0f] via-[#0f0f1a] to-[#1a1a2e]">
+        <div className={isDefault ? "flex min-h-0 flex-1 flex-col overflow-hidden bg-gradient-to-br from-[#0a0a0f] via-[#0f0f1a] to-[#1a1a2e]" : "flex min-h-0 flex-1 flex-col overflow-hidden bg-white"}>
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
             <div
               data-dashboard-scroll-area

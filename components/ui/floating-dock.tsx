@@ -25,13 +25,13 @@ const FloatingDockMobile = ({ items, className }: { items: { title: string; icon
       <div className="flex gap-5 justify-center">
         <AnimatePresence>
           {items.map((item, idx) => (
-            <motion.div key={item.title} initial={{ opacity: 0, y: 10, scale: 0.8 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.8 }} transition={{ delay: idx * 0.05 }}>
+            <motion.div key={item.href} initial={{ opacity: 0, y: 10, scale: 0.8 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: idx * 0.05 }}>
               <Link
                 href={item.href}
                 className={cn(
                   "h-14 w-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1",
                   isNeo && "bg-amber-400 border-[3px] border-black shadow-[4px_4px_0px_0px_black] [&_svg]:text-black active:shadow-none active:translate-x-0 active:translate-y-0",
-                  isRetro && "bg-[#0f0f23] border-2 border-[#6699ff] [&_svg]:text-[#6699ff] hover:bg-[#1a1a2e] shadow-lg shadow-[#6699ff]/20",
+                  isRetro && "bg-white border-2 border-[#6699ff] [&_svg]:text-[#6699ff] hover:bg-blue-50 shadow-lg shadow-[#6699ff]/20",
                   !isNeo && !isRetro && "bg-white/10 backdrop-blur-md border border-white/20 [&_svg]:text-white hover:bg-white/20 shadow-lg shadow-black/20",
                 )}
               >
@@ -54,7 +54,7 @@ const FloatingDockDesktop = ({ items, className }: { items: { title: string; ico
       {/* No card wrapper — items float independently */}
       <AnimatePresence>
         {items.map((item, idx) => (
-          <motion.div key={item.title} initial={{ opacity: 0, x: -10, scale: 0.8 }} animate={{ opacity: 1, x: 0, scale: 1 }} exit={{ opacity: 0, x: -10, scale: 0.8 }} transition={{ delay: idx * 0.05 }}>
+          <motion.div key={item.href} initial={{ opacity: 0, x: -10, scale: 0.8 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ delay: idx * 0.05 }}>
             <IconContainer {...item} />
           </motion.div>
         ))}
@@ -74,7 +74,7 @@ function IconContainer({ icon, href }: { title: string; icon: React.ReactNode; h
         className={cn(
           "h-12 w-12 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-x-0.5",
           isNeo && "bg-amber-400 border-[3px] border-black shadow-[4px_4px_0px_0px_black] [&_svg]:text-black active:shadow-none active:translate-x-0 active:translate-y-0",
-          isRetro && "bg-[#0f0f23] border-2 border-[#6699ff] [&_svg]:text-[#6699ff] hover:bg-[#1a1a2e] shadow-lg shadow-[#6699ff]/20",
+          isRetro && "bg-white border-2 border-[#6699ff] [&_svg]:text-[#6699ff] hover:bg-blue-50 shadow-lg shadow-[#6699ff]/20",
           !isNeo && !isRetro && "bg-white/10 backdrop-blur-md border border-white/20 [&_svg]:text-white hover:bg-white/20 shadow-lg shadow-black/20",
         )}
         whileHover={{ scale: 1.15 }}
