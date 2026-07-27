@@ -1,12 +1,6 @@
 import { Client } from "minio";
 
-const requiredEnvKeys = [
-  "MINIO_ENDPOINT",
-  "MINIO_USE_SSL",
-  "MINIO_ACCESS_KEY",
-  "MINIO_SECRET_KEY",
-  "MINIO_BUCKET",
-] as const;
+const requiredEnvKeys = ["MINIO_ENDPOINT", "MINIO_USE_SSL", "MINIO_ACCESS_KEY", "MINIO_SECRET_KEY", "MINIO_BUCKET"] as const;
 
 const normalizePath = (value: string) => value.replace(/^\/+|\/+$/g, "");
 
@@ -32,8 +26,7 @@ export function getMinioBucketName() {
 }
 
 export function getMinioPublicBaseUrl() {
-  const explicitUrl =
-    process.env.MINIO_PUBLIC_BASE_URL?.trim() || process.env.MINIO_PUBLIC_URL?.trim();
+  const explicitUrl = process.env.MINIO_PUBLIC_BASE_URL?.trim() || process.env.MINIO_PUBLIC_URL?.trim();
 
   if (explicitUrl) {
     return explicitUrl.replace(/\/+$/g, "");
@@ -74,17 +67,14 @@ export async function ensureMinioBucket(client: Client) {
   const exists = await client.bucketExists(bucket);
 
   if (!exists) {
-    await client.makeBucket(
-      bucket,
-      process.env.MINIO_REGION || process.env.MINIO_BUCKET_REGION || "us-east-1"
-    );
+    await client.makeBucket(bucket, process.env.MINIO_REGION || process.env.MINIO_BUCKET_REGION || "us-east-1");
   }
 }
 
-export function buildMinioObjectName(fileName: string) {
-  const folder = normalizePath(process.env.MINIO_PROJECT_IMAGE_FOLDER || "projects");
+export function buildMinioObjectName(fileName: string, folder?: string) {
+  const subfolder = folder ? normalizePath(folder) : normalizePath(process.env.MINIO_PROJECT_IMAGE_FOLDER || "projects");
   const cleanedName = fileName.replace(/[^a-zA-Z0-9._-]/g, "-");
-  return `${folder}/${Date.now()}-${cleanedName}`;
+  return `${subfolder}/${Date.now()}-${cleanedName}`;
 }
 
 export function buildMinioPublicUrl(objectName: string) {
@@ -100,4 +90,31 @@ export function buildMinioPublicUrl(objectName: string) {
 
   const bucket = normalizePath(getMinioBucketName());
   return `${baseUrl}/${bucket}/${normalizePath(objectName)}`;
+}
+
+/**
+ * Extract the object name (path) from a MinIO public URL.
+ * Example: "https://cdn.mohagussetiaone.my.id/projects/123-uuid.jpg"
+ *   -> returns "projects/123-uuid.jpg"
+ */
+export function extractObjectNameFromUrl(publicUrl: string): string | null {
+  const baseUrl = getMinioPublicBaseUrl();
+  if (!baseUrl) return null;
+
+  const normalizedBase = baseUrl.replace(/\/+$/g, "");
+  if (!publicUrl.startsWith(normalizedBase)) return null;
+
+  return normalizePath(publicUrl.slice(normalizedBase.length));
+}
+
+/**
+ * Delete an object from MinIO bucket by its public URL.
+ */
+export async function deleteMinioObject(publicUrl: string): Promise<void> {
+  const objectName = extractObjectNameFromUrl(publicUrl);
+  if (!objectName) return;
+
+  const client = getMinioClient();
+  const bucket = getMinioBucketName();
+  await client.removeObject(bucket, objectName);
 }

@@ -10,9 +10,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ data: content });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { message: "Gagal mengambil data konten." },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Gagal mengambil data konten." }, { status: 500 });
   }
 }

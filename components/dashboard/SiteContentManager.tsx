@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { ImageUploader } from "@/components/dashboard/ImageUploader";
 
 // ─── Helpers ─────────────────────────────────────────────────
 
@@ -69,21 +70,35 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
     const enT = data.localized?.["en"] ?? {};
     const g = data.global ?? {};
     setForm({
-      greetingId: idT.greeting ?? "", greetingEn: enT.greeting ?? "",
-      nameId: idT.name ?? "", nameEn: enT.name ?? "",
-      descriptionId: idT.description ?? "", descriptionEn: enT.description ?? "",
-      letsTalkId: idT.lets_talk ?? "", letsTalkEn: enT.lets_talk ?? "",
-      yearsId: idT.years ?? "", yearsEn: enT.years ?? "",
-      experienceId: idT.experience ?? "", experienceEn: enT.experience ?? "",
-      programmingId: idT.programming ?? "", programmingEn: enT.programming ?? "",
-      languageId: idT.language ?? "", languageEn: enT.language ?? "",
-      developmentId: idT.development ?? "", developmentEn: enT.development ?? "",
-      projectId: idT.project ?? "", projectEn: enT.project ?? "",
-      email: g.email ?? "", address: g.address ?? "",
-      jobTitle: g.jobTitle ?? "", websiteUrl: g.websiteUrl ?? "",
+      greetingId: idT.greeting ?? "",
+      greetingEn: enT.greeting ?? "",
+      nameId: idT.name ?? "",
+      nameEn: enT.name ?? "",
+      descriptionId: idT.description ?? "",
+      descriptionEn: enT.description ?? "",
+      letsTalkId: idT.lets_talk ?? "",
+      letsTalkEn: enT.lets_talk ?? "",
+      yearsId: idT.years ?? "",
+      yearsEn: enT.years ?? "",
+      experienceId: idT.experience ?? "",
+      experienceEn: enT.experience ?? "",
+      programmingId: idT.programming ?? "",
+      programmingEn: enT.programming ?? "",
+      languageId: idT.language ?? "",
+      languageEn: enT.language ?? "",
+      developmentId: idT.development ?? "",
+      developmentEn: enT.development ?? "",
+      projectId: idT.project ?? "",
+      projectEn: enT.project ?? "",
+      email: g.email ?? "",
+      address: g.address ?? "",
+      jobTitle: g.jobTitle ?? "",
+      websiteUrl: g.websiteUrl ?? "",
       whatsappNumber: g.whatsappNumber ?? "",
-      yearsExperience: g.yearsExperience ?? "", programmingLanguages: g.programmingLanguages ?? "",
-      developmentProjects: g.developmentProjects ?? "", cvFileUrl: g.cvFileUrl ?? "",
+      yearsExperience: g.yearsExperience ?? "",
+      programmingLanguages: g.programmingLanguages ?? "",
+      developmentProjects: g.developmentProjects ?? "",
+      cvFileUrl: g.cvFileUrl ?? "",
       bannerImage: g.bannerImage ?? "",
     });
   }, [data]);
@@ -95,8 +110,9 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
       { key: "name", locale: "id", value: form.nameId },
       { key: "name", locale: "en", value: form.nameEn },
       { key: "description", locale: "id", value: form.descriptionId },
-      { key: "description", locale: "en", value: form.descriptionEn },          { key: "lets_talk", locale: "id", value: form.letsTalkId },
-          { key: "lets_talk", locale: "en", value: form.letsTalkEn },
+      { key: "description", locale: "en", value: form.descriptionEn },
+      { key: "lets_talk", locale: "id", value: form.letsTalkId },
+      { key: "lets_talk", locale: "en", value: form.letsTalkEn },
       { key: "years", locale: "id", value: form.yearsId },
       { key: "years", locale: "en", value: form.yearsEn },
       { key: "experience", locale: "id", value: form.experienceId },
@@ -168,7 +184,10 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
           <Field label="Website URL" value={form.websiteUrl} onChange={(v) => setForm((p) => ({ ...p, websiteUrl: v }))} />
           <Field label="WhatsApp Number" value={form.whatsappNumber} onChange={(v) => setForm((p) => ({ ...p, whatsappNumber: v }))} />
           <Field label="CV File URL" value={form.cvFileUrl} onChange={(v) => setForm((p) => ({ ...p, cvFileUrl: v }))} />
-          <Field label="Banner Image URL" value={form.bannerImage} onChange={(v) => setForm((p) => ({ ...p, bannerImage: v }))} />
+          <div className="space-y-1.5">
+            <Label className="text-xs text-white/60">Banner Image</Label>
+            <ImageUploader folder="banner" currentUrl={form.bannerImage} onUrlChange={(url) => setForm((p) => ({ ...p, bannerImage: url }))} label="Upload banner image ke MinIO/CDN (otomatis saat Save)" />
+          </div>
         </div>
         <div className="h-px bg-white/10" />
         <div className="grid gap-4 md:grid-cols-3">
@@ -187,9 +206,12 @@ function AboutEditor({ data }: { data: SiteContentGrouped | null }) {
   const idT = data?.localized?.["id"] ?? {};
   const enT = data?.localized?.["en"] ?? {};
   const [form, setForm] = useState({
-    titleId: idT.title ?? "", titleEn: enT.title ?? "",
-    descriptionId: idT.description ?? "", descriptionEn: enT.description ?? "",
-    description_1Id: idT.description_1 ?? "", description_1En: enT.description_1 ?? "",
+    titleId: idT.title ?? "",
+    titleEn: enT.title ?? "",
+    descriptionId: idT.description ?? "",
+    descriptionEn: enT.description ?? "",
+    description_1Id: idT.description_1 ?? "",
+    description_1En: enT.description_1 ?? "",
   });
   const [isSaving, startSave] = useTransition();
 
@@ -198,9 +220,12 @@ function AboutEditor({ data }: { data: SiteContentGrouped | null }) {
     const idT = data.localized?.["id"] ?? {};
     const enT = data.localized?.["en"] ?? {};
     setForm({
-      titleId: idT.title ?? "", titleEn: enT.title ?? "",
-      descriptionId: idT.description ?? "", descriptionEn: enT.description ?? "",
-      description_1Id: idT.description_1 ?? "", description_1En: enT.description_1 ?? "",
+      titleId: idT.title ?? "",
+      titleEn: enT.title ?? "",
+      descriptionId: idT.description ?? "",
+      descriptionEn: enT.description ?? "",
+      description_1Id: idT.description_1 ?? "",
+      description_1En: enT.description_1 ?? "",
     });
   }, [data]);
 
@@ -242,7 +267,7 @@ function AboutEditor({ data }: { data: SiteContentGrouped | null }) {
 
 function JSONBlock({ title, count, onAdd, showAdd, children }: { title: string; count: number; onAdd: () => void; showAdd: boolean; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+    <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-white font-semibold text-sm">
           {title}
@@ -265,8 +290,10 @@ function FooterEditor({ data }: { data: SiteContentGrouped | null }) {
   const enT = data?.localized?.["en"] ?? {};
   const g = data?.global ?? {};
   const [form, setForm] = useState({
-    copyrightTextId: idT.copyrightText ?? "", copyrightTextEn: enT.copyrightText ?? "",
-    brandName: g.brandName ?? "", brandUrl: g.brandUrl ?? "",
+    copyrightTextId: idT.copyrightText ?? "",
+    copyrightTextEn: enT.copyrightText ?? "",
+    brandName: g.brandName ?? "",
+    brandUrl: g.brandUrl ?? "",
   });
   const [isSaving, startSave] = useTransition();
 
@@ -276,8 +303,10 @@ function FooterEditor({ data }: { data: SiteContentGrouped | null }) {
     const enT = data.localized?.["en"] ?? {};
     const g = data.global ?? {};
     setForm({
-      copyrightTextId: idT.copyrightText ?? "", copyrightTextEn: enT.copyrightText ?? "",
-      brandName: g.brandName ?? "", brandUrl: g.brandUrl ?? "",
+      copyrightTextId: idT.copyrightText ?? "",
+      copyrightTextEn: enT.copyrightText ?? "",
+      brandName: g.brandName ?? "",
+      brandUrl: g.brandUrl ?? "",
     });
   }, [data]);
 
@@ -321,11 +350,16 @@ function NavHomeEditor({ data }: { data: SiteContentGrouped | null }) {
   const idT = data?.localized?.["id"] ?? {};
   const enT = data?.localized?.["en"] ?? {};
   const [form, setForm] = useState({
-    homeId: idT.home ?? "", homeEn: enT.home ?? "",
-    aboutId: idT.about ?? "", aboutEn: enT.about ?? "",
-    skillsId: idT.skills ?? "", skillsEn: enT.skills ?? "",
-    portfolioId: idT.portfolio ?? "", portfolioEn: enT.portfolio ?? "",
-    contactId: idT.contact ?? "", contactEn: enT.contact ?? "",
+    homeId: idT.home ?? "",
+    homeEn: enT.home ?? "",
+    aboutId: idT.about ?? "",
+    aboutEn: enT.about ?? "",
+    skillsId: idT.skills ?? "",
+    skillsEn: enT.skills ?? "",
+    portfolioId: idT.portfolio ?? "",
+    portfolioEn: enT.portfolio ?? "",
+    contactId: idT.contact ?? "",
+    contactEn: enT.contact ?? "",
   });
   const [isSaving, startSave] = useTransition();
 
@@ -334,11 +368,16 @@ function NavHomeEditor({ data }: { data: SiteContentGrouped | null }) {
     const idT = data.localized?.["id"] ?? {};
     const enT = data.localized?.["en"] ?? {};
     setForm({
-      homeId: idT.home ?? "", homeEn: enT.home ?? "",
-      aboutId: idT.about ?? "", aboutEn: enT.about ?? "",
-      skillsId: idT.skills ?? "", skillsEn: enT.skills ?? "",
-      portfolioId: idT.portfolio ?? "", portfolioEn: enT.portfolio ?? "",
-      contactId: idT.contact ?? "", contactEn: enT.contact ?? "",
+      homeId: idT.home ?? "",
+      homeEn: enT.home ?? "",
+      aboutId: idT.about ?? "",
+      aboutEn: enT.about ?? "",
+      skillsId: idT.skills ?? "",
+      skillsEn: enT.skills ?? "",
+      portfolioId: idT.portfolio ?? "",
+      portfolioEn: enT.portfolio ?? "",
+      contactId: idT.contact ?? "",
+      contactEn: enT.contact ?? "",
     });
   }, [data]);
 
@@ -346,11 +385,16 @@ function NavHomeEditor({ data }: { data: SiteContentGrouped | null }) {
     startSave(async () => {
       try {
         await saveSection("navhome", [
-          { key: "home", locale: "id", value: form.homeId }, { key: "home", locale: "en", value: form.homeEn },
-          { key: "about", locale: "id", value: form.aboutId }, { key: "about", locale: "en", value: form.aboutEn },
-          { key: "skills", locale: "id", value: form.skillsId }, { key: "skills", locale: "en", value: form.skillsEn },
-          { key: "portfolio", locale: "id", value: form.portfolioId }, { key: "portfolio", locale: "en", value: form.portfolioEn },
-          { key: "contact", locale: "id", value: form.contactId }, { key: "contact", locale: "en", value: form.contactEn },
+          { key: "home", locale: "id", value: form.homeId },
+          { key: "home", locale: "en", value: form.homeEn },
+          { key: "about", locale: "id", value: form.aboutId },
+          { key: "about", locale: "en", value: form.aboutEn },
+          { key: "skills", locale: "id", value: form.skillsId },
+          { key: "skills", locale: "en", value: form.skillsEn },
+          { key: "portfolio", locale: "id", value: form.portfolioId },
+          { key: "portfolio", locale: "en", value: form.portfolioEn },
+          { key: "contact", locale: "id", value: form.contactId },
+          { key: "contact", locale: "en", value: form.contactEn },
         ]);
         toast.success("NavHome content saved!");
       } catch (err) {
@@ -361,7 +405,7 @@ function NavHomeEditor({ data }: { data: SiteContentGrouped | null }) {
 
   return (
     <SectionWrapper title="NavHome (Floating Dock)" onSave={handleSave} isSaving={isSaving}>
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+      <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-4">
         <p className="text-sm text-white/50">Labels untuk navigasi floating dock di bagian bawah layar.</p>
       </div>
       <LocalizedBlock locale="id" accent="amber">
@@ -392,12 +436,17 @@ function SkillsEditor({ data }: { data: SiteContentGrouped | null }) {
   const idT = data?.localized?.["id"] ?? {};
   const enT = data?.localized?.["en"] ?? {};
   const existingItems: SkillItem[] = (() => {
-    try { return data?.global?.items ? JSON.parse(data.global.items) : []; }
-    catch { return []; }
+    try {
+      return data?.global?.items ? JSON.parse(data.global.items) : [];
+    } catch {
+      return [];
+    }
   })();
   const [form, setForm] = useState({
-    titleId: idT.title ?? "", titleEn: enT.title ?? "",
-    descriptionId: idT.description ?? "", descriptionEn: enT.description ?? "",
+    titleId: idT.title ?? "",
+    titleEn: enT.title ?? "",
+    descriptionId: idT.description ?? "",
+    descriptionEn: enT.description ?? "",
   });
   const [items, setItems] = useState<SkillItem[]>(existingItems);
   const [newItem, setNewItem] = useState<SkillItem>({ name: "", image: "", bgColor: "#28A9E0", textColor: "#28A9E0" });
@@ -409,11 +458,17 @@ function SkillsEditor({ data }: { data: SiteContentGrouped | null }) {
     const idT = data.localized?.["id"] ?? {};
     const enT = data.localized?.["en"] ?? {};
     setForm({
-      titleId: idT.title ?? "", titleEn: enT.title ?? "",
-      descriptionId: idT.description ?? "", descriptionEn: enT.description ?? "",
+      titleId: idT.title ?? "",
+      titleEn: enT.title ?? "",
+      descriptionId: idT.description ?? "",
+      descriptionEn: enT.description ?? "",
     });
-    try { const raw = data.global?.items; setItems(raw ? JSON.parse(raw) : []); }
-    catch { setItems([]); }
+    try {
+      const raw = data.global?.items;
+      setItems(raw ? JSON.parse(raw) : []);
+    } catch {
+      setItems([]);
+    }
   }, [data]);
 
   const handleSave = () => {
@@ -450,7 +505,7 @@ function SkillsEditor({ data }: { data: SiteContentGrouped | null }) {
           </Button>
         </div>
         {showAdd && (
-          <div className="mb-4 rounded-xl border border-white/10 bg-white/[0.05] p-4 space-y-3">
+          <div className="mb-4 rounded-xl border border-white/10 bg-white/5 p-4 space-y-3">
             <div className="grid gap-3 md:grid-cols-2">
               <CompactField label="Name" value={newItem.name} onChange={(v) => setNewItem((p) => ({ ...p, name: v }))} placeholder="HTML" />
               <CompactField label="Image URL" value={newItem.image} onChange={(v) => setNewItem((p) => ({ ...p, image: v }))} placeholder="/assets/image/skills/html5.png" />
@@ -458,24 +513,60 @@ function SkillsEditor({ data }: { data: SiteContentGrouped | null }) {
               <CompactField label="Text Color" value={newItem.textColor} onChange={(v) => setNewItem((p) => ({ ...p, textColor: v }))} placeholder="#E54F26" />
             </div>
             <div className="flex gap-2 justify-end">
-              <Button type="button" variant="ghost" size="sm" onClick={() => setShowAdd(false)} className="text-white/50 hover:text-white">Cancel</Button>
-              <Button type="button" size="sm" onClick={() => { if (newItem.name && newItem.image) { setItems((p) => [...p, { ...newItem }]); setNewItem({ name: "", image: "", bgColor: "#28A9E0", textColor: "#28A9E0" }); setShowAdd(false); }}} className="bg-brand-500 text-black hover:bg-brand-400">Add</Button>
+              <Button type="button" variant="ghost" size="sm" onClick={() => setShowAdd(false)} className="text-white/50 hover:text-white">
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                onClick={() => {
+                  if (newItem.name && newItem.image) {
+                    setItems((p) => [...p, { ...newItem }]);
+                    setNewItem({ name: "", image: "", bgColor: "#28A9E0", textColor: "#28A9E0" });
+                    setShowAdd(false);
+                  }
+                }}
+                className="bg-brand-500 text-black hover:bg-brand-400"
+              >
+                Add
+              </Button>
             </div>
           </div>
         )}
         <div className="space-y-2">
           {items.map((item, i) => (
-            <div key={i} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-xs text-white" style={{ backgroundColor: item.bgColor }}>{item.name.charAt(0)}</div>
-              <div className="min-w-0 flex-1 grid gap-1 md:grid-cols-3">
-                <input value={item.name} onChange={(e) => setItems((p) => p.map((x, j) => j === i ? { ...x, name: e.target.value } : x))} className="rounded-lg border border-white/10 bg-black/20 px-2 py-1 text-sm text-white outline-none" />
-                <input value={item.image} onChange={(e) => setItems((p) => p.map((x, j) => j === i ? { ...x, image: e.target.value } : x))} className="rounded-lg border border-white/10 bg-black/20 px-2 py-1 text-sm text-white font-mono outline-none" />
-                <div className="flex gap-1">
-                  <input value={item.bgColor} onChange={(e) => setItems((p) => p.map((x, j) => j === i ? { ...x, bgColor: e.target.value } : x))} className="flex-1 rounded-lg border border-white/10 bg-black/20 px-2 py-1 text-sm text-white font-mono outline-none" />
-                  <input type="color" value={item.bgColor} onChange={(e) => setItems((p) => p.map((x, j) => j === i ? { ...x, bgColor: e.target.value } : x))} className="h-8 w-8 cursor-pointer rounded border border-white/10 bg-transparent" />
-                </div>
+            <div key={i} className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/3 px-4 py-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-xs text-white mt-1" style={{ backgroundColor: item.bgColor }}>
+                {item.name.charAt(0)}
               </div>
-              <button type="button" onClick={() => setItems((p) => p.filter((_, j) => j !== i))} className="shrink-0 text-rose-400/60 hover:text-rose-400"><Trash2 className="h-4 w-4" /></button>
+              <div className="min-w-0 flex-1 space-y-2">
+                <div className="grid gap-2 md:grid-cols-2">
+                  <input
+                    value={item.name}
+                    onChange={(e) => setItems((p) => p.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))}
+                    className="rounded-lg border border-white/10 bg-black/20 px-2 py-1 text-sm text-white outline-none"
+                    placeholder="Skill name"
+                  />
+                  <div className="flex gap-1">
+                    <input
+                      value={item.bgColor}
+                      onChange={(e) => setItems((p) => p.map((x, j) => (j === i ? { ...x, bgColor: e.target.value } : x)))}
+                      className="flex-1 rounded-lg border border-white/10 bg-black/20 px-2 py-1 text-sm text-white font-mono outline-none"
+                      placeholder="#HEX"
+                    />
+                    <input
+                      type="color"
+                      value={item.bgColor}
+                      onChange={(e) => setItems((p) => p.map((x, j) => (j === i ? { ...x, bgColor: e.target.value } : x)))}
+                      className="h-8 w-8 cursor-pointer rounded border border-white/10 bg-transparent"
+                    />
+                  </div>
+                </div>
+                <ImageUploader folder="skills" currentUrl={item.image} onUrlChange={(url) => setItems((p) => p.map((x, j) => (j === i ? { ...x, image: url } : x)))} label="Upload icon skill ke MinIO/CDN (otomatis saat Save)" />
+              </div>
+              <button type="button" onClick={() => setItems((p) => p.filter((_, j) => j !== i))} className="shrink-0 mt-1 text-rose-400/60 hover:text-rose-400">
+                <Trash2 className="h-4 w-4" />
+              </button>
             </div>
           ))}
           {items.length === 0 && <p className="text-sm text-white/40">No skills yet.</p>}
@@ -491,23 +582,34 @@ function ContactEditor({ data }: { data: SiteContentGrouped | null }) {
   const idT = data?.localized?.["id"] ?? {};
   const enT = data?.localized?.["en"] ?? {};
   const [form, setForm] = useState({
-    titleId: idT.title ?? "", titleEn: enT.title ?? "",
-    title_form_1Id: idT.title_form_1 ?? "", title_form_1En: enT.title_form_1 ?? "",
-    title_form_2Id: idT.title_form_2 ?? "", title_form_2En: enT.title_form_2 ?? "",
-    title_form_3Id: idT.title_form_3 ?? "", title_form_3En: enT.title_form_3 ?? "",
-    submitId: idT.submit ?? "", submitEn: enT.submit ?? "",
+    titleId: idT.title ?? "",
+    titleEn: enT.title ?? "",
+    title_form_1Id: idT.title_form_1 ?? "",
+    title_form_1En: enT.title_form_1 ?? "",
+    title_form_2Id: idT.title_form_2 ?? "",
+    title_form_2En: enT.title_form_2 ?? "",
+    title_form_3Id: idT.title_form_3 ?? "",
+    title_form_3En: enT.title_form_3 ?? "",
+    submitId: idT.submit ?? "",
+    submitEn: enT.submit ?? "",
   });
   const [isSaving, startSave] = useTransition();
 
   useEffect(() => {
     if (!data) return;
-    const idT = data.localized?.["id"] ?? {}; const enT = data.localized?.["en"] ?? {};
+    const idT = data.localized?.["id"] ?? {};
+    const enT = data.localized?.["en"] ?? {};
     setForm({
-      titleId: idT.title ?? "", titleEn: enT.title ?? "",
-      title_form_1Id: idT.title_form_1 ?? "", title_form_1En: enT.title_form_1 ?? "",
-      title_form_2Id: idT.title_form_2 ?? "", title_form_2En: enT.title_form_2 ?? "",
-      title_form_3Id: idT.title_form_3 ?? "", title_form_3En: enT.title_form_3 ?? "",
-      submitId: idT.submit ?? "", submitEn: enT.submit ?? "",
+      titleId: idT.title ?? "",
+      titleEn: enT.title ?? "",
+      title_form_1Id: idT.title_form_1 ?? "",
+      title_form_1En: enT.title_form_1 ?? "",
+      title_form_2Id: idT.title_form_2 ?? "",
+      title_form_2En: enT.title_form_2 ?? "",
+      title_form_3Id: idT.title_form_3 ?? "",
+      title_form_3En: enT.title_form_3 ?? "",
+      submitId: idT.submit ?? "",
+      submitEn: enT.submit ?? "",
     });
   }, [data]);
 
@@ -515,11 +617,16 @@ function ContactEditor({ data }: { data: SiteContentGrouped | null }) {
     startSave(async () => {
       try {
         await saveSection("contact", [
-          { key: "title", locale: "id", value: form.titleId }, { key: "title", locale: "en", value: form.titleEn },
-          { key: "title_form_1", locale: "id", value: form.title_form_1Id }, { key: "title_form_1", locale: "en", value: form.title_form_1En },
-          { key: "title_form_2", locale: "id", value: form.title_form_2Id }, { key: "title_form_2", locale: "en", value: form.title_form_2En },
-          { key: "title_form_3", locale: "id", value: form.title_form_3Id }, { key: "title_form_3", locale: "en", value: form.title_form_3En },
-          { key: "submit", locale: "id", value: form.submitId }, { key: "submit", locale: "en", value: form.submitEn },
+          { key: "title", locale: "id", value: form.titleId },
+          { key: "title", locale: "en", value: form.titleEn },
+          { key: "title_form_1", locale: "id", value: form.title_form_1Id },
+          { key: "title_form_1", locale: "en", value: form.title_form_1En },
+          { key: "title_form_2", locale: "id", value: form.title_form_2Id },
+          { key: "title_form_2", locale: "en", value: form.title_form_2En },
+          { key: "title_form_3", locale: "id", value: form.title_form_3Id },
+          { key: "title_form_3", locale: "en", value: form.title_form_3En },
+          { key: "submit", locale: "id", value: form.submitId },
+          { key: "submit", locale: "en", value: form.submitEn },
         ]);
         toast.success("Contact content saved!");
       } catch (err) {
@@ -557,8 +664,10 @@ function ContactEditor({ data }: { data: SiteContentGrouped | null }) {
 function NavbarEditor({ data }: { data: SiteContentGrouped | null }) {
   const g = data?.global ?? {};
   const [form, setForm] = useState({
-    brandName: g.brandName ?? "", logoImage: g.logoImage ?? "",
-    instagramUrl: g.instagramUrl ?? "", githubUrl: g.githubUrl ?? "",
+    brandName: g.brandName ?? "",
+    logoImage: g.logoImage ?? "",
+    instagramUrl: g.instagramUrl ?? "",
+    githubUrl: g.githubUrl ?? "",
     linkedinUrl: g.linkedinUrl ?? "",
   });
   const [isSaving, startSave] = useTransition();
@@ -591,7 +700,10 @@ function NavbarEditor({ data }: { data: SiteContentGrouped | null }) {
       <SeparateBlock title="Brand Info">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Brand Name" value={form.brandName} onChange={(v) => setForm((p) => ({ ...p, brandName: v }))} />
-          <Field label="Logo Image URL" value={form.logoImage} onChange={(v) => setForm((p) => ({ ...p, logoImage: v }))} />
+          <div className="space-y-1.5">
+            <Label className="text-xs text-white/60">Logo Image</Label>
+            <ImageUploader folder="navbar" currentUrl={form.logoImage} onUrlChange={(url) => setForm((p) => ({ ...p, logoImage: url }))} label="Upload navbar logo ke MinIO/CDN (otomatis saat Save)" />
+          </div>
         </div>
       </SeparateBlock>
       <SeparateBlock title="Social Links">
@@ -625,7 +737,7 @@ function SectionWrapper({ title, onSave, isSaving, children }: { title: string; 
 function LocalizedBlock({ locale, accent, children }: { locale: string; accent: string; children: React.ReactNode }) {
   const color = accent === "amber" ? "text-amber-300" : "text-sky-400";
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+    <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-4">
       <div className="flex items-center gap-2 text-white font-semibold">
         <Globe2 className={`h-4 w-4 ${color}`} />
         {locale === "id" ? "Bahasa Indonesia" : "English"}
@@ -637,7 +749,7 @@ function LocalizedBlock({ locale, accent, children }: { locale: string; accent: 
 
 function SeparateBlock({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+    <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-4">
       <div className="flex items-center gap-2 text-white font-semibold">{title}</div>
       {children}
     </div>
@@ -666,7 +778,7 @@ function TextareaField({ label, value, onChange }: { label: string; value: strin
   return (
     <div className="space-y-1.5">
       <Label className="text-xs text-white/60">{label}</Label>
-      <Textarea value={value} onChange={(e) => onChange(e.target.value)} className="border-white/10 bg-white/5 min-h-[100px]" />
+      <Textarea value={value} onChange={(e) => onChange(e.target.value)} className="border-white/10 bg-white/5 min-h-25" />
     </div>
   );
 }
@@ -699,12 +811,16 @@ export function SiteContentManager({ locale, defaultSection }: SiteContentManage
     setIsLoading(true);
     fetch(`/api/site-content?locale=${locale}`)
       .then((res) => res.json())
-      .then((json) => { if (json?.data) setData(json.data); })
+      .then((json) => {
+        if (json?.data) setData(json.data);
+      })
       .catch(console.error)
       .finally(() => setIsLoading(false));
   }, [locale]);
 
-  useEffect(() => { fetchContent(); }, [fetchContent]);
+  useEffect(() => {
+    fetchContent();
+  }, [fetchContent]);
 
   const renderEditor = () => {
     if (isLoading) {
@@ -719,19 +835,27 @@ export function SiteContentManager({ locale, defaultSection }: SiteContentManage
     }
     const sectionData = data?.[activeSection] ?? null;
     switch (activeSection) {
-      case "banner": return <BannerEditor data={sectionData} locale={locale} />;
-      case "about": return <AboutEditor data={sectionData} />;
-      case "skills": return <SkillsEditor data={sectionData} />;
-      case "contact": return <ContactEditor data={sectionData} />;
-      case "navbar": return <NavbarEditor data={sectionData} />;
-      case "footer": return <FooterEditor data={sectionData} />;
-      case "navhome": return <NavHomeEditor data={sectionData} />;
-      default: return null;
+      case "banner":
+        return <BannerEditor data={sectionData} locale={locale} />;
+      case "about":
+        return <AboutEditor data={sectionData} />;
+      case "skills":
+        return <SkillsEditor data={sectionData} />;
+      case "contact":
+        return <ContactEditor data={sectionData} />;
+      case "navbar":
+        return <NavbarEditor data={sectionData} />;
+      case "footer":
+        return <FooterEditor data={sectionData} />;
+      case "navhome":
+        return <NavHomeEditor data={sectionData} />;
+      default:
+        return null;
     }
   };
 
   return (
-    <div id="content-editor" className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+    <div id="content-editor" className="overflow-hidden rounded-2xl border border-white/10 bg-white/3 backdrop-blur-sm">
       <div className="border-b border-white/10 px-5 py-4">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
@@ -743,10 +867,11 @@ export function SiteContentManager({ locale, defaultSection }: SiteContentManage
       </div>
       <div className="flex flex-wrap gap-1 border-b border-white/10 px-5 py-3">
         {SECTIONS.map((section) => (
-          <button key={section.id} type="button" onClick={() => setActiveSection(section.id)}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
-              activeSection === section.id ? "bg-brand-500/15 text-brand-400" : "text-white/50 hover:text-white hover:bg-white/5"
-            }`}
+          <button
+            key={section.id}
+            type="button"
+            onClick={() => setActiveSection(section.id)}
+            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${activeSection === section.id ? "bg-brand-500/15 text-brand-400" : "text-white/50 hover:text-white hover:bg-white/5"}`}
           >
             <section.icon className="h-4 w-4" /> {section.label}
           </button>

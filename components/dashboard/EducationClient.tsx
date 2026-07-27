@@ -25,6 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
+import { ImageUploader } from "@/components/dashboard/ImageUploader";
 import type { Education, SiteContentGrouped } from "@/app/types/site-content";
 
 type EducationClientProps = { locale: string };
@@ -299,17 +300,15 @@ export function EducationClient({ locale }: EducationClientProps) {
                   placeholder="Computer Science" className="border-white/10 bg-white/5 text-white" />
               </div>
               <div className="space-y-2">
-                <Label className="text-white/80">Logo URL</Label>
-                <Input value={form.logo ?? ""} onChange={(e) => setForm((p) => ({ ...p, logo: e.target.value }))}
-                  placeholder="https://school.edu/logo.png" className="border-white/10 bg-white/5 text-white" />
+                <Label className="text-white/80">Logo</Label>
+                <ImageUploader
+                  folder="education"
+                  currentUrl={form.logo ?? ""}
+                  onUrlChange={(url) => setForm((p) => ({ ...p, logo: url }))}
+                  label="Upload logo sekolah ke MinIO/CDN (otomatis saat Save)"
+                />
               </div>
             </div>
-            {form.logo && (
-              <div className="flex items-center gap-2">
-                <Image src={form.logo} alt="Preview" width={32} height={32} className="rounded object-cover w-8 h-8" />
-                <span className="text-xs text-white/40">Logo preview</span>
-              </div>
-            )}
             {/* Row 3 */}
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">

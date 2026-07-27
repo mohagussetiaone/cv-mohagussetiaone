@@ -1,6 +1,25 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+@font-face {
+  font-family: "Geist Sans";
+  src: url("../fonts/GeistVF.woff") format("woff");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("../fonts/GeistMonoVF.woff") format("woff");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --font-geist-sans: "Geist Sans";
+  --font-geist-mono: "Geist Mono";
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -199,13 +218,19 @@ html:not([data-theme]) body {
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-
   body {
-    @apply font-sans antialiased;
+    @apply border-border outline-ring/50 font-sans antialiased;
   }
+}
+
+html,
+body {
+  min-height: 100%;
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 @layer utilities {

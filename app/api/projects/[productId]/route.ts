@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getAuthSession } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { isAdminEmail } from "@/lib/auth";
+import { deleteMinioObject, hasMinioConfig } from "@/lib/minio";
 import { projectPayloadSchema } from "@/lib/validators/project";
 
 type RouteContext = {
@@ -132,24 +133,28 @@ export async function DELETE(request: Request, { params }: RouteContext) {
     }
 
     const project = await prisma.project.findUnique({
-      where: { productId }
+      where: { productId },
     });
 
     if (!project) {
       return NextResponse.json({ message: "Project tidak ditemukan." }, { status: 404 });
     }
 
-    // Delete related translations, skills (connections), and categories (connections)
-    // Prisma handles relation cleanup if configured or we can do it explicitly
-    // Here we just delete the project and rely on cascade delete if setup, 
-    // or manually delete translations first.
-    
+    // Hapus image dari MinIO storage jika ada
+    if (project.image && hasMinioConfig()) {
+      try {
+        await deleteMinioObject(project.image);
+      } catch (err) {
+        console.error("Gagal hapus image dari MinIO:", err);
+      }
+    }
+
     await prisma.projectTranslation.deleteMany({
-      where: { projectId: project.id }
+      where: { projectId: project.id },
     });
 
     await prisma.project.delete({
-      where: { productId }
+      where: { productId },
     });
 
     return NextResponse.json({

@@ -1,21 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { RootShell } from "@/components/layout/RootShell";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LocaleProvider } from "@/components/providers/LocaleProvider";
-
-const geistSans = localFont({
-  src: "../fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-
-const geistMono = localFont({
-  src: "../fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Moh Agus Setiawan | Frontend React Developer",
@@ -74,7 +61,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+      <body className="antialiased" suppressHydrationWarning>
         <LocaleProvider initialLocale={locale} enMessages={enMessages} idMessages={idMessages}>
           <ThemeProvider>
             <RootShell>{children}</RootShell>

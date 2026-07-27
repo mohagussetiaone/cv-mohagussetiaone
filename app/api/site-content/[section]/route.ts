@@ -77,9 +77,6 @@ export async function PUT(request: Request, { params }: RouteContext) {
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { message: "Terjadi kesalahan saat menyimpan konten." },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Terjadi kesalahan saat menyimpan konten." }, { status: 500 });
   }
 }

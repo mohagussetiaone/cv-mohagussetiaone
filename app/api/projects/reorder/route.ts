@@ -24,8 +24,8 @@ export async function PATCH(request: Request) {
         prisma.project.update({
           where: { productId: item.productId },
           data: { sortOrder: item.sortOrder },
-        })
-      )
+        }),
+      ),
     );
 
     return NextResponse.json({
@@ -33,9 +33,6 @@ export async function PATCH(request: Request) {
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { message: "Terjadi kesalahan saat memperbarui urutan project." },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Terjadi kesalahan saat memperbarui urutan project." }, { status: 500 });
   }
 }

@@ -2,14 +2,7 @@ import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
 import { getAuthSession } from "@/auth";
 import { isAdminEmail } from "@/lib/auth";
-import {
-  buildMinioObjectName,
-  buildMinioPublicUrl,
-  ensureMinioBucket,
-  getMinioBucketName,
-  getMinioClient,
-  hasMinioConfig,
-} from "@/lib/minio";
+import { buildMinioObjectName, buildMinioPublicUrl, ensureMinioBucket, getMinioBucketName, getMinioClient, hasMinioConfig } from "@/lib/minio";
 
 export const runtime = "nodejs";
 
@@ -25,10 +18,7 @@ export async function POST(request: Request) {
     }
 
     if (!hasMinioConfig()) {
-      return NextResponse.json(
-        { message: "Konfigurasi MinIO belum lengkap di environment." },
-        { status: 500 }
-      );
+      return NextResponse.json({ message: "Konfigurasi MinIO belum lengkap di environment." }, { status: 500 });
     }
 
     const formData = await request.formData();
@@ -39,21 +29,19 @@ export async function POST(request: Request) {
     }
 
     if (!allowedTypes.has(file.type)) {
-      return NextResponse.json(
-        { message: "Format file harus JPG, PNG, WEBP, atau SVG." },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: "Format file harus JPG, PNG, WEBP, atau SVG." }, { status: 400 });
     }
 
     if (file.size > maxFileSize) {
-      return NextResponse.json(
-        { message: "Ukuran file maksimal 5MB." },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: "Ukuran file maksimal 5MB." }, { status: 400 });
     }
 
     const extension =
-      file.name.split(".").pop()?.replace(/[^a-zA-Z0-9]/g, "").toLowerCase() ||
+      file.name
+        .split(".")
+        .pop()
+        ?.replace(/[^a-zA-Z0-9]/g, "")
+        .toLowerCase() ||
       file.type.split("/")[1] ||
       "bin";
     const objectName = buildMinioObjectName(`${randomUUID()}.${extension}`);
@@ -79,9 +67,6 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error(error);
 
-    return NextResponse.json(
-      { message: "Terjadi kesalahan saat upload image ke MinIO." },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Terjadi kesalahan saat upload image ke MinIO." }, { status: 500 });
   }
 }

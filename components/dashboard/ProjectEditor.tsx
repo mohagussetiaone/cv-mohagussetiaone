@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { ImageUploader } from "@/components/dashboard/ImageUploader";
 import { cn } from "@/lib/utils";
 
 type ProjectEditorProps = {
@@ -56,7 +57,6 @@ export function ProjectEditor({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
-  const [isUploading, startUploadTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [form, setForm] = useState(() => createInitialState(project));
@@ -127,29 +127,55 @@ export function ProjectEditor({
     }));
   };
 
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  const [pendingImageFile, setPendingImageFile] = useState<File | null>(null);
+  const [previewBlobUrl, setPreviewBlobUrl] = useState<string | null>(null);
 
-    setError(null);
-    setSuccess(null);
+  // Cleanup blob URL on unmount
+  useEffect(() => {
+    return () => {
+      if (previewBlobUrl) URL.revokeObjectURL(previewBlobUrl);
+    };
+  }, [previewBlobUrl]);
 
-    startUploadTransition(async () => {
-      const payload = new FormData();
-      payload.append("file", file);
-      const response = await fetch("/api/uploads/project-image", { method: "POST", body: payload });
-      const result = await response.json().catch(() => null);
+  const handleImageFileSelect = (file: File | null) => {
+    // Revoke old preview
+    if (previewBlobUrl) {
+      URL.revokeObjectURL(previewBlobUrl);
+      setPreviewBlobUrl(null);
+    }
+    if (file) {
+      setPreviewBlobUrl(URL.createObjectURL(file));
+    }
+    setPendingImageFile(file);
+  };
 
-      if (!response.ok) {
-        setError(result?.message || "Gagal upload image.");
-        event.target.value = "";
-        return;
-      }
+  // Helper: upload pending image & delete old if saving
+  const uploadPendingImage = async (oldUrl: string): Promise<string> => {
+    if (!pendingImageFile) return oldUrl;
 
-      updateField("image", result?.data?.url ?? "");
-      setSuccess("Image berhasil diupload ke storage.");
-      event.target.value = "";
-    });
+    const payload = new FormData();
+    payload.append("file", pendingImageFile);
+    payload.append("folder", "projects");
+
+    const response = await fetch("/api/uploads/general", { method: "POST", body: payload });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result?.message || "Gagal upload.");
+
+    const newUrl = result?.data?.url ?? "";
+
+    // Hapus file lama dari MinIO
+    if (oldUrl && oldUrl !== newUrl) {
+      try {
+        await fetch("/api/uploads/general", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: oldUrl }),
+        });
+      } catch { /* ignore */ }
+    }
+
+    setPendingImageFile(null);
+    return newUrl;
   };
 
   // Filter out already selected technologies for the dropdown
@@ -199,42 +225,56 @@ export function ProjectEditor({
     setSuccess(null);
 
     startTransition(async () => {
-      const endpoint = mode === "edit" && project ? `/api/projects/${project.productId}` : "/api/projects";
-      const method = mode === "edit" ? "PATCH" : "POST";
+      try {
+        // Upload pending image dulu (jika ada)
+        const newImage = pendingImageFile
+          ? await uploadPendingImage(form.image)
+          : form.image;
 
-      const body = {
-        image: form.image,
-        urlPreview: form.urlPreview,
-        githubUrl: form.githubUrl,
-        figmaUrl: form.figmaUrl,
-        internal: form.internal,
-        categories: form.categories.join(", "),
-        technologies: form.technologies.join(", "),
-        translations: form.translations,
-      };
+        const endpoint = mode === "edit" && project ? `/api/projects/${project.productId}` : "/api/projects";
+        const method = mode === "edit" ? "PATCH" : "POST";
 
-      const response = await fetch(endpoint, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+        const body = {
+          image: newImage,
+          urlPreview: form.urlPreview,
+          githubUrl: form.githubUrl,
+          figmaUrl: form.figmaUrl,
+          internal: form.internal,
+          categories: form.categories.join(", "),
+          technologies: form.technologies.join(", "),
+          translations: form.translations,
+        };
 
-      const payload = await response.json().catch(() => null);
+        const response = await fetch(endpoint, {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
 
-      if (!response.ok) {
-        setError(payload?.message || "Gagal menyimpan project.");
-        return;
+        const payload = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          setError(payload?.message || "Gagal menyimpan project.");
+          return;
+        }
+
+        // Update form.image with new URL after successful save
+        if (newImage !== form.image) {
+          updateField("image", newImage);
+        }
+
+        setSuccess(mode === "edit" ? "Project berhasil diperbarui." : "Project berhasil ditambahkan.");
+        onSaved?.();
+
+        if (mode === "create") {
+          setForm(createInitialState());
+        }
+
+        router.refresh();
+        setTimeout(handleClose, 1500);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Gagal menyimpan.");
       }
-
-      setSuccess(mode === "edit" ? "Project berhasil diperbarui." : "Project berhasil ditambahkan.");
-      onSaved?.();
-
-      if (mode === "create") {
-        setForm(createInitialState());
-      }
-
-      router.refresh();
-      setTimeout(handleClose, 1500);
     });
   };
 
@@ -372,30 +412,26 @@ export function ProjectEditor({
             <div className="space-y-3 rounded-2xl border border-dashed border-white/15 bg-white/[0.03] p-5">
               <div className="flex items-center gap-2 text-sm font-medium text-white">
                 <ImageUp className="h-4 w-4 text-amber-300" />
-                Upload image project ke MinIO
+                Image project
               </div>
               <p className="text-sm text-white/60">
-                Pilih file JPG, PNG, WEBP, atau SVG. Setelah upload berhasil, URL akan otomatis masuk ke field image.
+                Pilih file JPG, PNG, WEBP, atau SVG. File akan diupload ke MinIO saat klik Simpan.
               </p>
-              <Input
-                id="projectImageUpload"
-                type="file"
-                accept="image/png,image/jpeg,image/webp,image/svg+xml"
-                onChange={handleImageUpload}
-                disabled={isUploading}
-                className="border-white/10 bg-white/5 file:mr-4 file:rounded-full file:border-0 file:bg-amber-300 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-black"
+              <ImageUploader
+                folder="projects"
+                currentUrl={form.image}
+                onUrlChange={(url) => updateField("image", url)}
+                onPendingFile={handleImageFileSelect}
+                label="Upload image project ke MinIO/CDN (otomatis saat Simpan)"
               />
-              <p className="text-xs text-white/40">
-                Maksimal 5MB. Jika perlu, Anda tetap bisa paste URL image manual di field atas.
-              </p>
             </div>
 
             {/* Preview - Larger */}
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/20">
               <div className="flex h-full min-h-[240px] items-center justify-center">
-                {form.image ? (
+                {(pendingImageFile || form.image) ? (
                   <Image
-                    src={form.image}
+                    src={pendingImageFile && previewBlobUrl ? previewBlobUrl : form.image}
                     alt="Preview image project"
                     width={400}
                     height={280}
