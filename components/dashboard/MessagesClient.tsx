@@ -27,7 +27,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 type Message = {
-  id: number;
+  id: string;
   name: string;
   email: string;
   message: string;
@@ -89,7 +89,7 @@ export function MessagesClient({ locale }: { locale: string }) {
     fetchMessages();
   }, [fetchMessages]);
 
-  const handleMarkRead = async (id: number, read: boolean) => {
+  const handleMarkRead = async (id: string, read: boolean) => {
     try {
       const res = await fetch(`/api/messages/${id}`, {
         method: "PUT",

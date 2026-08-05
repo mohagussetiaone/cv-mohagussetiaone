@@ -16,8 +16,9 @@ export async function GET(_request: Request, { params }: RouteContext) {
     }
 
     const { id } = await params;
-    const messageId = Number(id);
-    if (Number.isNaN(messageId)) {
+    const messageId = id;
+
+    if (!messageId) {
       return NextResponse.json({ message: "ID tidak valid." }, { status: 400 });
     }
 
@@ -45,8 +46,9 @@ export async function PUT(request: Request, { params }: RouteContext) {
     }
 
     const { id } = await params;
-    const messageId = Number(id);
-    if (Number.isNaN(messageId)) {
+    const messageId = id;
+
+    if (!messageId) {
       return NextResponse.json({ message: "ID tidak valid." }, { status: 400 });
     }
 

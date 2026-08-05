@@ -1,9 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState, useTransition } from "react";
-import { ArrowLeft, Briefcase, PencilLine, PlusCircle, Trash2 } from "lucide-react";
+import { ArrowLeft, Briefcase, PencilLine, PlusCircle, Trash2, Save } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,41 +12,23 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { ImageUploader } from "@/components/dashboard/ImageUploader";
-import type { SiteContentGrouped, WorkExperience } from "@/app/types/site-content";
+import type { SectionContentResponse, WorkExperience } from "@/app/types/site-content";
 
 type WorksClientProps = { locale: string };
 
 const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Freelance", "Internship"] as const;
 
-async function fetchContent(locale: string): Promise<SiteContentGrouped | null> {
-  const res = await fetch(`/api/site-content?locale=${locale}`);
-  const json = await res.json();
-  return json?.data?.works ?? null;
-}
+type WorkForm = {
+  company: string;
+  position: string;
+  location: string;
+  type: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+};
 
-async function saveSection(section: string, entries: { key: string; locale: string; value: string }[]) {
-  const response = await fetch(`/api/site-content/${section}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ entries }),
-  });
-  const result = await response.json();
-  if (!response.ok) throw new Error(result.message || "Gagal menyimpan.");
-  return result;
-}
-
-function parseJSON<T>(raw: string | undefined, fallback: T): T {
-  if (!raw) return fallback;
-  try {
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
-  }
-}
-
-const emptyForm = (): WorkExperience => ({
-  id: "",
+const emptyForm = (): WorkForm => ({
   company: "",
   position: "",
   location: "",
@@ -55,11 +36,10 @@ const emptyForm = (): WorkExperience => ({
   startDate: "",
   endDate: "Present",
   description: "",
-  logo: "",
 });
 
 export function WorksClient({ locale }: WorksClientProps) {
-  const [data, setData] = useState<SiteContentGrouped | null>(null);
+  const [experiences, setExperiences] = useState<WorkExperience[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, startSave] = useTransition();
 
@@ -68,51 +48,59 @@ export function WorksClient({ locale }: WorksClientProps) {
   const [titleEn, setTitleEn] = useState("");
   const [descId, setDescId] = useState("");
   const [descEn, setDescEn] = useState("");
-
-  // Items
-  const [experiences, setExperiences] = useState<WorkExperience[]>([]);
+  const [expLabelId, setExpLabelId] = useState("");
+  const [expLabelEn, setExpLabelEn] = useState("");
 
   // Dialog state
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [form, setForm] = useState<WorkExperience>(emptyForm());
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [form, setForm] = useState<WorkForm>(emptyForm());
 
   const loadData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const result = await fetchContent(locale);
-      setData(result);
+      const res = await fetch("/api/works");
+      const json = await res.json();
+      const payload = json?.data as SectionContentResponse<WorkExperience> | undefined;
+      setExperiences(payload?.items ?? []);
+      const id = payload?.settings?.localized?.["id"] ?? {};
+      const en = payload?.settings?.localized?.["en"] ?? {};
+      setTitleId(id.title ?? "");
+      setTitleEn(en.title ?? "");
+      setDescId(id.description ?? "");
+      setDescEn(en.description ?? "");
+      setExpLabelId(id.experience_label ?? "");
+      setExpLabelEn(en.experience_label ?? "");
     } catch {
       toast.error("Gagal memuat data.");
     } finally {
       setIsLoading(false);
     }
-  }, [locale]);
+  }, []);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
 
-  useEffect(() => {
-    if (!data) return;
-    const idMap = data.localized?.["id"] ?? {};
-    const enMap = data.localized?.["en"] ?? {};
-    setTitleId(idMap.title ?? "");
-    setTitleEn(enMap.title ?? "");
-    setDescId(idMap.description ?? "");
-    setDescEn(enMap.description ?? "");
-    setExperiences(parseJSON<WorkExperience[]>(data.global?.experience, []));
-  }, [data]);
-
   const openAdd = () => {
-    setEditingIndex(null);
+    setEditingId(null);
     setForm(emptyForm());
     setDialogOpen(true);
   };
 
   const openEdit = (index: number) => {
-    setEditingIndex(index);
-    setForm({ ...experiences[index] });
+    const exp = experiences[index];
+    if (!exp) return;
+    setEditingId(exp.id);
+    setForm({
+      company: exp.company,
+      position: exp.position,
+      location: exp.location ?? "",
+      type: exp.type,
+      startDate: exp.startDate,
+      endDate: exp.endDate,
+      description: exp.description ?? "",
+    });
     setDialogOpen(true);
   };
 
@@ -121,32 +109,63 @@ export function WorksClient({ locale }: WorksClientProps) {
       toast.error("Company dan Position wajib diisi.");
       return;
     }
-    if (editingIndex !== null) {
-      setExperiences((p) => p.map((x, i) => (i === editingIndex ? { ...form } : x)));
-    } else {
-      setExperiences((p) => [...p, { ...form, id: `exp-${Date.now()}` }]);
-    }
-    setDialogOpen(false);
+
+    startSave(async () => {
+      try {
+        const isEdit = editingId !== null;
+        const endpoint = isEdit ? `/api/works/${editingId}` : "/api/works";
+        const res = await fetch(endpoint, {
+          method: isEdit ? "PATCH" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.message || "Gagal menyimpan.");
+        toast.success(isEdit ? "Work experience berhasil diperbarui." : "Work experience berhasil ditambahkan.");
+        setDialogOpen(false);
+        loadData();
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "Gagal menyimpan.");
+      }
+    });
   };
 
   const handleDelete = (index: number) => {
-    setExperiences((p) => p.filter((_, i) => i !== index));
-  };
-
-  const handleSave = () => {
+    const exp = experiences[index];
+    if (!exp) return;
     startSave(async () => {
       try {
-        await saveSection("works", [
+        const res = await fetch(`/api/works/${exp.id}`, { method: "DELETE" });
+        if (!res.ok) throw new Error("Gagal menghapus.");
+        toast.success("Work experience berhasil dihapus.");
+        loadData();
+      } catch {
+        toast.error("Gagal menghapus.");
+      }
+    });
+  };
+
+  const handleSaveSettings = () => {
+    startSave(async () => {
+      try {
+        const entries = [
           { key: "title", locale: "id", value: titleId },
           { key: "title", locale: "en", value: titleEn },
           { key: "description", locale: "id", value: descId },
           { key: "description", locale: "en", value: descEn },
-          { key: "experience", locale: "", value: JSON.stringify(experiences) },
-        ]);
-        toast.success("Works content saved!");
-        loadData();
+          { key: "experience_label", locale: "id", value: expLabelId },
+          { key: "experience_label", locale: "en", value: expLabelEn },
+        ];
+        const res = await fetch("/api/works/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ entries }),
+        });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.message || "Gagal menyimpan.");
+        toast.success("Pengaturan section berhasil disimpan.");
       } catch (err) {
-        toast.error(err instanceof Error ? err.message : "Failed to save");
+        toast.error(err instanceof Error ? err.message : "Gagal menyimpan.");
       }
     });
   };
@@ -164,7 +183,7 @@ export function WorksClient({ locale }: WorksClientProps) {
               </Link>
             </div>
             <h1 className="mt-3 text-xl font-semibold text-white">Works Management</h1>
-            <p className="mt-1 text-sm text-white/40">Kelola pengalaman kerja yang ditampilkan di halaman utama.</p>
+            <p className="mt-1 text-sm text-white/40">Kelola pengalaman kerja yang ditampilkan di halaman utama. Setiap tambah, edit, atau hapus langsung tersimpan ke API.</p>
           </div>
           <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500/15">
             <Briefcase className="h-5 w-5 text-brand-400" />
@@ -174,10 +193,16 @@ export function WorksClient({ locale }: WorksClientProps) {
 
       {/* Section Settings */}
       <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-6">
-        <h2 className="text-sm font-semibold text-white">Section Settings</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-white">Section Settings</h2>
+          <Button type="button" size="sm" onClick={handleSaveSettings} disabled={isSaving} className="bg-brand-500 text-black hover:bg-brand-400 h-8 text-xs">
+            <Save className="mr-1.5 h-3.5 w-3.5" /> {isSaving ? "Saving..." : "Save Section"}
+          </Button>
+        </div>
         <div className="grid gap-4 md:grid-cols-2">
           <FieldGroup label="Title" idValue={titleId} onIdChange={setTitleId} enValue={titleEn} onEnChange={setTitleEn} />
           <FieldGroup label="Description" idValue={descId} onIdChange={setDescId} enValue={descEn} onEnChange={setDescEn} textarea />
+          <FieldGroup label="Experience Label" idValue={expLabelId} onIdChange={setExpLabelId} enValue={expLabelEn} onEnChange={setExpLabelEn} />
         </div>
       </div>
 
@@ -219,7 +244,7 @@ export function WorksClient({ locale }: WorksClientProps) {
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-500/20 text-brand-400 text-xs font-bold overflow-hidden">
-                        {exp.logo ? <Image src={exp.logo} alt={exp.company} width={36} height={36} className="object-cover w-full h-full" /> : exp.company.charAt(0)}
+                        {exp.company.charAt(0)}
                       </div>
                       <div className="min-w-0">
                         <p className="text-sm font-medium text-white truncate">{exp.company}</p>
@@ -263,15 +288,14 @@ export function WorksClient({ locale }: WorksClientProps) {
         <DialogContent className="max-h-[90svh] max-w-2xl overflow-y-auto border-white/10 bg-[#0a0a0a] text-white">
           <DialogHeader>
             <Badge variant="secondary" className="w-fit gap-1 mb-2">
-              {editingIndex !== null ? <PencilLine className="h-3.5 w-3.5" /> : <PlusCircle className="h-3.5 w-3.5" />}
-              {editingIndex !== null ? "Edit Experience" : "Add Experience"}
+              {editingId !== null ? <PencilLine className="h-3.5 w-3.5" /> : <PlusCircle className="h-3.5 w-3.5" />}
+              {editingId !== null ? "Edit Experience" : "Add Experience"}
             </Badge>
-            <DialogTitle className="text-xl">{editingIndex !== null ? "Edit work experience" : "Add new work experience"}</DialogTitle>
+            <DialogTitle className="text-xl">{editingId !== null ? "Edit work experience" : "Add new work experience"}</DialogTitle>
             <DialogDescription className="text-white/60">All fields marked with * are required.</DialogDescription>
           </DialogHeader>
 
           <div className="grid gap-5 py-4">
-            {/* Row 1 */}
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-white/80">Company *</Label>
@@ -282,7 +306,6 @@ export function WorksClient({ locale }: WorksClientProps) {
                 <Input value={form.position} onChange={(e) => setForm((p) => ({ ...p, position: e.target.value }))} placeholder="Job title" className="border-white/10 bg-white/5 text-white" />
               </div>
             </div>
-            {/* Row 2 */}
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-white/80">Location</Label>
@@ -304,7 +327,6 @@ export function WorksClient({ locale }: WorksClientProps) {
                 </Select>
               </div>
             </div>
-            {/* Row 3 */}
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-white/80">Start Date</Label>
@@ -325,25 +347,9 @@ export function WorksClient({ locale }: WorksClientProps) {
                 )}
               </div>
             </div>
-            {/* Row 4 */}
-            <div className="space-y-2">
-              <Label className="text-white/80">Logo</Label>              <ImageUploader
-                folder="works"
-                currentUrl={form.logo ?? ""}
-                onUrlChange={(url) => setForm((p) => ({ ...p, logo: url }))}
-                label="Upload logo perusahaan ke MinIO/CDN (otomatis saat Save)"
-              />
-            </div>
-            {/* Row 5 */}
             <div className="space-y-2">
               <Label className="text-white/80">Description</Label>
-              <Textarea
-                value={form.description}
-                onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
-                placeholder="Describe your responsibilities, achievements, and technologies used..."
-                rows={4}
-                className="border-white/10 bg-white/5 text-white min-h-25"
-              />
+              <Textarea value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} placeholder="Describe your responsibilities, achievements, and technologies used..." rows={4} className="border-white/10 bg-white/5 text-white min-h-25" />
             </div>
           </div>
 
@@ -351,19 +357,12 @@ export function WorksClient({ locale }: WorksClientProps) {
             <Button type="button" variant="outline" onClick={() => setDialogOpen(false)} className="rounded-full border-white/10 bg-transparent text-white hover:bg-white/10">
               Cancel
             </Button>
-            <Button type="button" onClick={handleSaveForm} className="rounded-full bg-brand-500 text-black hover:bg-brand-400 font-semibold px-6">
-              {editingIndex !== null ? "Update" : "Add"}
+            <Button type="button" onClick={handleSaveForm} disabled={isSaving} className="rounded-full bg-brand-500 text-black hover:bg-brand-400 font-semibold px-6">
+              {isSaving ? "Saving..." : editingId !== null ? "Update" : "Add"}
             </Button>
           </div>
         </DialogContent>
       </Dialog>
-
-      {/* Save button */}
-      <div className="flex justify-end">
-        <Button onClick={handleSave} disabled={isSaving} className="bg-brand-500 text-black hover:bg-brand-400 px-6">
-          {isSaving ? "Saving..." : "Save Changes"}
-        </Button>
-      </div>
     </main>
   );
 }

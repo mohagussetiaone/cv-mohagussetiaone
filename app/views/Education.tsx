@@ -4,22 +4,12 @@ import { useMemo } from "react";
 import {
   Calendar,
   GraduationCap,
-  Building2,
 } from "lucide-react";
 import { useLocale } from "next-intl";
-import { useSiteContent, getLocalizedContent } from "@/hooks/use-site-content";
+import { useSectionContent } from "@/hooks/use-section-content";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { cn } from "@/lib/utils";
 import type { Education as EducationType } from "@/app/types/site-content";
-
-function parseJSON<T>(raw: string | undefined, fallback: T): T {
-  if (!raw) return fallback;
-  try {
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
-  }
-}
 
 // ─── Education Card ─────────────────────────────────────────
 
@@ -77,12 +67,6 @@ function EducationCard({ edu, theme }: { edu: EducationType; theme: string }) {
             <Calendar className="h-3 w-3" />
             {edu.startDate} - {edu.endDate}
           </span>
-          {edu.logo && (
-            <span className="inline-flex items-center gap-1">
-              <Building2 className="h-3 w-3" />
-              {edu.school}
-            </span>
-          )}
         </div>
 
         {edu.description && (
@@ -104,22 +88,19 @@ function EducationCard({ edu, theme }: { edu: EducationType; theme: string }) {
 
 const Education = () => {
   const locale = useLocale();
-  const content = useSiteContent("education", locale);
+  const content = useSectionContent<EducationType>("education", locale);
   const { theme } = useTheme();
 
   const title = useMemo(
-    () => getLocalizedContent(content, locale, "title") || "Education",
-    [content, locale]
+    () => content.localized["title"] || "Education",
+    [content.localized]
   );
   const description = useMemo(
-    () => getLocalizedContent(content, locale, "description") || "My educational background",
-    [content, locale]
+    () => content.localized["description"] || "My educational background",
+    [content.localized]
   );
 
-  const education = useMemo(() => {
-    const raw = content.localized?.[locale]?.items ?? content.global?.items;
-    return parseJSON<EducationType[]>(raw, []);
-  }, [content, locale]);
+  const education = content.items;
 
   return (
     <div className="py-10 md:py-20 px-4 md:px-8" id="education">

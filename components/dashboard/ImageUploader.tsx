@@ -14,9 +14,10 @@ type ImageUploaderProps = {
   label?: string;
   accept?: string;
   maxSizeMB?: number;
+  deferred?: boolean;
 };
 
-export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onPendingFile, label = "Upload image ke MinIO", accept = "image/png,image/jpeg,image/webp,image/svg+xml", maxSizeMB = 5 }: ImageUploaderProps) {
+export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onPendingFile, label = "Upload image ke MinIO", accept = "image/png,image/jpeg,image/webp,image/svg+xml", maxSizeMB = 5, deferred = false }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [localPreview, setLocalPreview] = useState<string | null>(null);
@@ -129,7 +130,7 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
           {hasPending ? "Ganti file" : "Pilih file"}
         </Button>
 
-        {hasPending && (
+        {hasPending && !deferred && (
           <Button type="button" size="sm" disabled={isUploading} onClick={handleUploadNow} className="bg-brand-500 text-black hover:bg-brand-400">
             {isUploading ? <Loader2 className="mr-1 h-3.5 w-3.5 animate-spin" /> : <Upload className="mr-1 h-3.5 w-3.5" />}
             {isUploading ? "Uploading..." : "Upload now"}
@@ -158,7 +159,7 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
               <>
                 <p className="text-xs font-medium text-amber-400/90">Menunggu upload</p>
                 <p className="truncate text-xs font-mono text-white/40">{pendingFile?.name}</p>
-                <p className="text-xs text-amber-400/60">Klik &quot;Upload now&quot; untuk upload ke MinIO</p>
+                <p className="text-xs text-amber-400/60">{deferred ? "File akan diupload otomatis saat submit form" : "Klik \"Upload now\" untuk upload ke MinIO"}</p>
               </>
             ) : hasSaved ? (
               <>

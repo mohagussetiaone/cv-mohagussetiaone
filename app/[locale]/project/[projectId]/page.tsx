@@ -17,13 +17,12 @@ type ShowCaseDetailProps = {
 const ShowCaseDetail = async ({ params }: ShowCaseDetailProps) => {
   const t = await getTranslations("Works");
   const { locale, projectId } = await params;
-  const parsedProjectId = Number.parseInt(projectId, 10);
 
-  if (Number.isNaN(parsedProjectId)) {
+  if (!projectId) {
     notFound();
   }
 
-  const project = await getProjectByProductId(parsedProjectId, locale as ProjectLocale);
+  const project = await getProjectByProductId(projectId, locale as ProjectLocale);
 
   if (!project) {
     notFound();

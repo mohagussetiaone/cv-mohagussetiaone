@@ -7,8 +7,8 @@ export interface ProjectTranslationRecord {
 }
 
 export interface ProjectRecord {
-  id: number;
-  productId: number;
+  id: string;
+  productId: string;
   sortOrder: number;
   projectName: string;
   description: string;

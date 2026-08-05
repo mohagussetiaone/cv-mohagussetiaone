@@ -1,21 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Briefcase, Building2, Calendar, ChevronDown, ChevronRight, MapPin } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
-import { useSiteContent, getLocalizedContent } from "@/hooks/use-site-content";
+import { useSectionContent } from "@/hooks/use-section-content";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { cn } from "@/lib/utils";
 import type { WorkExperience } from "@/app/types/site-content";
-
-function parseJSON<T>(raw: string | undefined, fallback: T): T {
-  if (!raw) return fallback;
-  try {
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
-  }
-}
 
 // ─── Experience Card ─────────────────────────────────────────
 
@@ -148,18 +139,15 @@ function ExperienceCard({ exp, index, theme }: { exp: WorkExperience; index: num
 const Works = () => {
   const locale = useLocale();
   const t = useTranslations("Works");
-  const content = useSiteContent("works", locale);
+  const content = useSectionContent<WorkExperience>("works", locale);
   const { theme } = useTheme();
 
   const t2 = useMemo(() => {
-    const get = (key: string) => getLocalizedContent(content, locale, key) ?? t(key);
+    const get = (key: string) => content.localized[key] ?? t(key);
     return get;
-  }, [content, locale, t]);
+  }, [content.localized, t]);
 
-  const experiences = useMemo(() => {
-    const raw = content.localized?.[locale]?.experience ?? content.global?.experience;
-    return parseJSON<WorkExperience[]>(raw, []);
-  }, [content, locale]);
+  const experiences = content.items;
 
   return (
     <div className="py-10 md:py-24 px-4 md:px-8" id="experience">

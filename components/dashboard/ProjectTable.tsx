@@ -54,7 +54,7 @@ type ProjectTableProps = {
   pagination: ProjectPaginationMeta;
   isLoading?: boolean;
   onDeleted?: () => void;
-  onReorder?: (items: { productId: number; sortOrder: number }[]) => void;
+  onReorder?: (items: { productId: string; sortOrder: number }[]) => void;
   isReordering?: boolean;
 };
 
@@ -118,7 +118,7 @@ function SortableRow({
 
       {/* ID */}
       <div className="w-14 shrink-0">
-        <span className="text-xs font-mono text-white/40">#{project.productId}</span>
+        <span className="text-xs font-mono text-white/40">#{project.productId.slice(0, 8)}</span>
       </div>
 
       {/* Project Info */}
@@ -264,7 +264,7 @@ export function ProjectTable({
       const { active, over } = event;
       if (!over || active.id === over.id) return;
 
-      let reorderedItems: { productId: number; sortOrder: number }[] = [];
+      let reorderedItems: { productId: string; sortOrder: number }[] = [];
 
       setLocalProjects((prev) => {
         const oldIndex = prev.findIndex((p) => p.productId === active.id);

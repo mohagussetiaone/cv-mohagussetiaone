@@ -12,7 +12,7 @@ export async function PATCH(request: Request) {
     }
 
     const json = await request.json();
-    const { items } = json as { items: { productId: number; sortOrder: number }[] };
+    const { items } = json as { items: { productId: string; sortOrder: number }[] };
 
     if (!Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ message: "Items array is required." }, { status: 400 });

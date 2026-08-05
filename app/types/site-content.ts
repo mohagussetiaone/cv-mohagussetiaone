@@ -1,7 +1,7 @@
 export type SiteContentSection = "banner" | "about" | "skills" | "contact" | "navbar" | "works" | "footer" | "navhome" | "certificates" | "education";
 
 export interface SiteContentRecord {
-  id: number;
+  id: string;
   section: SiteContentSection;
   key: string;
   locale: string;
@@ -17,6 +17,7 @@ export interface SiteContentGrouped {
 }
 
 export interface SkillItem {
+  id: string;
   name: string;
   image: string;
   bgColor: string;
@@ -27,12 +28,12 @@ export interface WorkExperience {
   id: string;
   company: string;
   position: string;
-  location: string;
+  location: string | null;
   type: string;
   startDate: string;
   endDate: string;
-  description: string;
-  logo?: string;
+  description: string | null;
+  logo: string | null;
 }
 
 export interface Education {
@@ -42,18 +43,27 @@ export interface Education {
   field: string;
   startDate: string;
   endDate: string;
-  description?: string;
-  logo?: string;
+  description?: string | null;
+  logo?: string | null;
 }
 
 export interface Certification {
   id: string;
   name: string;
   organization: string;
-  issueDate: string;
-  expiryDate?: string;
-  credentialUrl?: string;
-  logo?: string;
+  issueDate: string | null;
+  expiryDate?: string | null;
+  credentialUrl?: string | null;
+  logo?: string | null;
+}
+
+export interface SectionSettings {
+  localized: Record<string, Record<string, string>>;
+}
+
+export interface SectionContentResponse<T> {
+  items: T[];
+  settings: SectionSettings;
 }
 
 export interface WorksData {

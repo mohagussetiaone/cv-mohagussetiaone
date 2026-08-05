@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
-import { FileText, Globe2, Home, Mail, Navigation, Plus, Puzzle, Save, Trash2, User, Zap } from "lucide-react";
-import type { SiteContentGrouped, SkillItem } from "@/app/types/site-content";
+import { FileText, Globe2, Home, Mail, Navigation, Plus, Puzzle, Save, Trash2, User } from "lucide-react";
+import type { SiteContentGrouped } from "@/app/types/site-content";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -430,152 +430,6 @@ function NavHomeEditor({ data }: { data: SiteContentGrouped | null }) {
   );
 }
 
-// ─── Skills Editor ───────────────────────────────────────────
-
-function SkillsEditor({ data }: { data: SiteContentGrouped | null }) {
-  const idT = data?.localized?.["id"] ?? {};
-  const enT = data?.localized?.["en"] ?? {};
-  const existingItems: SkillItem[] = (() => {
-    try {
-      return data?.global?.items ? JSON.parse(data.global.items) : [];
-    } catch {
-      return [];
-    }
-  })();
-  const [form, setForm] = useState({
-    titleId: idT.title ?? "",
-    titleEn: enT.title ?? "",
-    descriptionId: idT.description ?? "",
-    descriptionEn: enT.description ?? "",
-  });
-  const [items, setItems] = useState<SkillItem[]>(existingItems);
-  const [newItem, setNewItem] = useState<SkillItem>({ name: "", image: "", bgColor: "#28A9E0", textColor: "#28A9E0" });
-  const [showAdd, setShowAdd] = useState(false);
-  const [isSaving, startSave] = useTransition();
-
-  useEffect(() => {
-    if (!data) return;
-    const idT = data.localized?.["id"] ?? {};
-    const enT = data.localized?.["en"] ?? {};
-    setForm({
-      titleId: idT.title ?? "",
-      titleEn: enT.title ?? "",
-      descriptionId: idT.description ?? "",
-      descriptionEn: enT.description ?? "",
-    });
-    try {
-      const raw = data.global?.items;
-      setItems(raw ? JSON.parse(raw) : []);
-    } catch {
-      setItems([]);
-    }
-  }, [data]);
-
-  const handleSave = () => {
-    startSave(async () => {
-      try {
-        await saveSection("skills", [
-          { key: "title", locale: "id", value: form.titleId },
-          { key: "title", locale: "en", value: form.titleEn },
-          { key: "description", locale: "id", value: form.descriptionId },
-          { key: "description", locale: "en", value: form.descriptionEn },
-          { key: "items", locale: "", value: JSON.stringify(items) },
-        ]);
-        toast.success("Skills content saved!");
-      } catch (err) {
-        toast.error(err instanceof Error ? err.message : "Failed to save");
-      }
-    });
-  };
-
-  return (
-    <SectionWrapper title="Skills" onSave={handleSave} isSaving={isSaving}>
-      <LocalizedBlock locale="id" accent="amber">
-        <Field label="Title" value={form.titleId} onChange={(v) => setForm((p) => ({ ...p, titleId: v }))} />
-        <TextareaField label="Description" value={form.descriptionId} onChange={(v) => setForm((p) => ({ ...p, descriptionId: v }))} />
-      </LocalizedBlock>
-      <LocalizedBlock locale="en" accent="sky">
-        <Field label="Title" value={form.titleEn} onChange={(v) => setForm((p) => ({ ...p, titleEn: v }))} />
-        <TextareaField label="Description" value={form.descriptionEn} onChange={(v) => setForm((p) => ({ ...p, descriptionEn: v }))} />
-      </LocalizedBlock>
-      <SeparateBlock title="Skill Items">
-        <div className="mb-3 flex justify-end">
-          <Button type="button" variant="outline" size="sm" onClick={() => setShowAdd(!showAdd)} className="border-white/10 bg-white/5 text-white/70 hover:bg-white/10">
-            <Plus className="mr-1 h-3.5 w-3.5" /> Add Skill
-          </Button>
-        </div>
-        {showAdd && (
-          <div className="mb-4 rounded-xl border border-white/10 bg-white/5 p-4 space-y-3">
-            <div className="grid gap-3 md:grid-cols-2">
-              <CompactField label="Name" value={newItem.name} onChange={(v) => setNewItem((p) => ({ ...p, name: v }))} placeholder="HTML" />
-              <CompactField label="Image URL" value={newItem.image} onChange={(v) => setNewItem((p) => ({ ...p, image: v }))} placeholder="/assets/image/skills/html5.png" />
-              <CompactField label="BG Color" value={newItem.bgColor} onChange={(v) => setNewItem((p) => ({ ...p, bgColor: v }))} placeholder="#E54F26" />
-              <CompactField label="Text Color" value={newItem.textColor} onChange={(v) => setNewItem((p) => ({ ...p, textColor: v }))} placeholder="#E54F26" />
-            </div>
-            <div className="flex gap-2 justify-end">
-              <Button type="button" variant="ghost" size="sm" onClick={() => setShowAdd(false)} className="text-white/50 hover:text-white">
-                Cancel
-              </Button>
-              <Button
-                type="button"
-                size="sm"
-                onClick={() => {
-                  if (newItem.name && newItem.image) {
-                    setItems((p) => [...p, { ...newItem }]);
-                    setNewItem({ name: "", image: "", bgColor: "#28A9E0", textColor: "#28A9E0" });
-                    setShowAdd(false);
-                  }
-                }}
-                className="bg-brand-500 text-black hover:bg-brand-400"
-              >
-                Add
-              </Button>
-            </div>
-          </div>
-        )}
-        <div className="space-y-2">
-          {items.map((item, i) => (
-            <div key={i} className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/3 px-4 py-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-xs text-white mt-1" style={{ backgroundColor: item.bgColor }}>
-                {item.name.charAt(0)}
-              </div>
-              <div className="min-w-0 flex-1 space-y-2">
-                <div className="grid gap-2 md:grid-cols-2">
-                  <input
-                    value={item.name}
-                    onChange={(e) => setItems((p) => p.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))}
-                    className="rounded-lg border border-white/10 bg-black/20 px-2 py-1 text-sm text-white outline-none"
-                    placeholder="Skill name"
-                  />
-                  <div className="flex gap-1">
-                    <input
-                      value={item.bgColor}
-                      onChange={(e) => setItems((p) => p.map((x, j) => (j === i ? { ...x, bgColor: e.target.value } : x)))}
-                      className="flex-1 rounded-lg border border-white/10 bg-black/20 px-2 py-1 text-sm text-white font-mono outline-none"
-                      placeholder="#HEX"
-                    />
-                    <input
-                      type="color"
-                      value={item.bgColor}
-                      onChange={(e) => setItems((p) => p.map((x, j) => (j === i ? { ...x, bgColor: e.target.value } : x)))}
-                      className="h-8 w-8 cursor-pointer rounded border border-white/10 bg-transparent"
-                    />
-                  </div>
-                </div>
-                <ImageUploader folder="skills" currentUrl={item.image} onUrlChange={(url) => setItems((p) => p.map((x, j) => (j === i ? { ...x, image: url } : x)))} label="Upload icon skill ke MinIO/CDN (otomatis saat Save)" />
-              </div>
-              <button type="button" onClick={() => setItems((p) => p.filter((_, j) => j !== i))} className="shrink-0 mt-1 text-rose-400/60 hover:text-rose-400">
-                <Trash2 className="h-4 w-4" />
-              </button>
-            </div>
-          ))}
-          {items.length === 0 && <p className="text-sm text-white/40">No skills yet.</p>}
-        </div>
-      </SeparateBlock>
-    </SectionWrapper>
-  );
-}
-
 // ─── Contact Editor ──────────────────────────────────────────
 
 function ContactEditor({ data }: { data: SiteContentGrouped | null }) {
@@ -788,14 +642,13 @@ function TextareaField({ label, value, onChange }: { label: string; value: strin
 const SECTIONS = [
   { id: "banner", label: "Banner", icon: Home },
   { id: "about", label: "About", icon: User },
-  { id: "skills", label: "Skills", icon: Zap },
   { id: "contact", label: "Contact", icon: Mail },
   { id: "navbar", label: "Navbar", icon: Navigation },
   { id: "footer", label: "Footer", icon: FileText },
   { id: "navhome", label: "NavHome", icon: Puzzle },
 ] as const;
 
-export type SiteContentSectionId = "banner" | "about" | "skills" | "works" | "education" | "certificates" | "contact" | "navbar" | "navhome" | "footer";
+export type SiteContentSectionId = "banner" | "about" | "contact" | "navbar" | "navhome" | "footer";
 
 type SiteContentManagerProps = {
   locale: string;
@@ -839,8 +692,6 @@ export function SiteContentManager({ locale, defaultSection }: SiteContentManage
         return <BannerEditor data={sectionData} locale={locale} />;
       case "about":
         return <AboutEditor data={sectionData} />;
-      case "skills":
-        return <SkillsEditor data={sectionData} />;
       case "contact":
         return <ContactEditor data={sectionData} />;
       case "navbar":

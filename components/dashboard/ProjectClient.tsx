@@ -97,12 +97,11 @@ export function ProjectClient({ locale, userEmail }: ProjectClientProps) {
   }, [locale, page, pageSize, search, refreshKey]);
 
   const editingProject = useMemo(() => {
-    const productId = Number.parseInt(editProductId ?? "", 10);
-    if (!editProductId || Number.isNaN(productId)) return null;
-    return projects.find((project) => project.productId === productId) ?? null;
+    if (!editProductId) return null;
+    return projects.find((project) => project.productId === editProductId) ?? null;
   }, [editProductId, projects]);
 
-  const handleReorder = useCallback(async (items: { productId: number; sortOrder: number }[]) => {
+  const handleReorder = useCallback(async (items: { productId: string; sortOrder: number }[]) => {
     setIsReordering(true);
     try {
       const response = await fetch("/api/projects/reorder", {

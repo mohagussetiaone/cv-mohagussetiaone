@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 type DeleteButtonProps = {
-  productId: number;
+  productId: string;
   projectName: string;
   trigger?: React.ReactNode;
   onDeleted?: () => void;

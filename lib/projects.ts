@@ -17,8 +17,8 @@ const projectInclude = {
 
 const mapProject = (
   project: {
-    id: number;
-    productId: number;
+    id: string;
+    productId: string;
     sortOrder: number;
     image: string | null;
     urlPreview: string | null;
@@ -196,7 +196,7 @@ export async function getProjectsPage({ locale, page = 1, pageSize = 10, search 
   };
 }
 
-export async function getProjectByProductId(productId: number, locale: ProjectLocale) {
+export async function getProjectByProductId(productId: string, locale: ProjectLocale) {
   const project = await prisma.project.findUnique({
     where: { productId },
     include: projectInclude,

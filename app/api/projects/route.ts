@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
 import { getAuthSession } from "@/auth";
 import { isAdminEmail } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -35,15 +36,9 @@ export async function POST(request: Request) {
     const payload = projectPayloadSchema.parse(json);
 
     // Auto-generate productId if not provided
-    let productId = payload.productId;
+    const productId = payload.productId ?? randomUUID();
 
-    if (productId === undefined) {
-      const lastProject = await prisma.project.findFirst({
-        orderBy: { productId: "desc" },
-        select: { productId: true },
-      });
-      productId = (lastProject?.productId ?? -1) + 1;
-    } else {
+    if (payload.productId) {
       const existingProject = await prisma.project.findUnique({
         where: { productId },
       });

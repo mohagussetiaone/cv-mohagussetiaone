@@ -14,36 +14,36 @@ const prisma = new PrismaClient({
 
 const projectData = [
   {
-    productId: 0,
+    productId: "d2e8b3c7-5f2a-4e9d-b6c1-3a4d5e6f7a8b",
     sortOrder: 1,
     translations: {
       id: {
-        projectName: "Kaftan Brautmode",
-        description: "Website untuk Kaftan Brautmode yang menampilkan koleksi dress serta menyediakan fitur pemesanan dan konsultasi melalui live Zoom.",
+        projectName: "Restogemn",
+        description: "Platform SaaS untuk restoran yang menyediakan reservasi meja, manajemen menu, dan analitik bisnis dalam satu aplikasi.",
       },
       en: {
-        projectName: "Kaftan Brautmode",
-        description: "A website for Kaftan Brautmode that showcases dress collections and provides ordering and live Zoom consultation features.",
+        projectName: "Restogemn",
+        description: "A SaaS platform for restaurants providing table reservations, menu management, and business analytics in a single application.",
       },
     },
-    image: "/project/kaftan.png",
+    image: null,
     technologies: ["Next.js", "Tailwind CSS"],
-    urlPreview: "https://kaftan-brautmode.de/de",
-    githubUrl: "https://github.com/mohagussetiaone/kaftan-brautmode",
+    urlPreview: "https://restogemn.biz.id",
+    githubUrl: null,
     figmaUrl: null,
     internal: false,
   },
   {
-    productId: 1,
+    productId: "a0f5b1db-9b7f-4af9-a99b-228764f92c0e",
     sortOrder: 2,
     translations: {
       id: {
         projectName: "PT Fortuna Teknik Mandiri",
-        description: "Website company profile untuk PT Fortuna Teknik Mandiri dengan tampilan modern dan responsif untuk menampilkan profil perusahaan serta katalog furniture.",
+        description: "Website company profile PT Fortuna Teknik Mandiri, produsen baja fabrikasi, dengan tampilan modern dan responsif untuk menampilkan profil perusahaan serta produk.",
       },
       en: {
         projectName: "PT Fortuna Teknik Mandiri",
-        description: "A company profile website for PT Fortuna Teknik Mandiri with a modern responsive interface for presenting the company profile and furniture catalog.",
+        description: "A company profile website for PT Fortuna Teknik Mandiri, a steel fabrication manufacturer, with a modern responsive interface presenting the company profile and products.",
       },
     },
     image: "/project/fortuna-teknik-mandiri.png",
@@ -54,168 +54,28 @@ const projectData = [
     internal: false,
   },
   {
-    productId: 2,
+    productId: "bb44b080-1b97-4e28-a182-4081dc0df636",
     sortOrder: 3,
     translations: {
       id: {
-        projectName: "PT Solusi Aplikasi Andalan Semesta",
-        description: "Website company profile yang menampilkan layanan pembuatan website, SaaS, dan solusi teknologi untuk PT Solusi Aplikasi Andalan Semesta.",
+        projectName: "Selaras Invitation Raya",
+        description: "Platform undangan digital elegan untuk pernikahan, ulang tahun, dan berbagai acara yang responsif dan mudah dibagikan.",
       },
       en: {
-        projectName: "PT Solusi Aplikasi Andalan Semesta",
-        description: "A company profile website that highlights website development, SaaS, and technology solutions for PT Solusi Aplikasi Andalan Semesta.",
-      },
-    },
-    image: "/project/pt-saas.png",
-    technologies: ["Vite.js", "Tailwind CSS"],
-    urlPreview: "https://ptsaas.vercel.app/",
-    githubUrl: "https://github.com/mohagussetiaone/saasisme",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    productId: 3,
-    sortOrder: 4,
-    translations: {
-      id: {
-        projectName: "Selaras Invite",
-        description: "Platform undangan digital yang menghadirkan pengalaman undangan online yang elegan, responsif, dan mudah dibagikan.",
-      },
-      en: {
-        projectName: "Selaras Invite",
-        description: "A digital invitation platform designed to deliver an elegant, responsive, and easy-to-share online invitation experience.",
+        projectName: "Selaras Invitation Raya",
+        description: "An elegant digital invitation platform for weddings, birthdays, and various events that is responsive and easy to share.",
       },
     },
     image: "/project/selaras-invite.png",
     technologies: ["Next.js", "Tailwind CSS", "Axios", "Supabase", "Prisma"],
-    urlPreview: "https://selarasinvite.vercel.app/",
+    urlPreview: "https://rayainvite.web.id",
     githubUrl: "https://github.com/mohagussetiaone/selarasinvite",
     figmaUrl: null,
     internal: false,
   },
   {
-    productId: 4,
-    sortOrder: 5,
-    translations: {
-      id: {
-        projectName: "Jajanian",
-        description: "Platform e-commerce camilan yang memudahkan pemesanan melalui WhatsApp dan mendukung beberapa metode pembayaran.",
-      },
-      en: {
-        projectName: "Jajanian",
-        description: "A snack e-commerce platform that simplifies ordering through WhatsApp and supports multiple payment methods.",
-      },
-    },
-    image: "/project/jajanian.png",
-    technologies: ["Vite.js", "Tailwind CSS", "Axios", "Supabase"],
-    urlPreview: "https://jajanian.vercel.app",
-    githubUrl: "https://github.com/mohagussetiaone/jajanian.git",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    productId: 5,
-    sortOrder: 6,
-    translations: {
-      id: {
-        projectName: "Client Area Nethome",
-        description: "Portal pelanggan Nethome untuk transaksi, pengelolaan layanan, pelacakan tagihan bulanan, dan akses dukungan dalam satu aplikasi.",
-      },
-      en: {
-        projectName: "Client Area Nethome",
-        description: "A Nethome customer portal for transactions, service management, monthly billing tracking, and support access in a single application.",
-      },
-    },
-    image: "/project/nethome.png",
-    technologies: ["Vite.js", "Tailwind CSS", "Axios"],
-    urlPreview: null,
-    githubUrl: null,
-    figmaUrl: null,
-    internal: true,
-  },
-  {
-    productId: 6,
-    sortOrder: 7,
-    translations: {
-      id: {
-        projectName: "WEB OLT Management",
-        description: "Sistem manajemen OLT untuk onboarding pelanggan, aktivasi jaringan, penjadwalan pekerjaan, dan pengaturan akses berbasis peran.",
-      },
-      en: {
-        projectName: "WEB OLT Management",
-        description: "An OLT management system for customer onboarding, network activation, job scheduling, and role-based access control.",
-      },
-    },
-    image: "/project/webolt.png",
-    technologies: ["Vite.js", "Tailwind CSS", "Axios"],
-    urlPreview: null,
-    githubUrl: null,
-    figmaUrl: null,
-    internal: true,
-  },
-  {
-    productId: 7,
-    sortOrder: 8,
-    translations: {
-      id: {
-        projectName: "Jvalleyverse",
-        description: "Platform pembelajaran daring yang menyediakan course gratis, forum interaktif, project praktikal, dan sertifikat penyelesaian.",
-      },
-      en: {
-        projectName: "Jvalleyverse",
-        description: "An online learning platform that offers free courses, interactive forums, practical projects, and completion certificates.",
-      },
-    },
-    image: "/project/jvalleyverse.png",
-    technologies: ["Vite.js", "Tailwind CSS", "Axios", "Supabase"],
-    urlPreview: "https://jvalleyverse.vercel.app",
-    githubUrl: "https://github.com/mohagussetiaone/jvalleyverse.git",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    productId: 8,
-    sortOrder: 9,
-    translations: {
-      id: {
-        projectName: "Laundrivy",
-        description: "Aplikasi laundry yang menyediakan pelacakan pesanan real-time, manajemen transaksi, dan dukungan chat agar pengalaman pelanggan lebih praktis.",
-      },
-      en: {
-        projectName: "Laundrivy",
-        description: "A laundry app that offers real-time order tracking, transaction management, and chat support for a more practical customer experience.",
-      },
-    },
-    image: "/project/laundrivy.png",
-    technologies: ["Next.js", "Tailwind CSS", "Axios", "Prisma"],
-    urlPreview: "https://laundrivy.vercel.app",
-    githubUrl: "https://github.com/mohagussetiaone/laundrivy.git",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    productId: 9,
-    sortOrder: 10,
-    translations: {
-      id: {
-        projectName: "Jvalleyverse Dashboard",
-        description: "Dashboard untuk mengelola course, memantau user, mengatur notifikasi, serta menampilkan blog dan project showcase secara dinamis.",
-      },
-      en: {
-        projectName: "Jvalleyverse Dashboard",
-        description: "A dashboard for managing courses, monitoring users, handling notifications, and publishing dynamic blog and project showcase content.",
-      },
-    },
-    image: "/project/jvalleyverse-dashboard.png",
-    technologies: ["Vite.js", "Tailwind CSS", "Axios", "Supabase"],
-    urlPreview: "https://jvalleyverse-dashboard.vercel.app",
-    githubUrl: "https://github.com/mohagussetiaone/jvalleyverse-dashboard.git",
-    figmaUrl: null,
-    internal: false,
-  },
-  {
-    productId: 10,
-    sortOrder: 11,
+    productId: "58b54a0d-a7c9-4674-895c-e7bc259940e1",
+    sortOrder: 4,
     translations: {
       id: {
         projectName: "Tani Deals App",
@@ -248,6 +108,11 @@ const categoryNameForProject = (project: { technologies: string[] }) => {
 async function main() {
   const skillNames = Array.from(new Set(projectData.flatMap((project) => project.technologies)));
   const categoryNames = Array.from(new Set(projectData.map(categoryNameForProject)));
+  const currentProductIds = projectData.map((project) => project.productId);
+
+  await prisma.project.deleteMany({
+    where: { productId: { notIn: currentProductIds } },
+  });
 
   await prisma.skill.createMany({
     data: skillNames.map((name) => ({ name })),
@@ -337,13 +202,19 @@ const siteContentData: { section: string; key: string; locale: string; value: st
   { section: "banner", key: "name", locale: "id", value: "Nama Saya Moh Agus Setiawan", sortOrder: 2 },
   { section: "banner", key: "name", locale: "en", value: "My Name is Moh Agus Setiawan", sortOrder: 2 },
   {
-    section: "banner", key: "description", locale: "id",
-    value: "Frontend Developer dengan pengalaman 2 tahun membangun aplikasi web interaktif menggunakan React.js dan Tailwind CSS. Berhasil mengembangkan dan mengoptimalkan antarmuka yang responsif dan ramah pengguna, termasuk proyek yang meningkatkan user engagement hingga 30%. Berfokus pada penerapan teknologi modern untuk menciptakan solusi bisnis yang efektif dan memberikan pengalaman pengguna yang optimal.",
+    section: "banner",
+    key: "description",
+    locale: "id",
+    value:
+      "Frontend Developer dengan pengalaman lebih dari 2 tahun yang berfokus pada React.js, siap berkontribusi dalam menciptakan aplikasi website yang responsif dan dinamis menggunakan teknologi modern untuk mencapai solusi bisnis dan pengalaman pengguna yang baik.",
     sortOrder: 3,
   },
   {
-    section: "banner", key: "description", locale: "en",
-    value: "Frontend Developer with 2 years of experience building interactive web applications using React.js and Tailwind CSS. Developing and optimizing responsive and user-friendly interfaces, including projects that increased user engagement by up to 30%. Focused on applying modern technologies to create effective business solutions and deliver optimal user experiences.",
+    section: "banner",
+    key: "description",
+    locale: "en",
+    value:
+      "Frontend Developer with 2+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
     sortOrder: 3,
   },
 
@@ -377,23 +248,35 @@ const siteContentData: { section: string; key: string; locale: string; value: st
   { section: "about", key: "title", locale: "id", value: "Tentang Saya", sortOrder: 1 },
   { section: "about", key: "title", locale: "en", value: "About Me", sortOrder: 1 },
   {
-    section: "about", key: "description", locale: "id",
-    value: "Frontend Developer dengan pengalaman membangun aplikasi web responsif dan berkinerja tinggi menggunakan HTML, CSS, JavaScript, dan React. Saya mengutamakan penerapan praktik pengembangan terbaik untuk menghasilkan kode yang bersih, terstruktur, mudah dipelihara, dan siap untuk skala lebih besar.\n\nDalam pengalaman profesional saya, saya telah berkontribusi pada pengembangan dan optimalisasi antarmuka pengguna yang secara langsung meningkatkan kinerja aplikasi serta kualitas pengalaman pengguna.",
+    section: "about",
+    key: "description",
+    locale: "id",
+    value:
+      "Frontend Developer dengan pengalaman lebih dari 2 tahun yang berfokus pada React.js, siap berkontribusi dalam menciptakan aplikasi website yang responsif dan dinamis menggunakan teknologi modern untuk mencapai solusi bisnis dan pengalaman pengguna yang baik.",
     sortOrder: 2,
   },
   {
-    section: "about", key: "description", locale: "en",
-    value: "A Frontend Developer with experience building responsive and high-performance web applications using HTML, CSS, JavaScript, and React. I prioritize the implementation of best development practices to produce clean, structured, maintainable, and scalable code.\n\nIn my professional experience,",
+    section: "about",
+    key: "description",
+    locale: "en",
+    value:
+      "Frontend Developer with 2+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
     sortOrder: 2,
   },
   {
-    section: "about", key: "description_1", locale: "id",
-    value: "Saya memiliki kemampuan untuk bekerja secara kolaboratif dalam tim lintas fungsi, beradaptasi dengan cepat terhadap teknologi baru, dan menjaga fokus pada penyelesaian masalah dengan solusi yang efektif.\n\nDi luar pekerjaan, saya aktif memperdalam pengetahuan di bidang pengembangan web, menjaga kebugaran melalui olahraga bulu tangkis, dan mengeksplorasi tantangan baru yang memperluas perspektif serta keterampilan saya.",
+    section: "about",
+    key: "description_1",
+    locale: "id",
+    value:
+      "Saya memiliki kemampuan untuk bekerja secara kolaboratif dalam tim lintas fungsi, beradaptasi dengan cepat terhadap teknologi baru, dan menjaga fokus pada penyelesaian masalah dengan solusi yang efektif.\n\nDi luar pekerjaan, saya aktif memperdalam pengetahuan di bidang pengembangan web, menjaga kebugaran melalui olahraga bulu tangkis, dan mengeksplorasi tantangan baru yang memperluas perspektif serta keterampilan saya.",
     sortOrder: 3,
   },
   {
-    section: "about", key: "description_1", locale: "en",
-    value: "I have contributed to the development and optimization of user interfaces that directly improve application performance and the quality of the user experience. I have the ability to work collaboratively in cross-functional teams, adapt quickly to new technologies, and maintain focus on solving problems with effective solutions.\n\nOutside of work, I actively deepen my knowledge in the field of web development, maintain fitness through badminton, and explore new challenges that broaden my perspective and skills.",
+    section: "about",
+    key: "description_1",
+    locale: "en",
+    value:
+      "I have the ability to work collaboratively in cross-functional teams, adapt quickly to new technologies, and maintain focus on solving problems with effective solutions.\n\nOutside of work, I actively deepen my knowledge in the field of web development, maintain fitness through badminton, and explore new challenges that broaden my perspective and skills.",
     sortOrder: 3,
   },
 
@@ -405,7 +288,9 @@ const siteContentData: { section: string; key: string; locale: string; value: st
 
   // ── Skills items (stored as JSON array) ──
   {
-    section: "skills", key: "items", locale: "",
+    section: "skills",
+    key: "items",
+    locale: "",
     value: JSON.stringify([
       { name: "HTML", image: "/assets/image/skills/html5.png", bgColor: "#E54F26", textColor: "#E54F26" },
       { name: "CSS", image: "/assets/image/skills/css.png", bgColor: "#0C73B8", textColor: "#0C73B8" },
@@ -442,29 +327,32 @@ const siteContentData: { section: string; key: string; locale: string; value: st
 
   // ── Works Experience (stored as JSON per locale) ──
   {
-    section: "works", key: "experience", locale: "en",
+    section: "works",
+    key: "experience",
+    locale: "en",
     value: JSON.stringify([
       {
         id: "exp-1",
-        company: "PT Remala Abadi",
+        company: "PT Solusi Aplikasi Andalan Semesta",
         position: "Frontend Developer",
         location: "Jakarta, Indonesia",
         type: "Full-time",
-        startDate: "2024-01",
+        startDate: "2023-09",
         endDate: "Present",
-        description: "Developing and maintaining web applications using React.js, Next.js, and Tailwind CSS. Building responsive and performant user interfaces for client projects and internal systems. Collaborating with cross-functional teams to deliver high-quality software solutions.",
-        logo: "/assets/image/logo/remala-abadi.png"
+        description:
+          "Developing and maintaining web applications using React.js, Next.js, and Tailwind CSS. Building responsive and performant user interfaces for client projects and internal systems. Collaborating with cross-functional teams to deliver high-quality software solutions.",
+        logo: "/assets/image/logo/remala-abadi.png",
       },
       {
         id: "exp-2",
-        company: "PT Solusi Aplikasi Andalan Semesta",
-        position: "Junior Frontend Developer",
+        company: "PT Whiteopen Teknologi",
+        position: "IT Staff Support",
         location: "Jakarta, Indonesia",
         type: "Full-time",
-        startDate: "2023-01",
-        endDate: "2023-12",
+        startDate: "2021-08",
+        endDate: "2022-12",
         description: "Built company profile websites and web applications using Vite.js and Tailwind CSS. Implemented responsive designs and integrated REST APIs. Collaborated on UI/UX improvements and optimized application performance.",
-        logo: "/assets/image/logo/pt-saas.png"
+        logo: "/assets/image/logo/pt-saas.png",
       },
       {
         id: "exp-3",
@@ -474,14 +362,17 @@ const siteContentData: { section: string; key: string; locale: string; value: st
         type: "Freelance",
         startDate: "2022-06",
         endDate: "2022-12",
-        description: "Developed responsive websites and landing pages for various clients. Used React.js, HTML, CSS, and JavaScript to create engaging user experiences. Managed client communication and project timelines independently.",
-        logo: "/assets/image/logo/freelance.png"
+        description:
+          "IT Staff Support Supporting Legacy System Migration activities for Implementation (Asian Toyota Lean Accounting System) Project SAP R3 to SAP Hana at Toyota Indonesia as responsible for: Admin for Jira Software Issue tracking and monitoring. Managing daily reporting of Cutover Rehearsal progress and the IT Team's Cutover Task List.Handling legacy system support as a System Admin, including: 1. Creating backups and restoring folders, file servers, setting up internet information servers, and authorizing users. 2. Creating database links, granting access to users, tables, and stored procedures using SQL Server Management Studio. 3. Creating SQL Job Schedulers on the database server and Windows Job Schedulers on the App Server.",
+        logo: "/assets/image/logo/freelance.png",
       },
     ]),
     sortOrder: 4,
   },
   {
-    section: "works", key: "experience", locale: "id",
+    section: "works",
+    key: "experience",
+    locale: "id",
     value: JSON.stringify([
       {
         id: "exp-1",
@@ -491,8 +382,9 @@ const siteContentData: { section: string; key: string; locale: string; value: st
         type: "Full-time",
         startDate: "2024-01",
         endDate: "Sekarang",
-        description: "Mengembangkan dan memelihara aplikasi web menggunakan React.js, Next.js, dan Tailwind CSS. Membangun antarmuka pengguna yang responsif dan berperforma tinggi untuk proyek klien dan sistem internal. Berkolaborasi dengan tim lintas fungsi untuk memberikan solusi perangkat lunak berkualitas tinggi.",
-        logo: "/assets/image/logo/remala-abadi.png"
+        description:
+          "Mengembangkan dan memelihara aplikasi web menggunakan React.js, Next.js, dan Tailwind CSS. Membangun antarmuka pengguna yang responsif dan berperforma tinggi untuk proyek klien dan sistem internal. Berkolaborasi dengan tim lintas fungsi untuk memberikan solusi perangkat lunak berkualitas tinggi.",
+        logo: "/assets/image/logo/remala-abadi.png",
       },
       {
         id: "exp-2",
@@ -502,8 +394,9 @@ const siteContentData: { section: string; key: string; locale: string; value: st
         type: "Full-time",
         startDate: "2023-01",
         endDate: "2023-12",
-        description: "Membangun website company profile dan aplikasi web menggunakan Vite.js dan Tailwind CSS. Mengimplementasikan desain responsif dan mengintegrasikan REST API. Berkolaborasi dalam perbaikan UI/UX dan mengoptimalkan performa aplikasi.",
-        logo: "/assets/image/logo/pt-saas.png"
+        description:
+          "Membangun website company profile dan aplikasi web menggunakan Vite.js dan Tailwind CSS. Mengimplementasikan desain responsif dan mengintegrasikan REST API. Berkolaborasi dalam perbaikan UI/UX dan mengoptimalkan performa aplikasi.",
+        logo: "/assets/image/logo/pt-saas.png",
       },
       {
         id: "exp-3",
@@ -513,8 +406,9 @@ const siteContentData: { section: string; key: string; locale: string; value: st
         type: "Freelance",
         startDate: "2022-06",
         endDate: "2022-12",
-        description: "Mengembangkan website responsif dan landing page untuk berbagai klien. Menggunakan React.js, HTML, CSS, dan JavaScript untuk menciptakan pengalaman pengguna yang menarik. Mengelola komunikasi klien dan jadwal proyek secara mandiri.",
-        logo: "/assets/image/logo/freelance.png"
+        description:
+          "Mengembangkan website responsif dan landing page untuk berbagai klien. Menggunakan React.js, HTML, CSS, dan JavaScript untuk menciptakan pengalaman pengguna yang menarik. Mengelola komunikasi klien dan jadwal proyek secara mandiri.",
+        logo: "/assets/image/logo/freelance.png",
       },
     ]),
     sortOrder: 5,
@@ -532,41 +426,45 @@ const siteContentData: { section: string; key: string; locale: string; value: st
 
   // ── Certificates items (stored as JSON per locale) ──
   {
-    section: "certificates", key: "items", locale: "en",
+    section: "certificates",
+    key: "items",
+    locale: "en",
     value: JSON.stringify([
       {
         id: "cert-1",
         name: "Learn to Build Web Applications with React",
         organization: "Dicoding",
         issueDate: "2024",
-        credentialUrl: "https://www.dicoding.com/certificates/..."
+        credentialUrl: "https://www.dicoding.com/certificates/...",
       },
       {
         id: "cert-2",
         name: "Learn JavaScript Programming Basics",
         organization: "Dicoding",
         issueDate: "2023",
-        credentialUrl: "https://www.dicoding.com/certificates/..."
+        credentialUrl: "https://www.dicoding.com/certificates/...",
       },
     ]),
     sortOrder: 3,
   },
   {
-    section: "certificates", key: "items", locale: "id",
+    section: "certificates",
+    key: "items",
+    locale: "id",
     value: JSON.stringify([
       {
         id: "cert-1",
         name: "Belajar Membuat Aplikasi Web dengan React",
         organization: "Dicoding",
         issueDate: "2024",
-        credentialUrl: "https://www.dicoding.com/certificates/..."
+        credentialUrl: "https://www.dicoding.com/certificates/...",
       },
       {
         id: "cert-2",
         name: "Belajar Dasar Pemrograman JavaScript",
         organization: "Dicoding",
         issueDate: "2023",
-        credentialUrl: "https://www.dicoding.com/certificates/..."
+        credentialUrl: "https://www.dicoding.com/certificates/...",
       },
     ]),
     sortOrder: 4,
@@ -586,7 +484,9 @@ const siteContentData: { section: string; key: string; locale: string; value: st
 
   // ── Education Items (stored as JSON per locale) ──
   {
-    section: "education", key: "items", locale: "en",
+    section: "education",
+    key: "items",
+    locale: "en",
     value: JSON.stringify([
       {
         id: "edu-1",
@@ -596,7 +496,7 @@ const siteContentData: { section: string; key: string; locale: string; value: st
         startDate: "2023",
         endDate: "2025",
         description: "Focusing on software development, web technologies, and information systems.",
-        logo: "/assets/image/logo/ubsi.jpg"
+        logo: "/assets/image/logo/ubsi.jpg",
       },
       {
         id: "edu-2",
@@ -606,13 +506,15 @@ const siteContentData: { section: string; key: string; locale: string; value: st
         startDate: "2018",
         endDate: "2021",
         description: "Studied software engineering fundamentals, web development, and database management.",
-        logo: ""
+        logo: "",
       },
     ]),
     sortOrder: 3,
   },
   {
-    section: "education", key: "items", locale: "id",
+    section: "education",
+    key: "items",
+    locale: "id",
     value: JSON.stringify([
       {
         id: "edu-1",
@@ -622,7 +524,7 @@ const siteContentData: { section: string; key: string; locale: string; value: st
         startDate: "2023",
         endDate: "2025",
         description: "Berfokus pada pengembangan perangkat lunak, teknologi web, dan sistem informasi.",
-        logo: "/assets/image/logo/ubsi.jpg"
+        logo: "/assets/image/logo/ubsi.jpg",
       },
       {
         id: "edu-2",
@@ -632,7 +534,7 @@ const siteContentData: { section: string; key: string; locale: string; value: st
         startDate: "2018",
         endDate: "2021",
         description: "Mempelajari dasar-dasar rekayasa perangkat lunak, pengembangan web, dan manajemen basis data.",
-        logo: ""
+        logo: "",
       },
     ]),
     sortOrder: 4,
@@ -671,8 +573,227 @@ async function seedSiteContent() {
   console.log(`  ✓ ${siteContentData.length} site content entries seeded`);
 }
 
+// ──────────────────────────────────────────────
+// Dedicated Section Content Seed
+// (skills, works, certificates, education)
+// ──────────────────────────────────────────────
+
+const sectionTextData: { section: string; key: string; locale: string; value: string; sortOrder: number }[] = [
+  { section: "skills", key: "title", locale: "id", value: "Ketrampilan", sortOrder: 1 },
+  { section: "skills", key: "title", locale: "en", value: "Skills", sortOrder: 1 },
+  { section: "skills", key: "description", locale: "id", value: "Saya berusaha untuk tidak pernah berhenti belajar dan berkembang", sortOrder: 2 },
+  { section: "skills", key: "description", locale: "en", value: "I am striving to never stop learning and improving", sortOrder: 2 },
+  { section: "works", key: "title", locale: "id", value: "Pengalaman Kerja", sortOrder: 1 },
+  { section: "works", key: "title", locale: "en", value: "Work Experience", sortOrder: 1 },
+  { section: "works", key: "description", locale: "id", value: "Perjalanan karir profesional saya sebagai Frontend Developer", sortOrder: 2 },
+  { section: "works", key: "description", locale: "en", value: "My professional career journey as a Frontend Developer", sortOrder: 2 },
+  { section: "works", key: "experience_label", locale: "id", value: "Pengalaman", sortOrder: 7 },
+  { section: "works", key: "experience_label", locale: "en", value: "Experience", sortOrder: 7 },
+  { section: "certificates", key: "title", locale: "id", value: "Sertifikasi", sortOrder: 1 },
+  { section: "certificates", key: "title", locale: "en", value: "Certifications", sortOrder: 1 },
+  { section: "certificates", key: "description", locale: "id", value: "Sertifikasi profesional yang telah saya raih", sortOrder: 2 },
+  { section: "certificates", key: "description", locale: "en", value: "Professional certifications I have achieved", sortOrder: 2 },
+  { section: "education", key: "title", locale: "id", value: "Pendidikan", sortOrder: 1 },
+  { section: "education", key: "title", locale: "en", value: "Education", sortOrder: 1 },
+  { section: "education", key: "description", locale: "id", value: "Riwayat pendidikan formal saya", sortOrder: 2 },
+  { section: "education", key: "description", locale: "en", value: "My formal education background", sortOrder: 2 },
+];
+
+const skillItemsData = [
+  { name: "HTML", image: "/assets/image/skills/html5.png", bgColor: "#E54F26", textColor: "#E54F26" },
+  { name: "CSS", image: "/assets/image/skills/css.png", bgColor: "#1572B6", textColor: "#1572B6" },
+  { name: "JAVASCRIPT", image: "/assets/image/skills/js.png", bgColor: "#F7DF1E", textColor: "#F7DF1E" },
+  { name: "REACT JS", image: "/assets/image/skills/react.png", bgColor: "#28A9E0", textColor: "#28A9E0" },
+  { name: "TYPESCRIPT", image: "", bgColor: "#3178C6", textColor: "#3178C6" },
+  { name: "VITE", image: "", bgColor: "#646CFF", textColor: "#646CFF" },
+  { name: "NEXTJS", image: "", bgColor: "#000000", textColor: "#000000" },
+  { name: "VUE JS", image: "", bgColor: "#42B883", textColor: "#42B883" },
+  { name: "EXPRESS JS", image: "", bgColor: "#000000", textColor: "#000000" },
+  { name: "NEST JS", image: "", bgColor: "#E0234E", textColor: "#E0234E" },
+  { name: "GOLANG", image: "", bgColor: "#00ADD8", textColor: "#00ADD8" },
+  { name: "TAILWINDCSS", image: "", bgColor: "#38BDF8", textColor: "#38BDF8" },
+  { name: "BOOTSTRAP", image: "", bgColor: "#7952B3", textColor: "#7952B3" },
+  { name: "MySQL", image: "", bgColor: "#4479A1", textColor: "#4479A1" },
+  { name: "POSTGRESQL", image: "", bgColor: "#336791", textColor: "#336791" },
+  { name: "GITHUB", image: "", bgColor: "#181717", textColor: "#181717" },
+  { name: "GITLAB", image: "", bgColor: "#FC6D26", textColor: "#FC6D26" },
+  { name: "VITEST", image: "", bgColor: "#729B1B", textColor: "#729B1B" },
+  { name: "ZUSTAND", image: "", bgColor: "#A020F0", textColor: "#A020F0" },
+];
+
+const workExperienceData = [
+  {
+    company: "PT Solusi Aplikasi Andalan Semesta",
+    position: "Frontend Developer",
+    location: "Jakarta, Indonesia",
+    type: "Full-time",
+    startDate: "2023-09",
+    endDate: "Present",
+    description:
+      "Developed and maintained multiple internal and customer-facing web platforms, including:\n- Nethome Client Area (nethome.id) for customer account management, product purchases, internet usage monitoring, and monthly billing.\n- Web OLT Dashboard, a Network Operation Center (NOC) management platform for OLT management, asset monitoring, maintenance, network configuration, client provisioning, client synchronization, inventory management, reporting, system logging, and role-based access control (RBAC).\n- Customer Data Management (tachyon.id) to improve data accuracy, consistency, and asset maintenance processes.\n- Remala Ticketing System for the Diskominfo project to manage issue reporting, ticket tracking, customer service workflows, and resolution processes.\n\nImplemented multi-tenant architecture supporting KSO and Non-KSO company structures and business processes.\nCollaborated with UI/UX designers and backend developers to transform business requirements and design prototypes into responsive, interactive, and maintainable web applications.\nOptimized application code and implemented structured development practices to improve performance, scalability, maintainability, and long-term system reliability.\nPerformed testing, debugging, and issue resolution to ensure application stability and efficient delivery.",
+    logo: "",
+  },
+  {
+    company: "PT Whiteopen Teknologi",
+    position: "IT Staff Support",
+    location: "Jakarta, Indonesia",
+    type: "Full-time",
+    startDate: "2021-08",
+    endDate: "2022-12",
+    description:
+      "Supporting Legacy System Migration activities for Implementation (Asian Toyota Lean Accounting System) Project SAP R3 to SAP Hana at Toyota Indonesia as responsible for:\n- Admin for Jira Software Issue tracking and monitoring.\n- Managing daily reporting of Cutover Rehearsal progress and the IT Team's Cutover Task List.\n- Handling legacy system support as a System Admin, including:\n  1. Creating backups and restoring folders, file servers, setting up internet information servers, and authorizing users.\n  2. Creating database links, granting access to users, tables, and stored procedures using SQL Server Management Studio.\n  3. Creating SQL Job Schedulers on the database server and Windows Job Schedulers on the App Server.",
+    logo: "",
+  },
+  {
+    company: "Freelance Web Developer Kaftan Team",
+    position: "Frontend Developer",
+    location: "Remote",
+    type: "Freelance",
+    startDate: "2025-12",
+    endDate: "2026-06",
+    description:
+      "Developing website kaftan brautmode:\n1. Landing page https://kaftan-brautmode.de/de with catalog, schedule, and language switch using next-intl.\n2. Menu dashboard admin kaftan for appointment user such as detail appointment, reschedule appointment, schedule working kaftan, manage calendar for appointment list.\n3. Menu dashboard user for user managing, reschedule appointment, activity, and system notification.",
+    logo: "",
+  },
+];
+
+const certificatesData = [
+  {
+    name: "Belajar Dasar-Dasar DevOps",
+    organization: "Dicoding Indonesia",
+    issueDate: "2024-09",
+    expiryDate: "2027-09",
+    credentialUrl: "https://www.dicoding.com/certificates/1RXY24RL3XVM",
+  },
+  {
+    name: "Belajar Membuat Aplikasi Back-End untuk Pemula",
+    organization: "Dicoding Indonesia",
+    issueDate: "2022-12",
+    expiryDate: "2025-12",
+    credentialUrl: "https://www.dicoding.com/certificates/L4PQ655Q4PO1",
+  },
+  {
+    name: "Cloud Practitioner Essentials (Belajar Dasar AWS Cloud)",
+    organization: "Dicoding Indonesia",
+    issueDate: "2022-10",
+    expiryDate: "2025-10",
+    credentialUrl: "https://www.dicoding.com/certificates/72ZD9Q95JPYW",
+  },
+  {
+    name: "Belajar Dasar Pemrograman JavaScript",
+    organization: "Dicoding Indonesia",
+    issueDate: "2022-09",
+    expiryDate: "2025-09",
+    credentialUrl: "https://www.dicoding.com/certificates/1OP86QJY8XQK",
+  },
+  {
+    name: "Belajar Dasar Pemrograman Web",
+    organization: "Dicoding Indonesia",
+    issueDate: "2022-08",
+    expiryDate: "2025-08",
+    credentialUrl: "https://www.dicoding.com/certificates/JLX1GEQM2Z72",
+  },
+  {
+    name: "Linux Administration Batch VII Training",
+    organization: "IT Group, Inc.",
+    issueDate: "2021-07",
+    expiryDate: "",
+    credentialUrl: "",
+  },
+  {
+    name: "Kursus SQL",
+    organization: "Progate",
+    issueDate: "2021-07",
+    expiryDate: "",
+    credentialUrl: "",
+  },
+  {
+    name: "Kursus Python",
+    organization: "Progate",
+    issueDate: "2021-07",
+    expiryDate: "",
+    credentialUrl: "",
+  },
+  {
+    name: "Kursus Node.js Dasar",
+    organization: "Progate",
+    issueDate: "2021-06",
+    expiryDate: "",
+    credentialUrl: "",
+  },
+  {
+    name: "Kursus Java Script Pengembangan Web",
+    organization: "Progate",
+    issueDate: "2021-06",
+    expiryDate: "",
+    credentialUrl: "",
+  },
+];
+
+const educationItemsData = [
+  {
+    school: "Universitas Gunadarma",
+    degree: "Bachelor",
+    field: "Information System",
+    startDate: "2021",
+    endDate: "2023",
+    description: "GPA 3.21. Focused on information systems, software development, and web technologies.",
+    logo: "",
+  },
+  {
+    school: "Jemblongan Valley Community",
+    degree: "Bootcamp",
+    field: "Fullstack Developer",
+    startDate: "2023",
+    endDate: "2023",
+    description: "Intensive fullstack developer training covering frontend and backend web development.",
+    logo: "",
+  },
+  {
+    school: "Code ID",
+    degree: "Bootcamp",
+    field: "Fullstack Developer",
+    startDate: "",
+    endDate: "",
+    description: "Fullstack developer program covering web development fundamentals and build tools.",
+    logo: "",
+  },
+];
+
+async function seedSectionContent() {
+  // Hapus data lama yang tersimpan sebagai JSON di SiteContent untuk section dedicated
+  await prisma.siteContent.deleteMany({
+    where: { section: { in: ["skills", "works", "certificates", "education"] } },
+  });
+
+  for (const item of sectionTextData) {
+    await prisma.sectionText.upsert({
+      where: {
+        section_key_locale: { section: item.section, key: item.key, locale: item.locale },
+      },
+      create: item,
+      update: { value: item.value, sortOrder: item.sortOrder },
+    });
+  }
+
+  await prisma.skillItem.deleteMany();
+  await prisma.skillItem.createMany({ data: skillItemsData.map((d, i) => ({ ...d, sortOrder: i + 1 })) });
+
+  await prisma.workExperience.deleteMany();
+  await prisma.workExperience.createMany({ data: workExperienceData.map((d, i) => ({ ...d, sortOrder: i + 1 })) });
+
+  await prisma.certificate.deleteMany();
+  await prisma.certificate.createMany({ data: certificatesData.map((d, i) => ({ ...d, sortOrder: i + 1 })) });
+
+  await prisma.educationItem.deleteMany();
+  await prisma.educationItem.createMany({ data: educationItemsData.map((d, i) => ({ ...d, sortOrder: i + 1 })) });
+
+  console.log("  ✓ skills, works, certificates, education (dedicated tables) seeded");
+}
+
 main()
   .then(seedSiteContent)
+  .then(seedSectionContent)
   .catch((error) => {
     console.error(error);
     process.exit(1);

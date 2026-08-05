@@ -299,7 +299,7 @@ export function ProjectEditor({
           </DialogTitle>
           <DialogDescription className="text-white/60">
             {mode === "edit"
-              ? `Edit project #${project?.productId ?? ""}`
+              ? `Edit project #${project?.productId.slice(0, 8) ?? ""}`
               : "Simpan konten dinamis project per locale."}
           </DialogDescription>
         </DialogHeader>

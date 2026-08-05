@@ -3,35 +3,23 @@
 import { useMemo } from "react";
 import { Award, Calendar, ExternalLink } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
-import { useSiteContent, getLocalizedContent } from "@/hooks/use-site-content";
+import { useSectionContent } from "@/hooks/use-section-content";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { cn } from "@/lib/utils";
 import type { Certification } from "@/app/types/site-content";
 
-function parseJSON<T>(raw: string | undefined, fallback: T): T {
-  if (!raw) return fallback;
-  try {
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
-  }
-}
-
 const Certificates = () => {
   const locale = useLocale();
   const t = useTranslations("Works");
-  const content = useSiteContent("certificates", locale);
+  const content = useSectionContent<Certification>("certificates", locale);
   const { theme } = useTheme();
 
   const t2 = useMemo(() => {
-    const get = (key: string) => getLocalizedContent(content, locale, key) ?? t(key);
+    const get = (key: string) => content.localized[key] ?? t(key);
     return get;
-  }, [content, locale, t]);
+  }, [content.localized, t]);
 
-  const certifications = useMemo(() => {
-    const raw = content.localized?.[locale]?.items ?? content.global?.items;
-    return parseJSON<Certification[]>(raw, []);
-  }, [content, locale]);
+  const certifications = content.items;
 
   if (certifications.length === 0) return null;
 

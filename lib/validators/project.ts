@@ -30,7 +30,11 @@ const csvToArray = z
   );
 
 export const projectPayloadSchema = z.object({
-  productId: z.coerce.number().int().nonnegative().optional(),
+  productId: z
+    .string()
+    .trim()
+    .uuid("Product ID harus UUID yang valid")
+    .optional(),
   image: optionalString,
   urlPreview: optionalUrl,
   githubUrl: optionalUrl,

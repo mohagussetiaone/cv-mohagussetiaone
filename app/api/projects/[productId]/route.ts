@@ -20,9 +20,9 @@ export async function PATCH(request: Request, { params }: RouteContext) {
     }
 
     const { productId } = await params;
-    const currentProductId = Number.parseInt(productId, 10);
+    const currentProductId = productId;
 
-    if (Number.isNaN(currentProductId)) {
+    if (!currentProductId) {
       return NextResponse.json({ message: "Product ID tidak valid." }, { status: 400 });
     }
 
@@ -126,9 +126,9 @@ export async function DELETE(request: Request, { params }: RouteContext) {
     }
 
     const { productId: productIdParam } = await params;
-    const productId = Number.parseInt(productIdParam, 10);
+    const productId = productIdParam;
 
-    if (Number.isNaN(productId)) {
+    if (!productId) {
       return NextResponse.json({ message: "Product ID tidak valid." }, { status: 400 });
     }
 
