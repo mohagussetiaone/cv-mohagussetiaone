@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { ImageUploader } from "@/components/dashboard/ImageUploader";
+import { deleteImageByUrl, uploadImageFile } from "@/lib/upload-client";
 
 // ─── Helpers ─────────────────────────────────────────────────
 
@@ -63,6 +64,8 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
     bannerImage: g.bannerImage ?? "",
   });
   const [isSaving, startSave] = useTransition();
+  // File banner yang dipilih — diupload saat Save (deferred)
+  const [pendingBannerFile, setPendingBannerFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (!data) return;
@@ -101,46 +104,71 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
       cvFileUrl: g.cvFileUrl ?? "",
       bannerImage: g.bannerImage ?? "",
     });
+    setPendingBannerFile(null);
   }, [data]);
 
   const handleSave = () => {
-    const entries = [
-      { key: "greeting", locale: "id", value: form.greetingId },
-      { key: "greeting", locale: "en", value: form.greetingEn },
-      { key: "name", locale: "id", value: form.nameId },
-      { key: "name", locale: "en", value: form.nameEn },
-      { key: "description", locale: "id", value: form.descriptionId },
-      { key: "description", locale: "en", value: form.descriptionEn },
-      { key: "lets_talk", locale: "id", value: form.letsTalkId },
-      { key: "lets_talk", locale: "en", value: form.letsTalkEn },
-      { key: "years", locale: "id", value: form.yearsId },
-      { key: "years", locale: "en", value: form.yearsEn },
-      { key: "experience", locale: "id", value: form.experienceId },
-      { key: "experience", locale: "en", value: form.experienceEn },
-      { key: "programming", locale: "id", value: form.programmingId },
-      { key: "programming", locale: "en", value: form.programmingEn },
-      { key: "language", locale: "id", value: form.languageId },
-      { key: "language", locale: "en", value: form.languageEn },
-      { key: "development", locale: "id", value: form.developmentId },
-      { key: "development", locale: "en", value: form.developmentEn },
-      { key: "project", locale: "id", value: form.projectId },
-      { key: "project", locale: "en", value: form.projectEn },
-      { key: "email", locale: "", value: form.email },
-      { key: "address", locale: "", value: form.address },
-      { key: "jobTitle", locale: "", value: form.jobTitle },
-      { key: "websiteUrl", locale: "", value: form.websiteUrl },
-      { key: "whatsappNumber", locale: "", value: form.whatsappNumber },
-      { key: "yearsExperience", locale: "", value: form.yearsExperience },
-      { key: "programmingLanguages", locale: "", value: form.programmingLanguages },
-      { key: "developmentProjects", locale: "", value: form.developmentProjects },
-      { key: "cvFileUrl", locale: "", value: form.cvFileUrl },
-      { key: "bannerImage", locale: "", value: form.bannerImage },
-    ];
     startSave(async () => {
+      // URL image baru yang terlanjur diupload — untuk rollback jika submit gagal
+      let uploadedNewUrl: string | null = null;
+
       try {
+        // 1. Upload pending banner dulu (jika ada) — file lama belum dihapus
+        let bannerImage = form.bannerImage;
+        if (pendingBannerFile) {
+          const uploaded = await uploadImageFile(pendingBannerFile, "banner");
+          uploadedNewUrl = uploaded;
+          bannerImage = uploaded;
+        }
+
+        // 2. Submit data
+        const entries = [
+          { key: "greeting", locale: "id", value: form.greetingId },
+          { key: "greeting", locale: "en", value: form.greetingEn },
+          { key: "name", locale: "id", value: form.nameId },
+          { key: "name", locale: "en", value: form.nameEn },
+          { key: "description", locale: "id", value: form.descriptionId },
+          { key: "description", locale: "en", value: form.descriptionEn },
+          { key: "lets_talk", locale: "id", value: form.letsTalkId },
+          { key: "lets_talk", locale: "en", value: form.letsTalkEn },
+          { key: "years", locale: "id", value: form.yearsId },
+          { key: "years", locale: "en", value: form.yearsEn },
+          { key: "experience", locale: "id", value: form.experienceId },
+          { key: "experience", locale: "en", value: form.experienceEn },
+          { key: "programming", locale: "id", value: form.programmingId },
+          { key: "programming", locale: "en", value: form.programmingEn },
+          { key: "language", locale: "id", value: form.languageId },
+          { key: "language", locale: "en", value: form.languageEn },
+          { key: "development", locale: "id", value: form.developmentId },
+          { key: "development", locale: "en", value: form.developmentEn },
+          { key: "project", locale: "id", value: form.projectId },
+          { key: "project", locale: "en", value: form.projectEn },
+          { key: "email", locale: "", value: form.email },
+          { key: "address", locale: "", value: form.address },
+          { key: "jobTitle", locale: "", value: form.jobTitle },
+          { key: "websiteUrl", locale: "", value: form.websiteUrl },
+          { key: "whatsappNumber", locale: "", value: form.whatsappNumber },
+          { key: "yearsExperience", locale: "", value: form.yearsExperience },
+          { key: "programmingLanguages", locale: "", value: form.programmingLanguages },
+          { key: "developmentProjects", locale: "", value: form.developmentProjects },
+          { key: "cvFileUrl", locale: "", value: form.cvFileUrl },
+          { key: "bannerImage", locale: "", value: bannerImage },
+        ];
         await saveSection("banner", entries);
+
+        // 3. Submit sukses: hapus file lama yang diganti dengan yang baru
+        if (uploadedNewUrl && form.bannerImage && form.bannerImage !== uploadedNewUrl) {
+          await deleteImageByUrl(form.bannerImage);
+        }
+        // Sync URL baru ke form state supaya save berikutnya tidak menimpa dengan URL lama
+        setForm((p) => ({ ...p, bannerImage }));
+        setPendingBannerFile(null);
         toast.success("Banner content saved!");
       } catch (err) {
+        // 4. ROLLBACK: hapus image baru jika submit gagal
+        if (uploadedNewUrl) {
+          await deleteImageByUrl(uploadedNewUrl);
+        }
         toast.error(err instanceof Error ? err.message : "Failed to save");
       }
     });
@@ -185,11 +213,11 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
           <Field label="WhatsApp Number" value={form.whatsappNumber} onChange={(v) => setForm((p) => ({ ...p, whatsappNumber: v }))} />
           <Field label="CV File URL" value={form.cvFileUrl} onChange={(v) => setForm((p) => ({ ...p, cvFileUrl: v }))} />
           <div className="space-y-1.5">
-            <Label className="text-xs text-white/60">Banner Image</Label>
-            <ImageUploader folder="banner" currentUrl={form.bannerImage} onUrlChange={(url) => setForm((p) => ({ ...p, bannerImage: url }))} label="Upload banner image ke MinIO/CDN (otomatis saat Save)" />
+            <Label className="text-xs text-black">Banner Image</Label>
+            <ImageUploader folder="banner" currentUrl={form.bannerImage} onUrlChange={(url) => setForm((p) => ({ ...p, bannerImage: url }))} onPendingFile={setPendingBannerFile} label="Upload banner image ke MinIO/CDN (otomatis saat Save)" />
           </div>
         </div>
-        <div className="h-px bg-white/10" />
+        <div className="h-px bg-black/10" />
         <div className="grid gap-4 md:grid-cols-3">
           <Field label="Years Exp (e.g. 2+)" value={form.yearsExperience} onChange={(v) => setForm((p) => ({ ...p, yearsExperience: v }))} />
           <Field label="Programming Count" value={form.programmingLanguages} onChange={(v) => setForm((p) => ({ ...p, programmingLanguages: v }))} />
@@ -267,13 +295,13 @@ function AboutEditor({ data }: { data: SiteContentGrouped | null }) {
 
 function JSONBlock({ title, count, onAdd, showAdd, children }: { title: string; count: number; onAdd: () => void; showAdd: boolean; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-3">
+    <div className="rounded-2xl border border-black/10 bg-white p-5 space-y-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-white font-semibold text-sm">
+        <div className="flex items-center gap-2 text-black font-semibold text-sm">
           {title}
-          <span className="text-xs text-white/40 bg-white/5 px-2 py-0.5 rounded-full">{count}</span>
+          <span className="text-xs text-black bg-black/5 px-2 py-0.5 rounded-full">{count}</span>
         </div>
-        <Button type="button" variant="outline" size="sm" onClick={onAdd} className="border-white/10 bg-white/5 text-white/70 hover:bg-white/10 h-7 text-xs">
+        <Button type="button" variant="outline" size="sm" onClick={onAdd} className="border border-black/10 bg-white text-black hover:bg-black/5 h-7 text-xs">
           <Plus className="mr-1 h-3 w-3" />
           {showAdd ? "Close" : "Add"}
         </Button>
@@ -405,8 +433,8 @@ function NavHomeEditor({ data }: { data: SiteContentGrouped | null }) {
 
   return (
     <SectionWrapper title="NavHome (Floating Dock)" onSave={handleSave} isSaving={isSaving}>
-      <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-4">
-        <p className="text-sm text-white/50">Labels untuk navigasi floating dock di bagian bawah layar.</p>
+      <div className="rounded-2xl border border-black/10 bg-white p-5 space-y-4">
+        <p className="text-sm text-black">Labels untuk navigasi floating dock di bagian bawah layar.</p>
       </div>
       <LocalizedBlock locale="id" accent="amber">
         <div className="grid gap-4 md:grid-cols-2">
@@ -525,25 +553,52 @@ function NavbarEditor({ data }: { data: SiteContentGrouped | null }) {
     linkedinUrl: g.linkedinUrl ?? "",
   });
   const [isSaving, startSave] = useTransition();
+  // File logo yang dipilih — diupload saat Save (deferred)
+  const [pendingLogoFile, setPendingLogoFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (!data) return;
     const g = data.global ?? {};
     setForm({ brandName: g.brandName ?? "", logoImage: g.logoImage ?? "", instagramUrl: g.instagramUrl ?? "", githubUrl: g.githubUrl ?? "", linkedinUrl: g.linkedinUrl ?? "" });
+    setPendingLogoFile(null);
   }, [data]);
 
   const handleSave = () => {
     startSave(async () => {
+      // URL image baru yang terlanjur diupload — untuk rollback jika submit gagal
+      let uploadedNewUrl: string | null = null;
+
       try {
+        // 1. Upload pending logo dulu (jika ada) — file lama belum dihapus
+        let logoImage = form.logoImage;
+        if (pendingLogoFile) {
+          const uploaded = await uploadImageFile(pendingLogoFile, "navbar");
+          uploadedNewUrl = uploaded;
+          logoImage = uploaded;
+        }
+
+        // 2. Submit data
         await saveSection("navbar", [
           { key: "brandName", locale: "", value: form.brandName },
-          { key: "logoImage", locale: "", value: form.logoImage },
+          { key: "logoImage", locale: "", value: logoImage },
           { key: "instagramUrl", locale: "", value: form.instagramUrl },
           { key: "githubUrl", locale: "", value: form.githubUrl },
           { key: "linkedinUrl", locale: "", value: form.linkedinUrl },
         ]);
+
+        // 3. Submit sukses: hapus file lama yang diganti dengan yang baru
+        if (uploadedNewUrl && form.logoImage && form.logoImage !== uploadedNewUrl) {
+          await deleteImageByUrl(form.logoImage);
+        }
+        // Sync URL baru ke form state supaya save berikutnya tidak menimpa dengan URL lama
+        setForm((p) => ({ ...p, logoImage }));
+        setPendingLogoFile(null);
         toast.success("Navbar content saved!");
       } catch (err) {
+        // 4. ROLLBACK: hapus image baru jika submit gagal
+        if (uploadedNewUrl) {
+          await deleteImageByUrl(uploadedNewUrl);
+        }
         toast.error(err instanceof Error ? err.message : "Failed to save");
       }
     });
@@ -555,8 +610,8 @@ function NavbarEditor({ data }: { data: SiteContentGrouped | null }) {
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Brand Name" value={form.brandName} onChange={(v) => setForm((p) => ({ ...p, brandName: v }))} />
           <div className="space-y-1.5">
-            <Label className="text-xs text-white/60">Logo Image</Label>
-            <ImageUploader folder="navbar" currentUrl={form.logoImage} onUrlChange={(url) => setForm((p) => ({ ...p, logoImage: url }))} label="Upload navbar logo ke MinIO/CDN (otomatis saat Save)" />
+            <Label className="text-xs text-black">Logo Image</Label>
+            <ImageUploader folder="navbar" currentUrl={form.logoImage} onUrlChange={(url) => setForm((p) => ({ ...p, logoImage: url }))} onPendingFile={setPendingLogoFile} label="Upload navbar logo ke MinIO/CDN (otomatis saat Save)" />
           </div>
         </div>
       </SeparateBlock>
@@ -577,8 +632,8 @@ function SectionWrapper({ title, onSave, isSaving, children }: { title: string; 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white">{title}</h3>
-        <Button onClick={onSave} disabled={isSaving} size="sm" className="rounded-lg bg-brand-500 text-black hover:bg-brand-400 font-medium">
+        <h3 className="text-lg font-semibold text-black">{title}</h3>
+        <Button onClick={onSave} disabled={isSaving} size="sm" className="rounded-lg border border-black/10 bg-amber-400 text-black font-bold hover:bg-amber-300">
           <Save className="mr-1.5 h-3.5 w-3.5" />
           {isSaving ? "Saving..." : "Save"}
         </Button>
@@ -589,10 +644,10 @@ function SectionWrapper({ title, onSave, isSaving, children }: { title: string; 
 }
 
 function LocalizedBlock({ locale, accent, children }: { locale: string; accent: string; children: React.ReactNode }) {
-  const color = accent === "amber" ? "text-amber-300" : "text-sky-400";
+  const color = accent === "amber" ? "text-amber-600" : "text-sky-600";
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-4">
-      <div className="flex items-center gap-2 text-white font-semibold">
+    <div className="rounded-2xl border border-black/10 bg-white p-5 space-y-4">
+      <div className="flex items-center gap-2 text-black font-semibold">
         <Globe2 className={`h-4 w-4 ${color}`} />
         {locale === "id" ? "Bahasa Indonesia" : "English"}
       </div>
@@ -603,8 +658,8 @@ function LocalizedBlock({ locale, accent, children }: { locale: string; accent: 
 
 function SeparateBlock({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-4">
-      <div className="flex items-center gap-2 text-white font-semibold">{title}</div>
+    <div className="rounded-2xl border border-black/10 bg-white p-5 space-y-4">
+      <div className="flex items-center gap-2 text-black font-semibold">{title}</div>
       {children}
     </div>
   );
@@ -613,8 +668,8 @@ function SeparateBlock({ title, children }: { title: string; children: React.Rea
 function Field({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs text-white/60">{label}</Label>
-      <Input value={value} onChange={(e) => onChange(e.target.value)} className="border-white/10 bg-white/5 h-9" />
+      <Label className="text-xs text-black">{label}</Label>
+      <Input value={value} onChange={(e) => onChange(e.target.value)} className="border border-black/10 bg-white text-black h-9 placeholder:text-black/40" />
     </div>
   );
 }
@@ -622,8 +677,8 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
 function CompactField({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
     <div className="space-y-1">
-      <Label className="text-white/60 text-xs">{label}</Label>
-      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="border-white/10 bg-black/20 h-8 text-sm" />
+      <Label className="text-black text-xs">{label}</Label>
+      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="border border-black/10 bg-white h-8 text-sm text-black placeholder:text-black/40" />
     </div>
   );
 }
@@ -631,8 +686,8 @@ function CompactField({ label, value, onChange, placeholder }: { label: string; 
 function TextareaField({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs text-white/60">{label}</Label>
-      <Textarea value={value} onChange={(e) => onChange(e.target.value)} className="border-white/10 bg-white/5 min-h-25" />
+      <Label className="text-xs text-black">{label}</Label>
+      <Textarea value={value} onChange={(e) => onChange(e.target.value)} className="border border-black/10 bg-white text-black min-h-25 placeholder:text-black/40" />
     </div>
   );
 }
@@ -681,7 +736,7 @@ export function SiteContentManager({ locale, defaultSection }: SiteContentManage
         <div className="flex items-center justify-center py-20">
           <div className="flex flex-col items-center gap-3">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-500/30 border-t-brand-500" />
-            <p className="text-sm text-white/40">Memuat konten...</p>
+            <p className="text-sm text-black">Memuat konten...</p>
           </div>
         </div>
       );
@@ -706,23 +761,23 @@ export function SiteContentManager({ locale, defaultSection }: SiteContentManage
   };
 
   return (
-    <div id="content-editor" className="overflow-hidden rounded-2xl border border-white/10 bg-white/3 backdrop-blur-sm">
-      <div className="border-b border-white/10 px-5 py-4">
+    <div id="content-editor" className="overflow-hidden rounded-2xl border border-black/10 bg-white">
+      <div className="border-b border-black/10 px-5 py-4">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-400">Content Editor</p>
-            <h2 className="mt-1 text-xl font-semibold text-white">Landing Page Content</h2>
-            <p className="mt-0.5 text-sm text-white/40">Manage all landing page content here. Changes appear on the main page immediately.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600">Content Editor</p>
+            <h2 className="mt-1 text-xl font-semibold text-black">Landing Page Content</h2>
+            <p className="mt-0.5 text-sm text-black">Manage all landing page content here. Changes appear on the main page immediately.</p>
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-1 border-b border-white/10 px-5 py-3">
+      <div className="flex flex-wrap gap-1 border-b border-black/10 px-5 py-3">
         {SECTIONS.map((section) => (
           <button
             key={section.id}
             type="button"
             onClick={() => setActiveSection(section.id)}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${activeSection === section.id ? "bg-brand-500/15 text-brand-400" : "text-white/50 hover:text-white hover:bg-white/5"}`}
+            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${activeSection === section.id ? "border border-black/10 bg-amber-400 font-bold text-black" : "text-black hover:text-black hover:bg-black/5"}`}
           >
             <section.icon className="h-4 w-4" /> {section.label}
           </button>

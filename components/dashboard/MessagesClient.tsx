@@ -47,7 +47,6 @@ export function MessagesClient({ locale }: { locale: string }) {
   const { theme } = useTheme();
   const isNeo = theme === "neobrutalism";
   const isRetro = theme === "retro";
-  const cardTheme = isNeo || isRetro;
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [pagination, setPagination] = useState<Pagination>({
@@ -129,10 +128,10 @@ export function MessagesClient({ locale }: { locale: string }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className={cn("text-2xl font-bold", cardTheme ? "text-black" : "text-white")}>
+          <h1 className="text-2xl font-bold text-black">
             Messages
           </h1>
-          <p className={cn("text-sm mt-1", cardTheme ? "text-black/60" : "text-white/50")}>
+          <p className="text-sm mt-1 text-black">
             {pagination.total} total messages
             {unreadCount > 0 && ` · ${unreadCount} unread`}
           </p>
@@ -140,7 +139,7 @@ export function MessagesClient({ locale }: { locale: string }) {
 
         <div className="flex items-center gap-3">
           {/* Filter buttons */}
-          <div className="flex rounded-lg overflow-hidden border border-white/10">
+          <div className="flex rounded-lg overflow-hidden border border-black/10">
             {["all", "unread", "replied"].map((f) => (
               <button
                 key={f}
@@ -151,12 +150,8 @@ export function MessagesClient({ locale }: { locale: string }) {
                 className={cn(
                   "px-3 py-1.5 text-xs font-medium transition-colors",
                   filter === f
-                    ? cardTheme
-                      ? "bg-black text-white"
-                      : "bg-white/15 text-white"
-                    : cardTheme
-                      ? "text-black/50 hover:text-black hover:bg-black/5"
-                      : "text-white/40 hover:text-white hover:bg-white/5"
+                    ? "bg-black text-white"
+                    : "text-black hover:text-black hover:bg-black/5"
                 )}
               >
                 {f === "all" ? "All" : f === "unread" ? "Unread" : "Replied"}
@@ -169,9 +164,7 @@ export function MessagesClient({ locale }: { locale: string }) {
             disabled={isLoading}
             className={cn(
               "rounded-lg p-2 transition-colors",
-              cardTheme
-                ? "text-black/50 hover:text-black hover:bg-black/5"
-                : "text-white/40 hover:text-white hover:bg-white/5"
+              "text-black hover:text-black hover:bg-black/5"
             )}
           >
             <RefreshCw className={cn("h-4 w-4", isLoading && "animate-spin")} />
@@ -182,11 +175,11 @@ export function MessagesClient({ locale }: { locale: string }) {
       {/* Messages List */}
       <div className="flex flex-col gap-2">
         {isLoading && messages.length === 0 ? (
-          <div className={cn("text-center py-20", cardTheme ? "text-black/40" : "text-white/30")}>
+          <div className={cn("text-center py-20", "text-black")}>
             Loading...
           </div>
         ) : messages.length === 0 ? (
-          <div className={cn("text-center py-20", cardTheme ? "text-black/40" : "text-white/30")}>
+          <div className={cn("text-center py-20", "text-black")}>
             <MessageSquare className="mx-auto h-12 w-12 mb-3 opacity-30" />
             <p>No messages yet</p>
             {filter !== "all" && (
@@ -204,7 +197,7 @@ export function MessagesClient({ locale }: { locale: string }) {
               key={msg.id}
               className={cn(
                 "group flex items-start gap-4 rounded-xl p-4 transition-all duration-200 cursor-pointer",
-                cardTheme
+                isNeo || isRetro
                   ? cn(
                       "border-2 hover:shadow-md",
                       isNeo
@@ -213,8 +206,8 @@ export function MessagesClient({ locale }: { locale: string }) {
                       !msg.read && (isNeo ? "border-l-4 border-l-amber-400" : "border-l-4 border-l-[#6699ff]")
                     )
                   : cn(
-                      "border border-white/[0.06] bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.05]",
-                      !msg.read && "border-l-2 border-l-brand-500 bg-brand-500/5"
+                      "border border-black/10 bg-white hover:border-black/20 hover:bg-black/5",
+                      !msg.read && "border-l-4 border-l-amber-400 bg-amber-50"
                     ),
               )}
               onClick={() => handleReadMessage(msg)}
@@ -223,15 +216,15 @@ export function MessagesClient({ locale }: { locale: string }) {
               <div
                 className={cn(
                   "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg",
-                  cardTheme && isNeo && "border-2 border-black bg-amber-200",
-                  cardTheme && isRetro && "border border-[#6699ff] bg-[#6699ff]/10",
-                  !cardTheme && "border border-white/10 bg-white/5"
+                  isNeo && "border-2 border-black bg-amber-200",
+                  isRetro && "border border-[#6699ff] bg-[#6699ff]/10",
+                  !isNeo && !isRetro && "border border-black/10 bg-black/5"
                 )}
               >
                 {msg.read ? (
-                  <MailOpen className={cn("h-5 w-5", cardTheme ? "text-black/40" : "text-white/30")} />
+                  <MailOpen className="h-5 w-5 text-black" />
                 ) : (
-                  <Mail className={cn("h-5 w-5", cardTheme ? "text-black" : "text-brand-400")} />
+                  <Mail className="h-5 w-5 text-black" />
                 )}
               </div>
 
@@ -243,7 +236,7 @@ export function MessagesClient({ locale }: { locale: string }) {
                       className={cn(
                         "font-medium text-sm",
                         !msg.read && "font-semibold",
-                        cardTheme ? "text-black" : "text-white"
+                        "text-black"
                       )}
                     >
                       {msg.name}
@@ -252,22 +245,22 @@ export function MessagesClient({ locale }: { locale: string }) {
                       <span
                         className={cn(
                           "ml-2 inline-block h-2 w-2 rounded-full",
-                          cardTheme && isNeo && "bg-amber-400",
-                          cardTheme && isRetro && "bg-[#6699ff]",
-                          !cardTheme && "bg-brand-500"
+                          isNeo && "bg-amber-400",
+                          isRetro && "bg-[#6699ff]",
+                          !isNeo && !isRetro && "bg-amber-400"
                         )}
                       />
                     )}
                   </div>
-                  <span className={cn("text-[11px] shrink-0", cardTheme ? "text-black/40" : "text-white/30")}>
+                  <span className={cn("text-[11px] shrink-0", "text-black")}>
                     {formatDate(msg.createdAt)}
                   </span>
                 </div>
 
-                <p className={cn("text-xs mt-1 line-clamp-1", cardTheme ? "text-black/50" : "text-white/40")}>
+                <p className={cn("text-xs mt-1 line-clamp-1", "text-black")}>
                   {msg.email}
                 </p>
-                <p className={cn("text-sm mt-1 line-clamp-2", cardTheme ? "text-black/70" : "text-white/60")}>
+                <p className={cn("text-sm mt-1 line-clamp-2", "text-black")}>
                   {msg.message}
                 </p>
 
@@ -277,9 +270,9 @@ export function MessagesClient({ locale }: { locale: string }) {
                     <span
                       className={cn(
                         "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px]",
-                        cardTheme && isNeo && "border-2 border-black bg-green-100 text-black font-bold",
-                        cardTheme && isRetro && "border border-[#6699ff] bg-[#6699ff]/10 text-[#6699ff]",
-                        !cardTheme && "border border-green-500/20 bg-green-500/10 text-green-400"
+                        isNeo && "border-2 border-black bg-green-100 text-black font-bold",
+                        isRetro && "border border-[#6699ff] bg-[#6699ff]/10 text-[#6699ff]",
+                        !isNeo && !isRetro && "border border-green-600/30 bg-green-100 text-green-700"
                       )}
                     >
                       <CheckCircle className="h-3 w-3" />
@@ -290,9 +283,9 @@ export function MessagesClient({ locale }: { locale: string }) {
                     <span
                       className={cn(
                         "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px]",
-                        cardTheme && isNeo && "border-2 border-black bg-amber-100 text-black font-bold",
-                        cardTheme && isRetro && "border border-[#6699ff] bg-[#6699ff]/10 text-[#6699ff]",
-                        !cardTheme && "border border-amber-500/20 bg-amber-500/10 text-amber-400"
+                        isNeo && "border-2 border-black bg-amber-100 text-black font-bold",
+                        isRetro && "border border-[#6699ff] bg-[#6699ff]/10 text-[#6699ff]",
+                        !isNeo && !isRetro && "border border-amber-600/30 bg-amber-100 text-amber-700"
                       )}
                     >
                       <Clock className="h-3 w-3" />
@@ -311,9 +304,7 @@ export function MessagesClient({ locale }: { locale: string }) {
                   onClick={(e) => e.stopPropagation()}
                   className={cn(
                     "rounded-lg p-2 transition-colors",
-                    cardTheme
-                      ? "text-black/40 hover:bg-black/10 hover:text-black"
-                      : "text-white/30 hover:bg-white/10 hover:text-white"
+                    "text-black hover:bg-black/10 hover:text-black"
                   )}
                   title="Reply via Gmail"
                 >
@@ -326,9 +317,7 @@ export function MessagesClient({ locale }: { locale: string }) {
                   }}
                   className={cn(
                     "rounded-lg p-2 transition-colors",
-                    cardTheme
-                      ? "text-black/40 hover:bg-black/10 hover:text-black"
-                      : "text-white/30 hover:bg-white/10 hover:text-white"
+                    "text-black hover:bg-black/10 hover:text-black"
                   )}
                   title={msg.read ? "Mark unread" : "Mark read"}
                 >
@@ -352,15 +341,13 @@ export function MessagesClient({ locale }: { locale: string }) {
             disabled={pagination.page <= 1}
             className={cn(
               "rounded-lg p-2 transition-colors disabled:opacity-30",
-              cardTheme
-                ? "text-black/50 hover:text-black hover:bg-black/5"
-                : "text-white/40 hover:text-white hover:bg-white/5"
+              "text-black hover:text-black hover:bg-black/5"
             )}
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
 
-          <span className={cn("text-sm", cardTheme ? "text-black/60" : "text-white/50")}>
+          <span className={cn("text-sm", "text-black")}>
             {pagination.page} / {pagination.totalPages}
           </span>
 
@@ -369,9 +356,7 @@ export function MessagesClient({ locale }: { locale: string }) {
             disabled={pagination.page >= pagination.totalPages}
             className={cn(
               "rounded-lg p-2 transition-colors disabled:opacity-30",
-              cardTheme
-                ? "text-black/50 hover:text-black hover:bg-black/5"
-                : "text-white/40 hover:text-white hover:bg-white/5"
+              "text-black hover:text-black hover:bg-black/5"
             )}
           >
             <ChevronRight className="h-4 w-4" />
@@ -384,19 +369,19 @@ export function MessagesClient({ locale }: { locale: string }) {
         <DialogContent
           className={cn(
             "max-w-2xl",
-            cardTheme && isNeo && "border-[3px] border-black bg-white shadow-[8px_8px_0px_0px_black]",
-            cardTheme && isRetro && "border-2 border-[#6699ff]/30 bg-[#f5f0e8]",
-            !cardTheme && "border border-white/10 bg-[#12121a] text-white"
+            isNeo && "border-[3px] border-black bg-white shadow-[8px_8px_0px_0px_black]",
+            isRetro && "border-2 border-[#6699ff]/30 bg-[#f5f0e8]",
+            !isNeo && !isRetro && "border border-black/10 bg-white text-black"
           )}
         >
           {readingMessage && (
             <>
               <DialogHeader>
-                <DialogTitle className={cn("flex items-center gap-2", cardTheme ? "text-black" : "text-white")}>
+                <DialogTitle className="flex items-center gap-2 text-black">
                   <MessageSquare className="h-5 w-5" />
                   Message from {readingMessage.name}
                 </DialogTitle>
-                <DialogDescription className={cardTheme ? "text-black/60" : "text-white/50"}>
+                <DialogDescription className="text-black">
                   <a
                     href={`mailto:${readingMessage.email}`}
                     className="text-brand-500 hover:underline"
@@ -409,10 +394,7 @@ export function MessagesClient({ locale }: { locale: string }) {
               </DialogHeader>
 
               <div
-                className={cn(
-                  "rounded-lg p-4 whitespace-pre-wrap text-sm leading-relaxed max-h-60 overflow-y-auto",
-                  cardTheme ? "bg-black/5 text-black" : "bg-white/5 text-white/80"
-                )}
+                className="rounded-lg p-4 whitespace-pre-wrap text-sm leading-relaxed max-h-60 overflow-y-auto bg-black/5 text-black"
               >
                 {readingMessage.message}
               </div>
@@ -426,9 +408,9 @@ export function MessagesClient({ locale }: { locale: string }) {
                   >
                     <Button
                       className={cn(
-                        cardTheme && isNeo && "border-2 border-black bg-amber-400 text-black font-bold shadow-[3px_3px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black]",
-                        cardTheme && isRetro && "bg-[#6699ff] text-white hover:bg-[#6699ff]/80",
-                        !cardTheme && "bg-brand-500 text-black hover:bg-brand-500/80"
+                        isNeo && "border-2 border-black bg-amber-400 text-black font-bold shadow-[3px_3px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black]",
+                        isRetro && "bg-[#6699ff] text-white hover:bg-[#6699ff]/80",
+                        !isNeo && !isRetro && "border border-black bg-amber-400 text-black font-bold hover:bg-amber-300"
                       )}
                     >
                       <Reply className="h-4 w-4 mr-1" />
@@ -439,7 +421,7 @@ export function MessagesClient({ locale }: { locale: string }) {
                 <Button
                   variant="ghost"
                   onClick={() => setReadDialogOpen(false)}
-                  className={cardTheme ? "text-black" : "text-white/50"}
+                  className="text-black"
                 >
                   Close
                 </Button>

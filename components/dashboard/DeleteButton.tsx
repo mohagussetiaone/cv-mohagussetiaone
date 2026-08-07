@@ -63,18 +63,18 @@ export function DeleteButton({
           </button>
         )}
       </DialogTrigger>
-      <DialogContent className="border-white/10 bg-[#0a0a0a] text-white">
+      <DialogContent className="border border-black/10 bg-white text-black">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Trash2 className="h-5 w-5 text-rose-400" />
+            <Trash2 className="h-5 w-5 text-rose-500" />
             Hapus Project?
           </DialogTitle>
-          <DialogDescription className="text-white/60">
+          <DialogDescription className="text-black">
             Apakah Anda yakin ingin menghapus <strong>{projectName}</strong>? Tindakan ini tidak dapat dibatalkan.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-2 sm:gap-0">
-          <Button variant="outline" className="rounded-full border-white/10 bg-transparent text-white hover:bg-white/10">
+          <Button variant="outline" className="rounded-full border border-black/10 bg-transparent text-black hover:bg-black/5">
             Batal
           </Button>
           <Button

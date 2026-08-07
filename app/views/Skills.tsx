@@ -44,7 +44,7 @@ const Skills = ({ locale: propLocale }: SkillsProps) => {
         style={{ backgroundColor: skill.bgColor }}
       >
         {skill.image ? (
-          <Image src={skill.image} alt={skill.name} width={34} height={34} style={{ width: "34px", height: "auto" }} />
+          <Image src={skill.image} alt={skill.name} width={44} height={44} style={{ width: "44px", height: "auto" }} />
         ) : (
           <span className="flex h-full w-full items-center justify-center text-xl font-bold text-white">
             {skill.name.charAt(0)}

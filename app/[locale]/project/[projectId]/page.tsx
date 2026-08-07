@@ -1,3 +1,6 @@
+// Selalu render fresh dari DB agar perubahan project langsung tampil (bukan static cache).
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Eye } from "lucide-react";
@@ -34,7 +37,11 @@ const ShowCaseDetail = async ({ params }: ShowCaseDetailProps) => {
         <div className="mx-auto flex flex-wrap">
           <div className="lg:w-1/2 w-full md:pr-4">
             <div className="sticky top-4">
-              <Image src={project.image || ""} alt={project.projectName} className="w-full h-auto object-cover object-center rounded border border-gray-200" width={500} height={500} />
+              {project.image ? (
+                <Image src={project.image} alt={project.projectName} className="w-full h-auto object-cover object-center rounded border border-gray-200" width={500} height={500} />
+              ) : (
+                <div className="flex h-64 w-full items-center justify-center rounded border border-dashed border-gray-300 bg-gray-100 text-gray-400">No image available</div>
+              )}
             </div>
           </div>
           <div className="lg:w-1/2 w-full lg:pl-6 mt-6 lg:mt-0 text-neutral-200">

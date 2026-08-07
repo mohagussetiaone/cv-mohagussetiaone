@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import type { SiteContentSection, SiteContentGrouped, SiteContentMap, SkillItem } from "@/app/types/site-content";
+import type { SiteContentSection, SiteContentGrouped, SiteContentMap } from "@/app/types/site-content";
 
 export async function getSiteContentBySection(section: SiteContentSection): Promise<SiteContentGrouped> {
   const rows = await prisma.siteContent.findMany({
@@ -25,7 +25,7 @@ export async function getSiteContentBySection(section: SiteContentSection): Prom
 }
 
 export async function getAllSiteContent(locale: string = "id"): Promise<Record<SiteContentSection, SiteContentGrouped>> {
-  const sections: SiteContentSection[] = ["banner", "about", "skills", "contact", "navbar", "works", "footer", "navhome", "certificates", "education"];
+  const sections: SiteContentSection[] = ["banner", "about", "contact", "navbar", "footer", "navhome"];
   const results: Record<string, SiteContentGrouped> = {};
 
   for (const section of sections) {
@@ -42,15 +42,3 @@ export function getLocalizedValue(grouped: SiteContentGrouped, key: string, loca
 export function getGlobalValue(grouped: SiteContentGrouped, key: string): string {
   return grouped.global[key] ?? "";
 }
-
-export function parseSkillItems(grouped: SiteContentGrouped): SkillItem[] {
-  try {
-    const raw = grouped.global["items"];
-    if (!raw) return [];
-    return JSON.parse(raw) as SkillItem[];
-  } catch {
-    return [];
-  }
-}
-
-

@@ -20,13 +20,16 @@ const Navbar = () => {
   const isDashboard = pathname.includes("/dashboard");
   const content = useSiteContent("navbar", locale);
 
-  const data = useMemo(() => ({
-    brandName: content.global?.brandName ?? "Moh Agus Setiawan",
-    logoImage: content.global?.logoImage ?? "/assets/image/logo/mohagus.jpg",
-    instagramUrl: content.global?.instagramUrl ?? "https://www.instagram.com/mohagussetiaone",
-    githubUrl: content.global?.githubUrl ?? "https://github.com/mohagussetiaone",
-    linkedinUrl: content.global?.linkedinUrl ?? "https://www.linkedin.com/in/moh-agus-setiawan-464960167/",
-  }), [content.global]);
+  const data = useMemo(
+    () => ({
+      brandName: content.global?.brandName ?? "Moh Agus Setiawan",
+      logoImage: content.global?.logoImage ?? "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/logo/mohagus.jpg",
+      instagramUrl: content.global?.instagramUrl ?? "https://www.instagram.com/mohagussetiaone",
+      githubUrl: content.global?.githubUrl ?? "https://github.com/mohagussetiaone",
+      linkedinUrl: content.global?.linkedinUrl ?? "https://www.linkedin.com/in/moh-agus-setiawan-464960167/",
+    }),
+    [content.global],
+  );
 
   if (isDashboard) {
     return null;
@@ -79,16 +82,8 @@ const Navbar = () => {
                 className={cn(
                   "relative z-10 flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200",
                   locale === "en"
-                    ? [
-                        theme === "default" && "text-brand-500",
-                        theme === "retro" && "text-[#6699ff]",
-                        theme === "neobrutalism" && "text-black",
-                      ]
-                    : [
-                        theme === "default" && "text-white/50 hover:text-white/80",
-                        theme === "retro" && "text-black/50 hover:text-black",
-                        theme === "neobrutalism" && "text-black/40 hover:text-black",
-                      ],
+                    ? [theme === "default" && "text-brand-500", theme === "retro" && "text-[#6699ff]", theme === "neobrutalism" && "text-black"]
+                    : [theme === "default" && "text-white/50 hover:text-white/80", theme === "retro" && "text-black/50 hover:text-black", theme === "neobrutalism" && "text-black/40 hover:text-black"],
                 )}
               >
                 <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -106,16 +101,8 @@ const Navbar = () => {
                 className={cn(
                   "relative z-10 flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200",
                   locale === "id"
-                    ? [
-                        theme === "default" && "text-brand-500",
-                        theme === "retro" && "text-[#6699ff]",
-                        theme === "neobrutalism" && "text-black",
-                      ]
-                    : [
-                        theme === "default" && "text-white/50 hover:text-white/80",
-                        theme === "retro" && "text-black/50 hover:text-black",
-                        theme === "neobrutalism" && "text-black/40 hover:text-black",
-                      ],
+                    ? [theme === "default" && "text-brand-500", theme === "retro" && "text-[#6699ff]", theme === "neobrutalism" && "text-black"]
+                    : [theme === "default" && "text-white/50 hover:text-white/80", theme === "retro" && "text-black/50 hover:text-black", theme === "neobrutalism" && "text-black/40 hover:text-black"],
                 )}
               >
                 <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

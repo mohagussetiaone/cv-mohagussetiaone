@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
@@ -13,12 +13,31 @@ type ProjectsProps = {
   projects: ProjectRecord[];
 };
 
-const Projects: React.FC<ProjectsProps> = ({ projects }) => {
+const Projects: React.FC<ProjectsProps> = ({ projects: initialProjects }) => {
   const locale = useLocale();
   const t = useTranslations("Works");
   const { theme } = useTheme();
+  const [projects, setProjects] = useState<ProjectRecord[]>(initialProjects);
   const [visibleCount, setVisibleCount] = useState(8);
   const [loading, setLoading] = useState(false);
+
+  // Selalu sinkron dengan DB setelah CRUD di dashboard.
+  // API route ini dinamis (tanpa cache), jadi data selalu fresh.
+  useEffect(() => {
+    let mounted = true;
+    fetch(`/api/projects?locale=${locale}&all=true`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (!mounted) return;
+        if (Array.isArray(json?.data)) {
+          setProjects(json.data);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, [locale]);
 
   const showMore = () => {
     setLoading(true);

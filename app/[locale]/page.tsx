@@ -1,3 +1,7 @@
+// Halaman ini selalu di-render fresh dari DB (bukan static cache),
+// supaya perubahan project dari dashboard langsung tampil.
+export const dynamic = "force-dynamic";
+
 import NavHome from "../views/NavHome";
 import Banner from "../views/Banner";
 import About from "../views/About";

@@ -3,13 +3,38 @@ import { getAuthSession } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { isAdminEmail } from "@/lib/auth";
 import { deleteMinioObject, hasMinioConfig } from "@/lib/minio";
+import { getProjectByProductId } from "@/lib/projects";
 import { projectPayloadSchema } from "@/lib/validators/project";
+import type { ProjectLocale } from "@/app/types/project";
 
 type RouteContext = {
   params: Promise<{
     productId: string;
   }>;
 };
+
+export async function GET(request: Request, { params }: RouteContext) {
+  try {
+    const { productId } = await params;
+    if (!productId) {
+      return NextResponse.json({ message: "Product ID tidak valid." }, { status: 400 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const localeParam = searchParams.get("locale");
+    const locale: ProjectLocale = localeParam === "en" ? "en" : "id";
+
+    const project = await getProjectByProductId(productId, locale);
+    if (!project) {
+      return NextResponse.json({ message: "Project tidak ditemukan." }, { status: 404 });
+    }
+
+    return NextResponse.json({ data: project });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: "Terjadi kesalahan saat mengambil project." }, { status: 500 });
+  }
+}
 
 export async function PATCH(request: Request, { params }: RouteContext) {
   try {

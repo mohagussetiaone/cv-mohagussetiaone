@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ImageUp, X, FileWarning, Upload, Loader2 } from "lucide-react";
+import { ImageUp, X, FileWarning } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 
 type ImageUploaderProps = {
   folder?: string;
@@ -14,15 +13,18 @@ type ImageUploaderProps = {
   label?: string;
   accept?: string;
   maxSizeMB?: number;
-  deferred?: boolean;
 };
 
-export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onPendingFile, label = "Upload image ke MinIO", accept = "image/png,image/jpeg,image/webp,image/svg+xml", maxSizeMB = 5, deferred = false }: ImageUploaderProps) {
+/**
+ * Komponen upload gambar dengan pola DEFERRED:
+ * file hanya dipilih & di-preview di sini, kemudian diupload otomatis
+ * saat form di-submit (oleh komponen induk). Tidak ada tombol upload manual.
+ */
+export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onPendingFile, label = "Upload image ke MinIO", accept = "image/png,image/jpeg,image/webp,image/svg+xml", maxSizeMB = 5 }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [localPreview, setLocalPreview] = useState<string | null>(null);
   const [sizeError, setSizeError] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
 
   // Cleanup local preview URL on unmount
   useEffect(() => {
@@ -60,54 +62,6 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
     [maxSizeMB, localPreview, onPendingFile],
   );
 
-  const handleUploadNow = useCallback(async () => {
-    if (!pendingFile) return;
-    setIsUploading(true);
-
-    try {
-      const payload = new FormData();
-      payload.append("file", pendingFile);
-      payload.append("folder", folder);
-
-      const response = await fetch("/api/uploads/general", { method: "POST", body: payload });
-      const result = await response.json();
-
-      if (!response.ok) {
-        toast.error(result?.message || "Gagal upload.");
-        return;
-      }
-
-      const url = result?.data?.url ?? "";
-
-      // Hapus file lama dari MinIO
-      if (currentUrl) {
-        try {
-          await fetch("/api/uploads/general", {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url: currentUrl }),
-          });
-        } catch {
-          /* ignore */
-        }
-      }
-
-      // Revoke blob preview, set CDN URL
-      if (localPreview?.startsWith("blob:")) URL.revokeObjectURL(localPreview);
-      setLocalPreview(null);
-      setPendingFile(null);
-      onPendingFile?.(null);
-      onUrlChange(url);
-
-      toast.success("File berhasil diupload ke MinIO/CDN!");
-    } catch {
-      toast.error("Gagal upload file.");
-    } finally {
-      setIsUploading(false);
-      if (inputRef.current) inputRef.current.value = "";
-    }
-  }, [pendingFile, folder, currentUrl, localPreview, onPendingFile, onUrlChange]);
-
   const handleRemove = useCallback(() => {
     if (localPreview?.startsWith("blob:")) URL.revokeObjectURL(localPreview);
     setLocalPreview(null);
@@ -125,17 +79,10 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
-        <Button type="button" variant="outline" size="sm" onClick={() => inputRef.current?.click()} disabled={isUploading} className="relative border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white">
+        <Button type="button" variant="outline" size="sm" onClick={() => inputRef.current?.click()} className="relative border border-black/10 bg-white text-black hover:bg-black/5">
           {hasPending ? <FileWarning className="mr-1.5 h-3.5 w-3.5 text-amber-400" /> : <ImageUp className="mr-1.5 h-3.5 w-3.5" />}
           {hasPending ? "Ganti file" : "Pilih file"}
         </Button>
-
-        {hasPending && !deferred && (
-          <Button type="button" size="sm" disabled={isUploading} onClick={handleUploadNow} className="bg-brand-500 text-black hover:bg-brand-400">
-            {isUploading ? <Loader2 className="mr-1 h-3.5 w-3.5 animate-spin" /> : <Upload className="mr-1 h-3.5 w-3.5" />}
-            {isUploading ? "Uploading..." : "Upload now"}
-          </Button>
-        )}
 
         {hasSaved && (
           <Button type="button" variant="ghost" size="sm" onClick={handleRemove} className="text-rose-400/60 hover:text-rose-400 hover:bg-rose-500/10">
@@ -150,28 +97,28 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
       {sizeError && <p className="text-xs text-rose-400/80">{sizeError}</p>}
 
       {previewSrc && (
-        <div className="relative mt-1 flex items-center gap-3 rounded-xl border border-white/10 bg-white/3 p-3">
-          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-black/20">
+        <div className="relative mt-1 flex items-center gap-3 rounded-xl border border-black/10 bg-white p-3">
+          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-black/5">
             <Image src={previewSrc} alt="Preview" fill className="object-cover" sizes="48px" />
           </div>
           <div className="min-w-0 flex-1">
             {hasPending ? (
               <>
-                <p className="text-xs font-medium text-amber-400/90">Menunggu upload</p>
-                <p className="truncate text-xs font-mono text-white/40">{pendingFile?.name}</p>
-                <p className="text-xs text-amber-400/60">{deferred ? "File akan diupload otomatis saat submit form" : "Klik \"Upload now\" untuk upload ke MinIO"}</p>
+                <p className="text-xs font-medium text-amber-600">Menunggu upload</p>
+                <p className="truncate text-xs font-mono text-black">{pendingFile?.name}</p>
+                <p className="text-xs text-amber-600/80">File akan diupload otomatis saat submit form</p>
               </>
             ) : hasSaved ? (
               <>
-                <p className="truncate text-xs font-mono text-white/60">{currentUrl}</p>
-                <p className="text-xs text-emerald-400/80">Tersimpan di MinIO via CDN</p>
+                <p className="truncate text-xs font-mono text-black">{currentUrl}</p>
+                <p className="text-xs text-emerald-600">Tersimpan di MinIO via CDN</p>
               </>
             ) : null}
           </div>
         </div>
       )}
 
-      <p className="text-xs text-white/40">{label}</p>
+      <p className="text-xs text-black">{label}</p>
     </div>
   );
 }

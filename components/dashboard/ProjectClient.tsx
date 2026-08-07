@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ArrowLeft, KeyRound } from "lucide-react";
 import Link from "next/link";
@@ -36,6 +36,7 @@ export function ProjectClient({ locale, userEmail }: ProjectClientProps) {
   const [isReordering, setIsReordering] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [editingProject, setEditingProject] = useState<ProjectRecord | null>(null);
 
   const page = Number.parseInt(searchParams.get("page") ?? "1", 10);
   const pageSize = Number.parseInt(searchParams.get("pageSize") ?? "10", 10);
@@ -96,10 +97,32 @@ export function ProjectClient({ locale, userEmail }: ProjectClientProps) {
     };
   }, [locale, page, pageSize, search, refreshKey]);
 
-  const editingProject = useMemo(() => {
-    if (!editProductId) return null;
-    return projects.find((project) => project.productId === editProductId) ?? null;
-  }, [editProductId, projects]);
+  // Saat edit, ambil detail project langsung dari API supaya data benar-benar realtime (bukan dari list yang bisa stale)
+  useEffect(() => {
+    if (!editProductId) {
+      setEditingProject(null);
+      return;
+    }
+
+    let mounted = true;
+    // Fallback jika API gagal/tidak menemukan → pakai data list yang sudah ada
+    const fallback = projects.find((project) => project.productId === editProductId) ?? null;
+
+    fetch(`/api/projects/${editProductId}?locale=${locale}`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (!mounted) return;
+        setEditingProject((json?.data as ProjectRecord) ?? fallback);
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setEditingProject(fallback);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [editProductId, locale]);
 
   const handleReorder = useCallback(async (items: { productId: string; sortOrder: number }[]) => {
     setIsReordering(true);
@@ -127,25 +150,25 @@ export function ProjectClient({ locale, userEmail }: ProjectClientProps) {
   return (
     <main className="flex flex-1 flex-col gap-8">
       {/* Header */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-white/2 p-6">
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand-500/10 blur-3xl" />
+      <div className="relative overflow-hidden rounded-2xl border border-black/10 bg-white p-6">
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-400/20 blur-3xl" />
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-3">
               <Link
                 href={`/${locale}/dashboard`}
-                className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-white/50 transition-colors hover:bg-white/5 hover:text-white"
+                className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-black transition-colors hover:bg-black/5"
               >
                 <ArrowLeft className="h-3.5 w-3.5" />
                 Back
               </Link>
             </div>
-            <h1 className="mt-3 text-xl font-semibold text-white">Project Management</h1>
-            <p className="mt-1 text-sm text-white/40">
+            <h1 className="mt-3 text-xl font-semibold text-black">Project Management</h1>
+            <p className="mt-1 text-sm text-black">
               Tambah, edit, urutkan, atau hapus project portfolio dengan mudah.
             </p>
           </div>
-          <Badge variant="outline" className="flex items-center gap-1.5 border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/50">
+          <Badge variant="outline" className="flex items-center gap-1.5 border border-black/10 bg-white px-3 py-1.5 text-xs text-black">
             <KeyRound className="h-3 w-3" />
             {userEmail}
           </Badge>
@@ -154,7 +177,7 @@ export function ProjectClient({ locale, userEmail }: ProjectClientProps) {
 
       {/* Error */}
       {error && (
-        <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+        <div className="rounded-2xl border border-rose-500/30 bg-rose-100 px-4 py-3 text-sm text-rose-700">
           {error}
         </div>
       )}

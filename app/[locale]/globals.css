@@ -95,14 +95,14 @@
   --chart-3: 30 80% 55%;
   --chart-4: 280 65% 60%;
   --chart-5: 340 75% 55%;
-  --sidebar-background: 224 36% 12%;
-  --sidebar-foreground: 0 0% 100%;
-  --sidebar-primary: 0 0% 100%;
-  --sidebar-primary-foreground: 222.2 84% 4.9%;
-  --sidebar-accent: 222 32% 18%;
-  --sidebar-accent-foreground: 0 0% 100%;
-  --sidebar-border: 222 32% 18%;
-  --sidebar-ring: 217.2 91.2% 59.8%;
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 0 0% 0%;
+  --sidebar-primary: 0 0% 0%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 0 0% 92%;
+  --sidebar-accent-foreground: 0 0% 0%;
+  --sidebar-border: 0 0% 85%;
+  --sidebar-ring: 0 0% 0%;
 }
 
 /* ═══════════════════════════════════════════════
@@ -205,10 +205,10 @@ html {
 
 /* ── Default Dashboard sidebar active item ── */
 [data-theme="default"] [data-sidebar="sidebar"] [data-sidebar="menu-button"][data-active="true"] {
-  background-color: rgba(18, 247, 214, 0.12) !important;
+  background-color: rgba(18, 247, 214, 0.18) !important;
   border-left: 3px solid #12F7D6 !important;
-  color: #12F7D6 !important;
-  font-weight: 600 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
 }
 
 /* SSR safeguard: default theme until JS hydrates */
@@ -659,6 +659,18 @@ html {
 [data-theme="neobrutalism"] .border-white\/\[0\.06\],
 [data-theme="neobrutalism"] .border-white\/\[0\.08\] {
   border-color: #000000 !important;
+  border-width: 3px !important;
+}
+
+/* Black-tinted borders (light admin surfaces) also become solid & thick in neo */
+[data-theme="neobrutalism"] .border-black\/10,
+[data-theme="neobrutalism"] .border-black\/15,
+[data-theme="neobrutalism"] .border-black\/20 {
+  border-color: #000000 !important;
+  border-width: 3px !important;
+}
+[data-theme="neobrutalism"] .border-black\/5 {
+  border-color: rgba(0, 0, 0, 0.4) !important;
   border-width: 3px !important;
 }
 

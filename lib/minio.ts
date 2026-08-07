@@ -84,17 +84,16 @@ export function buildMinioPublicUrl(objectName: string) {
     throw new Error("MINIO_PUBLIC_BASE_URL atau MINIO_PUBLIC_URL belum diatur.");
   }
 
-  if (process.env.MINIO_PUBLIC_BASE_URL?.trim()) {
-    return `${baseUrl}/${normalizePath(objectName)}`;
-  }
-
+  // Catatan: nama bucket SELALU disertakan dalam URL publik
+  // (format: base/bucket/object), jadi MINIO_PUBLIC_BASE_URL / MINIO_PUBLIC_URL
+  // tidak boleh sudah mengandung path bucket.
   const bucket = normalizePath(getMinioBucketName());
   return `${baseUrl}/${bucket}/${normalizePath(objectName)}`;
 }
 
 /**
  * Extract the object name (path) from a MinIO public URL.
- * Example: "https://cdn.mohagussetiaone.my.id/projects/123-uuid.jpg"
+ * Example: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/projects/123-uuid.jpg"
  *   -> returns "projects/123-uuid.jpg"
  */
 export function extractObjectNameFromUrl(publicUrl: string): string | null {
@@ -104,7 +103,15 @@ export function extractObjectNameFromUrl(publicUrl: string): string | null {
   const normalizedBase = baseUrl.replace(/\/+$/g, "");
   if (!publicUrl.startsWith(normalizedBase)) return null;
 
-  return normalizePath(publicUrl.slice(normalizedBase.length));
+  let rest = normalizePath(publicUrl.slice(normalizedBase.length));
+
+  // Lepas prefix nama bucket jika ada (format: base/bucket/object)
+  const bucket = normalizePath(getMinioBucketName());
+  if (bucket && rest.startsWith(`${bucket}/`)) {
+    rest = rest.slice(bucket.length + 1);
+  }
+
+  return rest;
 }
 
 /**

@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react";
 import Image from "next/image";
-import MohAgusImage from "@/app/assets/image/profile/mohagus.jpeg";
 import Link from "next/link";
 import { Mail, MapPin, Briefcase, Link2, Download, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -60,14 +59,14 @@ const Banner = ({ locale: propLocale }: BannerProps) => {
   const yearsExperience = t2.getGlobal("yearsExperience") ?? "2+";
   const programmingLanguages = t2.getGlobal("programmingLanguages") ?? "2";
   const devProjects = t2.getGlobal("developmentProjects") ?? "8+";
-  const cvFileUrl = t2.getGlobal("cvFileUrl") ?? "/CV_2026021211100687.pdf";
+  const cvFileUrl = t2.getGlobal("cvFileUrl") ?? "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/CV_2026021211100687.pdf";
 
   const profileCard = (
     <div
       className={`${isNeo ? "border-[3px] border-black bg-amber-400 p-6 shadow-[6px_6px_0px_0px_black] rounded-tl-[8rem] rounded-br-[8rem]" : isRetro ? "border border-gray-300 p-6 rounded-tl-[8rem] rounded-br-[8rem]" : "border border-gray-500 p-6 rounded-tl-[8rem] rounded-br-[8rem]"}`}
     >
       <div className="flex flex-col items-center justify-center mx-auto py-6">
-        <Image src={MohAgusImage} width={220} height={180} alt="BannerImage.jpg" className="object-contain rounded-full" />
+        <Image src="https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/profile/mohagus.jpeg" width={220} height={180} alt="BannerImage.jpg" className="object-contain rounded-full" />
       </div>
       <div className="flex flex-col gap-4 py-4">
         <div className="flex gap-2 items-center">

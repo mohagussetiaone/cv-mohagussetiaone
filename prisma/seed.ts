@@ -46,7 +46,7 @@ const projectData = [
         description: "A company profile website for PT Fortuna Teknik Mandiri, a steel fabrication manufacturer, with a modern responsive interface presenting the company profile and products.",
       },
     },
-    image: "/project/fortuna-teknik-mandiri.png",
+    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/project/fortuna-teknik-mandiri.png",
     technologies: ["Next.js", "Tailwind CSS"],
     urlPreview: "https://fortuna-teknik-mandiri.vercel.app/",
     githubUrl: "https://github.com/mohagussetiaone/fortuna-teknik-mandiri",
@@ -66,7 +66,7 @@ const projectData = [
         description: "An elegant digital invitation platform for weddings, birthdays, and various events that is responsive and easy to share.",
       },
     },
-    image: "/project/selaras-invite.png",
+    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/project/selaras-invite.png",
     technologies: ["Next.js", "Tailwind CSS", "Axios", "Supabase", "Prisma"],
     urlPreview: "https://rayainvite.web.id",
     githubUrl: "https://github.com/mohagussetiaone/selarasinvite",
@@ -86,7 +86,7 @@ const projectData = [
         description: "An app design that connects farmers and distributors through easier market access, payment solutions, and agricultural education.",
       },
     },
-    image: "/project/tanidealsapp.png",
+    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/project/tanidealsapp.png",
     technologies: ["Figma"],
     urlPreview: "https://www.figma.com/proto/vV1zYKypYPe8bBS5mWyyP8/Tani-Deals-App-UI?node-id=7-3&node-type=canvas&t=roF7vYPt7FGuCZPq-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=75%3A2029",
     githubUrl: null,
@@ -227,8 +227,8 @@ const siteContentData: { section: string; key: string; locale: string; value: st
   { section: "banner", key: "yearsExperience", locale: "", value: "2+", sortOrder: 15 },
   { section: "banner", key: "programmingLanguages", locale: "", value: "2", sortOrder: 16 },
   { section: "banner", key: "developmentProjects", locale: "", value: "8+", sortOrder: 17 },
-  { section: "banner", key: "cvFileUrl", locale: "", value: "/CV_2026021211100687.pdf", sortOrder: 18 },
-  { section: "banner", key: "bannerImage", locale: "", value: "/assets/image/profile/mohagus.jpeg", sortOrder: 19 },
+  { section: "banner", key: "cvFileUrl", locale: "", value: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/CV_2026021211100687.pdf", sortOrder: 18 },
+  { section: "banner", key: "bannerImage", locale: "", value: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/profile/mohagus.jpeg", sortOrder: 19 },
   { section: "banner", key: "lets_talk", locale: "id", value: "Mari Mengobrol", sortOrder: 5 },
   { section: "banner", key: "lets_talk", locale: "en", value: "Let's Talk", sortOrder: 5 },
   { section: "banner", key: "years", locale: "id", value: "Tahun", sortOrder: 6 },
@@ -280,26 +280,6 @@ const siteContentData: { section: string; key: string; locale: string; value: st
     sortOrder: 3,
   },
 
-  // ── Skills (localized) ──
-  { section: "skills", key: "title", locale: "id", value: "Ketrampilan", sortOrder: 1 },
-  { section: "skills", key: "title", locale: "en", value: "Skills", sortOrder: 1 },
-  { section: "skills", key: "description", locale: "id", value: "Saya berusaha untuk tidak pernah berhenti belajar dan berkembang", sortOrder: 2 },
-  { section: "skills", key: "description", locale: "en", value: "I am striving to never stop learning and improving", sortOrder: 2 },
-
-  // ── Skills items (stored as JSON array) ──
-  {
-    section: "skills",
-    key: "items",
-    locale: "",
-    value: JSON.stringify([
-      { name: "HTML", image: "/assets/image/skills/html5.png", bgColor: "#E54F26", textColor: "#E54F26" },
-      { name: "CSS", image: "/assets/image/skills/css.png", bgColor: "#0C73B8", textColor: "#0C73B8" },
-      { name: "JAVASCRIPT", image: "/assets/image/skills/js.png", bgColor: "#E7A020", textColor: "#E7A020" },
-      { name: "REACT JS", image: "/assets/image/skills/react.png", bgColor: "#28A9E0", textColor: "#28A9E0" },
-    ]),
-    sortOrder: 3,
-  },
-
   // ── Contact (localized) ──
   { section: "contact", key: "title", locale: "id", value: "Kirim Saya Pesan", sortOrder: 1 },
   { section: "contact", key: "title", locale: "en", value: "Send Me A Message", sortOrder: 1 },
@@ -314,231 +294,16 @@ const siteContentData: { section: string; key: string; locale: string; value: st
 
   // ── Navbar (non-localized) ──
   { section: "navbar", key: "brandName", locale: "", value: "Moh Agus Setiawan", sortOrder: 1 },
-  { section: "navbar", key: "logoImage", locale: "", value: "/assets/image/logo/mohagus.jpg", sortOrder: 2 },
+  { section: "navbar", key: "logoImage", locale: "", value: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/logo/mohagus.jpg", sortOrder: 2 },
   { section: "navbar", key: "instagramUrl", locale: "", value: "https://www.instagram.com/mohagussetiaone", sortOrder: 3 },
   { section: "navbar", key: "githubUrl", locale: "", value: "https://github.com/mohagussetiaone", sortOrder: 4 },
   { section: "navbar", key: "linkedinUrl", locale: "", value: "https://www.linkedin.com/in/moh-agus-setiawan-464960167/", sortOrder: 5 },
-
-  // ── Works (localized) ──
-  { section: "works", key: "title", locale: "id", value: "Pengalaman Kerja", sortOrder: 1 },
-  { section: "works", key: "title", locale: "en", value: "Work Experience", sortOrder: 1 },
-  { section: "works", key: "description", locale: "id", value: "Perjalanan karir profesional saya sebagai Frontend Developer", sortOrder: 2 },
-  { section: "works", key: "description", locale: "en", value: "My professional career journey as a Frontend Developer", sortOrder: 2 },
-
-  // ── Works Experience (stored as JSON per locale) ──
-  {
-    section: "works",
-    key: "experience",
-    locale: "en",
-    value: JSON.stringify([
-      {
-        id: "exp-1",
-        company: "PT Solusi Aplikasi Andalan Semesta",
-        position: "Frontend Developer",
-        location: "Jakarta, Indonesia",
-        type: "Full-time",
-        startDate: "2023-09",
-        endDate: "Present",
-        description:
-          "Developing and maintaining web applications using React.js, Next.js, and Tailwind CSS. Building responsive and performant user interfaces for client projects and internal systems. Collaborating with cross-functional teams to deliver high-quality software solutions.",
-        logo: "/assets/image/logo/remala-abadi.png",
-      },
-      {
-        id: "exp-2",
-        company: "PT Whiteopen Teknologi",
-        position: "IT Staff Support",
-        location: "Jakarta, Indonesia",
-        type: "Full-time",
-        startDate: "2021-08",
-        endDate: "2022-12",
-        description: "Built company profile websites and web applications using Vite.js and Tailwind CSS. Implemented responsive designs and integrated REST APIs. Collaborated on UI/UX improvements and optimized application performance.",
-        logo: "/assets/image/logo/pt-saas.png",
-      },
-      {
-        id: "exp-3",
-        company: "Freelance",
-        position: "Frontend Developer",
-        location: "Remote",
-        type: "Freelance",
-        startDate: "2022-06",
-        endDate: "2022-12",
-        description:
-          "IT Staff Support Supporting Legacy System Migration activities for Implementation (Asian Toyota Lean Accounting System) Project SAP R3 to SAP Hana at Toyota Indonesia as responsible for: Admin for Jira Software Issue tracking and monitoring. Managing daily reporting of Cutover Rehearsal progress and the IT Team's Cutover Task List.Handling legacy system support as a System Admin, including: 1. Creating backups and restoring folders, file servers, setting up internet information servers, and authorizing users. 2. Creating database links, granting access to users, tables, and stored procedures using SQL Server Management Studio. 3. Creating SQL Job Schedulers on the database server and Windows Job Schedulers on the App Server.",
-        logo: "/assets/image/logo/freelance.png",
-      },
-    ]),
-    sortOrder: 4,
-  },
-  {
-    section: "works",
-    key: "experience",
-    locale: "id",
-    value: JSON.stringify([
-      {
-        id: "exp-1",
-        company: "PT Remala Abadi",
-        position: "Frontend Developer",
-        location: "Jakarta, Indonesia",
-        type: "Full-time",
-        startDate: "2024-01",
-        endDate: "Sekarang",
-        description:
-          "Mengembangkan dan memelihara aplikasi web menggunakan React.js, Next.js, dan Tailwind CSS. Membangun antarmuka pengguna yang responsif dan berperforma tinggi untuk proyek klien dan sistem internal. Berkolaborasi dengan tim lintas fungsi untuk memberikan solusi perangkat lunak berkualitas tinggi.",
-        logo: "/assets/image/logo/remala-abadi.png",
-      },
-      {
-        id: "exp-2",
-        company: "PT Solusi Aplikasi Andalan Semesta",
-        position: "Junior Frontend Developer",
-        location: "Jakarta, Indonesia",
-        type: "Full-time",
-        startDate: "2023-01",
-        endDate: "2023-12",
-        description:
-          "Membangun website company profile dan aplikasi web menggunakan Vite.js dan Tailwind CSS. Mengimplementasikan desain responsif dan mengintegrasikan REST API. Berkolaborasi dalam perbaikan UI/UX dan mengoptimalkan performa aplikasi.",
-        logo: "/assets/image/logo/pt-saas.png",
-      },
-      {
-        id: "exp-3",
-        company: "Freelance",
-        position: "Frontend Developer",
-        location: "Remote",
-        type: "Freelance",
-        startDate: "2022-06",
-        endDate: "2022-12",
-        description:
-          "Mengembangkan website responsif dan landing page untuk berbagai klien. Menggunakan React.js, HTML, CSS, dan JavaScript untuk menciptakan pengalaman pengguna yang menarik. Mengelola komunikasi klien dan jadwal proyek secara mandiri.",
-        logo: "/assets/image/logo/freelance.png",
-      },
-    ]),
-    sortOrder: 5,
-  },
-
-  // ── Works section heading labels (localized) ──
-  { section: "works", key: "experience_label", locale: "id", value: "Pengalaman", sortOrder: 7 },
-  { section: "works", key: "experience_label", locale: "en", value: "Experience", sortOrder: 7 },
-
-  // ── Certificates (localized) ──
-  { section: "certificates", key: "title", locale: "id", value: "Sertifikasi", sortOrder: 1 },
-  { section: "certificates", key: "title", locale: "en", value: "Certifications", sortOrder: 1 },
-  { section: "certificates", key: "description", locale: "id", value: "Sertifikasi profesional yang telah saya raih", sortOrder: 2 },
-  { section: "certificates", key: "description", locale: "en", value: "Professional certifications I have achieved", sortOrder: 2 },
-
-  // ── Certificates items (stored as JSON per locale) ──
-  {
-    section: "certificates",
-    key: "items",
-    locale: "en",
-    value: JSON.stringify([
-      {
-        id: "cert-1",
-        name: "Learn to Build Web Applications with React",
-        organization: "Dicoding",
-        issueDate: "2024",
-        credentialUrl: "https://www.dicoding.com/certificates/...",
-      },
-      {
-        id: "cert-2",
-        name: "Learn JavaScript Programming Basics",
-        organization: "Dicoding",
-        issueDate: "2023",
-        credentialUrl: "https://www.dicoding.com/certificates/...",
-      },
-    ]),
-    sortOrder: 3,
-  },
-  {
-    section: "certificates",
-    key: "items",
-    locale: "id",
-    value: JSON.stringify([
-      {
-        id: "cert-1",
-        name: "Belajar Membuat Aplikasi Web dengan React",
-        organization: "Dicoding",
-        issueDate: "2024",
-        credentialUrl: "https://www.dicoding.com/certificates/...",
-      },
-      {
-        id: "cert-2",
-        name: "Belajar Dasar Pemrograman JavaScript",
-        organization: "Dicoding",
-        issueDate: "2023",
-        credentialUrl: "https://www.dicoding.com/certificates/...",
-      },
-    ]),
-    sortOrder: 4,
-  },
 
   // ── Footer (localized) ──
   { section: "footer", key: "copyrightText", locale: "id", value: "Hak Cipta Dilindungi.", sortOrder: 1 },
   { section: "footer", key: "copyrightText", locale: "en", value: "All Rights Reserved.", sortOrder: 1 },
   { section: "footer", key: "brandName", locale: "", value: "Moh Agus Setiawan", sortOrder: 2 },
   { section: "footer", key: "brandUrl", locale: "", value: "https://mohagussetiaone.my.id", sortOrder: 3 },
-
-  // ── Education (localized) ──
-  { section: "education", key: "title", locale: "id", value: "Pendidikan", sortOrder: 1 },
-  { section: "education", key: "title", locale: "en", value: "Education", sortOrder: 1 },
-  { section: "education", key: "description", locale: "id", value: "Riwayat pendidikan formal saya", sortOrder: 2 },
-  { section: "education", key: "description", locale: "en", value: "My formal education background", sortOrder: 2 },
-
-  // ── Education Items (stored as JSON per locale) ──
-  {
-    section: "education",
-    key: "items",
-    locale: "en",
-    value: JSON.stringify([
-      {
-        id: "edu-1",
-        school: "Universitas Bina Sarana Informatika",
-        degree: "Bachelor",
-        field: "Computer Science",
-        startDate: "2023",
-        endDate: "2025",
-        description: "Focusing on software development, web technologies, and information systems.",
-        logo: "/assets/image/logo/ubsi.jpg",
-      },
-      {
-        id: "edu-2",
-        school: "SMK Negeri 1 Jakarta",
-        degree: "Vocational High School",
-        field: "Software Engineering",
-        startDate: "2018",
-        endDate: "2021",
-        description: "Studied software engineering fundamentals, web development, and database management.",
-        logo: "",
-      },
-    ]),
-    sortOrder: 3,
-  },
-  {
-    section: "education",
-    key: "items",
-    locale: "id",
-    value: JSON.stringify([
-      {
-        id: "edu-1",
-        school: "Universitas Bina Sarana Informatika",
-        degree: "Sarjana",
-        field: "Ilmu Komputer",
-        startDate: "2023",
-        endDate: "2025",
-        description: "Berfokus pada pengembangan perangkat lunak, teknologi web, dan sistem informasi.",
-        logo: "/assets/image/logo/ubsi.jpg",
-      },
-      {
-        id: "edu-2",
-        school: "SMK Negeri 1 Jakarta",
-        degree: "Sekolah Menengah Kejuruan",
-        field: "Rekayasa Perangkat Lunak",
-        startDate: "2018",
-        endDate: "2021",
-        description: "Mempelajari dasar-dasar rekayasa perangkat lunak, pengembangan web, dan manajemen basis data.",
-        logo: "",
-      },
-    ]),
-    sortOrder: 4,
-  },
 
   // ── NavHome (localized) ──
   { section: "navhome", key: "home", locale: "id", value: "Beranda", sortOrder: 1 },
@@ -600,25 +365,25 @@ const sectionTextData: { section: string; key: string; locale: string; value: st
 ];
 
 const skillItemsData = [
-  { name: "HTML", image: "/assets/image/skills/html5.png", bgColor: "#E54F26", textColor: "#E54F26" },
-  { name: "CSS", image: "/assets/image/skills/css.png", bgColor: "#1572B6", textColor: "#1572B6" },
-  { name: "JAVASCRIPT", image: "/assets/image/skills/js.png", bgColor: "#F7DF1E", textColor: "#F7DF1E" },
-  { name: "REACT JS", image: "/assets/image/skills/react.png", bgColor: "#28A9E0", textColor: "#28A9E0" },
-  { name: "TYPESCRIPT", image: "", bgColor: "#3178C6", textColor: "#3178C6" },
-  { name: "VITE", image: "", bgColor: "#646CFF", textColor: "#646CFF" },
-  { name: "NEXTJS", image: "", bgColor: "#000000", textColor: "#000000" },
-  { name: "VUE JS", image: "", bgColor: "#42B883", textColor: "#42B883" },
-  { name: "EXPRESS JS", image: "", bgColor: "#000000", textColor: "#000000" },
-  { name: "NEST JS", image: "", bgColor: "#E0234E", textColor: "#E0234E" },
-  { name: "GOLANG", image: "", bgColor: "#00ADD8", textColor: "#00ADD8" },
-  { name: "TAILWINDCSS", image: "", bgColor: "#38BDF8", textColor: "#38BDF8" },
-  { name: "BOOTSTRAP", image: "", bgColor: "#7952B3", textColor: "#7952B3" },
-  { name: "MySQL", image: "", bgColor: "#4479A1", textColor: "#4479A1" },
-  { name: "POSTGRESQL", image: "", bgColor: "#336791", textColor: "#336791" },
-  { name: "GITHUB", image: "", bgColor: "#181717", textColor: "#181717" },
-  { name: "GITLAB", image: "", bgColor: "#FC6D26", textColor: "#FC6D26" },
-  { name: "VITEST", image: "", bgColor: "#729B1B", textColor: "#729B1B" },
-  { name: "ZUSTAND", image: "", bgColor: "#A020F0", textColor: "#A020F0" },
+  { name: "HTML", image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/skills/html5.png", bgColor: "#E54F26", textColor: "#E54F26" },
+  { name: "CSS", image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/skills/css.png", bgColor: "#1572B6", textColor: "#1572B6" },
+  { name: "JAVASCRIPT", image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/skills/js.png", bgColor: "#F7DF1E", textColor: "#F7DF1E" },
+  { name: "REACT JS", image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/skills/react.png", bgColor: "#28A9E0", textColor: "#28A9E0" },
+  { name: "TYPESCRIPT", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/typescript/typescript-original.svg", bgColor: "#3178C6", textColor: "#3178C6" },
+  { name: "VITE", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vite/vite-original.svg", bgColor: "#646CFF", textColor: "#646CFF" },
+  { name: "NEXTJS", image: "https://cdn.simpleicons.org/nextdotjs/ffffff", bgColor: "#000000", textColor: "#000000" },
+  { name: "VUE JS", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vuejs/vuejs-original.svg", bgColor: "#42B883", textColor: "#42B883" },
+  { name: "EXPRESS JS", image: "https://cdn.simpleicons.org/express/ffffff", bgColor: "#000000", textColor: "#000000" },
+  { name: "NEST JS", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/nestjs/nestjs-original.svg", bgColor: "#E0234E", textColor: "#E0234E" },
+  { name: "GOLANG", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/go/go-original.svg", bgColor: "#00ADD8", textColor: "#00ADD8" },
+  { name: "TAILWINDCSS", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/tailwindcss/tailwindcss-original.svg", bgColor: "#38BDF8", textColor: "#38BDF8" },
+  { name: "BOOTSTRAP", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/bootstrap/bootstrap-original.svg", bgColor: "#7952B3", textColor: "#7952B3" },
+  { name: "MySQL", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/mysql/mysql-original.svg", bgColor: "#4479A1", textColor: "#4479A1" },
+  { name: "POSTGRESQL", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/postgresql/postgresql-original.svg", bgColor: "#336791", textColor: "#336791" },
+  { name: "GITHUB", image: "https://cdn.simpleicons.org/github/ffffff", bgColor: "#181717", textColor: "#181717" },
+  { name: "GITLAB", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/gitlab/gitlab-original.svg", bgColor: "#FC6D26", textColor: "#FC6D26" },
+  { name: "VITEST", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vitest/vitest-original.svg", bgColor: "#729B1B", textColor: "#729B1B" },
+  { name: "ZUSTAND", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/zustand/zustand-original.svg", bgColor: "#A020F0", textColor: "#A020F0" },
 ];
 
 const workExperienceData = [

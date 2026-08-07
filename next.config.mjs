@@ -21,6 +21,9 @@ const minioRemotePattern = minioPublicUrl
 
 const nextConfig = {
   images: {
+    // Skill stack logos use SVG (devicon / simple-icons). Both CDNs are trusted.
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
     remotePatterns: [
       {
         protocol: "https",
@@ -37,6 +40,18 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "picsum.photos",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.simpleicons.org",
         port: "",
         pathname: "/**",
       },

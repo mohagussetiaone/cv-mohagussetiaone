@@ -1,11 +1,30 @@
 import { NextResponse } from "next/server";
 import { getAuthSession } from "@/auth";
 import { isAdminEmail } from "@/lib/auth";
-import { deleteSectionItem, updateSectionItem } from "@/lib/section-content";
+import { deleteSectionItem, getSectionItem, updateSectionItem } from "@/lib/section-content";
 
 const SECTION = "certificates" as const;
 
 type RouteContext = { params: Promise<{ id: string }> };
+
+export async function GET(_request: Request, { params }: RouteContext) {
+  try {
+    const { id } = await params;
+    if (!id) {
+      return NextResponse.json({ message: "ID tidak valid." }, { status: 400 });
+    }
+
+    const item = await getSectionItem(SECTION, id);
+    if (!item) {
+      return NextResponse.json({ message: "Item tidak ditemukan." }, { status: 404 });
+    }
+
+    return NextResponse.json({ data: item });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: "Gagal mengambil data sertifikat." }, { status: 500 });
+  }
+}
 
 export async function PATCH(request: Request, { params }: RouteContext) {
   try {

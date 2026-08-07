@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Briefcase, Building2, Calendar, ChevronDown, ChevronRight, MapPin } from "lucide-react";
+import { Briefcase, Building2, Calendar, ChevronDown, MapPin } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { useSectionContent } from "@/hooks/use-section-content";
 import { useTheme } from "@/components/theme/ThemeProvider";
@@ -87,21 +87,37 @@ function ExperienceCard({ exp, index, theme }: { exp: WorkExperience; index: num
             <Building2 className={cn("h-5 w-5", isCardTheme && theme === "neobrutalism" && "text-black", isCardTheme && theme === "retro" && "text-[#6699ff]", !isCardTheme && "text-brand-400")} />
           </div>
 
-          <div className="min-w-0 flex-1">
+          <div
+            onClick={() => setExpanded(!expanded)}
+            role="button"
+            tabIndex={0}
+            aria-expanded={expanded}
+            aria-controls={`exp-desc-${exp.id}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setExpanded(!expanded);
+              }
+            }}
+            className={cn(
+              "min-w-0 flex-1 cursor-pointer select-none rounded-lg outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand-500/50",
+              isCardTheme ? "text-black" : "text-white",
+            )}
+          >
             <div className="flex items-start justify-between gap-2">
-              <div>
-                <h3 className={cn("font-semibold text-base", isCardTheme ? "text-black" : "text-white")}>{exp.position}</h3>
+              <div className="min-w-0">
+                <h3 className={cn("font-semibold text-base underline-offset-4 hover:underline decoration-2", isCardTheme ? "text-black" : "text-white")}>{exp.position}</h3>
                 <p className={cn("text-sm font-medium", isCardTheme && theme === "neobrutalism" && "text-amber-600", isCardTheme && theme === "retro" && "text-[#6699ff]", !isCardTheme && "text-brand-400")}>{exp.company}</p>
               </div>
-              <button
-                onClick={() => setExpanded(!expanded)}
-                className={cn("shrink-0 mt-1 rounded-lg p-1 transition-all", isCardTheme ? "text-black/40 hover:text-black hover:bg-black/10" : "text-white/30 hover:text-white/70 hover:bg-white/5")}
+              <span
+                aria-hidden
+                className={cn("shrink-0 mt-1 rounded-lg p-1 transition-transform", expanded ? "rotate-0" : "-rotate-90", isCardTheme ? "text-black" : "text-white/30")}
               >
-                {expanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-              </button>
+                <ChevronDown className="h-4 w-4" />
+              </span>
             </div>
 
-            <div className={cn("mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs", isCardTheme ? "text-black/60" : "text-white/50")}>
+            <div className={cn("mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs", isCardTheme ? "text-black" : "text-white/50")}>
               <span className="inline-flex items-center gap-1">
                 <Calendar className="h-3 w-3" />
                 {dateLabel}
@@ -123,8 +139,12 @@ function ExperienceCard({ exp, index, theme }: { exp: WorkExperience; index: num
             </div>
 
             {expanded && exp.description && (
-              <div className={cn("mt-3 pt-3", isCardTheme && theme === "neobrutalism" && "border-t-2 border-black/10", isCardTheme && theme === "retro" && "border-t border-[#6699ff]/20", !isCardTheme && "border-t border-white/10")}>
-                <p className={cn("text-sm leading-relaxed whitespace-pre-line", isCardTheme ? "text-black/70" : "text-white/70")}>{exp.description}</p>
+              <div
+                id={`exp-desc-${exp.id}`}
+                onClick={(e) => e.stopPropagation()}
+                className={cn("mt-3 pt-3", isCardTheme && theme === "neobrutalism" && "border-t-2 border-black/10", isCardTheme && theme === "retro" && "border-t border-[#6699ff]/20", !isCardTheme && "border-t border-white/10")}
+              >
+                <p className={cn("text-sm leading-relaxed whitespace-pre-line", isCardTheme ? "text-black" : "text-white/70")}>{exp.description}</p>
               </div>
             )}
           </div>
@@ -154,7 +174,7 @@ const Works = () => {
       {/* Header - center aligned */}
       <div className="relative flex flex-col items-center text-center mb-12">
         <h1 className={cn("text-center text-4xl underline", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{t2("title")}</h1>
-        <p className={cn("mt-2 max-w-2xl", theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50")}>{t2("description")}</p>
+        <p className={cn("mt-2 max-w-2xl", theme === "neobrutalism" ? "text-black" : theme === "retro" ? "text-black" : "text-white/50")}>{t2("description")}</p>
         <div
           className={cn(
             "absolute -top-6 right-0 text-[6rem] md:text-[8rem] font-bold select-none pointer-events-none",

@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react";
 import Image from "next/image";
-import ProgrammerImage from "@/app/assets/image/about/Programmer.png";
 import { useTranslations, useLocale } from "next-intl";
 import { useSiteContent, getLocalizedContent } from "@/hooks/use-site-content";
 import { useTheme } from "@/components/theme/ThemeProvider";
@@ -59,7 +58,7 @@ const About = ({ locale: propLocale }: AboutProps) => {
           </div>
         </div>
         <div className="col-span-6 md:col-span-2 items-end">
-          <Image src={ProgrammerImage} alt="Programmer" width={1300} height={1300} />
+          <Image src="https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/about/Programmer.png" alt="Programmer" width={1300} height={1300} />
         </div>
       </div>
     </section>

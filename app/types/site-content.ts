@@ -1,4 +1,4 @@
-export type SiteContentSection = "banner" | "about" | "skills" | "contact" | "navbar" | "works" | "footer" | "navhome" | "certificates" | "education";
+export type SiteContentSection = "banner" | "about" | "contact" | "navbar" | "footer" | "navhome";
 
 export interface SiteContentRecord {
   id: string;

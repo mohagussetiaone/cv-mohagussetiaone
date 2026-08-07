@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import { getAuthSession } from "@/auth";
 import { isAdminEmail } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { getProjectsPage } from "@/lib/projects";
+import { getProjects, getProjectsPage } from "@/lib/projects";
 import type { ProjectLocale } from "@/app/types/project";
 import { projectPayloadSchema } from "@/lib/validators/project";
 
@@ -11,6 +11,13 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const localeParam = searchParams.get("locale");
   const locale: ProjectLocale = localeParam === "en" ? "en" : "id";
+
+  // Halaman publik: ambil SEMUA project tanpa pagination agar selalu sinkron dengan CRUD
+  if (searchParams.get("all") === "true") {
+    const data = await getProjects(locale);
+    return NextResponse.json({ data });
+  }
+
   const search = searchParams.get("search") ?? "";
   const page = Number.parseInt(searchParams.get("page") ?? "1", 10);
   const pageSize = Number.parseInt(searchParams.get("pageSize") ?? "10", 10);

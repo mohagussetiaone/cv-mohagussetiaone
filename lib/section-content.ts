@@ -53,6 +53,19 @@ export async function listSectionItems(section: SectionKind) {
   }
 }
 
+export async function getSectionItem(section: SectionKind, id: string) {
+  switch (section) {
+    case "skills":
+      return prisma.skillItem.findUnique({ where: { id } });
+    case "works":
+      return prisma.workExperience.findUnique({ where: { id } });
+    case "certificates":
+      return prisma.certificate.findUnique({ where: { id } });
+    case "education":
+      return prisma.educationItem.findUnique({ where: { id } });
+  }
+}
+
 export async function getSectionPayload(section: SectionKind) {
   const [items, settingsRows] = await Promise.all([listSectionItems(section), getSectionSettings(section)]);
   const localized: Record<string, Record<string, string>> = {};

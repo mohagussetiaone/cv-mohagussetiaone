@@ -1,4 +1,8 @@
+"use client";
+
 import { BarChart3, FolderLock, FolderOpen, Layers, Wrench } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useNeo } from "@/components/dashboard/neo";
 
 type ProjectStatsProps = {
   totalProjects: number;
@@ -57,6 +61,8 @@ const stats = (data: ProjectStatsProps) => [
 ];
 
 export function ProjectStats(props: ProjectStatsProps) {
+  const { isNeo } = useNeo();
+
   return (
     <section id="overview" className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
       {stats(props).map((item) => {
@@ -64,15 +70,22 @@ export function ProjectStats(props: ProjectStatsProps) {
         return (
           <div
             key={item.label}
-            className={`group relative overflow-hidden rounded-2xl border ${item.border} bg-gradient-to-br ${item.gradient} p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
+            className={cn(
+              "group relative overflow-hidden p-5 transition-all duration-300",
+              isNeo
+                ? "border-[3px] border-black bg-white shadow-[5px_5px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_black]"
+                : `rounded-2xl border ${item.border} bg-gradient-to-br ${item.gradient} hover:scale-[1.02] hover:shadow-lg`,
+            )}
           >
-            <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-white/5 blur-2xl" />
+            {!isNeo && <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-amber-400/10 blur-2xl" />}
             <div className="flex items-start justify-between">
-              <p className="text-sm font-medium text-white/60">{item.label}</p>
-              <Icon className={`h-4 w-4 ${item.iconColor}`} />
+              <p className={cn("text-sm font-medium", isNeo ? "text-black" : "text-black")}>{item.label}</p>
+              <span className={cn("flex h-8 w-8 shrink-0 items-center justify-center", isNeo ? "border-2 border-black bg-amber-400 shadow-[2px_2px_0px_0px_black]" : "")}>
+                <Icon className={cn("h-4 w-4", isNeo ? "text-black" : item.iconColor)} />
+              </span>
             </div>
-            <p className="mt-3 text-3xl font-bold text-white">{item.value}</p>
-            <p className="mt-1 text-xs text-white/40">{item.helper}</p>
+            <p className={cn("mt-3 text-3xl font-bold", isNeo ? "text-black" : "text-black")}>{item.value}</p>
+            <p className={cn("mt-1 text-xs", isNeo ? "text-black" : "text-black")}>{item.helper}</p>
           </div>
         );
       })}
