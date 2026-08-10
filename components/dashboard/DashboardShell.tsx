@@ -4,6 +4,7 @@ import { useEffect, type CSSProperties, type ReactNode } from "react";
 import { AppSidebar } from "./AppSidebar";
 import { SiteHeader } from "./SiteHeader";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 type DashboardShellProps = {
   children: ReactNode;
@@ -27,31 +28,33 @@ export function DashboardShell({ children, locale, userEmail, userName }: Dashbo
   }, []);
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "16rem",
-          "--header-height": "3.5rem",
-        } as CSSProperties
-      }
-      className="fixed inset-0 z-0 h-svh w-full overflow-hidden overscroll-none"
-    >
-      <AppSidebar locale={locale} userEmail={userEmail} userName={userName} />
-      <SidebarInset className="h-svh overflow-hidden overscroll-none">
-        <SiteHeader locale={locale} userEmail={userEmail} />
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-white">
-          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-            <div
-              data-dashboard-scroll-area
-              className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
-            >
-              <div className="mx-auto w-full max-w-[1600px] px-4 py-6 md:px-8 lg:px-10">
-                {children}
+    <ThemeProvider forcedTheme="default">
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "16rem",
+            "--header-height": "3.5rem",
+          } as CSSProperties
+        }
+        className="fixed inset-0 z-0 h-svh w-full overflow-hidden overscroll-none"
+      >
+        <AppSidebar locale={locale} userEmail={userEmail} userName={userName} />
+        <SidebarInset className="h-svh overflow-hidden overscroll-none">
+          <SiteHeader locale={locale} userEmail={userEmail} />
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-white">
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+              <div
+                data-dashboard-scroll-area
+                className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
+              >
+                <div className="mx-auto w-full max-w-[1600px] px-4 py-6 md:px-8 lg:px-10">
+                  {children}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+        </SidebarInset>
+      </SidebarProvider>
+    </ThemeProvider>
   );
 }

@@ -66,7 +66,16 @@ const Banner = ({ locale: propLocale }: BannerProps) => {
       className={`${isNeo ? "border-[3px] border-black bg-amber-400 p-6 shadow-[6px_6px_0px_0px_black] rounded-tl-[8rem] rounded-br-[8rem]" : isRetro ? "border border-gray-300 p-6 rounded-tl-[8rem] rounded-br-[8rem]" : "border border-gray-500 p-6 rounded-tl-[8rem] rounded-br-[8rem]"}`}
     >
       <div className="flex flex-col items-center justify-center mx-auto py-6">
-        <Image src="https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/profile/mohagus.jpeg" width={220} height={180} alt="BannerImage.jpg" className="object-contain rounded-full" />
+        <Image
+          src="https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/profile/mohagus.jpeg"
+          width={220}
+          height={180}
+          alt="Foto profil Moh Agus Setiawan"
+          priority
+          fetchPriority="high"
+          sizes="(max-width: 768px) 60vw, 220px"
+          className="w-auto h-auto object-contain rounded-full"
+        />
       </div>
       <div className="flex flex-col gap-4 py-4">
         <div className="flex gap-2 items-center">
@@ -104,7 +113,7 @@ const Banner = ({ locale: propLocale }: BannerProps) => {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex flex-col gap-4 items-start justify-start md:mx-6">
               <span className="text-sm text-brand-500">{"<h1>"}</span>
-              <h1 className="text-5xl text-white">{t2.get("greeting")}</h1>
+              <p className="text-5xl text-white">{t2.get("greeting")}</p>
               <h1 className="text-4xl text-white">{t2.get("name")}</h1>
               <TypewriterEffect words={words} />
               <span className="text-sm text-brand-500">{"<h1/>"}</span>
@@ -127,29 +136,29 @@ const Banner = ({ locale: propLocale }: BannerProps) => {
             >
               <div className="flex gap-3">
                 <div className="h-full flex justify-center items-center">
-                  <h1 className="text-4xl text-brand-500">{yearsExperience}</h1>
+                  <strong className="text-4xl text-brand-500">{yearsExperience}</strong>
                 </div>
                 <div className="flex flex-col text-white">
-                  <h2>{t2.get("years")}</h2>
-                  <h2>{t2.get("experience")}</h2>
+                  <span>{t2.get("years")}</span>
+                  <span>{t2.get("experience")}</span>
                 </div>
               </div>
               <div className="flex gap-3">
                 <div className="h-full flex justify-center items-center">
-                  <h1 className="text-4xl text-brand-500">{programmingLanguages}</h1>
+                  <strong className="text-4xl text-brand-500">{programmingLanguages}</strong>
                 </div>
                 <div className="flex flex-col text-white">
-                  <h2>{t2.get("programming")}</h2>
-                  <h2>{t2.get("language")}</h2>
+                  <span>{t2.get("programming")}</span>
+                  <span>{t2.get("language")}</span>
                 </div>
               </div>
               <div className="flex gap-3">
                 <div className="h-full flex justify-center items-center">
-                  <h1 className="text-4xl text-brand-500">{devProjects}</h1>
+                  <strong className="text-4xl text-brand-500">{devProjects}</strong>
                 </div>
                 <div className="flex flex-col text-white">
-                  <h2>{t2.get("development")}</h2>
-                  <h2>{t2.get("project")}</h2>
+                  <span>{t2.get("development")}</span>
+                  <span>{t2.get("project")}</span>
                 </div>
               </div>
             </div>

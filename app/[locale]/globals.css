@@ -213,7 +213,7 @@ html {
 
 /* SSR safeguard: default theme until JS hydrates */
 html:not([data-theme]) body {
-  background-color: #292f36;
+  background-color: #0b0e14;
   color: #ffffff;
 }
 
@@ -245,9 +245,28 @@ html {
 
 [data-theme="default"] body,
 [data-theme="default"] .theme-body {
-  background-color: #292f36;
+  background-color: #0b0e14;
   color: #ffffff;
+  background-image:
+    radial-gradient(circle at 15% -5%, rgba(18, 247, 214, 0.28), transparent 38%),
+    radial-gradient(circle at 90% 4%, rgba(56, 189, 248, 0.24), transparent 32%),
+    radial-gradient(circle at 50% 110%, rgba(168, 85, 247, 0.20), transparent 46%),
+    linear-gradient(170deg, #101825 0%, #1f2937 40%, #111827 75%, #06080d 100%);
 }
+
+[data-theme="default"] .text-brand-500,
+[data-theme="default"] .text-brand-400 {
+  color: #12F7D6;
+}
+
+/* ── Default theme: raise low-opacity text so it meets WCAG AA contrast ── */
+[data-theme="default"] .text-white\/25 { color: rgba(255,255,255,0.52) !important; }
+[data-theme="default"] .text-white\/30 { color: rgba(255,255,255,0.56) !important; }
+[data-theme="default"] .text-white\/35 { color: rgba(255,255,255,0.60) !important; }
+[data-theme="default"] .text-white\/40 { color: rgba(255,255,255,0.62) !important; }
+[data-theme="default"] .text-white\/50 { color: rgba(255,255,255,0.66) !important; }
+[data-theme="default"] .text-white\/\[0\.4\] { color: rgba(255,255,255,0.62) !important; }
+[data-theme="default"] .text-white\/\[0\.5\] { color: rgba(255,255,255,0.66) !important; }
 
 [data-theme="retro"] body,
 [data-theme="retro"] .theme-body {

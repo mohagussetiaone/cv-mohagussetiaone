@@ -27,9 +27,9 @@ const Certificates = () => {
     <div className="py-10 md:py-20 px-4 md:px-8" id="certificates">
       {/* Header - center aligned */}
       <div className="relative flex flex-col items-center text-center mb-12">
-        <h1 className={cn("text-center text-4xl underline", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>
+        <h2 className={cn("text-center text-4xl underline", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>
           {t2("title") || "Certifications"}
-        </h1>
+        </h2>
         <p className={cn("mt-2 max-w-2xl", theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50")}>{t2("description") || "Professional certifications"}</p>
         <div
           className={cn(
@@ -45,7 +45,7 @@ const Certificates = () => {
 
       {/* Certification Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {certifications.map((cert) => (
+        {certifications.map((cert, i) => (
           <div
             key={cert.id}
             className={cn(
@@ -77,7 +77,7 @@ const Certificates = () => {
                   theme !== "neobrutalism" && theme !== "retro" && "text-white group-hover:text-amber-400",
                 )}
               >
-                {cert.name}
+                {content.localized[`item_${i + 1}.name`] ?? cert.name}
               </h3>
               <p className={cn("mt-0.5 text-sm", theme === "neobrutalism" && "text-amber-600/80", theme === "retro" && "text-[#6699ff]/80", theme !== "neobrutalism" && theme !== "retro" && "text-amber-400/80")}>{cert.organization}</p>
               <div className={cn("mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs", theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50")}>

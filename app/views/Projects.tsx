@@ -51,14 +51,14 @@ const Projects: React.FC<ProjectsProps> = ({ projects: initialProjects }) => {
     <div className="py-10 md:py-24 px-4 md:px-8" id="portfolio">
       {/* Header - center aligned */}
       <div className="relative flex flex-col items-center text-center mb-12">
-        <h1 className={cn(
+        <h2 className={cn(
           "text-center text-4xl underline",
           theme === "neobrutalism" && "text-amber-400",
           theme === "retro" && "text-[#6699ff]",
           theme !== "neobrutalism" && theme !== "retro" && "text-brand-500",
         )}>
           {t("title")}
-        </h1>
+        </h2>
         <p className={cn(
           "mt-2 max-w-2xl",
           theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50"

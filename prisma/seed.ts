@@ -525,11 +525,95 @@ const educationItemsData = [
   },
 ];
 
+// ──────────────────────────────────────────────
+// Per-item localized field data (works, education, certificates)
+// Key: item_{index}.{field}  (index = 1-based sort order)
+// ──────────────────────────────────────────────
+const sectionItemLocalizedData: { section: string; key: string; locale: string; value: string; sortOrder: number }[] = [
+  // ── Works (WorkExperience) description ──
+  {
+    section: "works", key: "item_1.description", locale: "en",
+    value: "Developed and maintained multiple internal and customer-facing web platforms, including:\n- Nethome Client Area (nethome.id) for customer account management, product purchases, internet usage monitoring, and monthly billing.\n- Web OLT Dashboard, a Network Operation Center (NOC) management platform for OLT management, asset monitoring, maintenance, network configuration, client provisioning, client synchronization, inventory management, reporting, system logging, and role-based access control (RBAC).\n- Customer Data Management (tachyon.id) to improve data accuracy, consistency, and asset maintenance processes.\n- Remala Ticketing System for the Diskominfo project to manage issue reporting, ticket tracking, customer service workflows, and resolution processes.\n\nImplemented multi-tenant architecture supporting KSO and Non-KSO company structures and business processes.\nCollaborated with UI/UX designers and backend developers to transform business requirements and design prototypes into responsive, interactive, and maintainable web applications.\nOptimized application code and implemented structured development practices to improve performance, scalability, maintainability, and long-term system reliability.\nPerformed testing, debugging, and issue resolution to ensure application stability and efficient delivery.",
+    sortOrder: 20,
+  },
+  {
+    section: "works", key: "item_1.description", locale: "id",
+    value: "Mengembangkan dan memelihara berbagai platform web internal dan untuk pelanggan, termasuk:\n- Nethome Client Area (nethome.id) untuk pengelolaan akun pelanggan, pembelian produk, pemantauan pemakaian internet, dan penagihan bulanan.\n- Web OLT Dashboard, platform pengelolaan Network Operation Center (NOC) untuk manajemen OLT, pemantauan aset, pemeliharaan, konfigurasi jaringan, penyediaan klien, sinkronisasi klien, manajemen inventaris, pelaporan, pencatatan sistem, dan kontrol akses berbasis peran (RBAC).\n- Customer Data Management (tachyon.id) untuk meningkatkan akurasi data, konsistensi, dan proses pemeliharaan aset.\n- Remala Ticketing System untuk proyek Diskominfo untuk mengelola pelaporan masalah, pelacakan tiket, alur kerja layanan pelanggan, dan proses penyelesaian.\n\nMengimplementasikan arsitektur multi-tenant yang mendukung struktur dan proses bisnis perusahaan KSO dan Non-KSO.\nBerkolaborasi dengan desainer UI/UX dan pengembang backend untuk mengubah kebutuhan bisnis dan prototipe desain menjadi aplikasi web yang responsif, interaktif, dan mudah dipelihara.\nMengoptimalkan kode aplikasi dan menerapkan praktik pengembangan terstruktur untuk meningkatkan performa, skalabilitas, kemudahan pemeliharaan, dan keandalan sistem jangka panjang.\nMelakukan pengujian, debugging, dan penyelesaian masalah untuk memastikan stabilitas dan efisiensi pengiriman aplikasi.",
+    sortOrder: 20,
+  },
+  {
+    section: "works", key: "item_2.description", locale: "en",
+    value: "Supporting Legacy System Migration activities for Implementation (Asian Toyota Lean Accounting System) Project SAP R3 to SAP Hana at Toyota Indonesia as responsible for:\n- Admin for Jira Software Issue tracking and monitoring.\n- Managing daily reporting of Cutover Rehearsal progress and the IT Team's Cutover Task List.\n- Handling legacy system support as a System Admin, including:\n  1. Creating backups and restoring folders, file servers, setting up internet information servers, and authorizing users.\n  2. Creating database links, granting access to users, tables, and stored procedures using SQL Server Management Studio.\n  3. Creating SQL Job Schedulers on the database server and Windows Job Schedulers on the App Server.",
+    sortOrder: 21,
+  },
+  {
+    section: "works", key: "item_2.description", locale: "id",
+    value: "Mendukung aktivitas migrasi Legacy System untuk Implementasi (Asian Toyota Lean Accounting System) Proyek SAP R3 ke SAP Hana di Toyota Indonesia dengan tanggung jawab:\n- Admin untuk pelacakan dan pemantauan isu Jira Software.\n- Mengelola pelaporan harian tentang progres Cutover Rehearsal dan Daftar Tugas Cutover Tim IT.\n- Menangani dukungan sistem legacy sebagai System Admin, termasuk:\n  1. Membuat backup dan memulihkan folder, file server, menyiapkan internet information server, dan mengizinkan akses pengguna.\n  2. Membuat database link, memberikan akses kepada pengguna, tabel, dan stored procedure menggunakan SQL Server Management Studio.\n  3. Membuat SQL Job Scheduler di server database dan Windows Job Scheduler di App Server.",
+    sortOrder: 21,
+  },
+  {
+    section: "works", key: "item_3.description", locale: "en",
+    value: "Developing website kaftan brautmode:\n1. Landing page https://kaftan-brautmode.de/de with catalog, schedule, and language switch using next-intl.\n2. Menu dashboard admin kaftan for appointment user such as detail appointment, reschedule appointment, schedule working kaftan, manage calendar for appointment list.\n3. Menu dashboard user for user managing, reschedule appointment, activity, and system notification.",
+    sortOrder: 22,
+  },
+  {
+    section: "works", key: "item_3.description", locale: "id",
+    value: "Mengembangkan website kaftan brautmode:\n1. Landing page https://kaftan-brautmode.de/de dengan katalog, jadwal, dan pengalihan bahasa menggunakan next-intl.\n2. Menu dashboard admin kaftan untuk janji temu pengguna seperti detail janji temu, penjadwalan ulang janji temu, jadwal kerja kaftan, dan pengelolaan kalender daftar janji temu.\n3. Menu dashboard user untuk pengelolaan pengguna, penjadwalan ulang janji temu, aktivitas, dan notifikasi sistem.",
+    sortOrder: 22,
+  },
+
+  // ── Education (EducationItem) field & description ──
+  { section: "education", key: "item_1.field", locale: "en", value: "Information System", sortOrder: 30 },
+  { section: "education", key: "item_1.field", locale: "id", value: "Sistem Informasi", sortOrder: 30 },
+  { section: "education", key: "item_1.description", locale: "en", value: "GPA 3.21. Focused on information systems, software development, and web technologies.", sortOrder: 31 },
+  { section: "education", key: "item_1.description", locale: "id", value: "IPK 3.21. Fokus pada sistem informasi, pengembangan perangkat lunak, dan teknologi web.", sortOrder: 31 },
+  { section: "education", key: "item_2.field", locale: "en", value: "Fullstack Developer", sortOrder: 32 },
+  { section: "education", key: "item_2.field", locale: "id", value: "Fullstack Developer", sortOrder: 32 },
+  { section: "education", key: "item_2.description", locale: "en", value: "Intensive fullstack developer training covering frontend and backend web development.", sortOrder: 33 },
+  { section: "education", key: "item_2.description", locale: "id", value: "Pelatihan fullstack developer intensif yang mencakup pengembangan web frontend dan backend.", sortOrder: 33 },
+  { section: "education", key: "item_3.field", locale: "en", value: "Fullstack Developer", sortOrder: 34 },
+  { section: "education", key: "item_3.field", locale: "id", value: "Fullstack Developer", sortOrder: 34 },
+  { section: "education", key: "item_3.description", locale: "en", value: "Fullstack developer program covering web development fundamentals and build tools.", sortOrder: 35 },
+  { section: "education", key: "item_3.description", locale: "id", value: "Program fullstack developer yang mencakup dasar-dasar pengembangan web dan build tools.", sortOrder: 35 },
+
+  // ── Certificates (Certificate) name ──
+  { section: "certificates", key: "item_1.name", locale: "en", value: "DevOps Fundamentals", sortOrder: 40 },
+  { section: "certificates", key: "item_1.name", locale: "id", value: "Belajar Dasar-Dasar DevOps", sortOrder: 40 },
+  { section: "certificates", key: "item_2.name", locale: "en", value: "Build Back-End Applications for Beginners", sortOrder: 41 },
+  { section: "certificates", key: "item_2.name", locale: "id", value: "Belajar Membuat Aplikasi Back-End untuk Pemula", sortOrder: 41 },
+  { section: "certificates", key: "item_3.name", locale: "en", value: "Cloud Practitioner Essentials (AWS Cloud Basics)", sortOrder: 42 },
+  { section: "certificates", key: "item_3.name", locale: "id", value: "Cloud Practitioner Essentials (Belajar Dasar AWS Cloud)", sortOrder: 42 },
+  { section: "certificates", key: "item_4.name", locale: "en", value: "JavaScript Programming Basics", sortOrder: 43 },
+  { section: "certificates", key: "item_4.name", locale: "id", value: "Belajar Dasar Pemrograman JavaScript", sortOrder: 43 },
+  { section: "certificates", key: "item_5.name", locale: "en", value: "Web Programming Basics", sortOrder: 44 },
+  { section: "certificates", key: "item_5.name", locale: "id", value: "Belajar Dasar Pemrograman Web", sortOrder: 44 },
+  { section: "certificates", key: "item_6.name", locale: "en", value: "Linux Administration Batch VII Training", sortOrder: 45 },
+  { section: "certificates", key: "item_6.name", locale: "id", value: "Linux Administration Batch VII Training", sortOrder: 45 },
+  { section: "certificates", key: "item_7.name", locale: "en", value: "SQL Course", sortOrder: 46 },
+  { section: "certificates", key: "item_7.name", locale: "id", value: "Kursus SQL", sortOrder: 46 },
+  { section: "certificates", key: "item_8.name", locale: "en", value: "Python Course", sortOrder: 47 },
+  { section: "certificates", key: "item_8.name", locale: "id", value: "Kursus Python", sortOrder: 47 },
+  { section: "certificates", key: "item_9.name", locale: "en", value: "Node.js Basics Course", sortOrder: 48 },
+  { section: "certificates", key: "item_9.name", locale: "id", value: "Kursus Node.js Dasar", sortOrder: 48 },
+  { section: "certificates", key: "item_10.name", locale: "en", value: "JavaScript Web Development Course", sortOrder: 49 },
+  { section: "certificates", key: "item_10.name", locale: "id", value: "Kursus Java Script Pengembangan Web", sortOrder: 49 },
+];
+
 async function seedSectionContent() {
   // Hapus data lama yang tersimpan sebagai JSON di SiteContent untuk section dedicated
   await prisma.siteContent.deleteMany({
     where: { section: { in: ["skills", "works", "certificates", "education"] } },
   });
+
+  for (const item of sectionItemLocalizedData) {
+    await prisma.sectionText.upsert({
+      where: {
+        section_key_locale: { section: item.section, key: item.key, locale: item.locale },
+      },
+      create: item,
+      update: { value: item.value, sortOrder: item.sortOrder },
+    });
+  }
 
   for (const item of sectionTextData) {
     await prisma.sectionText.upsert({

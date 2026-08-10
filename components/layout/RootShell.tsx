@@ -23,12 +23,7 @@ export function RootShell({ children }: RootShellProps) {
   }
 
   if (isDashboardRoute) {
-    return (
-      <>
-        {children}
-        <ThemeSwitcher />
-      </>
-    );
+    return <>{children}</>;
   }
 
   return (
@@ -39,7 +34,7 @@ export function RootShell({ children }: RootShellProps) {
             ? ""
             : isRetro
             ? ""
-            : "bg-[radial-gradient(circle_at_top_left,rgba(18,247,214,0.16),transparent_26%),radial-gradient(circle_at_85%_18%,rgba(56,189,248,0.14),transparent_20%),linear-gradient(135deg,#292F36_0%,#1F2937_45%,#111827_100%)"
+            : "bg-[radial-gradient(circle_at_12%_6%,rgba(18,247,214,0.30),transparent_30%),radial-gradient(circle_at_88%_14%,rgba(56,189,248,0.26),transparent_26%),radial-gradient(circle_at_50%_105%,rgba(168,85,247,0.22),transparent_42%),linear-gradient(165deg,#16b8a0_0%,#1F2937_34%,#111827_72%,#05070c_100%)"
         }`}
       >
         <Navbar />

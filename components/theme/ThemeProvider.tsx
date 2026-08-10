@@ -26,31 +26,48 @@ function getInitialTheme(): ThemeName {
   return "default";
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeName>("default");
-  const [mounted, setMounted] = useState(false);
+export function ThemeProvider({ children, forcedTheme }: { children: ReactNode; forcedTheme?: ThemeName | null }) {
+  const [theme, setThemeState] = useState<ThemeName>(() => forcedTheme ?? "default");
+  const [mounted, setMounted] = useState<boolean>(forcedTheme ? true : false);
 
-  // Hydrate from localStorage on mount
+  // When forced, apply the fixed theme on mount and restore the previous one on unmount.
   useEffect(() => {
+    if (!forcedTheme) return;
+    const previous = document.documentElement.getAttribute("data-theme");
+    document.documentElement.setAttribute("data-theme", forcedTheme);
+    return () => {
+      if (previous) {
+        document.documentElement.setAttribute("data-theme", previous);
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+    };
+  }, [forcedTheme]);
+
+  // Hydrate from localStorage on mount (only when not forced)
+  useEffect(() => {
+    if (forcedTheme) return;
     const initial = getInitialTheme();
     setThemeState(initial);
     document.documentElement.setAttribute("data-theme", initial);
     setMounted(true);
-  }, []);
+  }, [forcedTheme]);
 
   const setTheme = useCallback((newTheme: ThemeName) => {
+    if (forcedTheme) return;
     setThemeState(newTheme);
     document.documentElement.setAttribute("data-theme", newTheme);
     try {
       localStorage.setItem(STORAGE_KEY, newTheme);
     } catch {}
-  }, []);
+  }, [forcedTheme]);
 
   const cycleTheme = useCallback(() => {
+    if (forcedTheme) return;
     const currentIndex = THEMES.indexOf(theme);
     const nextIndex = (currentIndex + 1) % THEMES.length;
     setTheme(THEMES[nextIndex]);
-  }, [theme, setTheme]);
+  }, [theme, forcedTheme, setTheme]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, cycleTheme }}>

@@ -44,7 +44,13 @@ const Skills = ({ locale: propLocale }: SkillsProps) => {
         style={{ backgroundColor: skill.bgColor }}
       >
         {skill.image ? (
-          <Image src={skill.image} alt={skill.name} width={44} height={44} style={{ width: "44px", height: "auto" }} />
+          <Image
+            src={skill.image}
+            alt={skill.name}
+            width={44}
+            height={44}
+            className="h-11 w-11 object-contain"
+          />
         ) : (
           <span className="flex h-full w-full items-center justify-center text-xl font-bold text-white">
             {skill.name.charAt(0)}
@@ -66,12 +72,12 @@ const Skills = ({ locale: propLocale }: SkillsProps) => {
     <section className="py-10 md:py-20 px-4 md:px-8" id="skills">
       {/* Header - center aligned, matching other sections */}
       <div className="relative flex flex-col items-center text-center mb-4">
-        <h1 className={cn(
+        <h2 className={cn(
           "text-center text-4xl underline",
           theme === "neobrutalism" && "text-amber-400",
           theme === "retro" && "text-[#6699ff]",
           theme !== "neobrutalism" && theme !== "retro" && "text-brand-500",
-        )}>{t2("title")}</h1>
+        )}>{t2("title")}</h2>
         <p className={cn(
           "mt-2 max-w-2xl",
           theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50"

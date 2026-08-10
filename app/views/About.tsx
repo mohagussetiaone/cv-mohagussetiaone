@@ -26,7 +26,7 @@ const About = ({ locale: propLocale }: AboutProps) => {
     <section className="py-10 md:py-20 px-4 md:px-8" id="about">
       {/* Header - Skills style */}
       <div className="relative flex flex-col items-center text-center mb-12">
-        <h1 className={cn("text-center text-4xl underline", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{t2("title")}</h1>
+        <h2 className={cn("text-center text-4xl underline", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{t2("title")}</h2>
         <div
           className={cn(
             "absolute -top-6 right-0 text-[6rem] md:text-[8rem] font-bold select-none pointer-events-none",

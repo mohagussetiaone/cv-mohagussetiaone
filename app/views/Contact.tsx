@@ -92,7 +92,7 @@ const Contact = ({ locale: propLocale }: ContactProps) => {
             theme !== "neobrutalism" && theme !== "retro" && "border-brand-500",
           )}
         >
-          <h1 className={cn("text-2xl font-bold px-4", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{t2("title")}</h1>
+          <h2 className={cn("text-2xl font-bold px-4", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{t2("title")}</h2>
         </div>
       </div>
       <Form {...form}>

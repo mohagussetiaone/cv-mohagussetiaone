@@ -45,6 +45,9 @@ export function ThemeSwitcher() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
+        aria-label="Ganti tema"
+        aria-expanded={open}
+        aria-haspopup="dialog"
         className={cn(
           "group flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300",
           isNeo && "border-[3px] border-black bg-amber-400 text-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] hover:-translate-y-0.5 active:shadow-none active:translate-x-0 active:translate-y-0",
@@ -74,7 +77,7 @@ export function ThemeSwitcher() {
             {/* Header */}
             <div className="px-3 py-3">
               <h3 className={cn("text-sm font-semibold", isNeo && "text-amber-400", isRetro && "text-[#6699ff]", !isNeo && !isRetro && "text-white")}>Theme</h3>
-              <p className={cn("mt-0.5 text-xs", isNeo && "text-neutral-400", isRetro && "text-gray-500", !isNeo && !isRetro && "text-white/40")}>Pilih tampilan halaman</p>
+              <p className={cn("mt-0.5 text-xs", isNeo && "text-neutral-400", isRetro && "text-gray-500", !isNeo && !isRetro && "text-white/60")}>Pilih tampilan halaman</p>
             </div>
 
             {/* Theme options */}
@@ -96,7 +99,7 @@ export function ThemeSwitcher() {
                       isRetro && isActive && "border-2 border-[#6699ff] bg-[#6699ff]/10 text-[#6699ff]",
                       isRetro && !isActive && "border-2 border-transparent text-gray-600 hover:bg-blue-50/50 hover:text-[#6699ff]",
                       !isNeo && !isRetro && isActive && "border border-brand-500/30 bg-brand-500/10 text-brand-500",
-                      !isNeo && !isRetro && !isActive && "border border-transparent text-white/60 hover:bg-white/5 hover:text-white",
+                      !isNeo && !isRetro && !isActive && "border border-transparent text-white/70 hover:bg-white/5 hover:text-white",
                     )}
                   >
                     <span
@@ -111,7 +114,7 @@ export function ThemeSwitcher() {
                     </span>
                     <div className="min-w-0 flex-1">
                       <div className={cn("font-medium", isActive && (isNeo ? "text-amber-400" : isRetro ? "text-[#6699ff]" : "text-brand-500"), isNeo && !isActive && "text-neutral-300", isRetro && !isActive && "text-gray-700", !isNeo && !isRetro && !isActive && "text-white")}>{detail.label}</div>
-                      <div className={cn("mt-0.5 text-xs", isNeo && "text-neutral-500", isRetro && "text-neutral-500", !isNeo && !isRetro && "text-white/30")}>{detail.description}</div>
+                      <div className={cn("mt-0.5 text-xs", isNeo && "text-neutral-500", isRetro && "text-neutral-500", !isNeo && !isRetro && "text-white/55")}>{detail.description}</div>
                     </div>
                     {isActive && (
                       <span className={cn("flex h-5 w-5 shrink-0 items-center justify-center rounded-full", isNeo && "bg-amber-400 text-black", isRetro && "bg-[#6699ff] text-white", !isNeo && !isRetro && "bg-brand-500 text-black")}>

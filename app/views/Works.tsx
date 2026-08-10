@@ -10,8 +10,9 @@ import type { WorkExperience } from "@/app/types/site-content";
 
 // ─── Experience Card ─────────────────────────────────────────
 
-function ExperienceCard({ exp, index, theme }: { exp: WorkExperience; index: number; theme: string }) {
+function ExperienceCard({ exp, index, theme, localizedText }: { exp: WorkExperience; index: number; theme: string; localizedText: Record<string, string> }) {
   const [expanded, setExpanded] = useState(index === 0);
+  const description = localizedText[`item_${index + 1}.description`] ?? exp.description ?? "";
 
   // ─── Card styling flag ──────────────────────────────────────
   const isCardTheme = theme === "neobrutalism" || theme === "retro";
@@ -99,20 +100,14 @@ function ExperienceCard({ exp, index, theme }: { exp: WorkExperience; index: num
                 setExpanded(!expanded);
               }
             }}
-            className={cn(
-              "min-w-0 flex-1 cursor-pointer select-none rounded-lg outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand-500/50",
-              isCardTheme ? "text-black" : "text-white",
-            )}
+            className={cn("min-w-0 flex-1 cursor-pointer select-none rounded-lg outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand-500/50", isCardTheme ? "text-black" : "text-white")}
           >
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
-                <h3 className={cn("font-semibold text-base underline-offset-4 hover:underline decoration-2", isCardTheme ? "text-black" : "text-white")}>{exp.position}</h3>
+                <h4 className={cn("font-semibold text-base underline-offset-4 hover:underline decoration-2", isCardTheme ? "text-black" : "text-white")}>{exp.position}</h4>
                 <p className={cn("text-sm font-medium", isCardTheme && theme === "neobrutalism" && "text-amber-600", isCardTheme && theme === "retro" && "text-[#6699ff]", !isCardTheme && "text-brand-400")}>{exp.company}</p>
               </div>
-              <span
-                aria-hidden
-                className={cn("shrink-0 mt-1 rounded-lg p-1 transition-transform", expanded ? "rotate-0" : "-rotate-90", isCardTheme ? "text-black" : "text-white/30")}
-              >
+              <span aria-hidden className={cn("shrink-0 mt-1 rounded-lg p-1 transition-transform", expanded ? "rotate-0" : "-rotate-90", isCardTheme ? "text-black" : "text-white/30")}>
                 <ChevronDown className="h-4 w-4" />
               </span>
             </div>
@@ -138,13 +133,13 @@ function ExperienceCard({ exp, index, theme }: { exp: WorkExperience; index: num
               </span>
             </div>
 
-            {expanded && exp.description && (
+            {expanded && description && (
               <div
                 id={`exp-desc-${exp.id}`}
                 onClick={(e) => e.stopPropagation()}
                 className={cn("mt-3 pt-3", isCardTheme && theme === "neobrutalism" && "border-t-2 border-black/10", isCardTheme && theme === "retro" && "border-t border-[#6699ff]/20", !isCardTheme && "border-t border-white/10")}
               >
-                <p className={cn("text-sm leading-relaxed whitespace-pre-line", isCardTheme ? "text-black" : "text-white/70")}>{exp.description}</p>
+                <p className={cn("text-sm leading-relaxed whitespace-pre-line", isCardTheme ? "text-black" : "text-white/70")}>{description}</p>
               </div>
             )}
           </div>
@@ -173,7 +168,7 @@ const Works = () => {
     <div className="py-10 md:py-24 px-4 md:px-8" id="experience">
       {/* Header - center aligned */}
       <div className="relative flex flex-col items-center text-center mb-12">
-        <h1 className={cn("text-center text-4xl underline", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{t2("title")}</h1>
+        <h2 className={cn("text-center text-4xl underline", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{t2("title")}</h2>
         <p className={cn("mt-2 max-w-2xl", theme === "neobrutalism" ? "text-black" : theme === "retro" ? "text-black" : "text-white/50")}>{t2("description")}</p>
         <div
           className={cn(
@@ -193,7 +188,7 @@ const Works = () => {
           <div>
             <div className="flex items-center gap-2 mb-6">
               <Briefcase className={cn("h-5 w-5", theme === "neobrutalism" && "text-amber-600", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-400")} />
-              <h2 className={cn("text-lg font-semibold", theme === "neobrutalism" ? "text-black" : theme === "retro" ? "text-black" : "text-white")}>{t2("experience_label") || "Experience"}</h2>
+              <h3 className={cn("text-lg font-semibold", theme === "neobrutalism" ? "text-black" : theme === "retro" ? "text-black" : "text-white")}>{t2("experience_label") || "Experience"}</h3>
               <span
                 className={cn(
                   "ml-auto text-xs px-2 py-0.5 rounded-full",
@@ -205,9 +200,9 @@ const Works = () => {
                 {experiences.length}
               </span>
             </div>
-            <div className="space-y-1">
+            <div className="space-y-4 md:space-y-8">
               {experiences.map((exp, i) => (
-                <ExperienceCard key={exp.id} exp={exp} index={i} theme={theme} />
+                <ExperienceCard key={exp.id} exp={exp} index={i} theme={theme} localizedText={content.localized} />
               ))}
             </div>
           </div>
