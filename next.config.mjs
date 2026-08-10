@@ -55,7 +55,15 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
-    ].concat(minioRemotePattern ? [minioRemotePattern] : []),
+      {
+        protocol: "https",
+        hostname: "cdn.mohagussetiaone.my.id",
+        port: "",
+        pathname: "/**",
+      },
+    ]
+      .concat(minioRemotePattern ? [minioRemotePattern] : [])
+      .filter((p, i, arr) => arr.findIndex((q) => q.hostname === p.hostname && q.protocol === p.protocol) === i),
   },
 };
 
