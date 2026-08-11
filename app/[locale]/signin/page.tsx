@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { LockKeyhole, Sparkles } from "lucide-react";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 import { getAuthSession } from "@/auth";
 import { isAdminEmail } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";

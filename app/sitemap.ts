@@ -1,14 +1,9 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
 import { routing } from "@/app/i18n/routing";
+import { getSiteUrl } from "@/lib/site-url";
 
-// Base URL situs. SITE_URL sudah diekspor eksplisit di deploy.yml;
-// NEXTAUTH_URL dipakai sebagai fallback (berisi URL produksi di server).
-const SITE_URL = (
-  process.env.SITE_URL ??
-  process.env.NEXTAUTH_URL ??
-  "https://mohagussetiaone.my.id"
-).replace(/\/+$/, "");
+const SITE_URL = getSiteUrl();
 
 // Locale diambil dari routing.ts (single source of truth, tidak hardcode).
 const LOCALES = routing.locales;
