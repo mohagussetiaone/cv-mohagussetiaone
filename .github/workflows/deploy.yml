@@ -25,6 +25,7 @@ jobs:
                       export AUTH_GOOGLE_ID="${{ secrets.AUTH_GOOGLE_ID }}"
                       export AUTH_GOOGLE_SECRET="${{ secrets.AUTH_GOOGLE_SECRET }}"
                       export NEXTAUTH_SECRET="${{ secrets.NEXTAUTH_SECRET }}"
+                      export SITE_URL="https://mohagussetiaone.my.id"
                       export ADMIN_EMAILS="${{ secrets.ADMIN_EMAILS }}"
                       export MINIO_ENABLED="${{ secrets.MINIO_ENABLED }}"
                       export MINIO_ENDPOINT="${{ secrets.MINIO_ENDPOINT }}"

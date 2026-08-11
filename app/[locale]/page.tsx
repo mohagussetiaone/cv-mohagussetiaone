@@ -10,7 +10,7 @@ import Education from "../views/Education";
 import Works from "../views/Works";
 import Projects from "../views/Projects";
 import Certificates from "../views/Certificates";
-import Contact from "../views/Contact";
+import ContactLazy from "../views/ContactLazy";
 import { getProjects } from "@/lib/projects";
 import type { ProjectLocale } from "@/app/types/project";
 
@@ -30,7 +30,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <Works />
         <Projects projects={projects} />
         <Certificates />
-        <Contact />
+        <ContactLazy />
         <NavHome />
       </div>
     </main>

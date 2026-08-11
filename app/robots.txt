@@ -1,5 +1,9 @@
 User-Agent: *
 Allow: /
-Disallow: /private/
+
+# Area admin & API tidak perlu di-crawl
+Disallow: /api
+Disallow: /*/dashboard
+Disallow: /*/signin
 
 Sitemap: https://mohagussetiaone.my.id/sitemap.xml

@@ -8,6 +8,7 @@ import { Send, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useTranslations, useLocale } from "next-intl";
@@ -132,7 +133,7 @@ const Contact = ({ locale: propLocale }: ContactProps) => {
               <FormItem>
                 <FormLabel className="text-white">{t2("title_form_3")}</FormLabel>
                 <FormControl>
-                  <Input {...field} type="message" className="text-white border-white bg-black rounded-lg" placeholder="I Think You Can Follow me" />
+                  <Textarea {...field} rows={4} className="text-white border-white bg-black rounded-lg min-h-28 resize-y" placeholder="I Think You Can Follow me" />
                 </FormControl>
                 <FormMessage className="text-white" />
               </FormItem>

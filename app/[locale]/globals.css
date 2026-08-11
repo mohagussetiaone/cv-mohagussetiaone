@@ -911,3 +911,61 @@ html {
 [data-theme="retro"] .rounded {
   border-radius: 0px !important;
 }
+
+/* ═══════════════════════════════════════════════
+   Typewriter effects (CSS-only, compositor-friendly)
+   ═══════════════════════════════════════════════ */
+
+@keyframes typewriter-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typewriter-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes typewriter-smooth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.typewriter-char {
+  animation: typewriter-reveal 0.3s ease-in-out forwards;
+}
+
+.typewriter-cursor {
+  animation: typewriter-blink 0.8s step-end infinite;
+}
+
+.typewriter-smooth {
+  white-space: nowrap;
+  animation: typewriter-smooth 2s linear 1s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typewriter-char,
+  .typewriter-cursor,
+  .typewriter-smooth {
+    animation: none;
+  }
+  .typewriter-char {
+    opacity: 1;
+  }
+}

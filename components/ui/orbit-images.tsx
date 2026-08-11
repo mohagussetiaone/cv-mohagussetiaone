@@ -4,9 +4,9 @@
 // https://x.com/dominikkoch
 // Adapted to accept custom ReactNode items (keeps the current skill data).
 
-import { useMemo, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useMemo, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { motion, useMotionValue, useTransform, animate } from "motion/react";
+import { motion, useMotionValue, useTransform, animate, useInView } from "motion/react";
 import type { MotionValue } from "motion/react";
 
 type OrbitShape =
@@ -211,22 +211,27 @@ export default function OrbitImages({
     }
   }, [shape, customPath, designCenterX, designCenterY, radiusX, radiusY, radius, starPoints, starInnerRatio]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!responsive || !containerRef.current) return;
-    const updateScale = () => {
-      if (!containerRef.current) return;
-      setScale(containerRef.current.clientWidth / baseWidth);
+    // Measure via ResizeObserver's contentRect (no forced synchronous layout read).
+    const updateScale = (entry: ResizeObserverEntry) => {
+      const width = entry.contentRect.width;
+      if (width > 0) setScale(width / baseWidth);
     };
-    updateScale();
-    const observer = new ResizeObserver(updateScale);
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) updateScale(entry);
+    });
     observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, [responsive, baseWidth]);
 
   const progress = useMotionValue(0);
 
+  // Only run the infinite orbit animation while the section is near the viewport.
+  const isInView = useInView(containerRef, { once: true, margin: "200px" });
+
   useEffect(() => {
-    if (paused) return;
+    if (paused || !isInView) return;
     const controls = animate(progress, direction === "reverse" ? -100 : 100, {
       duration,
       ease: easing,
@@ -234,7 +239,7 @@ export default function OrbitImages({
       repeatType: "loop",
     });
     return () => controls.stop();
-  }, [progress, duration, easing, direction, paused]);
+  }, [progress, duration, easing, direction, paused, isInView]);
 
   const containerWidth = responsive ? "100%" : typeof width === "number" ? width : "100%";
   const containerHeight = responsive ? "auto" : typeof height === "number" ? height : typeof width === "number" ? width : "auto";
