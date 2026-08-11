@@ -1,6 +1,6 @@
-// Halaman ini selalu di-render fresh dari DB (bukan static cache),
-// supaya perubahan project dari dashboard langsung tampil.
-export const dynamic = "force-dynamic";
+// ISR 60 detik: HTML di-cache supaya TTFB/LCP cepat, tapi tetap fresh ≤1 menit.
+// (Grid project & konten section tetap di-refresh otomatis oleh JS di sisi klien.)
+export const revalidate = 60;
 
 import NavHome from "../views/NavHome";
 import Banner from "../views/Banner";

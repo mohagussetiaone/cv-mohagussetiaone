@@ -3,11 +3,11 @@
 // Component created by Dominik Koch
 // https://x.com/dominikkoch
 // Adapted to accept custom ReactNode items (keeps the current skill data).
+// Now pure CSS: items orbit via CSS `offset-path` + `offset-distance` keyframes
+// (see `orbit-spin` in globals.css), so no animation library is bundled.
 
 import { useMemo, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { motion, useMotionValue, useTransform, animate, useInView } from "motion/react";
-import type { MotionValue } from "motion/react";
 
 type OrbitShape =
   | "ellipse"
@@ -56,8 +56,11 @@ interface OrbitItemProps {
   path: string;
   itemSize: number;
   rotation: number;
-  progress: MotionValue<number>;
+  duration: number;
+  direction: "normal" | "reverse";
+  easing: string;
   fill: boolean;
+  paused: boolean;
 }
 
 function generateEllipsePath(cx: number, cy: number, rx: number, ry: number): string {
@@ -126,16 +129,20 @@ function generateWavePath(cx: number, cy: number, w: number, amplitude: number, 
   return pts.join(" ") + " Z";
 }
 
-function OrbitItem({ item, index, totalItems, path, itemSize, rotation, progress, fill }: OrbitItemProps) {
-  const itemOffset = fill ? (index / totalItems) * 100 : 0;
+const EASING_MAP: Record<string, string> = {
+  linear: "linear",
+  easeIn: "ease-in",
+  easeOut: "ease-out",
+  easeInOut: "ease-in-out",
+};
 
-  const offsetDistance = useTransform(progress, (p: number) => {
-    const offset = (((p + itemOffset) % 100) + 100) % 100;
-    return `${offset}%`;
-  });
+function OrbitItem({ item, index, totalItems, path, itemSize, rotation, duration, direction, easing, fill, paused }: OrbitItemProps) {
+  // Sebar item di sepanjang path: negative animation-delay setara `fill` offset asli
+  // (item ke-i mulai dari (i/total)*durasi detik lebih awal).
+  const delay = fill ? -((index / totalItems) * duration) : 0;
 
   return (
-    <motion.div
+    <div
       className="absolute will-change-transform select-none"
       style={{
         width: itemSize,
@@ -143,11 +150,12 @@ function OrbitItem({ item, index, totalItems, path, itemSize, rotation, progress
         offsetPath: `path("${path}")`,
         offsetRotate: "0deg",
         offsetAnchor: "center center",
-        offsetDistance,
+        animation: `orbit-spin ${duration}s ${EASING_MAP[easing] ?? "linear"} ${delay}s infinite ${direction === "reverse" ? "reverse" : "normal"}`,
+        animationPlayState: paused ? "paused" : "running",
       }}
     >
       <div style={{ transform: `rotate(${-rotation}deg)` }}>{item}</div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -213,7 +221,7 @@ export default function OrbitImages({
 
   useEffect(() => {
     if (!responsive || !containerRef.current) return;
-    // Measure via ResizeObserver's contentRect (no forced synchronous layout read).
+    // Ukur lebar via ResizeObserver (contentRect) — tanpa forced synchronous layout read.
     const updateScale = (entry: ResizeObserverEntry) => {
       const width = entry.contentRect.width;
       if (width > 0) setScale(width / baseWidth);
@@ -224,22 +232,6 @@ export default function OrbitImages({
     observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, [responsive, baseWidth]);
-
-  const progress = useMotionValue(0);
-
-  // Only run the infinite orbit animation while the section is near the viewport.
-  const isInView = useInView(containerRef, { once: true, margin: "200px" });
-
-  useEffect(() => {
-    if (paused || !isInView) return;
-    const controls = animate(progress, direction === "reverse" ? -100 : 100, {
-      duration,
-      ease: easing,
-      repeat: Infinity,
-      repeatType: "loop",
-    });
-    return () => controls.stop();
-  }, [progress, duration, easing, direction, paused, isInView]);
 
   const containerWidth = responsive ? "100%" : typeof width === "number" ? width : "100%";
   const containerHeight = responsive ? "auto" : typeof height === "number" ? height : typeof width === "number" ? width : "auto";
@@ -308,8 +300,11 @@ export default function OrbitImages({
               path={path}
               itemSize={itemSize}
               rotation={rotation}
-              progress={progress}
+              duration={duration}
+              direction={direction}
+              easing={easing}
               fill={fill}
+              paused={paused}
             />
           ))}
         </div>

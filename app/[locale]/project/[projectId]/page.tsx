@@ -1,5 +1,6 @@
-// Selalu render fresh dari DB agar perubahan project langsung tampil (bukan static cache).
-export const dynamic = "force-dynamic";
+// ISR 60 detik: HTML di-cache supaya halaman project cepat dibuka (dan enak di-crawl Google),
+// tapi tetap fresh ≤1 menit setelah project diubah.
+export const revalidate = 60;
 
 import Link from "next/link";
 import Image from "next/image";

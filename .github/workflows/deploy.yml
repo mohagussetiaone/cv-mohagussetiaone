@@ -72,5 +72,10 @@ jobs:
                       echo "🔄 Restart service"
                       sudo systemctl restart mycv
 
+                      echo "🔥 Warm-up ISR cache (supaya pengunjung/Lighthouse pertama dapat HTML dari cache)"
+                      sleep 5
+                      curl -s -o /dev/null -L https://mohagussetiaone.my.id/id || true
+                      curl -s -o /dev/null -L https://mohagussetiaone.my.id/en || true
+
                       echo "✅ Check service status"
                       systemctl is-active mycv
