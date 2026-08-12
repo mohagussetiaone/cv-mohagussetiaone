@@ -77,7 +77,7 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
   const previewSrc = localPreview || currentUrl;
 
   return (
-    <div className="space-y-2">
+    <div className="min-w-0 space-y-2">
       <div className="flex items-center gap-2">
         <Button type="button" variant="outline" size="sm" onClick={() => inputRef.current?.click()} className="relative border border-black/10 bg-white text-black hover:bg-black/5">
           {hasPending ? <FileWarning className="mr-1.5 h-3.5 w-3.5 text-amber-400" /> : <ImageUp className="mr-1.5 h-3.5 w-3.5" />}
@@ -110,8 +110,10 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
               </>
             ) : hasSaved ? (
               <>
-                <p className="truncate text-xs font-mono text-black">{currentUrl}</p>
-                <p className="text-xs text-emerald-600">Tersimpan di MinIO via CDN</p>
+                <a href={currentUrl} target="_blank" rel="noopener noreferrer" title={currentUrl} className="block truncate text-xs font-mono text-black underline decoration-dotted underline-offset-2 hover:text-emerald-600">
+                  {currentUrl}
+                </a>
+                <p className="text-xs text-emerald-600">Tersimpan di MinIO via CDN — klik URL untuk membuka di tab baru</p>
               </>
             ) : null}
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 type SiteContentMap = Record<string, string>;
 
@@ -105,19 +105,21 @@ export function refreshSiteContent(locale: string) {
 
 export function useSiteContent(section: string, locale: string = "id"): SiteContentState {
   const key = `${section}:${locale}`;
-  loadLocale(locale);
+
+  // Muat data hanya setelah mount (bukan saat render). Dengan begini server &
+  // client hydration selalu memakai snapshot yang sama (EMPTY) → tidak ada
+  // hydration mismatch. Data muncul setelah fetch selesai (post-mount).
+  useEffect(() => {
+    loadLocale(locale);
+  }, [locale]);
 
   return useSyncExternalStore(
     subscribe,
     () => getSnapshot(key),
-    () => getSnapshot(key)
+    () => getSnapshot(key),
   );
 }
 
-export function getLocalizedContent(
-  content: SiteContentState,
-  locale: string,
-  key: string
-): string | undefined {
+export function getLocalizedContent(content: SiteContentState, locale: string, key: string): string | undefined {
   return content.localized?.[locale]?.[key] ?? content.localized?.["id"]?.[key] ?? content.global?.[key];
 }

@@ -14,13 +14,21 @@ const DEFAULT_LOCALE = routing.defaultLocale;
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const projects = await prisma.project.findMany({
-    select: {
-      productId: true,
-      updatedAt: true,
-    },
-    orderBy: [{ sortOrder: "asc" }, { productId: "asc" }],
-  });
+  // Query DB dengan fallback: bila Postgres sempat error/timeout saat di-crawl
+  // Google, kita tetap mengembalikan XML yang valid (tanpa URL project) alih-alih
+  // response 500 yang membuat Search Console melaporkan "Couldn't fetch".
+  let projects: { productId: string; updatedAt: Date }[] = [];
+  try {
+    projects = await prisma.project.findMany({
+      select: {
+        productId: true,
+        updatedAt: true,
+      },
+      orderBy: [{ sortOrder: "asc" }, { productId: "asc" }],
+    });
+  } catch (error) {
+    console.warn("[sitemap] Gagal mengambil project dari DB, fallback ke halaman dasar:", error);
+  }
 
   // lastmod homepage = perubahan konten terakhir (project paling baru di-update).
   const lastContentChange =

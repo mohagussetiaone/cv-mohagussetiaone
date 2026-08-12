@@ -20,10 +20,12 @@ export function DashboardShell({ children, locale, userEmail, userName }: Dashbo
 
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    document.body.dataset.dashboardActive = "true";
 
     return () => {
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
+      delete document.body.dataset.dashboardActive;
     };
   }, []);
 
@@ -36,6 +38,7 @@ export function DashboardShell({ children, locale, userEmail, userName }: Dashbo
             "--header-height": "3.5rem",
           } as CSSProperties
         }
+        data-dashboard-root
         className="fixed inset-0 z-0 h-svh w-full overflow-hidden overscroll-none"
       >
         <AppSidebar locale={locale} userEmail={userEmail} userName={userName} />
@@ -43,13 +46,8 @@ export function DashboardShell({ children, locale, userEmail, userName }: Dashbo
           <SiteHeader locale={locale} userEmail={userEmail} />
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-white">
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-              <div
-                data-dashboard-scroll-area
-                className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
-              >
-                <div className="mx-auto w-full max-w-[1600px] px-4 py-6 md:px-8 lg:px-10">
-                  {children}
-                </div>
+              <div data-dashboard-scroll-area className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain">
+                <div className="mx-auto w-full max-w-400 px-4 py-6 md:px-8 lg:px-10">{children}</div>
               </div>
             </div>
           </div>

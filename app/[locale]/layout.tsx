@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Toaster } from "sonner";
 import { setRequestLocale } from "next-intl/server";
 import "./globals.css";
@@ -59,22 +58,6 @@ export default async function RootLayout({
         <meta name="keywords" content="Moh Agus Setiawan, Frontend Developer, React Developer, Remala Abadi, Next.js, Tailwind CSS, pengembangan web, portofolio, aplikasi web" />
       </head>
       <body className="antialiased" suppressHydrationWarning>
-        <Script
-          id="bis-skin-checked-remover"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(){
-                try {
-                  var els = document.querySelectorAll("[bis_skin_checked]");
-                  for (var i = 0; i < els.length; i++) {
-                    els[i].removeAttribute("bis_skin_checked");
-                  }
-                } catch(e){}
-              })();
-            `,
-          }}
-        />
         <LocaleProvider initialLocale={locale} enMessages={enMessages} idMessages={idMessages}>
           <ThemeProvider>
             <RootShell>{children}</RootShell>

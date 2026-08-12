@@ -69,12 +69,13 @@ const Banner = ({ locale: propLocale }: BannerProps) => {
         <Image
           src="https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/profile/mohagus.jpeg"
           width={220}
-          height={180}
+          height={220}
           alt="Foto profil Moh Agus Setiawan"
           priority
           fetchPriority="high"
           sizes="(max-width: 768px) 60vw, 220px"
-          className="w-auto h-auto object-contain rounded-full"
+          style={{ width: "220px", height: "220px" }}
+          className="object-contain rounded-full"
         />
       </div>
       <div className="flex flex-col gap-4 py-4">

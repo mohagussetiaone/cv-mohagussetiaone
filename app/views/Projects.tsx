@@ -51,24 +51,16 @@ const Projects: React.FC<ProjectsProps> = ({ projects: initialProjects }) => {
     <div className="py-10 md:py-24 px-4 md:px-8" id="portfolio">
       {/* Header - center aligned */}
       <div className="relative flex flex-col items-center text-center mb-12">
-        <h2 className={cn(
-          "text-center text-4xl underline",
-          theme === "neobrutalism" && "text-amber-400",
-          theme === "retro" && "text-[#6699ff]",
-          theme !== "neobrutalism" && theme !== "retro" && "text-brand-500",
-        )}>
-          {t("title")}
-        </h2>
-        <p className={cn(
-          "mt-2 max-w-2xl",
-          theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50"
-        )}>{t("description")}</p>
-        <div className={cn(
-          "absolute -top-6 right-0 text-[6rem] md:text-[8rem] font-bold select-none pointer-events-none",
-          theme === "neobrutalism" && "text-amber-400/20",
-          theme === "retro" && "text-[#6699ff]/15",
-          theme !== "neobrutalism" && theme !== "retro" && "text-brand-500/10",
-        )}>
+        <h2 className={cn("text-center text-4xl underline", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{t("title")}</h2>
+        <p className={cn("mt-2 max-w-2xl", theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50")}>{t("description")}</p>
+        <div
+          className={cn(
+            "absolute -top-6 right-0 text-[6rem] md:text-[8rem] font-bold select-none pointer-events-none",
+            theme === "neobrutalism" && "text-amber-400/20",
+            theme === "retro" && "text-[#6699ff]/15",
+            theme !== "neobrutalism" && theme !== "retro" && "text-brand-500/10",
+          )}
+        >
           {"</>"}
         </div>
       </div>
@@ -83,41 +75,27 @@ const Projects: React.FC<ProjectsProps> = ({ projects: initialProjects }) => {
               "group relative flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02]",
               theme === "neobrutalism" && "border-[3px] border-black bg-white shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5",
               theme === "retro" && "border-2 border-[#6699ff]/15 bg-[#faf6ef] hover:border-[#6699ff]/40",
-              theme !== "neobrutalism" && theme !== "retro" && "border border-white/[0.08] bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.05] hover:shadow-lg hover:shadow-brand-500/5",
+              theme !== "neobrutalism" && theme !== "retro" && "border border-white/8 bg-white/2 hover:border-white/20 hover:bg-white/5 hover:shadow-lg hover:shadow-brand-500/5",
             )}
           >
             {/* Image */}
-            <div className={cn(
-              "relative aspect-video w-full overflow-hidden",
-              theme === "neobrutalism" ? "bg-amber-200" : theme === "retro" ? "bg-[#6699ff]/10" : "bg-black/40"
-            )}>
-              {project.image && (
-                <Image
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  src={project.image}
-                  alt={project.projectName}
-                  fill
-                  sizes="(max-width: 640px) 50vw, 25vw"
-                />
-              )}
+            <div className={cn("relative aspect-video w-full overflow-hidden", theme === "neobrutalism" ? "bg-amber-200" : theme === "retro" ? "bg-[#6699ff]/10" : "bg-black/40")}>
+              {project.image && <Image className="object-cover transition-transform duration-500 group-hover:scale-105" src={project.image} alt={project.projectName} fill sizes="(max-width: 640px) 50vw, 25vw" />}
             </div>
 
             {/* Content */}
             <div className="flex flex-1 flex-col gap-1.5 p-3">
-              <h3 className={cn(
-                "font-semibold text-sm transition-colors line-clamp-1",
-                theme === "neobrutalism" && "text-black group-hover:text-amber-600",
-                theme === "retro" && "text-black group-hover:text-[#6699ff]",
-                theme !== "neobrutalism" && theme !== "retro" && "text-white group-hover:text-brand-400",
-              )}>
+              <h3
+                className={cn(
+                  "font-semibold text-sm transition-colors line-clamp-1",
+                  theme === "neobrutalism" && "text-black group-hover:text-amber-600",
+                  theme === "retro" && "text-black group-hover:text-[#6699ff]",
+                  theme !== "neobrutalism" && theme !== "retro" && "text-white group-hover:text-brand-400",
+                )}
+              >
                 {project.projectName}
               </h3>
-              <p className={cn(
-                "text-xs line-clamp-2 leading-relaxed",
-                theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50"
-              )}>
-                {project.description}
-              </p>
+              <p className={cn("text-xs line-clamp-2 leading-relaxed", theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50")}>{project.description}</p>
               {project.technologies.length > 0 && (
                 <div className="mt-auto flex flex-wrap gap-1 pt-1">
                   {project.technologies.slice(0, 3).map((tech, i) => (
@@ -133,14 +111,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects: initialProjects }) => {
                       {tech}
                     </span>
                   ))}
-                  {project.technologies.length > 3 && (
-                    <span className={cn(
-                      "text-[10px]",
-                      theme === "neobrutalism" ? "text-black/40" : theme === "retro" ? "text-black/40" : "text-white/30"
-                    )}>
-                      +{project.technologies.length - 3}
-                    </span>
-                  )}
+                  {project.technologies.length > 3 && <span className={cn("text-[10px]", theme === "neobrutalism" ? "text-black/40" : theme === "retro" ? "text-black/40" : "text-white/30")}>+{project.technologies.length - 3}</span>}
                 </div>
               )}
             </div>

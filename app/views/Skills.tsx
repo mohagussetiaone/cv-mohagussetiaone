@@ -26,45 +26,21 @@ const Skills = ({ locale: propLocale }: SkillsProps) => {
 
   const skillData: SkillItem[] = useMemo(() => content.items, [content.items]);
 
-  const pathColor =
-    theme === "neobrutalism"
-      ? "rgba(0,0,0,0.25)"
-      : theme === "retro"
-        ? "rgba(102,153,255,0.30)"
-        : "rgba(255,255,255,0.15)";
+  const pathColor = theme === "neobrutalism" ? "rgba(0,0,0,0.25)" : theme === "retro" ? "rgba(102,153,255,0.30)" : "rgba(255,255,255,0.15)";
 
   const orbitItems = skillData.map((skill) => (
     <div key={skill.id} className="flex h-full w-full flex-col items-center justify-center gap-2">
       <div
-        className={cn(
-          "flex h-16 w-16 items-center justify-center overflow-hidden rounded-full",
-          theme === "neobrutalism" && "border-[3px] border-black shadow-[3px_3px_0px_0px_black]",
-          theme === "retro" && "border-2 border-[#6699ff]/30",
-        )}
+        className={cn("flex h-16 w-16 items-center justify-center overflow-hidden rounded-full", theme === "neobrutalism" && "border-[3px] border-black shadow-[3px_3px_0px_0px_black]", theme === "retro" && "border-2 border-[#6699ff]/30")}
         style={{ backgroundColor: skill.bgColor }}
       >
         {skill.image ? (
-          <Image
-            src={skill.image}
-            alt={skill.name}
-            width={44}
-            height={44}
-            className="h-11 w-11 object-contain"
-          />
+          <Image src={skill.image} alt={skill.name} width={44} height={44} className="h-auto w-auto object-contain" />
         ) : (
-          <span className="flex h-full w-full items-center justify-center text-xl font-bold text-white">
-            {skill.name.charAt(0)}
-          </span>
+          <span className="flex h-full w-full items-center justify-center text-xl font-bold text-white">{skill.name.charAt(0)}</span>
         )}
       </div>
-      <span
-        className={cn(
-          "text-center text-sm",
-          theme === "neobrutalism" ? "font-bold text-black" : theme === "retro" ? "font-medium text-black" : "font-medium text-white",
-        )}
-      >
-        {skill.name}
-      </span>
+      <span className={cn("text-center text-sm", theme === "neobrutalism" ? "font-bold text-black" : theme === "retro" ? "font-medium text-black" : "font-medium text-white")}>{skill.name}</span>
     </div>
   ));
 
@@ -72,22 +48,16 @@ const Skills = ({ locale: propLocale }: SkillsProps) => {
     <section className="py-10 md:py-20 px-4 md:px-8" id="skills">
       {/* Header - center aligned, matching other sections */}
       <div className="relative flex flex-col items-center text-center mb-4">
-        <h2 className={cn(
-          "text-center text-4xl underline",
-          theme === "neobrutalism" && "text-amber-400",
-          theme === "retro" && "text-[#6699ff]",
-          theme !== "neobrutalism" && theme !== "retro" && "text-brand-500",
-        )}>{t2("title")}</h2>
-        <p className={cn(
-          "mt-2 max-w-2xl",
-          theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50"
-        )}>{t2("description")}</p>
-        <div className={cn(
-          "absolute -top-6 right-0 text-[6rem] md:text-[8rem] font-bold select-none pointer-events-none",
-          theme === "neobrutalism" && "text-amber-400/20",
-          theme === "retro" && "text-[#6699ff]/15",
-          theme !== "neobrutalism" && theme !== "retro" && "text-brand-500/10",
-        )}>
+        <h2 className={cn("text-center text-4xl underline", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{t2("title")}</h2>
+        <p className={cn("mt-2 max-w-2xl", theme === "neobrutalism" ? "text-black/60" : theme === "retro" ? "text-black/60" : "text-white/50")}>{t2("description")}</p>
+        <div
+          className={cn(
+            "absolute -top-6 right-0 text-[6rem] md:text-[8rem] font-bold select-none pointer-events-none",
+            theme === "neobrutalism" && "text-amber-400/20",
+            theme === "retro" && "text-[#6699ff]/15",
+            theme !== "neobrutalism" && theme !== "retro" && "text-brand-500/10",
+          )}
+        >
           {"</>"}
         </div>
       </div>

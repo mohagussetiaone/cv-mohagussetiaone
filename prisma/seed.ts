@@ -213,8 +213,7 @@ const siteContentData: { section: string; key: string; locale: string; value: st
     section: "banner",
     key: "description",
     locale: "en",
-    value:
-      "Frontend Developer with 2+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
+    value: "Frontend Developer with 2+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
     sortOrder: 3,
   },
 
@@ -259,8 +258,7 @@ const siteContentData: { section: string; key: string; locale: string; value: st
     section: "about",
     key: "description",
     locale: "en",
-    value:
-      "Frontend Developer with 2+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
+    value: "Frontend Developer with 2+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
     sortOrder: 2,
   },
   {
@@ -369,20 +367,20 @@ const skillItemsData = [
   { name: "CSS", image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/skills/css.png", bgColor: "#1572B6", textColor: "#1572B6" },
   { name: "JAVASCRIPT", image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/skills/js.png", bgColor: "#F7DF1E", textColor: "#F7DF1E" },
   { name: "REACT JS", image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/image/skills/react.png", bgColor: "#28A9E0", textColor: "#28A9E0" },
-  { name: "TYPESCRIPT", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/typescript/typescript-original.svg", bgColor: "#3178C6", textColor: "#3178C6" },
-  { name: "VITE", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vite/vite-original.svg", bgColor: "#646CFF", textColor: "#646CFF" },
+  { name: "TYPESCRIPT", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/typescript/typescript-original.svg", bgColor: "#ffffff", textColor: "#3178C6" },
+  { name: "VITE", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vite/vite-original.svg", bgColor: "#ffffff", textColor: "#646CFF" },
   { name: "NEXTJS", image: "https://cdn.simpleicons.org/nextdotjs/ffffff", bgColor: "#000000", textColor: "#000000" },
-  { name: "VUE JS", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vuejs/vuejs-original.svg", bgColor: "#42B883", textColor: "#42B883" },
+  { name: "VUE JS", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vuejs/vuejs-original.svg", bgColor: "#ffffff", textColor: "#42B883" },
   { name: "EXPRESS JS", image: "https://cdn.simpleicons.org/express/ffffff", bgColor: "#000000", textColor: "#000000" },
-  { name: "NEST JS", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/nestjs/nestjs-original.svg", bgColor: "#E0234E", textColor: "#E0234E" },
+  { name: "NEST JS", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/nestjs/nestjs-original.svg", bgColor: "#ffffff", textColor: "#E0234E" },
   { name: "GOLANG", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/go/go-original.svg", bgColor: "#00ADD8", textColor: "#00ADD8" },
-  { name: "TAILWINDCSS", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/tailwindcss/tailwindcss-original.svg", bgColor: "#38BDF8", textColor: "#38BDF8" },
+  { name: "TAILWINDCSS", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/tailwindcss/tailwindcss-original.svg", bgColor: "#ffffff", textColor: "#38BDF8" },
   { name: "BOOTSTRAP", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/bootstrap/bootstrap-original.svg", bgColor: "#7952B3", textColor: "#7952B3" },
-  { name: "MySQL", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/mysql/mysql-original.svg", bgColor: "#4479A1", textColor: "#4479A1" },
+  { name: "MySQL", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/mysql/mysql-original.svg", bgColor: "#ffffff", textColor: "#4479A1" },
   { name: "POSTGRESQL", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/postgresql/postgresql-original.svg", bgColor: "#336791", textColor: "#336791" },
   { name: "GITHUB", image: "https://cdn.simpleicons.org/github/ffffff", bgColor: "#181717", textColor: "#181717" },
-  { name: "GITLAB", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/gitlab/gitlab-original.svg", bgColor: "#FC6D26", textColor: "#FC6D26" },
-  { name: "VITEST", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vitest/vitest-original.svg", bgColor: "#729B1B", textColor: "#729B1B" },
+  { name: "GITLAB", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/gitlab/gitlab-original.svg", bgColor: "#ffffff", textColor: "#FC6D26" },
+  { name: "VITEST", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vitest/vitest-original.svg", bgColor: "#ffffff", textColor: "#729B1B" },
   { name: "ZUSTAND", image: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/zustand/zustand-original.svg", bgColor: "#A020F0", textColor: "#A020F0" },
 ];
 
@@ -532,33 +530,51 @@ const educationItemsData = [
 const sectionItemLocalizedData: { section: string; key: string; locale: string; value: string; sortOrder: number }[] = [
   // ── Works (WorkExperience) description ──
   {
-    section: "works", key: "item_1.description", locale: "en",
-    value: "Developed and maintained multiple internal and customer-facing web platforms, including:\n- Nethome Client Area (nethome.id) for customer account management, product purchases, internet usage monitoring, and monthly billing.\n- Web OLT Dashboard, a Network Operation Center (NOC) management platform for OLT management, asset monitoring, maintenance, network configuration, client provisioning, client synchronization, inventory management, reporting, system logging, and role-based access control (RBAC).\n- Customer Data Management (tachyon.id) to improve data accuracy, consistency, and asset maintenance processes.\n- Remala Ticketing System for the Diskominfo project to manage issue reporting, ticket tracking, customer service workflows, and resolution processes.\n\nImplemented multi-tenant architecture supporting KSO and Non-KSO company structures and business processes.\nCollaborated with UI/UX designers and backend developers to transform business requirements and design prototypes into responsive, interactive, and maintainable web applications.\nOptimized application code and implemented structured development practices to improve performance, scalability, maintainability, and long-term system reliability.\nPerformed testing, debugging, and issue resolution to ensure application stability and efficient delivery.",
+    section: "works",
+    key: "item_1.description",
+    locale: "en",
+    value:
+      "Developed and maintained multiple internal and customer-facing web platforms, including:\n- Nethome Client Area (nethome.id) for customer account management, product purchases, internet usage monitoring, and monthly billing.\n- Web OLT Dashboard, a Network Operation Center (NOC) management platform for OLT management, asset monitoring, maintenance, network configuration, client provisioning, client synchronization, inventory management, reporting, system logging, and role-based access control (RBAC).\n- Customer Data Management (tachyon.id) to improve data accuracy, consistency, and asset maintenance processes.\n- Remala Ticketing System for the Diskominfo project to manage issue reporting, ticket tracking, customer service workflows, and resolution processes.\n\nImplemented multi-tenant architecture supporting KSO and Non-KSO company structures and business processes.\nCollaborated with UI/UX designers and backend developers to transform business requirements and design prototypes into responsive, interactive, and maintainable web applications.\nOptimized application code and implemented structured development practices to improve performance, scalability, maintainability, and long-term system reliability.\nPerformed testing, debugging, and issue resolution to ensure application stability and efficient delivery.",
     sortOrder: 20,
   },
   {
-    section: "works", key: "item_1.description", locale: "id",
-    value: "Mengembangkan dan memelihara berbagai platform web internal dan untuk pelanggan, termasuk:\n- Nethome Client Area (nethome.id) untuk pengelolaan akun pelanggan, pembelian produk, pemantauan pemakaian internet, dan penagihan bulanan.\n- Web OLT Dashboard, platform pengelolaan Network Operation Center (NOC) untuk manajemen OLT, pemantauan aset, pemeliharaan, konfigurasi jaringan, penyediaan klien, sinkronisasi klien, manajemen inventaris, pelaporan, pencatatan sistem, dan kontrol akses berbasis peran (RBAC).\n- Customer Data Management (tachyon.id) untuk meningkatkan akurasi data, konsistensi, dan proses pemeliharaan aset.\n- Remala Ticketing System untuk proyek Diskominfo untuk mengelola pelaporan masalah, pelacakan tiket, alur kerja layanan pelanggan, dan proses penyelesaian.\n\nMengimplementasikan arsitektur multi-tenant yang mendukung struktur dan proses bisnis perusahaan KSO dan Non-KSO.\nBerkolaborasi dengan desainer UI/UX dan pengembang backend untuk mengubah kebutuhan bisnis dan prototipe desain menjadi aplikasi web yang responsif, interaktif, dan mudah dipelihara.\nMengoptimalkan kode aplikasi dan menerapkan praktik pengembangan terstruktur untuk meningkatkan performa, skalabilitas, kemudahan pemeliharaan, dan keandalan sistem jangka panjang.\nMelakukan pengujian, debugging, dan penyelesaian masalah untuk memastikan stabilitas dan efisiensi pengiriman aplikasi.",
+    section: "works",
+    key: "item_1.description",
+    locale: "id",
+    value:
+      "Mengembangkan dan memelihara berbagai platform web internal dan untuk pelanggan, termasuk:\n- Nethome Client Area (nethome.id) untuk pengelolaan akun pelanggan, pembelian produk, pemantauan pemakaian internet, dan penagihan bulanan.\n- Web OLT Dashboard, platform pengelolaan Network Operation Center (NOC) untuk manajemen OLT, pemantauan aset, pemeliharaan, konfigurasi jaringan, penyediaan klien, sinkronisasi klien, manajemen inventaris, pelaporan, pencatatan sistem, dan kontrol akses berbasis peran (RBAC).\n- Customer Data Management (tachyon.id) untuk meningkatkan akurasi data, konsistensi, dan proses pemeliharaan aset.\n- Remala Ticketing System untuk proyek Diskominfo untuk mengelola pelaporan masalah, pelacakan tiket, alur kerja layanan pelanggan, dan proses penyelesaian.\n\nMengimplementasikan arsitektur multi-tenant yang mendukung struktur dan proses bisnis perusahaan KSO dan Non-KSO.\nBerkolaborasi dengan desainer UI/UX dan pengembang backend untuk mengubah kebutuhan bisnis dan prototipe desain menjadi aplikasi web yang responsif, interaktif, dan mudah dipelihara.\nMengoptimalkan kode aplikasi dan menerapkan praktik pengembangan terstruktur untuk meningkatkan performa, skalabilitas, kemudahan pemeliharaan, dan keandalan sistem jangka panjang.\nMelakukan pengujian, debugging, dan penyelesaian masalah untuk memastikan stabilitas dan efisiensi pengiriman aplikasi.",
     sortOrder: 20,
   },
   {
-    section: "works", key: "item_2.description", locale: "en",
-    value: "Supporting Legacy System Migration activities for Implementation (Asian Toyota Lean Accounting System) Project SAP R3 to SAP Hana at Toyota Indonesia as responsible for:\n- Admin for Jira Software Issue tracking and monitoring.\n- Managing daily reporting of Cutover Rehearsal progress and the IT Team's Cutover Task List.\n- Handling legacy system support as a System Admin, including:\n  1. Creating backups and restoring folders, file servers, setting up internet information servers, and authorizing users.\n  2. Creating database links, granting access to users, tables, and stored procedures using SQL Server Management Studio.\n  3. Creating SQL Job Schedulers on the database server and Windows Job Schedulers on the App Server.",
+    section: "works",
+    key: "item_2.description",
+    locale: "en",
+    value:
+      "Supporting Legacy System Migration activities for Implementation (Asian Toyota Lean Accounting System) Project SAP R3 to SAP Hana at Toyota Indonesia as responsible for:\n- Admin for Jira Software Issue tracking and monitoring.\n- Managing daily reporting of Cutover Rehearsal progress and the IT Team's Cutover Task List.\n- Handling legacy system support as a System Admin, including:\n  1. Creating backups and restoring folders, file servers, setting up internet information servers, and authorizing users.\n  2. Creating database links, granting access to users, tables, and stored procedures using SQL Server Management Studio.\n  3. Creating SQL Job Schedulers on the database server and Windows Job Schedulers on the App Server.",
     sortOrder: 21,
   },
   {
-    section: "works", key: "item_2.description", locale: "id",
-    value: "Mendukung aktivitas migrasi Legacy System untuk Implementasi (Asian Toyota Lean Accounting System) Proyek SAP R3 ke SAP Hana di Toyota Indonesia dengan tanggung jawab:\n- Admin untuk pelacakan dan pemantauan isu Jira Software.\n- Mengelola pelaporan harian tentang progres Cutover Rehearsal dan Daftar Tugas Cutover Tim IT.\n- Menangani dukungan sistem legacy sebagai System Admin, termasuk:\n  1. Membuat backup dan memulihkan folder, file server, menyiapkan internet information server, dan mengizinkan akses pengguna.\n  2. Membuat database link, memberikan akses kepada pengguna, tabel, dan stored procedure menggunakan SQL Server Management Studio.\n  3. Membuat SQL Job Scheduler di server database dan Windows Job Scheduler di App Server.",
+    section: "works",
+    key: "item_2.description",
+    locale: "id",
+    value:
+      "Mendukung aktivitas migrasi Legacy System untuk Implementasi (Asian Toyota Lean Accounting System) Proyek SAP R3 ke SAP Hana di Toyota Indonesia dengan tanggung jawab:\n- Admin untuk pelacakan dan pemantauan isu Jira Software.\n- Mengelola pelaporan harian tentang progres Cutover Rehearsal dan Daftar Tugas Cutover Tim IT.\n- Menangani dukungan sistem legacy sebagai System Admin, termasuk:\n  1. Membuat backup dan memulihkan folder, file server, menyiapkan internet information server, dan mengizinkan akses pengguna.\n  2. Membuat database link, memberikan akses kepada pengguna, tabel, dan stored procedure menggunakan SQL Server Management Studio.\n  3. Membuat SQL Job Scheduler di server database dan Windows Job Scheduler di App Server.",
     sortOrder: 21,
   },
   {
-    section: "works", key: "item_3.description", locale: "en",
-    value: "Developing website kaftan brautmode:\n1. Landing page https://kaftan-brautmode.de/de with catalog, schedule, and language switch using next-intl.\n2. Menu dashboard admin kaftan for appointment user such as detail appointment, reschedule appointment, schedule working kaftan, manage calendar for appointment list.\n3. Menu dashboard user for user managing, reschedule appointment, activity, and system notification.",
+    section: "works",
+    key: "item_3.description",
+    locale: "en",
+    value:
+      "Developing website kaftan brautmode:\n1. Landing page https://kaftan-brautmode.de/de with catalog, schedule, and language switch using next-intl.\n2. Menu dashboard admin kaftan for appointment user such as detail appointment, reschedule appointment, schedule working kaftan, manage calendar for appointment list.\n3. Menu dashboard user for user managing, reschedule appointment, activity, and system notification.",
     sortOrder: 22,
   },
   {
-    section: "works", key: "item_3.description", locale: "id",
-    value: "Mengembangkan website kaftan brautmode:\n1. Landing page https://kaftan-brautmode.de/de dengan katalog, jadwal, dan pengalihan bahasa menggunakan next-intl.\n2. Menu dashboard admin kaftan untuk janji temu pengguna seperti detail janji temu, penjadwalan ulang janji temu, jadwal kerja kaftan, dan pengelolaan kalender daftar janji temu.\n3. Menu dashboard user untuk pengelolaan pengguna, penjadwalan ulang janji temu, aktivitas, dan notifikasi sistem.",
+    section: "works",
+    key: "item_3.description",
+    locale: "id",
+    value:
+      "Mengembangkan website kaftan brautmode:\n1. Landing page https://kaftan-brautmode.de/de dengan katalog, jadwal, dan pengalihan bahasa menggunakan next-intl.\n2. Menu dashboard admin kaftan untuk janji temu pengguna seperti detail janji temu, penjadwalan ulang janji temu, jadwal kerja kaftan, dan pengelolaan kalender daftar janji temu.\n3. Menu dashboard user untuk pengelolaan pengguna, penjadwalan ulang janji temu, aktivitas, dan notifikasi sistem.",
     sortOrder: 22,
   },
 

@@ -74,7 +74,7 @@ export function ProjectStats(props: ProjectStatsProps) {
               "group relative overflow-hidden p-5 transition-all duration-300",
               isNeo
                 ? "border-[3px] border-black bg-white shadow-[5px_5px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_black]"
-                : `rounded-2xl border ${item.border} bg-gradient-to-br ${item.gradient} hover:scale-[1.02] hover:shadow-lg`,
+                : `rounded-2xl border ${item.border} bg-linear-to-br ${item.gradient} hover:scale-[1.02] hover:shadow-lg`,
             )}
           >
             {!isNeo && <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-amber-400/10 blur-2xl" />}

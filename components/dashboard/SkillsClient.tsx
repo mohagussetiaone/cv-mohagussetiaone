@@ -286,15 +286,15 @@ export function SkillsClient({ locale }: SkillsClientProps) {
           </DialogHeader>
 
           <div className="grid gap-5 py-4">
-            <div className="space-y-2">
+            <div className="min-w-0 space-y-2">
               <Label className="text-black">Name *</Label>
               <Input value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} placeholder="HTML" className="border border-black/10 bg-white text-black placeholder:text-black/40" />
             </div>
-            <div className="space-y-2">
+            <div className="min-w-0 space-y-2">
               <Label className="text-black">Icon</Label>
               <ImageUploader folder="skills" currentUrl={form.image} onUrlChange={(url) => setForm((p) => ({ ...p, image: url }))} onPendingFile={setPendingFile} label="Upload icon skill (upload otomatis saat submit form)" />
             </div>
-            <div className="space-y-2">
+            <div className="min-w-0 space-y-2">
               <Label className="text-black">Circle Color</Label>
               <div className="flex items-center gap-3">
                 <input type="color" value={form.bgColor} onChange={(e) => setForm((p) => ({ ...p, bgColor: e.target.value }))} className="h-10 w-14 cursor-pointer rounded border border-black/10 bg-transparent" />

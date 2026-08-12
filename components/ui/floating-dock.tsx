@@ -7,11 +7,21 @@ import { useTheme } from "@/components/theme/ThemeProvider";
 // Pure CSS: entrance animation via `dock-in` keyframes (globals.css),
 // hover scale via Tailwind transition classes — no animation library needed.
 
-export const FloatingDock = ({ items, desktopClassName, mobileClassName }: { items: { title: string; icon: React.ReactNode; href: string }[]; desktopClassName?: string; mobileClassName?: string }) => {
+export const FloatingDock = ({
+  items,
+  desktopClassName,
+  mobileClassName,
+  mobileItems,
+}: {
+  items: { title: string; icon: React.ReactNode; href: string }[];
+  desktopClassName?: string;
+  mobileClassName?: string;
+  mobileItems?: { title: string; icon: React.ReactNode; href: string }[];
+}) => {
   return (
     <>
       <FloatingDockDesktop items={items} className={desktopClassName} />
-      <FloatingDockMobile items={items} className={mobileClassName} />
+      <FloatingDockMobile items={mobileItems ?? items} className={mobileClassName} />
     </>
   );
 };

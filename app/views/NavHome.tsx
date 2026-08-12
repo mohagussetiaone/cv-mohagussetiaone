@@ -56,7 +56,10 @@ export default function NavHome() {
 
   return (
     <main>
-      <FloatingDock items={links} />
+      <FloatingDock
+        items={links}
+        mobileItems={links.filter((link) => ["#home", "#about", "#portfolio", "#contact"].includes(link.href))}
+      />
     </main>
   );
 }

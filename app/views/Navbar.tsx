@@ -45,7 +45,7 @@ const Navbar = () => {
         className={`flex flex-wrap gap-4 bg-dark border-b border-gray-600 items-center justify-between mx-auto p-4 ${isDefaultTheme ? "bg-[radial-gradient(circle_at_top_left,rgba(18,247,214,0.16),transparent_26%),radial-gradient(circle_at_85%_18%,rgba(56,189,248,0.14),transparent_20%),linear-gradient(135deg,#292F36_0%,#1F2937_45%,#111827_100%)" : ""}`}
       >
         <Link href={`/${locale}`} className="flex gap-3 justify-start items-center cursor-pointer">
-          <Image src={data.logoImage} alt="Logo" width={36} height={36} className="rounded-full object-cover w-9 h-9" />
+          <Image src={data.logoImage} alt="Logo" width={36} height={36} className="h-auto w-auto rounded-full object-cover" />
           <h2 className={cn("text-lg md:text-xl font-semibold", theme === "neobrutalism" && "text-amber-400", theme === "retro" && "text-[#6699ff]", theme !== "neobrutalism" && theme !== "retro" && "text-brand-500")}>{data.brandName}</h2>
         </Link>
         <div className="flex gap-6">
