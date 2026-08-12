@@ -47,5 +47,12 @@
     "title_form_2": "Email Anda",
     "title_form_3": "Pesan Anda",
     "submit": "Kirim"
+  },
+  "NotFoundPage": {
+    "badge": "Halaman Tidak Ditemukan",
+    "title": "Oops! Halaman ini menghilang",
+    "description": "Sepertinya halaman yang kamu cari tidak ada, sudah dipindah, atau mungkin belum pernah dibuat. Tenang, masih banyak yang bisa dilihat.",
+    "backHome": "Kembali ke Beranda",
+    "backPrevious": "Halaman Sebelumnya"
   }
 }

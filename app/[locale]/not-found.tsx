@@ -1,20 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ArrowLeft, Home, Frown } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import { useAppLocale } from "@/components/providers/LocaleProvider";
 import { cn } from "@/lib/utils";
 
 export default function NotFound() {
+  const t = useTranslations("NotFoundPage");
+  const locale = useLocale();
+  const { setLocale } = useAppLocale();
   const { theme } = useTheme();
-  const pathname = usePathname();
   const isNeo = theme === "neobrutalism";
   const isRetro = theme === "retro";
 
-  // Home link: ikut locale dari path saat ini (mis. /en/xyz → /en)
-  const locale = pathname.match(/^\/(en|id)/)?.[1] ?? "";
-  const homeHref = locale ? `/${locale}` : "/";
+  // Home link: ikut locale aktif (mis. /en/xyz → /en)
+  const homeHref = `/${locale}`;
 
   return (
     <div
@@ -25,6 +27,88 @@ export default function NotFound() {
         !isNeo && !isRetro && "bg-dark text-white",
       )}
     >
+      {/* ─── Language Switcher (EN/ID) ─── */}
+      <div className="absolute right-4 top-4 z-20 md:right-8 md:top-8">
+        <div
+          className={cn(
+            "relative flex items-center rounded-xl p-0.5",
+            // Default theme
+            !isNeo && !isRetro && "bg-white/5 border border-white/10",
+            // Retro theme
+            isRetro && "bg-[#ede4d4] border-2 border-[#6699ff]/30",
+            // Neo theme
+            isNeo && "bg-white border-[3px] border-black shadow-[2px_2px_0px_0px_black]",
+          )}
+        >
+          {/* Sliding indicator */}
+          <span
+            className={cn(
+              "absolute top-0.5 bottom-0.5 w-[calc(50%-2px)] rounded-lg transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+              locale === "en" ? "left-0.5" : "left-[calc(50%+0.5px)]",
+              // Default
+              !isNeo && !isRetro && "bg-brand-500/20 border border-brand-500/30",
+              // Retro
+              isRetro && "bg-[#6699ff]/15 border border-[#6699ff]/40",
+              // Neo
+              isNeo && "bg-amber-400 border-2 border-black",
+            )}
+          />
+
+          {/* EN button */}
+          <button
+            onClick={() => setLocale("en")}
+            className={cn(
+              "relative z-10 flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200",
+              locale === "en"
+                ? isNeo
+                  ? "text-black"
+                  : isRetro
+                    ? "text-[#6699ff]"
+                    : "text-brand-500"
+                : isNeo
+                  ? "text-black/40 hover:text-black"
+                  : isRetro
+                    ? "text-black/50 hover:text-black"
+                    : "text-white/50 hover:text-white/80",
+            )}
+          >
+            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="M2 9h20" />
+              <path d="M12 9v11" />
+              <path d="M2 13c3 1.5 7 2 10 2s7-.5 10-2" />
+            </svg>
+            EN
+          </button>
+
+          {/* ID button */}
+          <button
+            onClick={() => setLocale("id")}
+            className={cn(
+              "relative z-10 flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200",
+              locale === "id"
+                ? isNeo
+                  ? "text-black"
+                  : isRetro
+                    ? "text-[#6699ff]"
+                    : "text-brand-500"
+                : isNeo
+                  ? "text-black/40 hover:text-black"
+                  : isRetro
+                    ? "text-black/50 hover:text-black"
+                    : "text-white/50 hover:text-white/80",
+            )}
+          >
+            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              <path d="M2 12h20" />
+            </svg>
+            ID
+          </button>
+        </div>
+      </div>
+
       {/* Animated Gradient Background — default theme only */}
       {!isNeo && !isRetro && (
         <div className="pointer-events-none absolute inset-0 -z-10">
@@ -56,16 +140,16 @@ export default function NotFound() {
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="space-y-2">
               <div className={cn("relative inline-block px-2", isNeo && "border-[3px] border-black bg-amber-400 text-black shadow-[4px_4px_0px_0px_black]", isRetro && "border-2 border-[#6699ff] bg-white px-3 text-[#6699ff]")}>
-                <span className={cn("text-sm font-semibold uppercase tracking-[0.3em]", isNeo ? "text-black" : isRetro ? "text-[#6699ff]" : "text-brand-500")}>Page Not Found</span>
+                <span className={cn("text-sm font-semibold uppercase tracking-[0.3em]", isNeo ? "text-black" : isRetro ? "text-[#6699ff]" : "text-brand-500")}>{t("badge")}</span>
               </div>
-              <h2 className={cn("text-3xl font-bold md:text-4xl", isNeo || isRetro ? "text-black" : "text-white")}>Oops! Halaman ini menghilang</h2>
+              <h2 className={cn("text-3xl font-bold md:text-4xl", isNeo || isRetro ? "text-black" : "text-white")}>{t("title")}</h2>
             </div>
           </div>
         </div>
 
         {/* Description */}
         <p className={cn("mx-auto mt-4 max-w-md text-base md:text-lg", isNeo ? "font-medium text-black" : isRetro ? "text-black" : "text-white/50")}>
-          Sepertinya halaman yang kamu cari tidak ada, sudah dipindah, atau mungkin belum pernah dibuat. Tenang, masih banyak yang bisa dilihat.
+          {t("description")}
         </p>
 
         {/* Divider */}
@@ -89,7 +173,7 @@ export default function NotFound() {
             )}
           >
             <Home className="h-4 w-4 transition-transform group-hover:scale-110" />
-            Kembali ke Beranda
+            {t("backHome")}
           </Link>
           <button
             onClick={() => window.history.back()}
@@ -103,7 +187,7 @@ export default function NotFound() {
             )}
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Halaman Sebelumnya
+            {t("backPrevious")}
           </button>
         </div>
       </div>

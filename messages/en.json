@@ -49,5 +49,12 @@
     "title_form_2": "Your Email",
     "title_form_3": "Your Message",
     "submit": "Submit"
+  },
+  "NotFoundPage": {
+    "badge": "Page Not Found",
+    "title": "Oops! This page has vanished",
+    "description": "Looks like the page you're looking for doesn't exist, was moved, or was never created. Don't worry, there's still plenty to explore.",
+    "backHome": "Back to Home",
+    "backPrevious": "Previous Page"
   }
 }
