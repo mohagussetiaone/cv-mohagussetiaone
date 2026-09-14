@@ -35,11 +35,20 @@ export const projectPayloadSchema = z.object({
     .trim()
     .uuid("Product ID harus UUID yang valid")
     .optional(),
+  projectName: z.string().trim().min(2, "Nama project minimal 2 karakter"),
   image: optionalString,
   urlPreview: optionalUrl,
   githubUrl: optionalUrl,
   figmaUrl: optionalUrl,
   internal: z.coerce.boolean().default(false),
+  // Tech detail fields
+  techStack: optionalString,
+  deployment: optionalString,
+  server: optionalString,
+  designMethod: optionalString,
+  orm: optionalString,
+  database: optionalString,
+  domainProvider: optionalString,
   technologies: csvToArray.refine((value) => value.length > 0, {
     message: "Minimal satu teknologi harus diisi",
   }),
@@ -48,11 +57,9 @@ export const projectPayloadSchema = z.object({
   }),
   translations: z.object({
     id: z.object({
-      projectName: z.string().trim().min(2, "Nama project Indonesia minimal 2 karakter"),
       description: z.string().trim().min(10, "Deskripsi Indonesia minimal 10 karakter"),
     }),
     en: z.object({
-      projectName: z.string().trim().min(2, "Nama project English minimal 2 karakter"),
       description: z.string().trim().min(10, "Deskripsi English minimal 10 karakter"),
     }),
   }),

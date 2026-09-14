@@ -20,16 +20,23 @@ const mapProject = (
     id: string;
     productId: string;
     sortOrder: number;
+    projectName: string;
     image: string | null;
     urlPreview: string | null;
     githubUrl: string | null;
     figmaUrl: string | null;
     internal: boolean;
+    techStack: string | null;
+    deployment: string | null;
+    server: string | null;
+    designMethod: string | null;
+    orm: string | null;
+    database: string | null;
+    domainProvider: string | null;
     skills: { name: string }[];
     categories: { name: string }[];
     translations: {
       locale: string;
-      projectName: string;
       description: string;
     }[];
   },
@@ -40,7 +47,6 @@ const mapProject = (
       if (translation.locale === "id" || translation.locale === "en") {
         accumulator[translation.locale] = {
           locale: translation.locale,
-          projectName: translation.projectName,
           description: translation.description,
         };
       }
@@ -59,13 +65,20 @@ const mapProject = (
     id: project.id,
     productId: project.productId,
     sortOrder: project.sortOrder,
-    projectName: activeTranslation?.projectName ?? "",
+    projectName: project.projectName,
     description: activeTranslation?.description ?? "",
     image: project.image,
     urlPreview: project.urlPreview,
     githubUrl: project.githubUrl,
     figmaUrl: project.figmaUrl,
     internal: project.internal,
+    techStack: project.techStack,
+    deployment: project.deployment,
+    server: project.server,
+    designMethod: project.designMethod,
+    orm: project.orm,
+    database: project.database,
+    domainProvider: project.domainProvider,
     technologies: project.skills.map((skill) => skill.name),
     categories: project.categories.map((category) => category.name),
     translations: translationMap,

@@ -31,15 +31,27 @@ export function ThemeProvider({ children, forcedTheme }: { children: ReactNode; 
   const [mounted, setMounted] = useState<boolean>(forcedTheme ? true : false);
 
   // When forced, apply the fixed theme on mount and restore the previous one on unmount.
+  // Also toggle the .dark class so Tailwind dark: variants activate correctly.
   useEffect(() => {
     if (!forcedTheme) return;
-    const previous = document.documentElement.getAttribute("data-theme");
+    const previousTheme = document.documentElement.getAttribute("data-theme");
+    const previousDark = document.documentElement.classList.contains("dark");
     document.documentElement.setAttribute("data-theme", forcedTheme);
+    if (forcedTheme === "default") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
     return () => {
-      if (previous) {
-        document.documentElement.setAttribute("data-theme", previous);
+      if (previousTheme) {
+        document.documentElement.setAttribute("data-theme", previousTheme);
       } else {
         document.documentElement.removeAttribute("data-theme");
+      }
+      if (previousDark) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
       }
     };
   }, [forcedTheme]);
@@ -50,6 +62,11 @@ export function ThemeProvider({ children, forcedTheme }: { children: ReactNode; 
     const initial = getInitialTheme();
     setThemeState(initial);
     document.documentElement.setAttribute("data-theme", initial);
+    if (initial === "default") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
     setMounted(true);
   }, [forcedTheme]);
 
@@ -57,6 +74,11 @@ export function ThemeProvider({ children, forcedTheme }: { children: ReactNode; 
     if (forcedTheme) return;
     setThemeState(newTheme);
     document.documentElement.setAttribute("data-theme", newTheme);
+    if (newTheme === "default") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
     try {
       localStorage.setItem(STORAGE_KEY, newTheme);
     } catch {}

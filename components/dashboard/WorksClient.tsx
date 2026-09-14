@@ -43,7 +43,6 @@ export function WorksClient({ locale }: WorksClientProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, startSave] = useTransition();
 
-  // Section settings
   const [titleId, setTitleId] = useState("");
   const [titleEn, setTitleEn] = useState("");
   const [descId, setDescId] = useState("");
@@ -51,7 +50,6 @@ export function WorksClient({ locale }: WorksClientProps) {
   const [expLabelId, setExpLabelId] = useState("");
   const [expLabelEn, setExpLabelEn] = useState("");
 
-  // Dialog state
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<WorkForm>(emptyForm());
@@ -95,36 +93,16 @@ export function WorksClient({ locale }: WorksClientProps) {
     const requestId = ++editRequestRef.current;
     setEditingId(exp.id);
     setDialogOpen(true);
-    // Isi dari list dulu sebagai fallback, lalu update dengan detail realtime dari API
-    setForm({
-      company: exp.company,
-      position: exp.position,
-      location: exp.location ?? "",
-      type: exp.type,
-      startDate: exp.startDate,
-      endDate: exp.endDate,
-      description: exp.description ?? "",
-    });
+    setForm({ company: exp.company, position: exp.position, location: exp.location ?? "", type: exp.type, startDate: exp.startDate, endDate: exp.endDate, description: exp.description ?? "" });
     try {
       const res = await fetch(`/api/works/${exp.id}`);
       const json = await res.json();
-      // Abaikan response lama jika user sudah pindah ke item lain
       if (requestId !== editRequestRef.current) return;
       if (res.ok && json?.data) {
-        const detail = json.data as WorkExperience;
-        setForm({
-          company: detail.company,
-          position: detail.position,
-          location: detail.location ?? "",
-          type: detail.type,
-          startDate: detail.startDate,
-          endDate: detail.endDate,
-          description: detail.description ?? "",
-        });
+        const d = json.data as WorkExperience;
+        setForm({ company: d.company, position: d.position, location: d.location ?? "", type: d.type, startDate: d.startDate, endDate: d.endDate, description: d.description ?? "" });
       }
-    } catch {
-      // Fallback ke data list yang sudah terisi
-    }
+    } catch {}
   };
 
   const handleSaveForm = () => {
@@ -132,16 +110,10 @@ export function WorksClient({ locale }: WorksClientProps) {
       toast.error("Company dan Position wajib diisi.");
       return;
     }
-
     startSave(async () => {
       try {
         const isEdit = editingId !== null;
-        const endpoint = isEdit ? `/api/works/${editingId}` : "/api/works";
-        const res = await fetch(endpoint, {
-          method: isEdit ? "PATCH" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-        });
+        const res = await fetch(isEdit ? `/api/works/${editingId}` : "/api/works", { method: isEdit ? "PATCH" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
         const json = await res.json();
         if (!res.ok) throw new Error(json.message || "Gagal menyimpan.");
         toast.success(isEdit ? "Work experience berhasil diperbarui." : "Work experience berhasil ditambahkan.");
@@ -179,11 +151,7 @@ export function WorksClient({ locale }: WorksClientProps) {
           { key: "experience_label", locale: "id", value: expLabelId },
           { key: "experience_label", locale: "en", value: expLabelEn },
         ];
-        const res = await fetch("/api/works/settings", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ entries }),
-        });
+        const res = await fetch("/api/works/settings", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ entries }) });
         const json = await res.json();
         if (!res.ok) throw new Error(json.message || "Gagal menyimpan.");
         toast.success("Pengaturan section berhasil disimpan.");
@@ -193,32 +161,33 @@ export function WorksClient({ locale }: WorksClientProps) {
     });
   };
 
+  const inputCls = "border border-black/10 dark:border-white/20 bg-white dark:bg-neutral-800 text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40";
+  const cardCls = "rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-900";
+
   return (
     <main className="flex flex-1 flex-col gap-6">
       {/* Header */}
-      <div className="relative overflow-hidden rounded-2xl border border-black/10 bg-white p-6">
+      <div className={`relative overflow-hidden p-6 ${cardCls}`}>
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-400/20 blur-3xl" />
         <div className="flex items-start justify-between">
           <div>
-            <div className="flex items-center gap-3">
-              <Link href={`/${locale}/dashboard`} className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-black transition-colors hover:bg-black/5">
-                <ArrowLeft className="h-3.5 w-3.5" /> Back
-              </Link>
-            </div>
-            <h1 className="mt-3 text-xl font-semibold text-black">Works Management</h1>
-            <p className="mt-1 text-sm text-black">Kelola pengalaman kerja yang ditampilkan di halaman utama. Setiap tambah, edit, atau hapus langsung tersimpan ke API.</p>
+            <Link href={`/${locale}/dashboard`} className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-black dark:text-white transition-colors hover:bg-black/5 dark:hover:bg-white/10">
+              <ArrowLeft className="h-3.5 w-3.5" /> Back
+            </Link>
+            <h1 className="mt-3 text-xl font-semibold text-black dark:text-white">Works Management</h1>
+            <p className="mt-1 text-sm text-black/70 dark:text-white/50">Kelola pengalaman kerja yang ditampilkan di halaman utama.</p>
           </div>
-          <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-amber-400">
-            <Briefcase className="h-5 w-5 text-black" />
+          <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 dark:border-white/15 bg-amber-400">
+            <Briefcase className="h-5 w-5 text-black dark:text-white" />
           </div>
         </div>
       </div>
 
       {/* Section Settings */}
-      <div className="rounded-2xl border border-black/10 bg-white p-5 space-y-6">
+      <div className={`${cardCls} p-5 space-y-6`}>
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-black">Section Settings</h2>
-          <Button type="button" size="sm" onClick={handleSaveSettings} disabled={isSaving} className="h-8 text-xs border border-black/10 bg-amber-400 text-black font-bold hover:bg-amber-300">
+          <h2 className="text-sm font-semibold text-black dark:text-white">Section Settings</h2>
+          <Button type="button" size="sm" onClick={handleSaveSettings} disabled={isSaving} className="h-8 text-xs border border-black/10 dark:border-white/15 bg-amber-400 text-black font-bold hover:bg-amber-300">
             <Save className="mr-1.5 h-3.5 w-3.5" /> {isSaving ? "Saving..." : "Save Section"}
           </Button>
         </div>
@@ -230,13 +199,13 @@ export function WorksClient({ locale }: WorksClientProps) {
       </div>
 
       {/* Experiences Table */}
-      <div className="rounded-2xl border border-black/10 bg-white overflow-hidden">
-        <div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
-          <div className="flex items-center gap-2 text-black font-semibold text-sm">
+      <div className={`${cardCls} overflow-hidden`}>
+        <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 px-5 py-4">
+          <div className="flex items-center gap-2 text-black dark:text-white font-semibold text-sm">
             Work Experiences
-            <span className="text-xs text-black bg-black/5 px-2 py-0.5 rounded-full">{experiences.length}</span>
+            <span className="text-xs text-black dark:text-white bg-black/5 dark:bg-white/10 px-2 py-0.5 rounded-full">{experiences.length}</span>
           </div>
-          <Button type="button" size="sm" onClick={openAdd} className="h-8 text-xs border border-black/10 bg-amber-400 text-black font-bold hover:bg-amber-300">
+          <Button type="button" size="sm" onClick={openAdd} className="h-8 text-xs border border-black/10 dark:border-white/15 bg-amber-400 text-black font-bold hover:bg-amber-300">
             <PlusCircle className="mr-1.5 h-3.5 w-3.5" /> Add Experience
           </Button>
         </div>
@@ -246,55 +215,57 @@ export function WorksClient({ locale }: WorksClientProps) {
             <div className="h-6 w-6 animate-spin rounded-full border-2 border-brand-500/30 border-t-brand-500" />
           </div>
         ) : experiences.length === 0 ? (
-          <div className="flex flex-col items-center py-16 text-black">
+          <div className="flex flex-col items-center py-16 text-black/50 dark:text-white/40">
             <Briefcase className="mb-3 h-10 w-10 opacity-30" />
             <p className="text-sm">No experiences yet. Click &quot;Add Experience&quot; to create one.</p>
           </div>
         ) : (
           <Table>
             <TableHeader>
-              <TableRow className="border-black/5 hover:bg-transparent">
-                <TableHead className="text-xs text-black uppercase w-45">Company</TableHead>
-                <TableHead className="text-xs text-black uppercase">Position</TableHead>
-                <TableHead className="text-xs text-black uppercase hidden md:table-cell">Period</TableHead>
-                <TableHead className="text-xs text-black uppercase hidden lg:table-cell">Type</TableHead>
-                <TableHead className="text-xs text-black uppercase w-25">Actions</TableHead>
+              <TableRow className="border-black/5 dark:border-white/5 hover:bg-transparent">
+                <TableHead className="text-xs text-black dark:text-white uppercase w-45">Company</TableHead>
+                <TableHead className="text-xs text-black dark:text-white uppercase">Position</TableHead>
+                <TableHead className="text-xs text-black dark:text-white uppercase hidden md:table-cell">Period</TableHead>
+                <TableHead className="text-xs text-black dark:text-white uppercase hidden lg:table-cell">Type</TableHead>
+                <TableHead className="text-xs text-black dark:text-white uppercase w-25">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {experiences.map((exp, i) => (
-                <TableRow key={exp.id} className="border-black/5 hover:bg-black/5">
+                <TableRow key={exp.id} className="border-black/5 dark:border-white/5 hover:bg-black/5 dark:hover:bg-white/5">
                   <TableCell>
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-black/10 bg-amber-400 text-black text-xs font-bold overflow-hidden">
-                        {exp.company.charAt(0)}
-                      </div>
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-black/10 dark:border-white/15 bg-amber-400 text-black text-xs font-bold overflow-hidden">{exp.company.charAt(0)}</div>
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-black truncate">{exp.company}</p>
-                        <p className="text-xs text-black truncate">{exp.location}</p>
+                        <p className="text-sm font-medium text-black dark:text-white truncate">{exp.company}</p>
+                        <p className="text-xs text-black/60 dark:text-white/40 truncate">{exp.location}</p>
                       </div>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <p className="text-sm text-black">{exp.position}</p>
-                    {exp.description && <p className="text-xs text-black line-clamp-1 mt-0.5 max-w-xs">{exp.description}</p>}
+                    <p className="text-sm text-black dark:text-white">{exp.position}</p>
+                    {exp.description && <p className="text-xs text-black/60 dark:text-white/40 line-clamp-1 mt-0.5 max-w-xs">{exp.description}</p>}
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    <span className="text-sm text-black">
+                    <span className="text-sm text-black/70 dark:text-white/60">
                       {exp.startDate} — {exp.endDate}
                     </span>
                   </TableCell>
                   <TableCell className="hidden lg:table-cell">
-                    <Badge variant="outline" className="border border-black/10 bg-white text-xs text-black">
+                    <Badge variant="outline" className="border border-black/10 dark:border-white/15 bg-white dark:bg-neutral-800 text-xs text-black dark:text-white">
                       {exp.type}
                     </Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <button type="button" onClick={() => openEdit(i)} className="rounded-lg p-1.5 text-black/60 hover:bg-black/5 hover:text-black transition-colors">
+                      <button type="button" onClick={() => openEdit(i)} className="rounded-lg p-1.5 text-black/50 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white transition-colors">
                         <PencilLine className="h-4 w-4" />
                       </button>
-                      <button type="button" onClick={() => handleDelete(i)} className="rounded-lg p-1.5 text-rose-500 hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(i)}
+                        className="rounded-lg p-1.5 text-rose-500 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 hover:text-rose-600 dark:hover:text-rose-300 transition-colors"
+                      >
                         <Trash2 className="h-4 w-4" />
                       </button>
                     </div>
@@ -308,41 +279,41 @@ export function WorksClient({ locale }: WorksClientProps) {
 
       {/* Add / Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-h-[90svh] max-w-2xl overflow-y-auto border border-black/10 bg-white text-black">
+        <DialogContent className="max-h-[90svh] max-w-2xl overflow-y-auto border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-900 text-black dark:text-white">
           <DialogHeader>
-            <Badge variant="secondary" className="w-fit gap-1 mb-2 border border-black/10 bg-amber-400 text-black">
+            <Badge variant="secondary" className="w-fit gap-1 mb-2 border border-black/10 dark:border-white/15 bg-amber-400 text-black">
               {editingId !== null ? <PencilLine className="h-3.5 w-3.5" /> : <PlusCircle className="h-3.5 w-3.5" />}
               {editingId !== null ? "Edit Experience" : "Add Experience"}
             </Badge>
-            <DialogTitle className="text-xl">{editingId !== null ? "Edit work experience" : "Add new work experience"}</DialogTitle>
-            <DialogDescription className="text-black">All fields marked with * are required.</DialogDescription>
+            <DialogTitle className="text-xl text-black dark:text-white">{editingId !== null ? "Edit work experience" : "Add new work experience"}</DialogTitle>
+            <DialogDescription className="text-black/60 dark:text-white/50">All fields marked with * are required.</DialogDescription>
           </DialogHeader>
 
           <div className="grid gap-5 py-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-black">Company *</Label>
-                <Input value={form.company} onChange={(e) => setForm((p) => ({ ...p, company: e.target.value }))} placeholder="Company name" className="border border-black/10 bg-white text-black placeholder:text-black/40" />
+                <Label className="text-black dark:text-white">Company *</Label>
+                <Input value={form.company} onChange={(e) => setForm((p) => ({ ...p, company: e.target.value }))} placeholder="Company name" className={inputCls} />
               </div>
               <div className="space-y-2">
-                <Label className="text-black">Position *</Label>
-                <Input value={form.position} onChange={(e) => setForm((p) => ({ ...p, position: e.target.value }))} placeholder="Job title" className="border border-black/10 bg-white text-black placeholder:text-black/40" />
+                <Label className="text-black dark:text-white">Position *</Label>
+                <Input value={form.position} onChange={(e) => setForm((p) => ({ ...p, position: e.target.value }))} placeholder="Job title" className={inputCls} />
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-black">Location</Label>
-                <Input value={form.location} onChange={(e) => setForm((p) => ({ ...p, location: e.target.value }))} placeholder="City, Country" className="border border-black/10 bg-white text-black placeholder:text-black/40" />
+                <Label className="text-black dark:text-white">Location</Label>
+                <Input value={form.location} onChange={(e) => setForm((p) => ({ ...p, location: e.target.value }))} placeholder="City, Country" className={inputCls} />
               </div>
               <div className="space-y-2">
-                <Label className="text-black">Type</Label>
+                <Label className="text-black dark:text-white">Type</Label>
                 <Select value={form.type} onValueChange={(v) => setForm((p) => ({ ...p, type: v }))}>
-                  <SelectTrigger className="border border-black/10 bg-white text-black">
+                  <SelectTrigger className="border border-black/10 dark:border-white/20 bg-white dark:bg-neutral-800 text-black dark:text-white">
                     <SelectValue placeholder="Select type..." />
                   </SelectTrigger>
-                  <SelectContent className="z-60 border border-black/10 bg-white text-black">
+                  <SelectContent className="z-60 border border-black/10 dark:border-white/20 bg-white dark:bg-neutral-800 text-black dark:text-white">
                     {[...JOB_TYPES].map((t) => (
-                      <SelectItem key={t} value={t} className="hover:bg-black/5 focus:bg-black/5">
+                      <SelectItem key={t} value={t} className="hover:bg-amber-50 dark:hover:bg-amber-900/30 focus:bg-amber-50 dark:focus:bg-amber-900/30">
                         {t}
                       </SelectItem>
                     ))}
@@ -352,32 +323,43 @@ export function WorksClient({ locale }: WorksClientProps) {
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-black">Start Date</Label>
-                <Input type="month" value={form.startDate} onChange={(e) => setForm((p) => ({ ...p, startDate: e.target.value }))} className="border border-black/10 bg-white text-black [color-scheme:light]" />
+                <Label className="text-black dark:text-white">Start Date</Label>
+                <Input type="month" value={form.startDate} onChange={(e) => setForm((p) => ({ ...p, startDate: e.target.value }))} className={`${inputCls} scheme-light dark:scheme-dark`} />
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label className="text-black">End Date</Label>
-                  <label className="flex items-center gap-1.5 text-xs text-black cursor-pointer select-none transition-colors">
-                    <input type="checkbox" checked={form.endDate === "Present"} onChange={(e) => setForm((p) => ({ ...p, endDate: e.target.checked ? "Present" : "" }))} className="rounded border border-black/20 bg-white accent-amber-400" />
+                  <Label className="text-black dark:text-white">End Date</Label>
+                  <label className="flex items-center gap-1.5 text-xs text-black dark:text-white cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={form.endDate === "Present"}
+                      onChange={(e) => setForm((p) => ({ ...p, endDate: e.target.checked ? "Present" : "" }))}
+                      className="rounded border border-black/20 dark:border-white/20 bg-white dark:bg-neutral-800 accent-amber-400"
+                    />
                     Current job
                   </label>
                 </div>
                 {form.endDate === "Present" ? (
-                  <div className="flex h-10 w-full items-center rounded-lg border border-black/10 bg-white px-3 text-sm text-black">Present</div>
+                  <div className={`flex h-10 w-full items-center rounded-lg px-3 text-sm ${inputCls}`}>Present</div>
                 ) : (
-                  <Input type="month" value={form.endDate} onChange={(e) => setForm((p) => ({ ...p, endDate: e.target.value }))} className="border border-black/10 bg-white text-black [color-scheme:light]" />
+                  <Input type="month" value={form.endDate} onChange={(e) => setForm((p) => ({ ...p, endDate: e.target.value }))} className={`${inputCls} scheme-light dark:scheme-dark`} />
                 )}
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-black">Description</Label>
-              <Textarea value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} placeholder="Describe your responsibilities, achievements, and technologies used..." rows={4} className="border border-black/10 bg-white text-black min-h-25 placeholder:text-black/40" />
+              <Label className="text-black dark:text-white">Description</Label>
+              <Textarea
+                value={form.description}
+                onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
+                placeholder="Describe your responsibilities, achievements, and technologies used..."
+                rows={4}
+                className={`${inputCls} min-h-25`}
+              />
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 border-t border-black/10 pt-4">
-            <Button type="button" variant="outline" onClick={() => setDialogOpen(false)} className="rounded-full border border-black/10 bg-transparent text-black hover:bg-black/5">
+          <div className="flex justify-end gap-3 border-t border-black/10 dark:border-white/10 pt-4">
+            <Button type="button" variant="outline" onClick={() => setDialogOpen(false)} className="rounded-full border border-black/10 dark:border-white/15 bg-transparent text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10">
               Cancel
             </Button>
             <Button type="button" onClick={handleSaveForm} disabled={isSaving} className="rounded-full bg-amber-400 text-black hover:bg-amber-300 font-bold border border-black px-6">
@@ -395,25 +377,16 @@ export function WorksClient({ locale }: WorksClientProps) {
 function FieldGroup({ label, idValue, onIdChange, enValue, onEnChange, textarea }: { label: string; idValue: string; onIdChange: (v: string) => void; enValue: string; onEnChange: (v: string) => void; textarea?: boolean }) {
   const InputTag = textarea ? "textarea" : "input";
   const inputProps = textarea ? { rows: 3 } : {};
+  const cls = "w-full rounded-lg border border-black/10 dark:border-white/20 bg-white dark:bg-neutral-800 px-3 py-2 text-sm text-black dark:text-white outline-none resize-y placeholder:text-black/40 dark:placeholder:text-white/40";
   return (
     <>
       <div className="space-y-2">
-        <label className="text-xs text-black">{label} (ID)</label>
-        <InputTag
-          value={idValue}
-          onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onIdChange(e.target.value)}
-          {...inputProps}
-          className="w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-black outline-none resize-y"
-        />
+        <label className="text-xs text-black dark:text-white">{label} (ID)</label>
+        <InputTag value={idValue} onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onIdChange(e.target.value)} {...inputProps} className={cls} />
       </div>
       <div className="space-y-2">
-        <label className="text-xs text-black">{label} (EN)</label>
-        <InputTag
-          value={enValue}
-          onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onEnChange(e.target.value)}
-          {...inputProps}
-          className="w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-black outline-none resize-y"
-        />
+        <label className="text-xs text-black dark:text-white">{label} (EN)</label>
+        <InputTag value={enValue} onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onEnChange(e.target.value)} {...inputProps} className={cls} />
       </div>
     </>
   );

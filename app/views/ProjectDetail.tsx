@@ -12,10 +12,23 @@ type ProjectDetailProps = {
   initialProject: ProjectRecord;
 };
 
+// Parse githubUrl: could be plain URL or JSON {"frontend":"...","backend":"..."}
+const parseGithubUrls = (raw: string | null | undefined): { frontend: string; backend: string } => {
+  if (!raw) return { frontend: "", backend: "" };
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object" && (parsed.frontend || parsed.backend)) {
+      return { frontend: parsed.frontend ?? "", backend: parsed.backend ?? "" };
+    }
+  } catch {}
+  return { frontend: raw, backend: "" };
+};
+
 const ProjectDetail = ({ productId, initialProject }: ProjectDetailProps) => {
   const locale = useLocale();
   const t = useTranslations("Works");
   const [project, setProject] = useState<ProjectRecord>(initialProject);
+  const githubUrls = parseGithubUrls(project.githubUrl);
 
   useEffect(() => {
     let mounted = true;
@@ -57,6 +70,19 @@ const ProjectDetail = ({ productId, initialProject }: ProjectDetailProps) => {
                 </span>
               ))}
             </div>
+
+            {/* Tech Detail Fields */}
+            {(project.techStack || project.deployment || project.server || project.designMethod || project.orm || project.database || project.domainProvider) && (
+              <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                {project.techStack && <div><span className="text-gray-400">Tech Stack:</span> <span className="text-neutral-200">{project.techStack}</span></div>}
+                {project.deployment && <div><span className="text-gray-400">Deployment:</span> <span className="text-neutral-200">{project.deployment}</span></div>}
+                {project.server && <div><span className="text-gray-400">Server:</span> <span className="text-neutral-200">{project.server}</span></div>}
+                {project.designMethod && <div><span className="text-gray-400">Desain/AI:</span> <span className="text-neutral-200">{project.designMethod}</span></div>}
+                {project.orm && <div><span className="text-gray-400">ORM:</span> <span className="text-neutral-200">{project.orm}</span></div>}
+                {project.database && <div><span className="text-gray-400">Database:</span> <span className="text-neutral-200">{project.database}</span></div>}
+                {project.domainProvider && <div><span className="text-gray-400">Domain:</span> <span className="text-neutral-200">{project.domainProvider}</span></div>}
+              </div>
+            )}
             {project.internal && (
               <div className="py-6">
                 <p className="text-yellow-500 text-lg">{t("internalNote")}</p>
@@ -73,10 +99,16 @@ const ProjectDetail = ({ productId, initialProject }: ProjectDetailProps) => {
                   <Eye className="w-5 h-5 mt-1" />
                   Preview
                 </a>
-                {project.githubUrl && (
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex gap-2 mt-6 text-white bg-black dark:bg-brand-700 border-0 py-2 px-8 focus:outline-none hover:bg-black/90 hover:text-white rounded text-lg">
+                {githubUrls.frontend && (
+                  <a href={githubUrls.frontend} target="_blank" rel="noopener noreferrer" className="flex gap-2 mt-6 text-white bg-black dark:bg-brand-700 border-0 py-2 px-8 focus:outline-none hover:bg-black/90 hover:text-white rounded text-lg">
                     <IconBrandGithub className="w-5 h-5 mt-1" />
-                    Github
+                    Frontend
+                  </a>
+                )}
+                {githubUrls.backend && (
+                  <a href={githubUrls.backend} target="_blank" rel="noopener noreferrer" className="flex gap-2 mt-6 bg-gray-700 dark:bg-brand-600 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 hover:text-white rounded text-lg">
+                    <IconBrandGithub className="w-5 h-5 mt-1" />
+                    Backend
                   </a>
                 )}
                 {project.figmaUrl && (

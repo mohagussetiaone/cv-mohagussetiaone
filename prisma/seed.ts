@@ -16,13 +16,12 @@ const projectData = [
   {
     productId: "d2e8b3c7-5f2a-4e9d-b6c1-3a4d5e6f7a8b",
     sortOrder: 1,
+    projectName: "Restogemn",
     translations: {
       id: {
-        projectName: "Restogemn",
         description: "Platform SaaS untuk restoran yang menyediakan reservasi meja, manajemen menu, dan analitik bisnis dalam satu aplikasi.",
       },
       en: {
-        projectName: "Restogemn",
         description: "A SaaS platform for restaurants providing table reservations, menu management, and business analytics in a single application.",
       },
     },
@@ -36,13 +35,12 @@ const projectData = [
   {
     productId: "a0f5b1db-9b7f-4af9-a99b-228764f92c0e",
     sortOrder: 2,
+    projectName: "PT Fortuna Teknik Mandiri",
     translations: {
       id: {
-        projectName: "PT Fortuna Teknik Mandiri",
         description: "Website company profile PT Fortuna Teknik Mandiri, produsen baja fabrikasi, dengan tampilan modern dan responsif untuk menampilkan profil perusahaan serta produk.",
       },
       en: {
-        projectName: "PT Fortuna Teknik Mandiri",
         description: "A company profile website for PT Fortuna Teknik Mandiri, a steel fabrication manufacturer, with a modern responsive interface presenting the company profile and products.",
       },
     },
@@ -56,13 +54,12 @@ const projectData = [
   {
     productId: "bb44b080-1b97-4e28-a182-4081dc0df636",
     sortOrder: 3,
+    projectName: "Selaras Invitation Raya",
     translations: {
       id: {
-        projectName: "Selaras Invitation Raya",
         description: "Platform undangan digital elegan untuk pernikahan, ulang tahun, dan berbagai acara yang responsif dan mudah dibagikan.",
       },
       en: {
-        projectName: "Selaras Invitation Raya",
         description: "An elegant digital invitation platform for weddings, birthdays, and various events that is responsive and easy to share.",
       },
     },
@@ -76,13 +73,12 @@ const projectData = [
   {
     productId: "58b54a0d-a7c9-4674-895c-e7bc259940e1",
     sortOrder: 4,
+    projectName: "Tani Deals App",
     translations: {
       id: {
-        projectName: "Tani Deals App",
         description: "Desain aplikasi yang menjembatani petani dan distributor melalui akses pasar yang lebih mudah, solusi pembayaran, dan edukasi pertanian.",
       },
       en: {
-        projectName: "Tani Deals App",
         description: "An app design that connects farmers and distributors through easier market access, payment solutions, and agricultural education.",
       },
     },
@@ -132,6 +128,7 @@ async function main() {
       create: {
         productId: project.productId,
         sortOrder: project.sortOrder,
+        projectName: project.projectName,
         image: project.image,
         urlPreview: project.urlPreview,
         githubUrl: project.githubUrl,
@@ -147,12 +144,10 @@ async function main() {
           create: [
             {
               locale: "id",
-              projectName: project.translations.id.projectName,
               description: project.translations.id.description,
             },
             {
               locale: "en",
-              projectName: project.translations.en.projectName,
               description: project.translations.en.description,
             },
           ],
@@ -160,6 +155,7 @@ async function main() {
       },
       update: {
         sortOrder: project.sortOrder,
+        projectName: project.projectName,
         image: project.image,
         urlPreview: project.urlPreview,
         githubUrl: project.githubUrl,
@@ -176,12 +172,10 @@ async function main() {
           create: [
             {
               locale: "id",
-              projectName: project.translations.id.projectName,
               description: project.translations.id.description,
             },
             {
               locale: "en",
-              projectName: project.translations.en.projectName,
               description: project.translations.en.description,
             },
           ],

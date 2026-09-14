@@ -40,4 +40,16 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# AI agent configs (antislop / skills)
+.agents/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.opencode/
+
 /lib/generated/prisma
+
+AGENTS.md
+CLAUDE.md
+GEMINI.md

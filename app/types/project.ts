@@ -2,7 +2,6 @@ export type ProjectLocale = "id" | "en";
 
 export interface ProjectTranslationRecord {
   locale: ProjectLocale;
-  projectName: string;
   description: string;
 }
 
@@ -17,6 +16,14 @@ export interface ProjectRecord {
   githubUrl: string | null;
   figmaUrl: string | null;
   internal: boolean;
+  // Tech detail fields
+  techStack: string | null;
+  deployment: string | null;
+  server: string | null;
+  designMethod: string | null;
+  orm: string | null;
+  database: string | null;
+  domainProvider: string | null;
   technologies: string[];
   categories: string[];
   translations: Record<ProjectLocale, ProjectTranslationRecord | null>;

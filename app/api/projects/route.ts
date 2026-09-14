@@ -73,11 +73,19 @@ export async function POST(request: Request) {
     const project = await prisma.project.create({
       data: {
         productId,
+        projectName: payload.projectName,
         image: payload.image,
         urlPreview: payload.urlPreview,
         githubUrl: payload.githubUrl,
         figmaUrl: payload.figmaUrl,
         internal: payload.internal,
+        techStack: payload.techStack,
+        deployment: payload.deployment,
+        server: payload.server,
+        designMethod: payload.designMethod,
+        orm: payload.orm,
+        database: payload.database,
+        domainProvider: payload.domainProvider,
         skills: {
           connect: payload.technologies.map((name) => ({ name })),
         },
@@ -88,12 +96,10 @@ export async function POST(request: Request) {
           create: [
             {
               locale: "id",
-              projectName: payload.translations.id.projectName,
               description: payload.translations.id.description,
             },
             {
               locale: "en",
-              projectName: payload.translations.en.projectName,
               description: payload.translations.en.description,
             },
           ],

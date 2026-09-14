@@ -213,11 +213,11 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
           <Field label="WhatsApp Number" value={form.whatsappNumber} onChange={(v) => setForm((p) => ({ ...p, whatsappNumber: v }))} />
           <Field label="CV File URL" value={form.cvFileUrl} onChange={(v) => setForm((p) => ({ ...p, cvFileUrl: v }))} />
           <div className="space-y-1.5">
-            <Label className="text-xs text-black">Banner Image</Label>
+            <Label className="text-xs text-black dark:text-white/80">Banner Image</Label>
             <ImageUploader folder="banner" currentUrl={form.bannerImage} onUrlChange={(url) => setForm((p) => ({ ...p, bannerImage: url }))} onPendingFile={setPendingBannerFile} label="Upload banner image ke MinIO/CDN (otomatis saat Save)" />
           </div>
         </div>
-        <div className="h-px bg-black/10" />
+        <div className="h-px bg-black/10 dark:bg-white/10" />
         <div className="grid gap-4 md:grid-cols-3">
           <Field label="Years Exp (e.g. 2+)" value={form.yearsExperience} onChange={(v) => setForm((p) => ({ ...p, yearsExperience: v }))} />
           <Field label="Programming Count" value={form.programmingLanguages} onChange={(v) => setForm((p) => ({ ...p, programmingLanguages: v }))} />
@@ -295,13 +295,13 @@ function AboutEditor({ data }: { data: SiteContentGrouped | null }) {
 
 function JSONBlock({ title, count, onAdd, showAdd, children }: { title: string; count: number; onAdd: () => void; showAdd: boolean; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-black/10 bg-white p-5 space-y-3">
+    <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] p-5 space-y-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-black font-semibold text-sm">
+        <div className="flex items-center gap-2 text-black dark:text-white font-semibold text-sm">
           {title}
-          <span className="text-xs text-black bg-black/5 px-2 py-0.5 rounded-full">{count}</span>
+          <span className="text-xs text-black dark:text-white/70 bg-black/5 dark:bg-white/10 px-2 py-0.5 rounded-full">{count}</span>
         </div>
-        <Button type="button" variant="outline" size="sm" onClick={onAdd} className="border border-black/10 bg-white text-black hover:bg-black/5 h-7 text-xs">
+        <Button type="button" variant="outline" size="sm" onClick={onAdd} className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 h-7 text-xs">
           <Plus className="mr-1 h-3 w-3" />
           {showAdd ? "Close" : "Add"}
         </Button>
@@ -433,8 +433,8 @@ function NavHomeEditor({ data }: { data: SiteContentGrouped | null }) {
 
   return (
     <SectionWrapper title="NavHome (Floating Dock)" onSave={handleSave} isSaving={isSaving}>
-      <div className="rounded-2xl border border-black/10 bg-white p-5 space-y-4">
-        <p className="text-sm text-black">Labels untuk navigasi floating dock di bagian bawah layar.</p>
+      <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] p-5 space-y-4">
+        <p className="text-sm text-black dark:text-white/70">Labels untuk navigasi floating dock di bagian bawah layar.</p>
       </div>
       <LocalizedBlock locale="id" accent="amber">
         <div className="grid gap-4 md:grid-cols-2">
@@ -610,7 +610,7 @@ function NavbarEditor({ data }: { data: SiteContentGrouped | null }) {
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Brand Name" value={form.brandName} onChange={(v) => setForm((p) => ({ ...p, brandName: v }))} />
           <div className="space-y-1.5">
-            <Label className="text-xs text-black">Logo Image</Label>
+            <Label className="text-xs text-black dark:text-white/80">Logo Image</Label>
             <ImageUploader folder="navbar" currentUrl={form.logoImage} onUrlChange={(url) => setForm((p) => ({ ...p, logoImage: url }))} onPendingFile={setPendingLogoFile} label="Upload navbar logo ke MinIO/CDN (otomatis saat Save)" />
           </div>
         </div>
@@ -632,8 +632,8 @@ function SectionWrapper({ title, onSave, isSaving, children }: { title: string; 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-black">{title}</h3>
-        <Button onClick={onSave} disabled={isSaving} size="sm" className="rounded-lg border border-black/10 bg-amber-400 text-black font-bold hover:bg-amber-300">
+        <h3 className="text-lg font-semibold text-black dark:text-white">{title}</h3>
+        <Button onClick={onSave} disabled={isSaving} size="sm" className="rounded-lg border border-black/10 dark:border-white/10 bg-amber-400 text-black font-bold hover:bg-amber-300">
           <Save className="mr-1.5 h-3.5 w-3.5" />
           {isSaving ? "Saving..." : "Save"}
         </Button>
@@ -646,8 +646,8 @@ function SectionWrapper({ title, onSave, isSaving, children }: { title: string; 
 function LocalizedBlock({ locale, accent, children }: { locale: string; accent: string; children: React.ReactNode }) {
   const color = accent === "amber" ? "text-amber-600" : "text-sky-600";
   return (
-    <div className="rounded-2xl border border-black/10 bg-white p-5 space-y-4">
-      <div className="flex items-center gap-2 text-black font-semibold">
+    <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] p-5 space-y-4">
+      <div className="flex items-center gap-2 text-black dark:text-white font-semibold">
         <Globe2 className={`h-4 w-4 ${color}`} />
         {locale === "id" ? "Bahasa Indonesia" : "English"}
       </div>
@@ -658,8 +658,8 @@ function LocalizedBlock({ locale, accent, children }: { locale: string; accent: 
 
 function SeparateBlock({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-black/10 bg-white p-5 space-y-4">
-      <div className="flex items-center gap-2 text-black font-semibold">{title}</div>
+    <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] p-5 space-y-4">
+      <div className="flex items-center gap-2 text-black dark:text-white font-semibold">{title}</div>
       {children}
     </div>
   );
@@ -668,8 +668,8 @@ function SeparateBlock({ title, children }: { title: string; children: React.Rea
 function Field({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs text-black">{label}</Label>
-      <Input value={value} onChange={(e) => onChange(e.target.value)} className="border border-black/10 bg-white text-black h-9 placeholder:text-black/40" />
+      <Label className="text-xs text-black dark:text-white/80">{label}</Label>
+      <Input value={value} onChange={(e) => onChange(e.target.value)} className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white h-9 placeholder:text-black/40 dark:placeholder:text-white/40" />
     </div>
   );
 }
@@ -677,8 +677,8 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
 function CompactField({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
     <div className="space-y-1">
-      <Label className="text-black text-xs">{label}</Label>
-      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="border border-black/10 bg-white h-8 text-sm text-black placeholder:text-black/40" />
+      <Label className="text-black dark:text-white/80 text-xs">{label}</Label>
+      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] h-8 text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40" />
     </div>
   );
 }
@@ -686,8 +686,8 @@ function CompactField({ label, value, onChange, placeholder }: { label: string; 
 function TextareaField({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs text-black">{label}</Label>
-      <Textarea value={value} onChange={(e) => onChange(e.target.value)} className="border border-black/10 bg-white text-black min-h-25 placeholder:text-black/40" />
+      <Label className="text-xs text-black dark:text-white/80">{label}</Label>
+      <Textarea value={value} onChange={(e) => onChange(e.target.value)} className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white min-h-25 placeholder:text-black/40 dark:placeholder:text-white/40" />
     </div>
   );
 }
@@ -736,7 +736,7 @@ export function SiteContentManager({ locale, defaultSection }: SiteContentManage
         <div className="flex items-center justify-center py-20">
           <div className="flex flex-col items-center gap-3">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-500/30 border-t-brand-500" />
-            <p className="text-sm text-black">Memuat konten...</p>
+            <p className="text-sm text-black dark:text-white">Memuat konten...</p>
           </div>
         </div>
       );
@@ -761,23 +761,23 @@ export function SiteContentManager({ locale, defaultSection }: SiteContentManage
   };
 
   return (
-    <div id="content-editor" className="overflow-hidden rounded-2xl border border-black/10 bg-white">
+    <div id="content-editor" className="overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0f1420]">
       <div className="border-b border-black/10 px-5 py-4">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600">Content Editor</p>
-            <h2 className="mt-1 text-xl font-semibold text-black">Landing Page Content</h2>
-            <p className="mt-0.5 text-sm text-black">Manage all landing page content here. Changes appear on the main page immediately.</p>
+            <h2 className="mt-1 text-xl font-semibold text-black dark:text-white">Landing Page Content</h2>
+            <p className="mt-0.5 text-sm text-black dark:text-white/70">Manage all landing page content here. Changes appear on the main page immediately.</p>
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-1 border-b border-black/10 px-5 py-3">
+      <div className="flex flex-wrap gap-1 border-b border-black/10 dark:border-white/10 px-5 py-3">
         {SECTIONS.map((section) => (
           <button
             key={section.id}
             type="button"
             onClick={() => setActiveSection(section.id)}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${activeSection === section.id ? "border border-black/10 bg-amber-400 font-bold text-black" : "text-black hover:text-black hover:bg-black/5"}`}
+            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${activeSection === section.id ? "border border-black/10 dark:border-white/10 bg-amber-400 font-bold text-black" : "text-black dark:text-white/70 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"}`}
           >
             <section.icon className="h-4 w-4" /> {section.label}
           </button>

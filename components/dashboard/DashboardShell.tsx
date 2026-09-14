@@ -44,7 +44,7 @@ export function DashboardShell({ children, locale, userEmail, userName }: Dashbo
         <AppSidebar locale={locale} userEmail={userEmail} userName={userName} />
         <SidebarInset className="h-svh overflow-hidden overscroll-none">
           <SiteHeader locale={locale} userEmail={userEmail} />
-          <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-white">
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-white dark:bg-[#0b0e14]">
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
               <div data-dashboard-scroll-area className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain">
                 <div className="mx-auto w-full max-w-400 px-4 py-6 md:px-8 lg:px-10">{children}</div>

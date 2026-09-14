@@ -79,7 +79,7 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
   return (
     <div className="min-w-0 space-y-2">
       <div className="flex items-center gap-2">
-        <Button type="button" variant="outline" size="sm" onClick={() => inputRef.current?.click()} className="relative border border-black/10 bg-white text-black hover:bg-black/5">
+        <Button type="button" variant="outline" size="sm" onClick={() => inputRef.current?.click()} className="relative border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5">
           {hasPending ? <FileWarning className="mr-1.5 h-3.5 w-3.5 text-amber-400" /> : <ImageUp className="mr-1.5 h-3.5 w-3.5" />}
           {hasPending ? "Ganti file" : "Pilih file"}
         </Button>
@@ -97,7 +97,7 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
       {sizeError && <p className="text-xs text-rose-400/80">{sizeError}</p>}
 
       {previewSrc && (
-        <div className="relative mt-1 flex items-center gap-3 rounded-xl border border-black/10 bg-white p-3">
+        <div className="relative mt-1 flex items-center gap-3 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] p-3">
           <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-black/5">
             <Image src={previewSrc} alt="Preview" fill className="object-cover" sizes="48px" />
           </div>
@@ -105,12 +105,12 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
             {hasPending ? (
               <>
                 <p className="text-xs font-medium text-amber-600">Menunggu upload</p>
-                <p className="truncate text-xs font-mono text-black">{pendingFile?.name}</p>
+                <p className="truncate text-xs font-mono text-black dark:text-white">{pendingFile?.name}</p>
                 <p className="text-xs text-amber-600/80">File akan diupload otomatis saat submit form</p>
               </>
             ) : hasSaved ? (
               <>
-                <a href={currentUrl} target="_blank" rel="noopener noreferrer" title={currentUrl} className="block truncate text-xs font-mono text-black underline decoration-dotted underline-offset-2 hover:text-emerald-600">
+                <a href={currentUrl} target="_blank" rel="noopener noreferrer" title={currentUrl} className="block truncate text-xs font-mono text-black dark:text-white underline decoration-dotted underline-offset-2 hover:text-emerald-600">
                   {currentUrl}
                 </a>
                 <p className="text-xs text-emerald-600">Tersimpan di MinIO via CDN — klik URL untuk membuka di tab baru</p>
@@ -120,7 +120,7 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
         </div>
       )}
 
-      <p className="text-xs text-black">{label}</p>
+      <p className="text-xs text-black dark:text-white/60">{label}</p>
     </div>
   );
 }

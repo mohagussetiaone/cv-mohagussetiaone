@@ -74,18 +74,18 @@ export function ProjectStats(props: ProjectStatsProps) {
               "group relative overflow-hidden p-5 transition-all duration-300",
               isNeo
                 ? "border-[3px] border-black bg-white shadow-[5px_5px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_black]"
-                : `rounded-2xl border ${item.border} bg-linear-to-br ${item.gradient} hover:scale-[1.02] hover:shadow-lg`,
+                : `rounded-2xl border ${item.border} bg-[#1a1f2e] bg-linear-to-br ${item.gradient} dark:border-white/10 hover:scale-[1.02] hover:shadow-lg`,
             )}
           >
             {!isNeo && <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-amber-400/10 blur-2xl" />}
             <div className="flex items-start justify-between">
-              <p className={cn("text-sm font-medium", isNeo ? "text-black" : "text-black")}>{item.label}</p>
+              <p className={cn("text-sm font-medium", isNeo ? "text-black" : "text-black dark:text-white")}>{item.label}</p>
               <span className={cn("flex h-8 w-8 shrink-0 items-center justify-center", isNeo ? "border-2 border-black bg-amber-400 shadow-[2px_2px_0px_0px_black]" : "")}>
                 <Icon className={cn("h-4 w-4", isNeo ? "text-black" : item.iconColor)} />
               </span>
             </div>
-            <p className={cn("mt-3 text-3xl font-bold", isNeo ? "text-black" : "text-black")}>{item.value}</p>
-            <p className={cn("mt-1 text-xs", isNeo ? "text-black" : "text-black")}>{item.helper}</p>
+            <p className={cn("mt-3 text-3xl font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>{item.value}</p>
+            <p className={cn("mt-1 text-xs", isNeo ? "text-black" : "text-black dark:text-white/70")}>{item.helper}</p>
           </div>
         );
       })}

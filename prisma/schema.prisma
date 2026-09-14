@@ -11,25 +11,33 @@ datasource db {
 }
 
 model Project {
-  id          String   @id @default(uuid())
-  productId   String   @unique
-  sortOrder   Int      @default(0)
-  image       String?
-  urlPreview  String?
-  githubUrl   String?
-  figmaUrl    String?
-  internal    Boolean  @default(false)
-  categories  Category[] @relation("ProjectCategories")
-  skills      Skill[]    @relation("ProjectSkills")
-  translations ProjectTranslation[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id             String   @id @default(uuid())
+  productId      String   @unique
+  sortOrder      Int      @default(0)
+  projectName    String   @default("")
+  image          String?
+  urlPreview     String?
+  githubUrl      String?
+  figmaUrl       String?
+  internal       Boolean  @default(false)
+  // Tech detail fields
+  techStack      String?  // e.g. "React, Next.js, Tailwind CSS"
+  deployment     String?  // e.g. "Vercel, Netlify"
+  server         String?  // e.g. "Node.js, Express"
+  designMethod   String?  // e.g. "Figma, Adobe XD" or "AI Agent: ChatGPT, Claude"
+  orm            String?  // e.g. "Prisma, Drizzle"
+  database       String?  // e.g. "PostgreSQL, MongoDB"
+  domainProvider String?  // e.g. "Cloudflare, Namecheap"
+  categories     Category[] @relation("ProjectCategories")
+  skills         Skill[]    @relation("ProjectSkills")
+  translations   ProjectTranslation[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 }
 
 model ProjectTranslation {
   id          String  @id @default(uuid())
   locale      String
-  projectName String
   description String
   projectId   String
   project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)

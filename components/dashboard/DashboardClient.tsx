@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { KeyRound, LayoutDashboard, FileText } from "lucide-react";
 import type { ProjectDashboardSummary, ProjectLocale, ProjectPaginationMeta, ProjectRecord } from "@/app/types/project";
-import { ProjectEditor } from "@/components/dashboard/ProjectEditor";
 import { ProjectStats } from "@/components/dashboard/ProjectStats";
 import { ProjectTable } from "@/components/dashboard/ProjectTable";
 import { Badge } from "@/components/ui/badge";
@@ -49,13 +48,9 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
   const [isReordering, setIsReordering] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
-  const [editingProject, setEditingProject] = useState<ProjectRecord | null>(null);
-
   const page = Number.parseInt(searchParams.get("page") ?? "1", 10);
   const pageSize = Number.parseInt(searchParams.get("pageSize") ?? "10", 10);
   const search = searchParams.get("search") ?? "";
-  const isAdding = searchParams.get("add") === "true";
-  const editProductId = searchParams.get("edit");
 
   const refetchProjects = useCallback(() => {
     setRefreshKey((current) => current + 1);
@@ -120,33 +115,6 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
     };
   }, [locale, page, pageSize, search, refreshKey]);
 
-  // Saat edit, ambil detail project langsung dari API supaya data benar-benar realtime (bukan dari list yang bisa stale)
-  useEffect(() => {
-    if (!editProductId) {
-      setEditingProject(null);
-      return;
-    }
-
-    let mounted = true;
-    // Fallback jika API gagal/tidak menemukan → pakai data list yang sudah ada
-    const fallback = projects.find((project) => project.productId === editProductId) ?? null;
-
-    fetch(`/api/projects/${editProductId}?locale=${locale}`, { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((json) => {
-        if (!mounted) return;
-        setEditingProject((json?.data as ProjectRecord) ?? fallback);
-      })
-      .catch(() => {
-        if (!mounted) return;
-        setEditingProject(fallback);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, [editProductId, locale]);
-
   const handleReorder = useCallback(async (items: { productId: string; sortOrder: number }[]) => {
     setIsReordering(true);
     try {
@@ -173,14 +141,14 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
   return (
     <main className="flex flex-1 flex-col gap-8">
       {/* Welcome Banner */}
-      <div className={cn("relative overflow-hidden p-6", isNeo ? NEO.cardAmber : "rounded-2xl border border-black/10 bg-white")}>
+      <div className={cn("relative overflow-hidden p-6", isNeo ? NEO.cardAmber : "rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-900")}>
         {!isNeo && <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-400/20 blur-3xl" />}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className={cn("text-xl font-bold", isNeo ? "text-black" : "text-black")}>Welcome back, Admin</h1>
-            <p className={cn("mt-1 text-sm", isNeo ? "font-medium text-black" : "text-black")}>Kelola portfolio project CV kamu di sini. Tambah, edit, urutkan, atau hapus project dengan mudah.</p>
+            <h1 className={cn("text-xl font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>Welcome back, Admin</h1>
+            <p className={cn("mt-1 text-sm", isNeo ? "font-medium text-black" : "text-black/70 dark:text-white/50")}>Kelola portfolio project CV kamu di sini. Tambah, edit, urutkan, atau hapus project dengan mudah.</p>
           </div>
-          <Badge variant="outline" className={cn("flex items-center gap-1.5 px-3 py-1.5 text-xs", isNeo ? "border-2 border-black bg-white font-bold text-black shadow-[2px_2px_0px_0px_black]" : "border border-black/10 bg-white text-black")}>
+          <Badge variant="outline" className={cn("flex items-center gap-1.5 px-3 py-1.5 text-xs", isNeo ? "border-2 border-black bg-white font-bold text-black shadow-[2px_2px_0px_0px_black]" : "border border-black/10 dark:border-white/15 bg-white dark:bg-neutral-800 text-black dark:text-white")}>
             <KeyRound className="h-3 w-3" />
             {userEmail}
           </Badge>
@@ -192,12 +160,10 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
 
       {/* Error & Table */}
       {error && (
-        <div className={cn("px-4 py-3 text-sm font-medium", isNeo ? "border-2 border-black bg-rose-100 text-rose-700 shadow-[3px_3px_0px_0px_black]" : "rounded-2xl border border-rose-500/30 bg-rose-100 text-rose-700")}>{error}</div>
+        <div className={cn("px-4 py-3 text-sm font-medium", isNeo ? "border-2 border-black bg-rose-100 text-rose-700 shadow-[3px_3px_0px_0px_black]" : "rounded-2xl border border-rose-500/30 bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400")}>{error}</div>
       )}
 
       <ProjectTable locale={locale} projects={projects} pagination={pagination} isLoading={isLoading} onDeleted={refetchProjects} onReorder={handleReorder} isReordering={isReordering} />
-
-      <ProjectEditor project={editingProject} isOpen={isAdding || editingProject !== null} onSaved={refetchProjects} />
     </main>
   );
 }

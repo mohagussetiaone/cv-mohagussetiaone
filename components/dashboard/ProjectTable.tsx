@@ -113,15 +113,15 @@ function SortableRow({
       style={style}
       className={cn(
         "group flex items-center gap-3 border-b px-4 py-3 transition-colors last:border-b-0",
-        isNeo ? "border-black/10 hover:bg-amber-100/50" : "border-black/5 hover:bg-black/5",
-        isDragging ? (isNeo ? "bg-amber-200 shadow-[4px_4px_0px_0px_black]" : "rounded-xl bg-black/5 shadow-xl shadow-black/10") : "",
+        isNeo ? "border-black/10 hover:bg-amber-100/50" : "border-black/5 dark:border-white/5 hover:bg-black/5 dark:hover:bg-white/5",
+        isDragging ? (isNeo ? "bg-amber-200 shadow-[4px_4px_0px_0px_black]" : "rounded-xl bg-black/5 dark:bg-white/5 shadow-xl shadow-black/10") : "",
       )}
     >
       {/* Drag Handle */}
       <button
         {...attributes}
         {...listeners}
-        className={cn("flex cursor-grab touch-none items-center transition-colors active:cursor-grabbing", isNeo ? "text-black/30 hover:text-black" : "text-black/30 hover:text-black")}
+        className={cn("flex cursor-grab touch-none items-center transition-colors active:cursor-grabbing", isNeo ? "text-black/30 hover:text-black" : "text-black/30 dark:text-white/30 hover:text-black dark:hover:text-white")}
       >
         <GripVertical className="h-4 w-4" />
       </button>
@@ -129,14 +129,14 @@ function SortableRow({
       {/* Project Info */}
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <p className={cn("truncate text-sm font-medium", isNeo ? "text-black" : "text-black")}>{project.projectName}</p>
+          <p className={cn("truncate text-sm font-medium", isNeo ? "text-black" : "text-black dark:text-white")}>{project.projectName}</p>
           {project.internal && (
             <Badge className={cn("shrink-0 px-1.5 py-0 text-[10px]", isNeo ? "border-2 border-black bg-amber-400 font-bold text-black" : "border-amber-500/20 bg-amber-500/10 text-amber-400")}>
               Internal
             </Badge>
           )}
         </div>
-        <p className={cn("mt-0.5 line-clamp-1 text-xs", isNeo ? "text-black" : "text-black")}>{project.description}</p>
+        <p className={cn("mt-0.5 line-clamp-1 text-xs", isNeo ? "text-black" : "text-black dark:text-white/70")}>{project.description}</p>
       </div>
 
       {/* Categories */}
@@ -146,7 +146,7 @@ function SortableRow({
             <Badge
               key={cat}
               variant="outline"
-              className={cn("px-1.5 py-0 text-[10px]", isNeo ? "border border-black bg-white font-bold text-black" : "border border-black/10 bg-white text-black")}
+              className={cn("px-1.5 py-0 text-[10px]", isNeo ? "border border-black bg-white font-bold text-black" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white")}
             >
               {cat}
             </Badge>
@@ -166,7 +166,7 @@ function SortableRow({
             </Badge>
           ))}
           {project.technologies.length > 3 && (
-            <span className={cn("text-[10px]", isNeo ? "text-black" : "text-black")}>+{project.technologies.length - 3}</span>
+            <span className={cn("text-[10px]", isNeo ? "text-black" : "text-black dark:text-white/70")}>+{project.technologies.length - 3}</span>
           )}
         </div>
       </div>
@@ -178,13 +178,13 @@ function SortableRow({
             <Button
               variant="ghost"
               size="icon"
-              className={cn("h-8 w-8", isNeo ? "text-black/40 hover:bg-black/10 hover:text-black" : "text-black/40 hover:bg-black/10 hover:text-black")}
+              className={cn("h-8 w-8", isNeo ? "text-black/40 hover:bg-black/10 hover:text-black" : "text-black/40 dark:text-white/40 hover:bg-black/10 dark:hover:bg-white/10 hover:text-black dark:hover:text-white")}
             >
               <Ellipsis className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className={cn("w-44", isNeo ? "border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_black]" : "border border-black/10 bg-white text-black")}>
-            <DropdownMenuItem asChild className={cn(isNeo ? "text-black hover:bg-amber-100 focus:bg-amber-100" : "text-black hover:bg-black/5 focus:bg-black/5")}>
+          <DropdownMenuContent align="end" className={cn("w-44", isNeo ? "border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] text-black dark:text-white")}>
+            <DropdownMenuItem asChild className={cn(isNeo ? "text-black hover:bg-amber-100 focus:bg-amber-100" : "text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 focus:bg-black/5 dark:focus:bg-white/5")}>
               <Link
                 href={`/${locale}/project/${project.productId}`}
                 className="inline-flex w-full items-center gap-2"
@@ -193,10 +193,9 @@ function SortableRow({
                 Detail
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild className={cn(isNeo ? "text-black hover:bg-amber-100 focus:bg-amber-100" : "text-black hover:bg-black/5 focus:bg-black/5")}>
+            <DropdownMenuItem asChild className={cn(isNeo ? "text-black hover:bg-amber-100 focus:bg-amber-100" : "text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 focus:bg-black/5 dark:focus:bg-white/5")}>
               <Link
-                href={`/${locale}/dashboard?edit=${project.productId}&page=${pagination.page}&pageSize=${pagination.pageSize}${pagination.search ? `&search=${encodeURIComponent(pagination.search)}` : ""}`}
-                scroll={false}
+                href={`/${locale}/dashboard/project/${project.productId}/edit`}
                 className="inline-flex w-full items-center gap-2"
               >
                 <FilePenLine className="h-4 w-4" />
@@ -204,7 +203,7 @@ function SortableRow({
               </Link>
             </DropdownMenuItem>
             {project.urlPreview ? (
-              <DropdownMenuItem asChild className={cn(isNeo ? "text-black hover:bg-amber-100 focus:bg-amber-100" : "text-black hover:bg-black/5 focus:bg-black/5")}>
+              <DropdownMenuItem asChild className={cn(isNeo ? "text-black hover:bg-amber-100 focus:bg-amber-100" : "text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 focus:bg-black/5 dark:focus:bg-white/5")}>
                 <Link
                   href={project.urlPreview}
                   target="_blank"
@@ -342,7 +341,7 @@ export function ProjectTable({
   });
 
   return (
-    <div id="projects" className={cn("overflow-hidden", isNeo ? NEO.card : "rounded-2xl border border-black/10 bg-white")}>
+    <div id="projects" className={cn("overflow-hidden", isNeo ? NEO.card : "rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e]")}>
       {/* Header */}
       <div className={cn("border-b px-5 py-4", isNeo ? "border-black/15" : "border-black/10")}>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -350,18 +349,18 @@ export function ProjectTable({
             <p className={cn("text-xs font-bold uppercase tracking-[0.2em]", isNeo ? "text-amber-600" : "text-brand-400")}>
               Project Table
             </p>
-            <h2 className={cn("mt-1 text-xl font-bold", isNeo ? "text-black" : "text-black")}>
+            <h2 className={cn("mt-1 text-xl font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>
               Portfolio entries
             </h2>
-            <p className={cn("mt-0.5 text-sm", isNeo ? "text-black" : "text-black")}>
-              Drag rows to reorder. Click <strong className="text-black">Add</strong> to create a new entry.
+            <p className={cn("mt-0.5 text-sm", isNeo ? "text-black" : "text-black dark:text-white")}>
+              Drag rows to reorder. Click <strong className="text-black dark:text-white">Add</strong> to create a new entry.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <div className="flex items-center gap-2">
               <div className="relative">
-                <Search className={cn("pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2", isNeo ? "text-black/40" : "text-black/40")} />
+                <Search className={cn("pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2", isNeo ? "text-black/40" : "text-black/40 dark:text-white/40")} />
                 <input
                   type="search"
                   value={searchInput}
@@ -373,7 +372,7 @@ export function ProjectTable({
                     "flex h-10 w-full min-w-[220px] rounded-xl py-2 pl-10 pr-3 text-sm outline-none ring-offset-background",
                     isNeo
                       ? "border-2 border-black bg-white font-medium text-black shadow-[2px_2px_0px_0px_black] placeholder:text-black/40 focus-visible:ring-2 focus-visible:ring-amber-400"
-                      : "border border-black/10 bg-white font-medium text-black placeholder:text-black/40 focus-visible:ring-2 focus-visible:ring-amber-400",
+                      : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] font-medium text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus-visible:ring-2 focus-visible:ring-amber-400",
                   )}
                 />
               </div>
@@ -384,7 +383,7 @@ export function ProjectTable({
                   aria-label="Hapus pencarian"
                   className={cn(
                     "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition",
-                    isNeo ? "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black] hover:bg-amber-100" : "border border-black/10 bg-white text-black hover:bg-black/5",
+                    isNeo ? "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black] hover:bg-amber-100" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5",
                   )}
                 >
                   <X className="h-4 w-4" />
@@ -392,7 +391,7 @@ export function ProjectTable({
               )}
             </div>
 
-            <Link href={`/${locale}/dashboard?add=true`} scroll={false}>
+            <Link href={`/${locale}/dashboard/project/new`}>
               <Button className={cn("rounded-xl font-bold", isNeo ? NEO.btn : "bg-brand-500 text-black hover:bg-brand-400 font-medium")}>
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Add Project
@@ -403,7 +402,7 @@ export function ProjectTable({
 
         {/* Reorder indicator */}
         {isReordering && (
-          <div className={cn("mt-3 flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-bold", isNeo ? "border-2 border-black bg-amber-200 text-black shadow-[2px_2px_0px_0px_black]" : "border border-amber-400/40 bg-amber-100 text-black")}>
+          <div className={cn("mt-3 flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-bold", isNeo ? "border-2 border-black bg-amber-200 text-black shadow-[2px_2px_0px_0px_black]" : "border border-amber-400/40 bg-amber-100 dark:bg-amber-900/30 text-black dark:text-white")}>
             <Save className="h-4 w-4 animate-pulse" />
             Saving new order...
           </div>
@@ -411,7 +410,7 @@ export function ProjectTable({
       </div>
 
       {/* Table Header */}
-      <div className={cn("hidden border-b px-4 py-2 text-xs font-bold uppercase tracking-wider md:flex md:items-center md:gap-3", isNeo ? "border-black/10 text-black" : "border-black/5 text-black")}>
+      <div className={cn("hidden border-b px-4 py-2 text-xs font-bold uppercase tracking-wider md:flex md:items-center md:gap-3", isNeo ? "border-black/10 text-black" : "border-black/5 dark:border-white/5 text-black dark:text-white/70")}>
         <div className="w-8 shrink-0" />
         <div className="min-w-0 flex-1">Project</div>
         <div className="hidden w-36 shrink-0 xl:block">Category</div>
@@ -424,15 +423,15 @@ export function ProjectTable({
         <div className="flex items-center justify-center py-20">
           <div className="flex flex-col items-center gap-3">
             <div className={cn("h-8 w-8 animate-spin rounded-full border-2", isNeo ? "border-black/20 border-t-black" : "border-brand-500/30 border-t-brand-500")} />
-            <p className={cn("text-sm", isNeo ? "text-black" : "text-black")}>Memuat data project...</p>
+            <p className={cn("text-sm", isNeo ? "text-black" : "text-black dark:text-white")}>Memuat data project...</p>
           </div>
         </div>
       ) : localProjects.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20">
           <FolderOpenIcon className={isNeo ? "text-black/20" : "text-black/20"} />
-          <p className={cn("mt-4 text-sm", isNeo ? "text-black" : "text-black")}>Belum ada data yang cocok dengan filter ini.</p>
+          <p className={cn("mt-4 text-sm", isNeo ? "text-black" : "text-black dark:text-white")}>Belum ada data yang cocok dengan filter ini.</p>
           <Link href={`/${locale}/dashboard`}>
-            <Button variant="outline" className={cn("mt-4", isNeo ? NEO.btnOutline : "border border-black/10 bg-white text-black hover:bg-black/5")}>
+            <Button variant="outline" className={cn("mt-4", isNeo ? NEO.btnOutline : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5")}>
               Reset Filter
             </Button>
           </Link>
@@ -466,13 +465,13 @@ export function ProjectTable({
 
       {/* Pagination */}
       <div className={cn("flex flex-col gap-4 border-t px-5 py-4 sm:flex-row sm:items-center sm:justify-between", isNeo ? "border-black/15" : "border-black/10")}>
-        <div className={cn("text-sm", isNeo ? "text-black" : "text-black")}>
+        <div className={cn("text-sm", isNeo ? "text-black" : "text-black dark:text-white")}>
           Menampilkan{" "}
-          <span className={cn("font-bold", isNeo ? "text-black" : "text-black")}>
+          <span className={cn("font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>
             {localProjects.length}
           </span>{" "}
           dari{" "}
-          <span className={cn("font-bold", isNeo ? "text-black" : "text-black")}>
+          <span className={cn("font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>
             {pagination.totalItems}
           </span>{" "}
           project.
@@ -486,14 +485,14 @@ export function ProjectTable({
           >
             <Button
               variant="outline"
-              className={cn(isNeo ? NEO.btnOutline : "border border-black/10 bg-white text-black hover:bg-black/5")}
+              className={cn(isNeo ? NEO.btnOutline : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5")}
             >
               <ChevronLeft className="mr-2 h-4 w-4" />
               Previous
             </Button>
           </Link>
 
-          <div className={cn("rounded-xl border px-4 py-2 text-sm font-bold", isNeo ? "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black]" : "border border-black/10 bg-white text-black")}>
+          <div className={cn("rounded-xl border px-4 py-2 text-sm font-bold", isNeo ? "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white")}>
             Page {pagination.page} of {pagination.totalPages}
           </div>
 
@@ -508,7 +507,7 @@ export function ProjectTable({
           >
             <Button
               variant="outline"
-              className={cn(isNeo ? NEO.btnOutline : "border border-black/10 bg-white text-black hover:bg-black/5")}
+              className={cn(isNeo ? NEO.btnOutline : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5")}
             >
               Next
               <ChevronRight className="ml-2 h-4 w-4" />
@@ -520,7 +519,7 @@ export function ProjectTable({
   );
 }
 
-function FolderOpenIcon({ className = "h-12 w-12 text-black/20" }: { className?: string }) {
+function FolderOpenIcon({ className = "h-12 w-12 text-black/20 dark:text-white/20" }: { className?: string }) {
   return (
     <svg
       className={className}
