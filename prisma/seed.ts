@@ -12,7 +12,54 @@ const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString }),
 });
 
-const projectData = [
+type SeedProject = {
+  productId: string;
+  sortOrder: number;
+  projectName: string;
+  translations: { id: { description: string }; en: { description: string } };
+  image: string;
+  urlPreview: string;
+  githubUrl: string | null;
+  figmaUrl: string | null;
+  internal: boolean;
+  techStack: string | null;
+  deployment: string | null;
+  server: string | null;
+  designMethod: string | null;
+  orm: string | null;
+  database: string | null;
+  domainProvider: string | null;
+};
+
+/** Seed helper — maps productId → skill names to connect via many-to-many. */
+const technologiesMap: Record<string, string[]> = {};
+
+const projectData: SeedProject[] = [
+  {
+    productId: "f02e09ac-d1b7-4e6f-b876-964283abb07f",
+    sortOrder: 0,
+    projectName: "Garten Eden",
+    translations: {
+      id: {
+        description: "Platform SaaS untuk restoran yang menyediakan reservasi meja, manajemen menu, dan analitik bisnis dalam satu aplikasi.",
+      },
+      en: {
+        description: "A SaaS platform for restaurants providing table reservations, menu management, and business analytics in a single application.",
+      },
+    },
+    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/projects/1789529791253-58597e19-2591-4617-b63b-8e754fe46850.png",
+    urlPreview: "https://garteneden-catering.de/",
+    githubUrl: null,
+    figmaUrl: null,
+    internal: false,
+    techStack: "Next.js, Tailwind CSS, React, Typescript",
+    deployment: null,
+    server: null,
+    designMethod: null,
+    orm: null,
+    database: null,
+    domainProvider: null,
+  },
   {
     productId: "d2e8b3c7-5f2a-4e9d-b6c1-3a4d5e6f7a8b",
     sortOrder: 1,
@@ -25,12 +72,43 @@ const projectData = [
         description: "A SaaS platform for restaurants providing table reservations, menu management, and business analytics in a single application.",
       },
     },
-    image: null,
-    technologies: ["Next.js", "Tailwind CSS"],
+    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/projects/1789099533675-f02e09ac-d1b7-4e6f-b876-964283abb07f.png",
     urlPreview: "https://restogemn.biz.id",
     githubUrl: null,
     figmaUrl: null,
     internal: false,
+    techStack: "Next.js, Tailwind CSS, React",
+    deployment: "Vercel",
+    server: null,
+    designMethod: "Figma",
+    orm: null,
+    database: null,
+    domainProvider: "Cloudflare",
+  },
+  {
+    productId: "a0f5b1db-9b7f-4af9-a99b-228764f92c0e",
+    sortOrder: 2,
+    projectName: "Ruang Muslim",
+    translations: {
+      id: {
+        description: "Ruang Muslim adalah platform yang menyediakan informasi dan layanan terkait komunitas Muslim, termasuk artikel, forum diskusi, dan direktori masjid.",
+      },
+      en: {
+        description: "Ruang Muslim is a platform that provides information and services related to the Muslim community, including articles, discussion forums, and a mosque directory.",
+      },
+    },
+    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/projects/1789099311824-6ed36b36-e8fa-46ea-871e-5b4fe8eaba0f.png",
+    urlPreview: "https://ruangmuslim.vercel.app/",
+    githubUrl: "https://github.com/mohagussetiaone/ruangmuslim",
+    figmaUrl: null,
+    internal: false,
+    techStack: "Next.js, Tailwind CSS, React",
+    deployment: "Vercel",
+    server: null,
+    designMethod: "Figma",
+    orm: null,
+    database: null,
+    domainProvider: "Vercel",
   },
   {
     productId: "a0f5b1db-9b7f-4af9-a99b-228764f92c0e",
@@ -45,16 +123,22 @@ const projectData = [
       },
     },
     image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/project/fortuna-teknik-mandiri.png",
-    technologies: ["Next.js", "Tailwind CSS"],
     urlPreview: "https://fortuna-teknik-mandiri.vercel.app/",
     githubUrl: "https://github.com/mohagussetiaone/fortuna-teknik-mandiri",
     figmaUrl: null,
     internal: false,
+    techStack: "Next.js, Tailwind CSS, React",
+    deployment: "Vercel",
+    server: null,
+    designMethod: "Figma",
+    orm: null,
+    database: null,
+    domainProvider: "Vercel",
   },
   {
     productId: "bb44b080-1b97-4e28-a182-4081dc0df636",
     sortOrder: 3,
-    projectName: "Selaras Invitation Raya",
+    projectName: "Raya Invitation",
     translations: {
       id: {
         description: "Platform undangan digital elegan untuk pernikahan, ulang tahun, dan berbagai acara yang responsif dan mudah dibagikan.",
@@ -64,11 +148,17 @@ const projectData = [
       },
     },
     image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/project/selaras-invite.png",
-    technologies: ["Next.js", "Tailwind CSS", "Axios", "Supabase", "Prisma"],
     urlPreview: "https://rayainvite.web.id",
     githubUrl: "https://github.com/mohagussetiaone/selarasinvite",
     figmaUrl: null,
     internal: false,
+    techStack: "Next.js, Tailwind CSS, React, Axios",
+    deployment: "Vercel",
+    server: "Next.js API Routes",
+    designMethod: "Figma",
+    orm: "Prisma",
+    database: "PostgreSQL (Supabase)",
+    domainProvider: "Cloudflare",
   },
   {
     productId: "58b54a0d-a7c9-4674-895c-e7bc259940e1",
@@ -83,27 +173,41 @@ const projectData = [
       },
     },
     image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/project/tanidealsapp.png",
-    technologies: ["Figma"],
     urlPreview: "https://www.figma.com/proto/vV1zYKypYPe8bBS5mWyyP8/Tani-Deals-App-UI?node-id=7-3&node-type=canvas&t=roF7vYPt7FGuCZPq-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=75%3A2029",
     githubUrl: null,
     figmaUrl: "https://www.figma.com/design/vV1zYKypYPe8bBS5mWyyP8/Tani-Deals-App-UI?node-id=0-1&t=roF7vYPt7FGuCZPq-1",
     internal: false,
+    techStack: "Figma",
+    deployment: null,
+    server: null,
+    designMethod: "Figma",
+    orm: null,
+    database: null,
+    domainProvider: null,
   },
 ];
 
-const categoryNameForProject = (project: { technologies: string[] }) => {
-  if (project.technologies.includes("Figma") && project.technologies.length === 1) {
+// Seed helper: productId → skill names (not a DB field)
+technologiesMap["f02e09ac-d1b7-4e6f-b876-964283abb07f"] = [];
+technologiesMap["d2e8b3c7-5f2a-4e9d-b6c1-3a4d5e6f7a8b"] = ["Next.js", "Tailwind CSS"];
+technologiesMap["a0f5b1db-9b7f-4af9-a99b-228764f92c0e"] = ["Next.js", "Tailwind CSS"];
+technologiesMap["bb44b080-1b97-4e28-a182-4081dc0df636"] = ["Next.js", "Tailwind CSS", "Axios", "Supabase", "Prisma"];
+technologiesMap["58b54a0d-a7c9-4674-895c-e7bc259940e1"] = ["Figma"];
+
+const categoryNameForProject = (techs: string[]) => {
+  if (techs.includes("Figma") && techs.length === 1) {
     return "UI/UX Design";
   }
-  if (project.technologies.includes("Prisma") || project.technologies.includes("Supabase")) {
+  if (techs.includes("Prisma") || techs.includes("Supabase")) {
     return "Fullstack App";
   }
   return "Frontend App";
 };
 
 async function main() {
-  const skillNames = Array.from(new Set(projectData.flatMap((project) => project.technologies)));
-  const categoryNames = Array.from(new Set(projectData.map(categoryNameForProject)));
+  const allTechs = projectData.flatMap((p) => technologiesMap[p.productId] ?? []);
+  const skillNames = Array.from(new Set(allTechs));
+  const categoryNames = Array.from(new Set(projectData.map((p) => categoryNameForProject(technologiesMap[p.productId] ?? []))));
   const currentProductIds = projectData.map((project) => project.productId);
 
   await prisma.project.deleteMany({
@@ -121,7 +225,8 @@ async function main() {
   });
 
   for (const project of projectData) {
-    const categoryName = categoryNameForProject(project);
+    const techs = technologiesMap[project.productId] ?? [];
+    const categoryName = categoryNameForProject(techs);
 
     await prisma.project.upsert({
       where: { productId: project.productId },
@@ -134,8 +239,15 @@ async function main() {
         githubUrl: project.githubUrl,
         figmaUrl: project.figmaUrl,
         internal: project.internal,
+        techStack: project.techStack,
+        deployment: project.deployment,
+        server: project.server,
+        designMethod: project.designMethod,
+        orm: project.orm,
+        database: project.database,
+        domainProvider: project.domainProvider,
         skills: {
-          connect: project.technologies.map((name) => ({ name })),
+          connect: techs.map((name) => ({ name })),
         },
         categories: {
           connect: { name: categoryName },
@@ -161,8 +273,15 @@ async function main() {
         githubUrl: project.githubUrl,
         figmaUrl: project.figmaUrl,
         internal: project.internal,
+        techStack: project.techStack,
+        deployment: project.deployment,
+        server: project.server,
+        designMethod: project.designMethod,
+        orm: project.orm,
+        database: project.database,
+        domainProvider: project.domainProvider,
         skills: {
-          set: project.technologies.map((name) => ({ name })),
+          set: techs.map((name) => ({ name })),
         },
         categories: {
           set: [{ name: categoryName }],
