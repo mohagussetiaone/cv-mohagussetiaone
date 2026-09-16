@@ -63,10 +63,7 @@ jobs:
                       echo "🗄️ Run database migrations"
                       /home/mohagus/.bun/bin/bun x prisma migrate deploy
 
-                      echo "🌱 Seed database"
-                      /home/mohagus/.bun/bin/bun run prisma:seed
-
-                      echo "🏗️ Build project"
+                      echo "️ Build project"
                       /home/mohagus/.bun/bin/bun run build
 
                       echo "🔄 Restart service"
