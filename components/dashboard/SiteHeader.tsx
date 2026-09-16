@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import { DarkModeToggle } from "@/components/theme/DarkModeToggle";
 import { cn } from "@/lib/utils";
 
 type SiteHeaderProps = {
@@ -19,22 +20,27 @@ export function SiteHeader({ locale, userEmail }: SiteHeaderProps) {
   const isNeo = theme === "neobrutalism";
 
   return (
-    <header className={cn(
-      "group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 sticky top-0 z-20 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear",
-      isNeo ? "border-black bg-white/80 backdrop-blur-xl" : "border-black/10 dark:border-white/10 bg-white/80 dark:bg-[#0b0e14]/80 backdrop-blur-xl"
-    )}>
+    <header
+      className={cn(
+        "group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 sticky top-0 z-20 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear",
+        isNeo ? "border-black bg-white/80 backdrop-blur-xl" : "border-black/10 dark:border-white/10 bg-white/80 dark:bg-[#0b0e14]/80 backdrop-blur-xl",
+      )}
+    >
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <SidebarTrigger className="-ml-1 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white" />
         <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4 bg-black/10 dark:bg-white/10" />
         <h1 className="text-base font-medium text-black dark:text-white">Dashboard</h1>
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-2">
+          <DarkModeToggle variant="dashboard" />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className={cn(
-                "inline-flex items-center gap-3 rounded-xl px-3 py-1.5 text-left shadow-sm transition-colors",
-                isNeo ? "border-2 border-black bg-amber-100 hover:bg-amber-200 shadow-[3px_3px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] hover:bg-black/5 dark:hover:bg-white/5"
-              )}>
+              <button
+                className={cn(
+                  "inline-flex items-center gap-3 rounded-xl px-3 py-1.5 text-left shadow-sm transition-colors",
+                  isNeo ? "border-2 border-black bg-amber-100 hover:bg-amber-200 shadow-[3px_3px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] hover:bg-black/5 dark:hover:bg-white/5",
+                )}
+              >
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-400 text-black font-bold text-sm border-2 border-black shrink-0">A</div>
                 <div className="hidden min-w-0 sm:grid">
                   <span className="truncate text-sm font-medium text-black dark:text-white">Admin</span>
@@ -43,10 +49,10 @@ export function SiteHeader({ locale, userEmail }: SiteHeaderProps) {
                 <ChevronDown className="h-4 w-4 text-black dark:text-white/60" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className={cn(
-              "w-64",
-              isNeo ? "border-2 border-black bg-white text-black shadow-[4px_4px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] text-black dark:text-white"
-            )}>
+            <DropdownMenuContent
+              align="end"
+              className={cn("w-64", isNeo ? "border-2 border-black bg-white text-black shadow-[4px_4px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] text-black dark:text-white")}
+            >
               <DropdownMenuLabel className="p-0">
                 <div className="px-2 py-1.5">
                   <div className="min-w-0">
@@ -58,7 +64,7 @@ export function SiteHeader({ locale, userEmail }: SiteHeaderProps) {
               <DropdownMenuSeparator className="bg-black/10 dark:bg-white/10" />
               <DropdownMenuItem asChild className="text-black dark:text-white hover:text-black dark:hover:text-white focus:text-black dark:focus:text-white focus:bg-black/5 dark:focus:bg-white/5">
                 <Link href={`/${locale}`}>
-                  <ExternalLink className="mr-2 h-4 w-4" />
+                  <ExternalLink className="h-4 w-4" />
                   Landing Page
                 </Link>
               </DropdownMenuItem>

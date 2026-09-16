@@ -148,7 +148,13 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
             <h1 className={cn("text-xl font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>Welcome back, Admin</h1>
             <p className={cn("mt-1 text-sm", isNeo ? "font-medium text-black" : "text-black/70 dark:text-white/50")}>Kelola portfolio project CV kamu di sini. Tambah, edit, urutkan, atau hapus project dengan mudah.</p>
           </div>
-          <Badge variant="outline" className={cn("flex items-center gap-1.5 px-3 py-1.5 text-xs", isNeo ? "border-2 border-black bg-white font-bold text-black shadow-[2px_2px_0px_0px_black]" : "border border-black/10 dark:border-white/15 bg-white dark:bg-neutral-800 text-black dark:text-white")}>
+          <Badge
+            variant="outline"
+            className={cn(
+              "flex items-center gap-1.5 px-3 py-1.5 text-xs",
+              isNeo ? "border-2 border-black bg-white font-bold text-black shadow-[2px_2px_0px_0px_black]" : "border border-black/10 dark:border-white/15 bg-white dark:bg-neutral-800 text-black dark:text-white",
+            )}
+          >
             <KeyRound className="h-3 w-3" />
             {userEmail}
           </Badge>
@@ -160,7 +166,14 @@ export function DashboardClient({ locale, userEmail }: DashboardClientProps) {
 
       {/* Error & Table */}
       {error && (
-        <div className={cn("px-4 py-3 text-sm font-medium", isNeo ? "border-2 border-black bg-rose-100 text-rose-700 shadow-[3px_3px_0px_0px_black]" : "rounded-2xl border border-rose-500/30 bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400")}>{error}</div>
+        <div
+          className={cn(
+            "px-4 py-3 text-sm font-medium",
+            isNeo ? "border-2 border-black bg-rose-100 text-rose-700 shadow-[3px_3px_0px_0px_black]" : "rounded-2xl border border-rose-500/30 bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400",
+          )}
+        >
+          {error}
+        </div>
       )}
 
       <ProjectTable locale={locale} projects={projects} pagination={pagination} isLoading={isLoading} onDeleted={refetchProjects} onReorder={handleReorder} isReordering={isReordering} />

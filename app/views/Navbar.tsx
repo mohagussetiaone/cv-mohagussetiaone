@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "@/app/i18n/routing";
 import { IconBrandGithub, IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react";
 import { useLocale } from "next-intl";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import { DarkModeToggle } from "@/components/theme/DarkModeToggle";
 import { useSiteContent } from "@/hooks/use-site-content";
 import { useAppLocale } from "@/components/providers/LocaleProvider";
 import { cn } from "@/lib/utils";
@@ -15,7 +16,7 @@ const Navbar = () => {
   const locale = useLocale();
   const { setLocale } = useAppLocale();
   const pathname = usePathname();
-  const { theme } = useTheme();
+  const { theme, isDark } = useTheme();
   const isDefaultTheme = theme === "default";
   const isDashboard = pathname.includes("/dashboard");
   const content = useSiteContent("navbar", locale);
@@ -54,8 +55,10 @@ const Navbar = () => {
             <div
               className={cn(
                 "relative flex items-center rounded-xl p-0.5",
-                // Default theme
-                theme === "default" && "bg-white/5 border border-white/10",
+                // Default theme – dark
+                theme === "default" && isDark && "bg-white/5 border border-white/10",
+                // Default theme – light
+                theme === "default" && !isDark && "bg-black/5 border border-black/10",
                 // Retro theme
                 theme === "retro" && "bg-[#ede4d4] border-2 border-[#6699ff]/30",
                 // Neo theme
@@ -67,8 +70,10 @@ const Navbar = () => {
                 className={cn(
                   "absolute top-0.5 bottom-0.5 w-[calc(50%-2px)] rounded-lg transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
                   locale === "en" ? "left-0.5" : "left-[calc(50%+0.5px)]",
-                  // Default
-                  theme === "default" && "bg-brand-500/20 border border-brand-500/30",
+                  // Default – dark
+                  theme === "default" && isDark && "bg-brand-500/20 border border-brand-500/30",
+                  // Default – light
+                  theme === "default" && !isDark && "bg-brand-500/10 border border-brand-500/25",
                   // Retro
                   theme === "retro" && "bg-[#6699ff]/15 border border-[#6699ff]/40",
                   // Neo
@@ -82,8 +87,13 @@ const Navbar = () => {
                 className={cn(
                   "relative z-10 flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200",
                   locale === "en"
-                    ? [theme === "default" && "text-brand-500", theme === "retro" && "text-[#6699ff]", theme === "neobrutalism" && "text-black"]
-                    : [theme === "default" && "text-white/50 hover:text-white/80", theme === "retro" && "text-black/50 hover:text-black", theme === "neobrutalism" && "text-black/40 hover:text-black"],
+                    ? [theme === "default" && isDark && "text-brand-500", theme === "default" && !isDark && "text-brand-500", theme === "retro" && "text-[#6699ff]", theme === "neobrutalism" && "text-black"]
+                    : [
+                        theme === "default" && isDark && "text-white/60 hover:text-white",
+                        theme === "default" && !isDark && "text-black/50 hover:text-black",
+                        theme === "retro" && "text-black/50 hover:text-black",
+                        theme === "neobrutalism" && "text-black/50 hover:text-black",
+                      ],
                 )}
               >
                 <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -101,8 +111,13 @@ const Navbar = () => {
                 className={cn(
                   "relative z-10 flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200",
                   locale === "id"
-                    ? [theme === "default" && "text-brand-500", theme === "retro" && "text-[#6699ff]", theme === "neobrutalism" && "text-black"]
-                    : [theme === "default" && "text-white/50 hover:text-white/80", theme === "retro" && "text-black/50 hover:text-black", theme === "neobrutalism" && "text-black/40 hover:text-black"],
+                    ? [theme === "default" && isDark && "text-brand-500", theme === "default" && !isDark && "text-brand-500", theme === "retro" && "text-[#6699ff]", theme === "neobrutalism" && "text-black"]
+                    : [
+                        theme === "default" && isDark && "text-white/60 hover:text-white",
+                        theme === "default" && !isDark && "text-black/50 hover:text-black",
+                        theme === "retro" && "text-black/50 hover:text-black",
+                        theme === "neobrutalism" && "text-black/50 hover:text-black",
+                      ],
                 )}
               >
                 <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -114,27 +129,30 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-          <div className="md:w-auto" id="navbar-default">
-            <ul className="font-medium flex gap-2 rounded-lg md:flex-row md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-              <li className="flex gap-2">
-                <Link href={data.instagramUrl} className="flex gap-2 text-white rounded" aria-current="page" target="_blank">
-                  <IconBrandInstagram className="text-brand-500" />
-                  <span className="hidden md:inline">Instagram</span>
-                </Link>
-              </li>
-              <li className="flex gap-2">
-                <Link href={data.githubUrl} className="flex gap-2 text-white rounded" target="_blank">
-                  <IconBrandGithub className="text-brand-500" />
-                  <span className="hidden md:inline">Github</span>
-                </Link>
-              </li>
-              <li className="flex gap-2">
-                <Link href={data.linkedinUrl} className="flex gap-2 text-white rounded" target="_blank">
-                  <IconBrandLinkedin className="text-brand-500" />
-                  <span className="hidden md:inline">Linkedin</span>
-                </Link>
-              </li>
-            </ul>
+          <div className="flex items-center gap-3">
+            <DarkModeToggle variant="public" />
+            <div className="md:w-auto" id="navbar-default">
+              <ul className="font-medium flex gap-2 rounded-lg md:flex-row md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li className="flex gap-2">
+                  <Link href={data.instagramUrl} className="flex gap-2 text-white rounded" aria-current="page" target="_blank">
+                    <IconBrandInstagram className="text-brand-500" />
+                    <span className="hidden md:inline">Instagram</span>
+                  </Link>
+                </li>
+                <li className="flex gap-2">
+                  <Link href={data.githubUrl} className="flex gap-2 text-white rounded" target="_blank">
+                    <IconBrandGithub className="text-brand-500" />
+                    <span className="hidden md:inline">Github</span>
+                  </Link>
+                </li>
+                <li className="flex gap-2">
+                  <Link href={data.linkedinUrl} className="flex gap-2 text-white rounded" target="_blank">
+                    <IconBrandLinkedin className="text-brand-500" />
+                    <span className="hidden md:inline">Linkedin</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

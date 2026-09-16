@@ -19,18 +19,18 @@ export function useNeo() {
 export const NEO = {
   /** White card with thick black border + hard offset shadow */
   card: "border-[3px] border-black bg-white shadow-[6px_6px_0px_0px_black]",
-  /** Amber hero card (welcome banner / page headers) */
+  /** Amber-accented card (welcome banner, highlights) */
   cardAmber: "border-[3px] border-black bg-amber-400 shadow-[6px_6px_0px_0px_black]",
-  /** Primary amber button with press-down interaction */
-  btn: "border-2 border-black bg-amber-400 text-black font-bold shadow-[3px_3px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-0 active:translate-y-0",
+  /** Brand hero card (welcome banner / page headers) */
+  cardBrand: "border-[3px] border-black bg-brand-500 shadow-[6px_6px_0px_0px_black]",
+  /** Primary brand button with press-down interaction */
+  btn: "border-2 border-black bg-brand-500 text-black font-bold shadow-[3px_3px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-0 active:translate-y-0",
   /** White outline button */
-  btnOutline:
-    "border-2 border-black bg-white text-black font-bold shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5",
+  btnOutline: "border-2 border-black bg-white text-black font-bold shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5",
   /** Input / textarea */
-  input:
-    "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black] placeholder:text-black/40",
+  input: "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black] placeholder:text-black/40",
   /** Small tag / badge */
-  tag: "border-2 border-black bg-amber-200 text-black font-bold",
+  tag: "border-2 border-black bg-brand-500/30 text-black font-bold",
   /** Dialog surface */
   dialog: "border-[3px] border-black bg-white text-black shadow-[8px_8px_0px_0px_black]",
 } as const;

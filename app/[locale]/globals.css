@@ -186,6 +186,195 @@
 }
 
 /* ═══════════════════════════════════════════════
+   Default Theme — LIGHT MODE
+   Activated via data-mode="light" alongside data-theme="default"
+   ═══════════════════════════════════════════════ */
+[data-theme="default"][data-mode="light"],
+[data-theme="default"].light-mode {
+  --brand: #0d9488;
+  --radius: 0.625rem;
+  --background: 0 0% 98%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 222 47% 11%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 171 77% 36%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+}
+
+/* ── Default Dashboard: light mode overrides ── */
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .bg-white {
+  background-color: rgba(255, 255, 255, 1) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .bg-white\/80 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] {
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+  background-color: hsl(var(--sidebar-background)) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] .border-sidebar-border,
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] [data-sidebar="separator"] {
+  border-color: hsl(var(--sidebar-border)) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] .bg-sidebar-accent {
+  background-color: hsl(var(--sidebar-accent)) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] .text-sidebar-foreground {
+  color: hsl(var(--sidebar-foreground)) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] .text-sidebar-foreground\/70 {
+  color: hsl(var(--sidebar-foreground) / 0.7) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] [data-sidebar="menu-button"][data-active="true"] {
+  background-color: rgba(13, 148, 136, 0.12) !important;
+  border: none !important;
+  border-left: 3px solid #0d9488 !important;
+  color: #0d9488 !important;
+  font-weight: 700 !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] [data-sidebar="menu-button"]:hover,
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] [data-sidebar="menu-button"]:active,
+[data-theme="default"][data-mode="light"] [data-dashboard-root] [data-sidebar="sidebar"] [data-sidebar="menu-button"]:focus-visible {
+  background-color: rgba(13, 148, 136, 0.08) !important;
+  color: #0d9488 !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .bg-black\/5 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .bg-black\/10 {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ── Default Dashboard light mode: text ── */
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .text-black {
+  color: #1e293b !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .text-black\/30 {
+  color: rgba(30, 41, 59, 0.35) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .text-black\/40 {
+  color: rgba(30, 41, 59, 0.45) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .text-black\/50 {
+  color: rgba(30, 41, 59, 0.55) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .text-black\/60 {
+  color: rgba(30, 41, 59, 0.65) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .text-black\/70 {
+  color: rgba(30, 41, 59, 0.75) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .placeholder\:text-black\/40::placeholder {
+  color: rgba(30, 41, 59, 0.45) !important;
+}
+
+/* ── Default Dashboard light mode: borders ── */
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .border-black {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .border-black\/5 {
+  border-color: rgba(0, 0, 0, 0.05) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .border-black\/10 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .border-black\/15 {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .border-black\/20 {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .decoration-black\/30 {
+  text-decoration-color: rgba(0, 0, 0, 0.25) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .decoration-black {
+  text-decoration-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* ── Default Dashboard light mode: amber → teal ── */
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .bg-amber-500\/10 {
+  background-color: rgba(13, 148, 136, 0.1) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .bg-amber-400\/20 {
+  background-color: rgba(13, 148, 136, 0.15) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .bg-amber-400\/10 {
+  background-color: rgba(13, 148, 136, 0.1) !important;
+}
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .bg-amber-400,
+[data-theme="default"][data-mode="light"] [data-dashboard-root] .bg-amber-300 {
+  background-color: #0d9488 !important;
+}
+
+/* ── Default light mode body ── */
+[data-theme="default"][data-mode="light"] body,
+[data-theme="default"][data-mode="light"] .theme-body {
+  background-color: #f8fafc;
+  color: #1e293b;
+  background-image: none;
+}
+
+/* ── Default light mode: raise dark text contrast ── */
+[data-theme="default"][data-mode="light"] .text-white\/25 {
+  color: rgba(30, 41, 59, 0.5) !important;
+}
+[data-theme="default"][data-mode="light"] .text-white\/30 {
+  color: rgba(30, 41, 59, 0.55) !important;
+}
+[data-theme="default"][data-mode="light"] .text-white\/35 {
+  color: rgba(30, 41, 59, 0.6) !important;
+}
+[data-theme="default"][data-mode="light"] .text-white\/40 {
+  color: rgba(30, 41, 59, 0.62) !important;
+}
+[data-theme="default"][data-mode="light"] .text-white\/50 {
+  color: rgba(30, 41, 59, 0.66) !important;
+}
+[data-theme="default"][data-mode="light"] .text-white\/\[0\.4\] {
+  color: rgba(30, 41, 59, 0.62) !important;
+}
+[data-theme="default"][data-mode="light"] .text-white\/\[0\.5\] {
+  color: rgba(30, 41, 59, 0.66) !important;
+}
+[data-theme="default"][data-mode="light"] .text-brand-500,
+[data-theme="default"][data-mode="light"] .text-brand-400 {
+  color: #0d9488;
+}
+
+/* ═══════════════════════════════════════════════
    Base Styles
    ═══════════════════════════════════════════════ */
 
@@ -493,6 +682,16 @@ html {
 
 /* Native form controls should follow the dark theme */
 [data-theme="default"] [data-dashboard-root] .\[color-scheme\:light\] {
+  color-scheme: dark;
+}
+
+/* Accent color for checkboxes / range inputs */
+[data-theme="default"] [data-dashboard-root] .accent-amber-400 {
+  accent-color: #12f7d6 !important;
+}
+
+/* Native select elements: force dark color-scheme so dropdowns render dark */
+[data-theme="default"] [data-dashboard-root] select {
   color-scheme: dark;
 }
 

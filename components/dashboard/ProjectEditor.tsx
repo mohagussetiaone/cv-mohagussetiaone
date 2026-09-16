@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState, useTransition, useEffect, useCallback } from "react";
+import { useMemo, useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { ArrowLeft, Check, Globe2, ImageUp, Languages, PencilLine, PlusCircle, X } from "lucide-react";
+import { ArrowLeft, Globe2, ImageUp, Languages, PencilLine, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import type { ProjectRecord } from "@/app/types/project";
 import { Badge } from "@/components/ui/badge";
@@ -12,11 +12,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { ImageUploader } from "@/components/dashboard/ImageUploader";
 import { deleteImageByUrl } from "@/lib/upload-client";
 import { projectPayloadSchema } from "@/lib/validators/project";
 import { cn } from "@/lib/utils";
+import { useNeo, NEO } from "@/components/dashboard/neo";
 
 type ProjectEditorProps = {
   project?: ProjectRecord | null;
@@ -74,16 +76,13 @@ const createInitialState = (project?: ProjectRecord | null) => {
 
 export function ProjectEditor({ project, locale }: ProjectEditorProps) {
   const router = useRouter();
+  const { isNeo } = useNeo();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [form, setForm] = useState(() => createInitialState(project));
   const [options, setOptions] = useState<OptionsData>({ skills: [], categories: [] });
-  const [techInput, setTechInput] = useState("");
-  const [techOpen, setTechOpen] = useState(false);
-  const [catInput, setCatInput] = useState("");
-  const [catOpen, setCatOpen] = useState(false);
 
   // Fetch options from DB
   useEffect(() => {
@@ -172,61 +171,6 @@ export function ProjectEditor({ project, locale }: ProjectEditorProps) {
     setPendingImageFile(null);
     return newUrl;
   };
-
-  // ─── Categories: Creatable Single Select ───────────────────
-  const availableCats = useMemo(() => options.categories.filter((c) => c !== form.categories[0]), [options.categories, form.categories]);
-  const catSearchResults = useMemo(() => availableCats.filter((c) => c.toLowerCase().includes(catInput.toLowerCase())), [availableCats, catInput]);
-
-  const handleSelectCategory = useCallback((cat: string) => {
-    setForm((prev) => ({ ...prev, categories: [cat] }));
-    setCatInput("");
-    setCatOpen(false);
-  }, []);
-
-  const handleRemoveCategory = useCallback(() => {
-    setForm((prev) => ({ ...prev, categories: [] }));
-  }, []);
-
-  const handleCatKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" && catInput.trim()) {
-        e.preventDefault();
-        handleSelectCategory(catInput.trim());
-      }
-      if (e.key === "Backspace" && !catInput && form.categories.length > 0) {
-        handleRemoveCategory();
-      }
-    },
-    [catInput, form.categories, handleSelectCategory, handleRemoveCategory],
-  );
-
-  // ─── Technologies: Creatable Multi-Select ──────────────────
-  const availableTechs = useMemo(() => options.skills.filter((s) => !form.technologies.includes(s)), [options.skills, form.technologies]);
-  const techSearchResults = useMemo(() => availableTechs.filter((s) => s.toLowerCase().includes(techInput.toLowerCase())), [availableTechs, techInput]);
-
-  const handleAddTech = useCallback(
-    (tech: string) => {
-      if (!form.technologies.includes(tech)) {
-        setForm((prev) => ({ ...prev, technologies: [...prev.technologies, tech] }));
-      }
-      setTechInput("");
-    },
-    [form.technologies],
-  );
-
-  const handleRemoveTech = useCallback((tech: string) => {
-    setForm((prev) => ({ ...prev, technologies: prev.technologies.filter((t) => t !== tech) }));
-  }, []);
-
-  const handleTechKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" && techInput.trim()) {
-        e.preventDefault();
-        handleAddTech(techInput.trim());
-      }
-    },
-    [techInput, handleAddTech],
-  );
 
   // ─── Validation & Submit ───────────────────────────────────
   const validateForm = (): Record<string, string> | null => {
@@ -334,41 +278,38 @@ export function ProjectEditor({ project, locale }: ProjectEditorProps) {
   };
 
   // ─── Reusable input classes ────────────────────────────────
-  const inputCls = "border border-gray-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40";
-  const chipCls = "inline-flex items-center gap-1 rounded-md bg-amber-100 dark:bg-amber-900/50 border border-amber-200 dark:border-amber-700/50 px-2 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-200";
-  const dropdownCls = "absolute left-0 right-0 z-50 mt-1 max-h-50 overflow-y-auto rounded-lg border border-gray-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-lg";
-  const dropdownItemCls = "flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors";
+  const inputCls = isNeo
+    ? NEO.input
+    : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40";
 
   return (
     <main className="flex flex-1 flex-col gap-8">
       {/* Header */}
-      <div className="relative overflow-hidden rounded-2xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-6">
+      <div className={cn("relative overflow-hidden p-6", isNeo ? "border-[3px] border-black bg-white shadow-[6px_6px_0px_0px_black]" : "rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e]")}>
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-400/20 blur-3xl" />
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-3">
               <Link
                 href={`/${locale}/dashboard/project`}
-                className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 transition-colors hover:bg-gray-100 dark:hover:bg-zinc-700"
+                className={cn("inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium transition-colors", isNeo ? "font-bold text-black hover:bg-amber-100" : "rounded-lg text-black hover:bg-black/5")}
               >
                 <ArrowLeft className="h-3.5 w-3.5" />
                 Back
               </Link>
             </div>
             <div className="mt-3 flex flex-wrap items-center gap-3">
-              <Badge variant="secondary" className="gap-1 bg-amber-100 dark:bg-amber-900/40 text-black dark:text-amber-200 border-0">
+              <Badge variant="secondary" className={cn("gap-1 border-0", isNeo ? "border-2 border-black bg-amber-400 font-bold text-black" : "bg-amber-400 text-black")}>
                 {mode === "edit" ? <PencilLine className="h-3.5 w-3.5" /> : <PlusCircle className="h-3.5 w-3.5" />}
                 {mode === "edit" ? "Edit Mode" : "Create Mode"}
               </Badge>
-              <Badge variant="outline" className="gap-1 border border-black/10 dark:border-white/15 text-gray-900 dark:text-gray-100">
+              <Badge variant="outline" className={cn("gap-1", isNeo ? "border-2 border-black bg-white font-bold text-black" : "border border-black/10 text-black")}>
                 <Languages className="h-3.5 w-3.5" />
                 ID + EN
               </Badge>
             </div>
-            <h1 className="mt-3 text-xl font-semibold text-gray-900 dark:text-gray-100">{mode === "edit" ? "Perbarui Project" : "Tambah Project Baru"}</h1>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {mode === "edit" ? `Edit project #${project?.productId.slice(0, 8) ?? ""}` : "Isi form di bawah untuk menambahkan project baru."}
-            </p>
+            <h1 className={cn("mt-3 text-xl font-semibold", isNeo ? "text-black" : "text-black")}>{mode === "edit" ? "Perbarui Project" : "Tambah Project Baru"}</h1>
+            <p className={cn("mt-1 text-sm", isNeo ? "text-black" : "text-black/60")}>{mode === "edit" ? `Edit project #${project?.productId.slice(0, 8) ?? ""}` : "Isi form di bawah untuk menambahkan project baru."}</p>
           </div>
         </div>
       </div>
@@ -376,143 +317,65 @@ export function ProjectEditor({ project, locale }: ProjectEditorProps) {
       <form onSubmit={handleSubmit} className="grid gap-6">
         {/* Project Name (Single, not bilingual) */}
         <div className="space-y-2">
-          <Label htmlFor="projectName" className="text-gray-900 dark:text-gray-100">
+          <Label htmlFor="projectName" className={cn(isNeo ? "font-bold text-black" : "text-black")}>
             Nama Project
           </Label>
-          <Input
-            id="projectName"
-            value={form.projectName}
-            onChange={(e) => updateField("projectName", e.target.value)}
-            className={cn(inputCls, fieldErrors.projectName && "border-rose-500/60!")}
-            placeholder="Nama project Anda"
-          />
-          {fieldErrors.projectName && <p className="text-xs text-rose-600 dark:text-rose-400">{fieldErrors.projectName}</p>}
+          <Input id="projectName" value={form.projectName} onChange={(e) => updateField("projectName", e.target.value)} className={cn(inputCls, fieldErrors.projectName && "border-rose-500/60!")} placeholder="Nama project Anda" />
+          {fieldErrors.projectName && <p className="text-xs text-rose-600">{fieldErrors.projectName}</p>}
         </div>
 
-        {/* Categories (Creatable Single-Select) + Technologies (Creatable Multi-Select) */}
-        <div className="grid gap-4 md:grid-cols-2">
-          {/* ── Categories ── */}
-          <div className="space-y-2">
-            <Label htmlFor="categories" className="text-gray-900 dark:text-gray-100">
-              Categories
-            </Label>
-            <div className="relative">
-              {/* Selected category as chip */}
-              {form.categories.length > 0 && (
-                <div className="mb-1.5">
-                  <span className={chipCls}>
-                    {form.categories[0]}
-                    <button type="button" onClick={handleRemoveCategory} className="inline-flex items-center text-amber-700 dark:text-amber-300 hover:text-amber-900 dark:hover:text-white">
-                      <X className="h-3 w-3" />
-                    </button>
-                  </span>
-                </div>
+        {/* Categories (Single Select) */}
+        <div className="space-y-2">
+          <Label htmlFor="categories" className={cn(isNeo ? "font-bold text-black" : "text-black dark:text-white")}>
+            Categories
+          </Label>
+          <Select value={form.categories[0] ?? ""} onValueChange={(val) => setForm((prev) => ({ ...prev, categories: val ? [val] : [] }))}>
+            <SelectTrigger
+              id="categories"
+              className={cn(
+                "w-full rounded-lg text-sm",
+                isNeo ? NEO.input : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40",
+                fieldErrors.categories && "border-rose-500/60!",
               )}
-              {/* Input */}
-              <input
-                type="text"
-                value={catInput}
-                onChange={(e) => { setCatInput(e.target.value); setCatOpen(true); }}
-                onFocus={() => setCatOpen(true)}
-                onBlur={() => setTimeout(() => setCatOpen(false), 200)}
-                onKeyDown={handleCatKeyDown}
-                placeholder={form.categories.length === 0 ? "Pilih atau ketik kategori baru..." : "Ganti kategori..."}
-                className={cn("w-full rounded-lg px-3 py-2 text-sm outline-none", inputCls)}
-              />
-              {/* Dropdown */}
-              {catOpen && (
-                <div className={dropdownCls}>
-                  {catSearchResults.length === 0 && catInput.trim() ? (
-                    <button type="button" onClick={() => handleSelectCategory(catInput.trim())} className="flex w-full items-center gap-2 px-3 py-2.5 text-left text-sm font-semibold text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20">
-                      <PlusCircle className="h-4 w-4" />
-                      Buat &quot;{catInput.trim()}&quot;
-                    </button>
-                  ) : catSearchResults.length === 0 && !catInput.trim() ? (
-                    <p className="px-3 py-6 text-center text-sm text-gray-400 dark:text-zinc-500">{options.categories.length === 0 ? "Memuat..." : "Ketik untuk mencari atau buat kategori baru"}</p>
-                  ) : (
-                    catSearchResults.map((cat) => (
-                      <button key={cat} type="button" onClick={() => handleSelectCategory(cat)} className={dropdownItemCls}>
-                        <Check className={cn("h-4 w-4 shrink-0", form.categories.includes(cat) ? "opacity-100 text-emerald-600 dark:text-emerald-400" : "opacity-0")} />
-                        <span>{cat}</span>
-                      </button>
-                    ))
-                  )}
-                </div>
-              )}
-            </div>
-            <p className="text-xs text-black/50 dark:text-white/40">Pilih dari daftar atau ketik nama baru</p>
-            {fieldErrors.categories && <p className="text-xs text-rose-600 dark:text-rose-400">{fieldErrors.categories}</p>}
-          </div>
-
-          {/* ── Technologies ── */}
-          <div className="space-y-2">
-            <Label htmlFor="technologies" className="text-gray-900 dark:text-gray-100">
-              Technologies
-            </Label>
-            <div className="relative">
-              <div className={cn("flex flex-wrap items-center gap-1 rounded-lg border p-1.5", "border-black/10 dark:border-white/15 bg-white dark:bg-neutral-800")}>
-                {form.technologies.map((tech) => (
-                  <span key={tech} className={chipCls}>
-                    {tech}
-                    <button type="button" onClick={() => handleRemoveTech(tech)} className="inline-flex items-center text-amber-700 dark:text-amber-300 hover:text-amber-900 dark:hover:text-white">
-                      <X className="h-3 w-3" />
-                    </button>
-                  </span>
-                ))}
-                <input
-                  type="text"
-                  value={techInput}
-                  onChange={(e) => setTechInput(e.target.value)}
-                  onFocus={() => setTechOpen(true)}
-                  onBlur={() => setTimeout(() => setTechOpen(false), 200)}
-                  onKeyDown={handleTechKeyDown}
-                  placeholder={form.technologies.length === 0 ? "Ketik untuk mencari atau tambah teknologi..." : ""}
-                  className="min-w-30 flex-1 bg-transparent px-1 py-1 text-sm text-gray-900 dark:text-gray-100 outline-none placeholder:text-gray-400 dark:placeholder:text-zinc-500"
-                />
-              </div>
-              {techOpen && (
-                <div className={dropdownCls}>
-                  {techSearchResults.length === 0 && techInput.trim() ? (                      <button type="button" onClick={() => handleAddTech(techInput.trim())} className="flex w-full items-center gap-2 px-3 py-2.5 text-left text-sm font-semibold text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20">
-                      <PlusCircle className="h-4 w-4" />
-                      Tambah &quot;{techInput.trim()}&quot;
-                    </button>
-                  ) : techSearchResults.length === 0 && !techInput.trim() ? (
-                    <p className="px-3 py-6 text-center text-sm text-gray-400 dark:text-zinc-500">{options.skills.length === 0 ? "Memuat..." : "Ketik untuk mencari teknologi"}</p>
-                  ) : (
-                    techSearchResults.map((tech) => (
-                      <button key={tech} type="button" onClick={() => handleAddTech(tech)} className={dropdownItemCls}>
-                        <Check className={cn("h-4 w-4 shrink-0", form.technologies.includes(tech) ? "opacity-100 text-emerald-600 dark:text-emerald-400" : "opacity-0")} />
-                        <span>{tech}</span>
-                      </button>
-                    ))
-                  )}
-                </div>
-              )}
-            </div>
-            <p className="text-xs text-gray-400 dark:text-zinc-500">Klik option atau Enter untuk menambah</p>
-            {fieldErrors.technologies && <p className="text-xs text-rose-600 dark:text-rose-400">{fieldErrors.technologies}</p>}
-          </div>
+            >
+              <SelectValue placeholder="-- Pilih kategori --" />
+            </SelectTrigger>
+            <SelectContent className={cn(isNeo ? "border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] text-black dark:text-white")}>
+              <SelectItem value="__none__" disabled className="hidden" />
+              {options.categories.map((cat) => (
+                <SelectItem
+                  key={cat}
+                  value={cat}
+                  className={cn("rounded-lg text-sm cursor-pointer", isNeo ? "focus:bg-amber-100 focus:text-black" : "focus:bg-amber-400/10 focus:text-amber-600 dark:focus:bg-amber-400/15 dark:focus:text-amber-400")}
+                >
+                  {cat}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className={cn("text-xs", isNeo ? "text-black/50" : "text-black/50 dark:text-white/50")}>Pilih dari daftar yang tersedia</p>
+          {fieldErrors.categories && <p className="text-xs text-rose-600">{fieldErrors.categories}</p>}
         </div>
 
         {/* Upload + Preview */}
         <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-          <div className="space-y-3 rounded-2xl border border-dashed border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              <ImageUp className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+          <div className={cn("space-y-3 p-5", isNeo ? "border-[3px] border-black bg-white" : "rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e]")}>
+            <div className={cn("flex items-center gap-2 text-sm font-medium", isNeo ? "text-black" : "text-black dark:text-white")}>
+              <ImageUp className="h-4 w-4 text-amber-600" />
               Image project
-            </div>              <p className="text-sm text-gray-500 dark:text-zinc-400">Pilih file JPG, PNG, WEBP, atau SVG. File akan diupload ke MinIO saat klik Simpan.</p>
+            </div>
             <ImageUploader folder="projects" currentUrl={form.image} onUrlChange={(url) => updateField("image", url)} onPendingFile={handleImageFileSelect} label="Upload image project ke MinIO/CDN (otomatis saat Simpan)" />
           </div>
-          <div className="overflow-hidden rounded-2xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800">
+          <div className={cn("overflow-hidden", isNeo ? "border-[3px] border-black bg-white shadow-[4px_4px_0px_0px_black]" : "rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-[#121826]")}>
             <div className="flex h-full min-h-60 items-center justify-center">
               {pendingImageFile || form.image ? (
                 <Image src={pendingImageFile && previewBlobUrl ? previewBlobUrl : form.image} alt="Preview image project" width={400} height={280} className="h-full min-h-60 w-full object-cover" />
               ) : (
                 <div className="flex flex-col items-center gap-3 px-4 py-10 text-center">
-                  <div className="rounded-xl border border-dashed border-black/20 dark:border-white/15 bg-white dark:bg-neutral-900 p-4">
-                    <ImageUp className="mx-auto h-8 w-8 text-gray-300 dark:text-zinc-600" />
+                  <div className={cn("border border-dashed p-4", isNeo ? "border-2 border-black bg-white" : "rounded-xl border-black/20 dark:border-white/15 bg-white dark:bg-neutral-900")}>
+                    <ImageUp className={cn("mx-auto h-8 w-8", isNeo ? "text-black/30" : "text-black/20")} />
                   </div>
-                  <p className="text-sm text-gray-400 dark:text-zinc-500">Preview akan muncul di sini</p>
+                  <p className={cn("text-sm", isNeo ? "text-black/50" : "text-black/40")}>Preview akan muncul di sini</p>
                 </div>
               )}
             </div>
@@ -522,102 +385,133 @@ export function ProjectEditor({ project, locale }: ProjectEditorProps) {
         {/* URL Fields */}
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="urlPreview" className="text-gray-900 dark:text-gray-100">Preview URL</Label>
+            <Label htmlFor="urlPreview" className={cn(isNeo ? "font-bold text-black" : "text-black")}>
+              Preview URL
+            </Label>
             <Input id="urlPreview" value={form.urlPreview} onChange={(e) => updateField("urlPreview", e.target.value)} className={cn(inputCls, fieldErrors.urlPreview && "border-rose-500/60!")} placeholder="https://kaftan-brautmode.de/de" />
-            {fieldErrors.urlPreview && <p className="text-xs text-rose-600 dark:text-rose-400">{fieldErrors.urlPreview}</p>}
+            {fieldErrors.urlPreview && <p className="text-xs text-rose-600">{fieldErrors.urlPreview}</p>}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="figmaUrl" className="text-gray-900 dark:text-gray-100">Figma URL</Label>
+            <Label htmlFor="figmaUrl" className={cn(isNeo ? "font-bold text-black" : "text-black")}>
+              Figma URL
+            </Label>
             <Input id="figmaUrl" value={form.figmaUrl} onChange={(e) => updateField("figmaUrl", e.target.value)} className={cn(inputCls, fieldErrors.figmaUrl && "border-rose-500/60!")} placeholder="https://figma.com/..." />
-            {fieldErrors.figmaUrl && <p className="text-xs text-rose-600 dark:text-rose-400">{fieldErrors.figmaUrl}</p>}
+            {fieldErrors.figmaUrl && <p className="text-xs text-rose-600">{fieldErrors.figmaUrl}</p>}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="githubUrlFrontend" className="text-gray-900 dark:text-gray-100">GitHub URL (Frontend)</Label>
+            <Label htmlFor="githubUrlFrontend" className={cn(isNeo ? "font-bold text-black" : "text-black")}>
+              GitHub URL (Frontend)
+            </Label>
             <Input id="githubUrlFrontend" value={form.githubUrlFrontend} onChange={(e) => updateField("githubUrlFrontend", e.target.value)} className={inputCls} placeholder="https://github.com/mohagussetiaone/frontend-repo" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="githubUrlBackend" className="text-gray-900 dark:text-gray-100">GitHub URL (Backend)</Label>
+            <Label htmlFor="githubUrlBackend" className={cn(isNeo ? "font-bold text-black" : "text-black")}>
+              GitHub URL (Backend)
+            </Label>
             <Input id="githubUrlBackend" value={form.githubUrlBackend} onChange={(e) => updateField("githubUrlBackend", e.target.value)} className={inputCls} placeholder="https://github.com/mohagussetiaone/backend-repo" />
           </div>
         </div>
 
         {/* Tech Detail Fields */}
-        <div className="space-y-3 rounded-2xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">Tech Details <span className="text-black/40 dark:text-white/30 font-normal">(opsional)</span></h3>
+        <div className={cn("space-y-3 p-5", isNeo ? "border-[3px] border-black bg-white shadow-[4px_4px_0px_0px_black]" : "rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e]")}>
+          <h3 className={cn("text-sm font-semibold", isNeo ? "text-black" : "text-black")}>
+            Tech Details <span className={cn("font-normal", isNeo ? "text-black/40" : "text-black/40")}>(opsional)</span>
+          </h3>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <div className="space-y-1.5">
-              <Label className="text-xs text-gray-500 dark:text-zinc-400">Tech Stack</Label>
+              <Label className={cn("text-xs", isNeo ? "font-bold text-black" : "text-black/60")}>Tech Stack</Label>
               <Input value={form.techStack} onChange={(e) => updateField("techStack", e.target.value)} className={inputCls} placeholder="React, Next.js, Tailwind CSS" />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs text-gray-500 dark:text-zinc-400">Deployment</Label>
+              <Label className={cn("text-xs", isNeo ? "font-bold text-black" : "text-black/60")}>Deployment</Label>
               <Input value={form.deployment} onChange={(e) => updateField("deployment", e.target.value)} className={inputCls} placeholder="Vercel, Netlify" />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs text-gray-500 dark:text-zinc-400">Server</Label>
+              <Label className={cn("text-xs", isNeo ? "font-bold text-black" : "text-black/60")}>Server</Label>
               <Input value={form.server} onChange={(e) => updateField("server", e.target.value)} className={inputCls} placeholder="Node.js, Express" />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs text-gray-500 dark:text-zinc-400">Desain / AI Agent</Label>
+              <Label className={cn("text-xs", isNeo ? "font-bold text-black" : "text-black/60")}>Desain / AI Agent</Label>
               <Input value={form.designMethod} onChange={(e) => updateField("designMethod", e.target.value)} className={inputCls} placeholder="Figma, ChatGPT, Claude" />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs text-gray-500 dark:text-zinc-400">ORM</Label>
+              <Label className={cn("text-xs", isNeo ? "font-bold text-black" : "text-black/60")}>ORM</Label>
               <Input value={form.orm} onChange={(e) => updateField("orm", e.target.value)} className={inputCls} placeholder="Prisma, Drizzle" />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs text-gray-500 dark:text-zinc-400">Database</Label>
+              <Label className={cn("text-xs", isNeo ? "font-bold text-black" : "text-black/60")}>Database</Label>
               <Input value={form.database} onChange={(e) => updateField("database", e.target.value)} className={inputCls} placeholder="PostgreSQL, MongoDB" />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs text-gray-500 dark:text-zinc-400">Domain Provider</Label>
+              <Label className={cn("text-xs", isNeo ? "font-bold text-black" : "text-black/60")}>Domain Provider</Label>
               <Input value={form.domainProvider} onChange={(e) => updateField("domainProvider", e.target.value)} className={inputCls} placeholder="Cloudflare, Namecheap" />
             </div>
           </div>
         </div>
 
-        <label className="flex items-center gap-3 rounded-2xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-3 text-sm text-black dark:text-white transition-colors hover:bg-black/5 dark:hover:bg-white/5">
-          <input type="checkbox" checked={form.internal} onChange={(e) => updateField("internal", e.target.checked)} className="h-4 w-4 rounded border border-black/20 dark:border-white/20 accent-amber-400" />
+        <label
+          className={cn(
+            "flex items-center gap-3 px-4 py-3 text-sm transition-colors",
+            isNeo ? "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black] hover:bg-amber-100" : "rounded-2xl border border-black/10 bg-white text-black hover:bg-black/5",
+          )}
+        >
+          <input type="checkbox" checked={form.internal} onChange={(e) => updateField("internal", e.target.checked)} className="h-4 w-4 rounded border border-black/20 accent-amber-400" />
           Tandai sebagai internal project
         </label>
 
         <Separator className="bg-black/10 dark:bg-white/10" />
 
         <div className="grid gap-6 xl:grid-cols-2">
-          <div className="rounded-2xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 space-y-4">
-            <div className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
-              <Globe2 className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+          <div className={cn("p-5 space-y-4", isNeo ? "border-[3px] border-black bg-white shadow-[4px_4px_0px_0px_black]" : "rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e]")}>
+            <div className={cn("flex items-center gap-2", isNeo ? "text-black" : "text-black")}>
+              <Globe2 className="h-4 w-4 text-amber-600" />
               <h3 className="font-semibold">Deskripsi Indonesia</h3>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="descriptionId" className="text-gray-900 dark:text-gray-100">Deskripsi</Label>
-              <Textarea id="descriptionId" value={form.translations.id.description} onChange={(e) => updateTranslation("id", "description", e.target.value)} className={cn(inputCls, "min-h-25", fieldErrors["translations.id.description"] && "border-rose-500/60!")} placeholder="Deskripsi project dalam Bahasa Indonesia..." />
-              {fieldErrors["translations.id.description"] && <p className="text-xs text-rose-600 dark:text-rose-400">{fieldErrors["translations.id.description"]}</p>}
+              <Label htmlFor="descriptionId" className={cn(isNeo ? "font-bold text-black" : "text-black")}>
+                Deskripsi
+              </Label>
+              <Textarea
+                id="descriptionId"
+                value={form.translations.id.description}
+                onChange={(e) => updateTranslation("id", "description", e.target.value)}
+                className={cn(inputCls, "min-h-25", fieldErrors["translations.id.description"] && "border-rose-500/60!")}
+                placeholder="Deskripsi project dalam Bahasa Indonesia..."
+              />
+              {fieldErrors["translations.id.description"] && <p className="text-xs text-rose-600">{fieldErrors["translations.id.description"]}</p>}
             </div>
           </div>
 
-          <div className="rounded-2xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 space-y-4">
-            <div className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
-              <Globe2 className="h-4 w-4 text-sky-600 dark:text-sky-400" />
+          <div className={cn("p-5 space-y-4", isNeo ? "border-[3px] border-black bg-white shadow-[4px_4px_0px_0px_black]" : "rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e]")}>
+            <div className={cn("flex items-center gap-2", isNeo ? "text-black" : "text-black")}>
+              <Globe2 className="h-4 w-4 text-sky-600" />
               <h3 className="font-semibold">Description (English)</h3>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="descriptionEn" className="text-gray-900 dark:text-gray-100">Description</Label>
-              <Textarea id="descriptionEn" value={form.translations.en.description} onChange={(e) => updateTranslation("en", "description", e.target.value)} className={cn(inputCls, "min-h-25", fieldErrors["translations.en.description"] && "border-rose-500/60!")} placeholder="Project description in English..." />
-              {fieldErrors["translations.en.description"] && <p className="text-xs text-rose-600 dark:text-rose-400">{fieldErrors["translations.en.description"]}</p>}
+              <Label htmlFor="descriptionEn" className={cn(isNeo ? "font-bold text-black" : "text-black")}>
+                Description
+              </Label>
+              <Textarea
+                id="descriptionEn"
+                value={form.translations.en.description}
+                onChange={(e) => updateTranslation("en", "description", e.target.value)}
+                className={cn(inputCls, "min-h-25", fieldErrors["translations.en.description"] && "border-rose-500/60!")}
+                placeholder="Project description in English..."
+              />
+              {fieldErrors["translations.en.description"] && <p className="text-xs text-rose-600">{fieldErrors["translations.en.description"]}</p>}
             </div>
           </div>
         </div>
 
         <div className="flex flex-col gap-3 pt-4">
-          {error && <p className="rounded-xl border border-rose-500/30 bg-rose-100 dark:bg-rose-900/30 px-4 py-3 text-sm text-rose-700 dark:text-rose-400">{error}</p>}
-          {success && <p className="rounded-xl border border-emerald-500/30 bg-emerald-100 dark:bg-emerald-900/30 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-400">{success}</p>}
+          {error && <p className="rounded-xl border border-rose-500/30 bg-rose-100 px-4 py-3 text-sm text-rose-700">{error}</p>}
+          {success && <p className="rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm text-black">{success}</p>}
 
           <div className="flex gap-3 justify-end">
-            <Button type="button" variant="outline" onClick={handleBack} className="rounded-full border border-black/10 dark:border-white/15 bg-transparent text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10">
+            <Button type="button" variant="outline" onClick={handleBack} className={cn(isNeo ? NEO.btnOutline : "rounded-full border border-black/10 bg-transparent text-black hover:bg-black/5")}>
               Batal
             </Button>
-            <Button type="submit" disabled={isPending} className="rounded-full border border-black bg-amber-400 px-8 text-black hover:bg-amber-300 font-bold">
+            <Button type="submit" disabled={isPending} className={cn(isNeo ? NEO.btn : "rounded-full border border-black bg-amber-400 px-8 text-black hover:bg-amber-300 font-bold")}>
               {isPending ? "Menyimpan..." : mode === "edit" ? "Update Project" : "Simpan Project"}
             </Button>
           </div>

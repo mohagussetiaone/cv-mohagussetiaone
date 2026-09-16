@@ -214,7 +214,13 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
           <Field label="CV File URL" value={form.cvFileUrl} onChange={(v) => setForm((p) => ({ ...p, cvFileUrl: v }))} />
           <div className="space-y-1.5">
             <Label className="text-xs text-black dark:text-white/80">Banner Image</Label>
-            <ImageUploader folder="banner" currentUrl={form.bannerImage} onUrlChange={(url) => setForm((p) => ({ ...p, bannerImage: url }))} onPendingFile={setPendingBannerFile} label="Upload banner image ke MinIO/CDN (otomatis saat Save)" />
+            <ImageUploader
+              folder="banner"
+              currentUrl={form.bannerImage}
+              onUrlChange={(url) => setForm((p) => ({ ...p, bannerImage: url }))}
+              onPendingFile={setPendingBannerFile}
+              label="Upload banner image ke MinIO/CDN (otomatis saat Save)"
+            />
           </div>
         </div>
         <div className="h-px bg-black/10 dark:bg-white/10" />
@@ -669,7 +675,11 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
   return (
     <div className="space-y-1.5">
       <Label className="text-xs text-black dark:text-white/80">{label}</Label>
-      <Input value={value} onChange={(e) => onChange(e.target.value)} className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white h-9 placeholder:text-black/40 dark:placeholder:text-white/40" />
+      <Input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white h-9 placeholder:text-black/40 dark:placeholder:text-white/40"
+      />
     </div>
   );
 }
@@ -678,7 +688,12 @@ function CompactField({ label, value, onChange, placeholder }: { label: string; 
   return (
     <div className="space-y-1">
       <Label className="text-black dark:text-white/80 text-xs">{label}</Label>
-      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] h-8 text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40" />
+      <Input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] h-8 text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40"
+      />
     </div>
   );
 }
@@ -687,7 +702,11 @@ function TextareaField({ label, value, onChange }: { label: string; value: strin
   return (
     <div className="space-y-1.5">
       <Label className="text-xs text-black dark:text-white/80">{label}</Label>
-      <Textarea value={value} onChange={(e) => onChange(e.target.value)} className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white min-h-25 placeholder:text-black/40 dark:placeholder:text-white/40" />
+      <Textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white min-h-25 placeholder:text-black/40 dark:placeholder:text-white/40"
+      />
     </div>
   );
 }

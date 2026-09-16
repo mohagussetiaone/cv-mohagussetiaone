@@ -3,50 +3,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  DndContext,
-  type DragEndEvent,
-  KeyboardSensor,
-  PointerSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { DndContext, type DragEndEvent, KeyboardSensor, PointerSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
+import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Ellipsis,
-  ExternalLink,
-  Eye,
-  FilePenLine,
-  GripVertical,
-  PlusCircle,
-  Save,
-  Search,
-  Trash2,
-  X,
-} from "lucide-react";
-import type {
-  ProjectPaginationMeta,
-  ProjectRecord,
-} from "@/app/types/project";
+import { ChevronLeft, ChevronRight, Ellipsis, ExternalLink, Eye, FilePenLine, GripVertical, PlusCircle, Save, Search, Trash2, X } from "lucide-react";
+import type { ProjectPaginationMeta, ProjectRecord } from "@/app/types/project";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { DeleteButton } from "./DeleteButton";
 import { cn } from "@/lib/utils";
 import { useNeo, NEO } from "@/components/dashboard/neo";
@@ -62,10 +27,7 @@ type ProjectTableProps = {
   isReordering?: boolean;
 };
 
-const createQueryString = (
-  current: ProjectPaginationMeta,
-  params: Partial<Pick<ProjectPaginationMeta, "page" | "pageSize" | "search">>
-) => {
+const createQueryString = (current: ProjectPaginationMeta, params: Partial<Pick<ProjectPaginationMeta, "page" | "pageSize" | "search">>) => {
   const query = new URLSearchParams();
   const page = params.page ?? current.page;
   const pageSize = params.pageSize ?? current.pageSize;
@@ -78,27 +40,8 @@ const createQueryString = (
   return query.toString();
 };
 
-function SortableRow({
-  project,
-  locale,
-  pagination,
-  onDeleted,
-  isNeo,
-}: {
-  project: ProjectRecord;
-  locale: string;
-  pagination: ProjectPaginationMeta;
-  onDeleted?: () => void;
-  isNeo: boolean;
-}) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: project.productId });
+function SortableRow({ project, locale, pagination, onDeleted, isNeo }: { project: ProjectRecord; locale: string; pagination: ProjectPaginationMeta; onDeleted?: () => void; isNeo: boolean }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: project.productId });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -130,11 +73,7 @@ function SortableRow({
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
           <p className={cn("truncate text-sm font-medium", isNeo ? "text-black" : "text-black dark:text-white")}>{project.projectName}</p>
-          {project.internal && (
-            <Badge className={cn("shrink-0 px-1.5 py-0 text-[10px]", isNeo ? "border-2 border-black bg-amber-400 font-bold text-black" : "border-amber-500/20 bg-amber-500/10 text-amber-400")}>
-              Internal
-            </Badge>
-          )}
+          {project.internal && <Badge className={cn("shrink-0 px-1.5 py-0 text-[10px]", isNeo ? "border-2 border-black bg-amber-400 font-bold text-black" : "border-amber-500/20 bg-amber-500/10 text-amber-400")}>Internal</Badge>}
         </div>
         <p className={cn("mt-0.5 line-clamp-1 text-xs", isNeo ? "text-black" : "text-black dark:text-white/70")}>{project.description}</p>
       </div>
@@ -158,16 +97,11 @@ function SortableRow({
       <div className="hidden w-40 shrink-0 lg:block">
         <div className="flex flex-wrap gap-1">
           {project.technologies.slice(0, 3).map((tech) => (
-            <Badge
-              key={tech}
-              className={cn("px-1.5 py-0 text-[10px]", isNeo ? "border-2 border-black bg-amber-200 font-bold text-black" : "bg-brand-500/15 text-brand-400 hover:bg-brand-500/20")}
-            >
+            <Badge key={tech} className={cn("px-1.5 py-0 text-[10px]", isNeo ? "border-2 border-black bg-amber-200 font-bold text-black" : "bg-brand-500/15 text-brand-400 hover:bg-brand-500/20")}>
               {tech}
             </Badge>
           ))}
-          {project.technologies.length > 3 && (
-            <span className={cn("text-[10px]", isNeo ? "text-black" : "text-black dark:text-white/70")}>+{project.technologies.length - 3}</span>
-          )}
+          {project.technologies.length > 3 && <span className={cn("text-[10px]", isNeo ? "text-black" : "text-black dark:text-white/70")}>+{project.technologies.length - 3}</span>}
         </div>
       </div>
 
@@ -183,32 +117,25 @@ function SortableRow({
               <Ellipsis className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className={cn("w-44", isNeo ? "border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] text-black dark:text-white")}>
+          <DropdownMenuContent
+            align="end"
+            className={cn("w-44", isNeo ? "border-[3px] border-black bg-white text-black shadow-[4px_4px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#1a1f2e] text-black dark:text-white")}
+          >
             <DropdownMenuItem asChild className={cn(isNeo ? "text-black hover:bg-amber-100 focus:bg-amber-100" : "text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 focus:bg-black/5 dark:focus:bg-white/5")}>
-              <Link
-                href={`/${locale}/project/${project.productId}`}
-                className="inline-flex w-full items-center gap-2"
-              >
+              <Link href={`/${locale}/project/${project.productId}`} className="inline-flex w-full items-center gap-2">
                 <Eye className="h-4 w-4" />
                 Detail
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className={cn(isNeo ? "text-black hover:bg-amber-100 focus:bg-amber-100" : "text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 focus:bg-black/5 dark:focus:bg-white/5")}>
-              <Link
-                href={`/${locale}/dashboard/project/${project.productId}/edit`}
-                className="inline-flex w-full items-center gap-2"
-              >
+              <Link href={`/${locale}/dashboard/project/${project.productId}/edit`} className="inline-flex w-full items-center gap-2">
                 <FilePenLine className="h-4 w-4" />
                 Edit
               </Link>
             </DropdownMenuItem>
             {project.urlPreview ? (
               <DropdownMenuItem asChild className={cn(isNeo ? "text-black hover:bg-amber-100 focus:bg-amber-100" : "text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 focus:bg-black/5 dark:focus:bg-white/5")}>
-                <Link
-                  href={project.urlPreview}
-                  target="_blank"
-                  className="inline-flex w-full items-center gap-2"
-                >
+                <Link href={project.urlPreview} target="_blank" className="inline-flex w-full items-center gap-2">
                   <ExternalLink className="h-4 w-4" />
                   Preview
                 </Link>
@@ -220,7 +147,12 @@ function SortableRow({
               projectName={project.projectName}
               onDeleted={onDeleted}
               trigger={
-                <button className={cn("flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-none transition-colors", isNeo ? "font-bold text-rose-600 hover:bg-rose-100 focus:bg-rose-100" : "text-rose-400 hover:bg-rose-500/10 focus:bg-rose-500/10")}>
+                <button
+                  className={cn(
+                    "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-none transition-colors",
+                    isNeo ? "font-bold text-rose-600 hover:bg-rose-100 focus:bg-rose-100" : "text-rose-400 hover:bg-rose-500/10 focus:bg-rose-500/10",
+                  )}
+                >
                   <Trash2 className="h-4 w-4" />
                   Delete
                 </button>
@@ -233,15 +165,7 @@ function SortableRow({
   );
 }
 
-export function ProjectTable({
-  locale,
-  projects,
-  pagination,
-  isLoading = false,
-  onDeleted,
-  onReorder,
-  isReordering = false,
-}: ProjectTableProps) {
+export function ProjectTable({ locale, projects, pagination, isLoading = false, onDeleted, onReorder, isReordering = false }: ProjectTableProps) {
   const { isNeo } = useNeo();
   const [localProjects, setLocalProjects] = useState(projects);
 
@@ -290,13 +214,10 @@ export function ProjectTable({
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
-  const projectIds = useMemo(
-    () => localProjects.map((p) => p.productId),
-    [localProjects]
-  );
+  const projectIds = useMemo(() => localProjects.map((p) => p.productId), [localProjects]);
 
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
@@ -330,7 +251,7 @@ export function ProjectTable({
         onReorder?.(reorderedItems);
       }
     },
-    [onReorder]
+    [onReorder],
   );
 
   const previousQuery = createQueryString(pagination, {
@@ -346,12 +267,8 @@ export function ProjectTable({
       <div className={cn("border-b px-5 py-4", isNeo ? "border-black/15" : "border-black/10")}>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className={cn("text-xs font-bold uppercase tracking-[0.2em]", isNeo ? "text-amber-600" : "text-brand-400")}>
-              Project Table
-            </p>
-            <h2 className={cn("mt-1 text-xl font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>
-              Portfolio entries
-            </h2>
+            <p className={cn("text-xs font-bold uppercase tracking-[0.2em]", isNeo ? "text-amber-600" : "text-brand-400")}>Project Table</p>
+            <h2 className={cn("mt-1 text-xl font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>Portfolio entries</h2>
             <p className={cn("mt-0.5 text-sm", isNeo ? "text-black" : "text-black dark:text-white")}>
               Drag rows to reorder. Click <strong className="text-black dark:text-white">Add</strong> to create a new entry.
             </p>
@@ -369,7 +286,7 @@ export function ProjectTable({
                   onBlur={() => setSearchFocused(false)}
                   placeholder="Cari project..."
                   className={cn(
-                    "flex h-10 w-full min-w-[220px] rounded-xl py-2 pl-10 pr-3 text-sm outline-none ring-offset-background",
+                    "flex h-10 w-full min-w-55 rounded-xl py-2 pl-10 pr-3 text-sm outline-none ring-offset-background",
                     isNeo
                       ? "border-2 border-black bg-white font-medium text-black shadow-[2px_2px_0px_0px_black] placeholder:text-black/40 focus-visible:ring-2 focus-visible:ring-amber-400"
                       : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] font-medium text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus-visible:ring-2 focus-visible:ring-amber-400",
@@ -383,7 +300,9 @@ export function ProjectTable({
                   aria-label="Hapus pencarian"
                   className={cn(
                     "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition",
-                    isNeo ? "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black] hover:bg-amber-100" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5",
+                    isNeo
+                      ? "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black] hover:bg-amber-100"
+                      : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5",
                   )}
                 >
                   <X className="h-4 w-4" />
@@ -392,8 +311,8 @@ export function ProjectTable({
             </div>
 
             <Link href={`/${locale}/dashboard/project/new`}>
-              <Button className={cn("rounded-xl font-bold", isNeo ? NEO.btn : "bg-brand-500 text-black hover:bg-brand-400 font-medium")}>
-                <PlusCircle className="mr-2 h-4 w-4" />
+              <Button className={cn("rounded-xl font-bold", isNeo ? NEO.btn : "bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90")}>
+                <PlusCircle className="h-4 w-4" />
                 Add Project
               </Button>
             </Link>
@@ -402,7 +321,12 @@ export function ProjectTable({
 
         {/* Reorder indicator */}
         {isReordering && (
-          <div className={cn("mt-3 flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-bold", isNeo ? "border-2 border-black bg-amber-200 text-black shadow-[2px_2px_0px_0px_black]" : "border border-amber-400/40 bg-amber-100 dark:bg-amber-900/30 text-black dark:text-white")}>
+          <div
+            className={cn(
+              "mt-3 flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-bold",
+              isNeo ? "border-2 border-black bg-amber-200 text-black shadow-[2px_2px_0px_0px_black]" : "border border-amber-400/40 bg-amber-100 dark:bg-amber-900/30 text-black dark:text-white",
+            )}
+          >
             <Save className="h-4 w-4 animate-pulse" />
             Saving new order...
           </div>
@@ -437,26 +361,11 @@ export function ProjectTable({
           </Link>
         </div>
       ) : (
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-          modifiers={[restrictToVerticalAxis]}
-        >
-          <SortableContext
-            items={projectIds}
-            strategy={verticalListSortingStrategy}
-          >
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis]}>
+          <SortableContext items={projectIds} strategy={verticalListSortingStrategy}>
             <div className={isNeo ? "" : "divide-y divide-white/5"}>
               {localProjects.map((project) => (
-                <SortableRow
-                  key={project.productId}
-                  project={project}
-                  locale={locale}
-                  pagination={pagination}
-                  onDeleted={onDeleted}
-                  isNeo={isNeo}
-                />
+                <SortableRow key={project.productId} project={project} locale={locale} pagination={pagination} onDeleted={onDeleted} isNeo={isNeo} />
               ))}
             </div>
           </SortableContext>
@@ -466,51 +375,31 @@ export function ProjectTable({
       {/* Pagination */}
       <div className={cn("flex flex-col gap-4 border-t px-5 py-4 sm:flex-row sm:items-center sm:justify-between", isNeo ? "border-black/15" : "border-black/10")}>
         <div className={cn("text-sm", isNeo ? "text-black" : "text-black dark:text-white")}>
-          Menampilkan{" "}
-          <span className={cn("font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>
-            {localProjects.length}
-          </span>{" "}
-          dari{" "}
-          <span className={cn("font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>
-            {pagination.totalItems}
-          </span>{" "}
-          project.
+          Menampilkan <span className={cn("font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>{localProjects.length}</span> dari{" "}
+          <span className={cn("font-bold", isNeo ? "text-black" : "text-black dark:text-white")}>{pagination.totalItems}</span> project.
         </div>
 
         <div className="flex items-center gap-2">
-          <Link
-            href={`/${locale}/dashboard?${previousQuery}`}
-            aria-disabled={pagination.page <= 1}
-            className={pagination.page <= 1 ? "pointer-events-none opacity-50" : ""}
-          >
-            <Button
-              variant="outline"
-              className={cn(isNeo ? NEO.btnOutline : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5")}
-            >
-              <ChevronLeft className="mr-2 h-4 w-4" />
+          <Link href={`/${locale}/dashboard?${previousQuery}`} aria-disabled={pagination.page <= 1} className={pagination.page <= 1 ? "pointer-events-none opacity-50" : ""}>
+            <Button variant="outline" className={cn(isNeo ? NEO.btnOutline : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5")}>
+              <ChevronLeft className="h-4 w-4" />
               Previous
             </Button>
           </Link>
 
-          <div className={cn("rounded-xl border px-4 py-2 text-sm font-bold", isNeo ? "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white")}>
+          <div
+            className={cn(
+              "rounded-xl border px-4 py-2 text-sm font-bold",
+              isNeo ? "border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_black]" : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white",
+            )}
+          >
             Page {pagination.page} of {pagination.totalPages}
           </div>
 
-          <Link
-            href={`/${locale}/dashboard?${nextQuery}`}
-            aria-disabled={pagination.page >= pagination.totalPages}
-            className={
-              pagination.page >= pagination.totalPages
-                ? "pointer-events-none opacity-50"
-                : ""
-            }
-          >
-            <Button
-              variant="outline"
-              className={cn(isNeo ? NEO.btnOutline : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5")}
-            >
+          <Link href={`/${locale}/dashboard?${nextQuery}`} aria-disabled={pagination.page >= pagination.totalPages} className={pagination.page >= pagination.totalPages ? "pointer-events-none opacity-50" : ""}>
+            <Button variant="outline" className={cn(isNeo ? NEO.btnOutline : "border border-black/10 dark:border-white/10 bg-white dark:bg-[#121826] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5")}>
               Next
-              <ChevronRight className="ml-2 h-4 w-4" />
+              <ChevronRight className="h-4 w-4" />
             </Button>
           </Link>
         </div>
@@ -521,18 +410,8 @@ export function ProjectTable({
 
 function FolderOpenIcon({ className = "h-12 w-12 text-black/20 dark:text-white/20" }: { className?: string }) {
   return (
-    <svg
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={1}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
-      />
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
     </svg>
   );
 }
