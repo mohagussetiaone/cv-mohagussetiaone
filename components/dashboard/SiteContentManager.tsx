@@ -64,7 +64,6 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
     bannerImage: g.bannerImage ?? "",
   });
   const [isSaving, startSave] = useTransition();
-  // File banner yang dipilih — diupload saat Save (deferred)
   const [pendingBannerFile, setPendingBannerFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -109,17 +108,18 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
 
   const handleSave = () => {
     startSave(async () => {
-      // URL image baru yang terlanjur diupload — untuk rollback jika submit gagal
+      // URL baru yang terlanjur diupload — untuk rollback jika submit gagal
       let uploadedNewUrl: string | null = null;
-
       try {
-        // 1. Upload pending banner dulu (jika ada) — file lama belum dihapus
+        // 1. Upload pending files
         let bannerImage = form.bannerImage;
         if (pendingBannerFile) {
           const uploaded = await uploadImageFile(pendingBannerFile, "banner");
           uploadedNewUrl = uploaded;
           bannerImage = uploaded;
         }
+
+        const cvFileUrl = form.cvFileUrl;
 
         // 2. Submit data
         const entries = [
@@ -151,7 +151,7 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
           { key: "yearsExperience", locale: "", value: form.yearsExperience },
           { key: "programmingLanguages", locale: "", value: form.programmingLanguages },
           { key: "developmentProjects", locale: "", value: form.developmentProjects },
-          { key: "cvFileUrl", locale: "", value: form.cvFileUrl },
+          { key: "cvFileUrl", locale: "", value: cvFileUrl },
           { key: "bannerImage", locale: "", value: bannerImage },
         ];
         await saveSection("banner", entries);
@@ -160,12 +160,11 @@ function BannerEditor({ data, locale }: { data: SiteContentGrouped | null; local
         if (uploadedNewUrl && form.bannerImage && form.bannerImage !== uploadedNewUrl) {
           await deleteImageByUrl(form.bannerImage);
         }
-        // Sync URL baru ke form state supaya save berikutnya tidak menimpa dengan URL lama
         setForm((p) => ({ ...p, bannerImage }));
         setPendingBannerFile(null);
         toast.success("Banner content saved!");
       } catch (err) {
-        // 4. ROLLBACK: hapus image baru jika submit gagal
+        // 4. ROLLBACK: hapus file baru jika submit gagal
         if (uploadedNewUrl) {
           await deleteImageByUrl(uploadedNewUrl);
         }

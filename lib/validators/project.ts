@@ -24,17 +24,13 @@ const csvToArray = z
         value
           .split(",")
           .map((item) => item.trim())
-          .filter(Boolean)
-      )
-    )
+          .filter(Boolean),
+      ),
+    ),
   );
 
 export const projectPayloadSchema = z.object({
-  productId: z
-    .string()
-    .trim()
-    .uuid("Product ID harus UUID yang valid")
-    .optional(),
+  productId: z.string().trim().uuid("Product ID harus UUID yang valid").optional(),
   projectName: z.string().trim().min(2, "Nama project minimal 2 karakter"),
   image: optionalString,
   urlPreview: optionalUrl,
@@ -49,9 +45,7 @@ export const projectPayloadSchema = z.object({
   orm: optionalString,
   database: optionalString,
   domainProvider: optionalString,
-  technologies: csvToArray.refine((value) => value.length > 0, {
-    message: "Minimal satu teknologi harus diisi",
-  }),
+  technologies: csvToArray.optional().default([]),
   categories: csvToArray.refine((value) => value.length > 0, {
     message: "Minimal satu kategori harus diisi",
   }),

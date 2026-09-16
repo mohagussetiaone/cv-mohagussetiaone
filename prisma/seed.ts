@@ -29,10 +29,8 @@ type SeedProject = {
   orm: string | null;
   database: string | null;
   domainProvider: string | null;
+  category: string;
 };
-
-/** Seed helper — maps productId → skill names to connect via many-to-many. */
-const technologiesMap: Record<string, string[]> = {};
 
 const projectData: SeedProject[] = [
   {
@@ -59,6 +57,7 @@ const projectData: SeedProject[] = [
     orm: null,
     database: null,
     domainProvider: null,
+    category: "Frontend App",
   },
   {
     productId: "a0f5b1db-9b7f-4af9-a99b-228764f92c0e",
@@ -84,6 +83,7 @@ const projectData: SeedProject[] = [
     orm: null,
     database: null,
     domainProvider: "Vercel",
+    category: "Frontend App",
   },
   {
     productId: "bb44b080-1b97-4e28-a182-4081dc0df636",
@@ -109,6 +109,7 @@ const projectData: SeedProject[] = [
     orm: "Prisma",
     database: "PostgreSQL (Supabase)",
     domainProvider: "Cloudflare",
+    category: "Fullstack App",
   },
   {
     productId: "d2e8b3c7-5f2a-4e9d-b6c1-3a4d5e6f7a8b",
@@ -134,9 +135,10 @@ const projectData: SeedProject[] = [
     orm: null,
     database: null,
     domainProvider: "Cloudflare",
+    category: "Frontend App",
   },
   {
-    productId: "a0f5b1db-9b7f-4af9-a99b-228764f92c0e",
+    productId: "c3d7e1a2-8b4f-4e6d-9a1b-5f8c2d4e6a0b",
     sortOrder: 5,
     projectName: "PT Fortuna Teknik Mandiri",
     translations: {
@@ -159,6 +161,7 @@ const projectData: SeedProject[] = [
     orm: null,
     database: null,
     domainProvider: "Vercel",
+    category: "Frontend App",
   },
   {
     productId: "58b54a0d-a7c9-4674-895c-e7bc259940e1",
@@ -184,39 +187,16 @@ const projectData: SeedProject[] = [
     orm: null,
     database: null,
     domainProvider: null,
+    category: "UI/UX Design",
   },
 ];
 
-// Seed helper: productId → skill names (not a DB field)
-technologiesMap["f02e09ac-d1b7-4e6f-b876-964283abb07f"] = [];
-technologiesMap["d2e8b3c7-5f2a-4e9d-b6c1-3a4d5e6f7a8b"] = ["Next.js", "Tailwind CSS"];
-technologiesMap["a0f5b1db-9b7f-4af9-a99b-228764f92c0e"] = ["Next.js", "Tailwind CSS"];
-technologiesMap["bb44b080-1b97-4e28-a182-4081dc0df636"] = ["Next.js", "Tailwind CSS", "Axios", "Supabase", "Prisma"];
-technologiesMap["58b54a0d-a7c9-4674-895c-e7bc259940e1"] = ["Figma"];
-
-const categoryNameForProject = (techs: string[]) => {
-  if (techs.includes("Figma") && techs.length === 1) {
-    return "UI/UX Design";
-  }
-  if (techs.includes("Prisma") || techs.includes("Supabase")) {
-    return "Fullstack App";
-  }
-  return "Frontend App";
-};
-
 async function main() {
-  const allTechs = projectData.flatMap((p) => technologiesMap[p.productId] ?? []);
-  const skillNames = Array.from(new Set(allTechs));
-  const categoryNames = Array.from(new Set(projectData.map((p) => categoryNameForProject(technologiesMap[p.productId] ?? []))));
+  const categoryNames = Array.from(new Set(projectData.map((p) => p.category)));
   const currentProductIds = projectData.map((project) => project.productId);
 
   await prisma.project.deleteMany({
     where: { productId: { notIn: currentProductIds } },
-  });
-
-  await prisma.skill.createMany({
-    data: skillNames.map((name) => ({ name })),
-    skipDuplicates: true,
   });
 
   await prisma.category.createMany({
@@ -225,9 +205,6 @@ async function main() {
   });
 
   for (const project of projectData) {
-    const techs = technologiesMap[project.productId] ?? [];
-    const categoryName = categoryNameForProject(techs);
-
     await prisma.project.upsert({
       where: { productId: project.productId },
       create: {
@@ -246,11 +223,8 @@ async function main() {
         orm: project.orm,
         database: project.database,
         domainProvider: project.domainProvider,
-        skills: {
-          connect: techs.map((name) => ({ name })),
-        },
         categories: {
-          connect: { name: categoryName },
+          connect: { name: project.category },
         },
         translations: {
           create: [
@@ -280,11 +254,8 @@ async function main() {
         orm: project.orm,
         database: project.database,
         domainProvider: project.domainProvider,
-        skills: {
-          set: techs.map((name) => ({ name })),
-        },
         categories: {
-          set: [{ name: categoryName }],
+          set: [{ name: project.category }],
         },
         translations: {
           deleteMany: {},
@@ -319,14 +290,14 @@ const siteContentData: { section: string; key: string; locale: string; value: st
     key: "description",
     locale: "id",
     value:
-      "Frontend Developer dengan pengalaman lebih dari 2 tahun yang berfokus pada React.js, siap berkontribusi dalam menciptakan aplikasi website yang responsif dan dinamis menggunakan teknologi modern untuk mencapai solusi bisnis dan pengalaman pengguna yang baik.",
+      "Frontend Developer dengan pengalaman lebih dari 3 tahun yang berfokus pada React.js, siap berkontribusi dalam menciptakan aplikasi website yang responsif dan dinamis menggunakan teknologi modern untuk mencapai solusi bisnis dan pengalaman pengguna yang baik.",
     sortOrder: 3,
   },
   {
     section: "banner",
     key: "description",
     locale: "en",
-    value: "Frontend Developer with 2+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
+    value: "Frontend Developer with 3+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
     sortOrder: 3,
   },
 
@@ -364,14 +335,14 @@ const siteContentData: { section: string; key: string; locale: string; value: st
     key: "description",
     locale: "id",
     value:
-      "Frontend Developer dengan pengalaman lebih dari 2 tahun yang berfokus pada React.js, siap berkontribusi dalam menciptakan aplikasi website yang responsif dan dinamis menggunakan teknologi modern untuk mencapai solusi bisnis dan pengalaman pengguna yang baik.",
+      "Frontend Developer dengan pengalaman lebih dari 3 tahun yang berfokus pada React.js, siap berkontribusi dalam menciptakan aplikasi website yang responsif dan dinamis menggunakan teknologi modern untuk mencapai solusi bisnis dan pengalaman pengguna yang baik.",
     sortOrder: 2,
   },
   {
     section: "about",
     key: "description",
     locale: "en",
-    value: "Frontend Developer with 2+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
+    value: "Frontend Developer with 3+ years specializing in React.js, ready to contribute to creating responsive and dynamic website applications using modern technology, in order to achieve business solutions and good user experience.",
     sortOrder: 2,
   },
   {

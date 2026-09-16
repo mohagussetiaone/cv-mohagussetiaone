@@ -41,6 +41,20 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
     (file: File) => {
       setSizeError(null);
 
+      // Validate file type against accept prop
+      const acceptList = accept.split(",").map((t) => t.trim());
+      const matchesAccept = acceptList.some((a) => {
+        if (a.startsWith(".")) return file.name.toLowerCase().endsWith(a.toLowerCase());
+        if (a.endsWith("/*")) return file.type.startsWith(a.replace("/*", "/"));
+        return file.type === a;
+      });
+      if (!matchesAccept) {
+        const humanTypes = acceptList.map((a) => a.split("/").pop()?.toUpperCase() ?? a).join(", ");
+        setSizeError(`Format tidak didukung. Gunakan ${humanTypes}.`);
+        if (inputRef.current) inputRef.current.value = "";
+        return;
+      }
+
       if (file.size > maxSizeMB * 1024 * 1024) {
         setSizeError(`Ukuran file maksimal ${maxSizeMB}MB.`);
         if (inputRef.current) inputRef.current.value = "";
@@ -104,10 +118,10 @@ export function ImageUploader({ folder = "general", currentUrl, onUrlChange, onP
 
       const file = e.dataTransfer.files?.[0];
       if (!file) return;
-      if (!file.type.startsWith("image/")) return;
+
       processFile(file);
     },
-    [processFile],
+    [processFile, accept],
   );
 
   const handleRemove = useCallback(() => {

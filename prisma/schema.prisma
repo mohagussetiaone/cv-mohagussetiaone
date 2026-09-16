@@ -11,28 +11,28 @@ datasource db {
 }
 
 model Project {
-  id             String   @id @default(uuid())
-  productId      String   @unique
-  sortOrder      Int      @default(0)
-  projectName    String   @default("")
+  id             String               @id @default(uuid())
+  productId      String               @unique
+  sortOrder      Int                  @default(0)
+  projectName    String               @default("")
   image          String?
   urlPreview     String?
   githubUrl      String?
   figmaUrl       String?
-  internal       Boolean  @default(false)
+  internal       Boolean              @default(false)
   // Tech detail fields
-  techStack      String?  // e.g. "React, Next.js, Tailwind CSS"
-  deployment     String?  // e.g. "Vercel, Netlify"
-  server         String?  // e.g. "Node.js, Express"
-  designMethod   String?  // e.g. "Figma, Adobe XD" or "AI Agent: ChatGPT, Claude"
-  orm            String?  // e.g. "Prisma, Drizzle"
-  database       String?  // e.g. "PostgreSQL, MongoDB"
-  domainProvider String?  // e.g. "Cloudflare, Namecheap"
-  categories     Category[] @relation("ProjectCategories")
-  skills         Skill[]    @relation("ProjectSkills")
+  techStack      String? // e.g. "React, Next.js, Tailwind CSS"
+  deployment     String? // e.g. "Vercel, Netlify"
+  server         String? // e.g. "Node.js, Express"
+  designMethod   String? // e.g. "Figma, Adobe XD" or "AI Agent: ChatGPT, Claude"
+  orm            String? // e.g. "Prisma, Drizzle"
+  database       String? // e.g. "PostgreSQL, MongoDB"
+  domainProvider String? // e.g. "Cloudflare, Namecheap"
+  categories     Category[]           @relation("ProjectCategories")
+  skills         Skill[]              @relation("ProjectSkills")
   translations   ProjectTranslation[]
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
 }
 
 model ProjectTranslation {
@@ -58,14 +58,14 @@ model Skill {
 }
 
 model Message {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
   email     String
   message   String
-  read      Boolean  @default(false)
+  read      Boolean   @default(false)
   repliedAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model SkillItem {
@@ -134,12 +134,21 @@ model SectionText {
   @@unique([section, key, locale])
 }
 
+model CvFile {
+  id        String   @id @default(uuid())
+  fileName  String
+  fileUrl   String
+  fileSize  Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model SiteContent {
   id        String   @id @default(uuid())
-  section   String   // e.g., "banner", "about", "skills", "contact", "navbar"
-  key       String   // e.g., "greeting", "description", "email"
+  section   String // e.g., "banner", "about", "skills", "contact", "navbar"
+  key       String // e.g., "greeting", "description", "email"
   locale    String   @default("") // "id", "en", or "" for non-localized
-  value     String   // text or JSON for complex data
+  value     String // text or JSON for complex data
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

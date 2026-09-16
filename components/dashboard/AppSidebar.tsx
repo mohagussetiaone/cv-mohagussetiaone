@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from "react";
 import Link from "next/link";
-import { Award, BookOpen, Briefcase, FileText, FolderIcon, LayoutDashboardIcon, MessageSquare, Zap } from "lucide-react";
+import { Award, BookOpen, Briefcase, FileText, FolderIcon, FileUp, LayoutDashboardIcon, MessageSquare, Zap } from "lucide-react";
 import { NavMain } from "@/components/dashboard/nav-main";
 import { NavUser } from "@/components/dashboard/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail } from "@/components/ui/sidebar";
@@ -23,6 +23,11 @@ const createSidebarData = (locale: string) => ({
       title: "Content",
       url: `/${locale}/dashboard/content`,
       icon: FileText,
+    },
+    {
+      title: "CV",
+      url: `/${locale}/dashboard/cv`,
+      icon: FileUp,
     },
     {
       title: "Works",

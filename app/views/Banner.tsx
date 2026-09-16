@@ -18,7 +18,9 @@ const handleDownload = async (cvUrl: string) => {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = cvUrl.split("/").pop() || "CV";
+    // Use a clean filename — strip UUID prefix if present
+    const rawName = cvUrl.split("/").pop() || "CV_MohAgus.pdf";
+    a.download = rawName.replace(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-/i, "");
     document.body.appendChild(a);
     a.click();
     a.remove();

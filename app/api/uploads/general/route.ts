@@ -29,7 +29,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "File wajib diisi." }, { status: 400 });
     }
 
-    if (!allowedTypes.has(file.type) && !file.type.startsWith("image/")) {
+    // Strict PDF-only for CV uploads
+    if (folder === "cv") {
+      if (file.type !== "application/pdf") {
+        return NextResponse.json({ message: "CV hanya boleh berformat PDF." }, { status: 400 });
+      }
+    } else if (!allowedTypes.has(file.type) && !file.type.startsWith("image/")) {
       return NextResponse.json({ message: "Format file tidak didukung. Gunakan JPG, PNG, WEBP, SVG, atau PDF." }, { status: 400 });
     }
 
