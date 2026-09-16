@@ -37,7 +37,7 @@ const technologiesMap: Record<string, string[]> = {};
 const projectData: SeedProject[] = [
   {
     productId: "f02e09ac-d1b7-4e6f-b876-964283abb07f",
-    sortOrder: 0,
+    sortOrder: 1,
     projectName: "Garten Eden",
     translations: {
       id: {
@@ -61,31 +61,6 @@ const projectData: SeedProject[] = [
     domainProvider: null,
   },
   {
-    productId: "d2e8b3c7-5f2a-4e9d-b6c1-3a4d5e6f7a8b",
-    sortOrder: 1,
-    projectName: "Restogemn",
-    translations: {
-      id: {
-        description: "Platform SaaS untuk restoran yang menyediakan reservasi meja, manajemen menu, dan analitik bisnis dalam satu aplikasi.",
-      },
-      en: {
-        description: "A SaaS platform for restaurants providing table reservations, menu management, and business analytics in a single application.",
-      },
-    },
-    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/projects/1789099533675-f02e09ac-d1b7-4e6f-b876-964283abb07f.png",
-    urlPreview: "https://restogemn.biz.id",
-    githubUrl: null,
-    figmaUrl: null,
-    internal: false,
-    techStack: "Next.js, Tailwind CSS, React",
-    deployment: "Vercel",
-    server: null,
-    designMethod: "Figma",
-    orm: null,
-    database: null,
-    domainProvider: "Cloudflare",
-  },
-  {
     productId: "a0f5b1db-9b7f-4af9-a99b-228764f92c0e",
     sortOrder: 2,
     projectName: "Ruang Muslim",
@@ -100,31 +75,6 @@ const projectData: SeedProject[] = [
     image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/projects/1789099311824-6ed36b36-e8fa-46ea-871e-5b4fe8eaba0f.png",
     urlPreview: "https://ruangmuslim.vercel.app/",
     githubUrl: "https://github.com/mohagussetiaone/ruangmuslim",
-    figmaUrl: null,
-    internal: false,
-    techStack: "Next.js, Tailwind CSS, React",
-    deployment: "Vercel",
-    server: null,
-    designMethod: "Figma",
-    orm: null,
-    database: null,
-    domainProvider: "Vercel",
-  },
-  {
-    productId: "a0f5b1db-9b7f-4af9-a99b-228764f92c0e",
-    sortOrder: 2,
-    projectName: "PT Fortuna Teknik Mandiri",
-    translations: {
-      id: {
-        description: "Website company profile PT Fortuna Teknik Mandiri, produsen baja fabrikasi, dengan tampilan modern dan responsif untuk menampilkan profil perusahaan serta produk.",
-      },
-      en: {
-        description: "A company profile website for PT Fortuna Teknik Mandiri, a steel fabrication manufacturer, with a modern responsive interface presenting the company profile and products.",
-      },
-    },
-    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/project/fortuna-teknik-mandiri.png",
-    urlPreview: "https://fortuna-teknik-mandiri.vercel.app/",
-    githubUrl: "https://github.com/mohagussetiaone/fortuna-teknik-mandiri",
     figmaUrl: null,
     internal: false,
     techStack: "Next.js, Tailwind CSS, React",
@@ -161,8 +111,58 @@ const projectData: SeedProject[] = [
     domainProvider: "Cloudflare",
   },
   {
-    productId: "58b54a0d-a7c9-4674-895c-e7bc259940e1",
+    productId: "d2e8b3c7-5f2a-4e9d-b6c1-3a4d5e6f7a8b",
     sortOrder: 4,
+    projectName: "Restogemn",
+    translations: {
+      id: {
+        description: "Platform SaaS untuk restoran yang menyediakan reservasi meja, manajemen menu, dan analitik bisnis dalam satu aplikasi.",
+      },
+      en: {
+        description: "A SaaS platform for restaurants providing table reservations, menu management, and business analytics in a single application.",
+      },
+    },
+    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/projects/1789099533675-f02e09ac-d1b7-4e6f-b876-964283abb07f.png",
+    urlPreview: "https://restogemn.biz.id",
+    githubUrl: null,
+    figmaUrl: null,
+    internal: false,
+    techStack: "Next.js, Tailwind CSS, React",
+    deployment: "Vercel",
+    server: null,
+    designMethod: "Figma",
+    orm: null,
+    database: null,
+    domainProvider: "Cloudflare",
+  },
+  {
+    productId: "a0f5b1db-9b7f-4af9-a99b-228764f92c0e",
+    sortOrder: 5,
+    projectName: "PT Fortuna Teknik Mandiri",
+    translations: {
+      id: {
+        description: "Website company profile PT Fortuna Teknik Mandiri, produsen baja fabrikasi, dengan tampilan modern dan responsif untuk menampilkan profil perusahaan serta produk.",
+      },
+      en: {
+        description: "A company profile website for PT Fortuna Teknik Mandiri, a steel fabrication manufacturer, with a modern responsive interface presenting the company profile and products.",
+      },
+    },
+    image: "https://cdn.mohagussetiaone.my.id/mohagussetiaone/assets/project/fortuna-teknik-mandiri.png",
+    urlPreview: "https://fortuna-teknik-mandiri.vercel.app/",
+    githubUrl: "https://github.com/mohagussetiaone/fortuna-teknik-mandiri",
+    figmaUrl: null,
+    internal: false,
+    techStack: "Next.js, Tailwind CSS, React",
+    deployment: "Vercel",
+    server: null,
+    designMethod: "Figma",
+    orm: null,
+    database: null,
+    domainProvider: "Vercel",
+  },
+  {
+    productId: "58b54a0d-a7c9-4674-895c-e7bc259940e1",
+    sortOrder: 6,
     projectName: "Tani Deals App",
     translations: {
       id: {
