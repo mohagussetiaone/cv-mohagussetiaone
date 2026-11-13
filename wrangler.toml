@@ -1,0 +1,45 @@
+# mycv — Cloudflare Pages (OpenNext) + D1 + R2
+# Dibuat saat porting dari VPS (Next.js standalone + Postgres + MinIO) ke full Cloudflare.
+# D1 dibuat user 13 Nov 2026 (region APAC). R2 bucket dibuat user (binding mycv_assets).
+# Secrets (jangan taruh di sini): R2_ACCOUNT_ID / R2_ENDPOINT, R2_ACCESS_KEY_ID,
+# R2_SECRET_ACCESS_KEY, AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, NEXTAUTH_SECRET
+# -> isi via `npx wrangler secret put <NAMA>` atau dashboard Cloudflare.
+
+name = "mycv"
+compatibility_date = "2026-11-13"
+compatibility_flags = ["nodejs_compat"]
+
+# Entry point hasil `opennextjs-cloudflare build` (dibutuhkan `preview`/`deploy`).
+main = ".open-next/worker.js"
+
+# Static assets hasil build — worker mengaksesnya via binding env.ASSETS
+# (dipakai image optimization + file statis). Tanpa ini, env.ASSETS undefined.
+[assets]
+directory = ".open-next/assets"
+
+[[d1_databases]]
+binding = "mycv_d1"
+database_name = "mycv-d1"
+database_id = "7fb49f73-fc4e-4cf3-8cb0-30255a196fdb"
+migrations_dir = "prisma/migrations"
+# Pola Prisma: tiap migrasi di folder sendiri (0001_init/migration.sql).
+# Tanpa ini wrangler hanya mencari prisma/migrations/*.sql dan tidak menemukan apa pun.
+migrations_pattern = "prisma/migrations/*/migration.sql"
+
+[[r2_buckets]]
+binding = "mycv_assets"
+bucket_name = "mycv-assets"
+
+[vars]
+R2_BUCKET = "mycv-assets"
+# Hostname CDN TETAP seperti produksi sekarang (cdn.mohagussetiaone.my.id).
+# JANGAN repoint penuh hostname ini ke bucket R2: hostname yang sama juga
+# melayani file JValleyverse dari MinIO VPS (bucket "jvalleyverse").
+# Routing per prefix (lihat laporan porting): /mohagussetiaone/* -> R2,
+# /jvalleyverse/* -> origin VPS. Worker routing itu BELUM dibuat (tahap deploy).
+R2_PUBLIC_BASE_URL = "https://cdn.mohagussetiaone.my.id"
+# Prefix path yang dipertahankan di URL publik supaya semua URL gambar di DB
+# produksi (hasil dump Postgres) tetap valid tanpa rewrite data:
+# https://cdn.mohagussetiaone.my.id/mohagussetiaone/<object>
+# Worker routing nantinya melepas segmen pertama ini saat mengambil dari R2.
+R2_PUBLIC_PATH_PREFIX = "mohagussetiaone"

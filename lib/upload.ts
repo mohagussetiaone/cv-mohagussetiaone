@@ -1,7 +1,6 @@
 "use server";
 
-import { randomUUID } from "crypto";
-import { buildMinioObjectName, buildMinioPublicUrl, deleteMinioObject, ensureMinioBucket, getMinioBucketName, getMinioClient } from "@/lib/minio";
+import { buildR2ObjectName, buildR2PublicUrl, deleteR2Object, putR2Object } from "@/lib/r2";
 
 export type UploadResult = {
   url: string;
@@ -9,10 +8,11 @@ export type UploadResult = {
 };
 
 /**
- * Upload a File (from FormData) to MinIO and return CDN URL.
+ * Upload a File (from FormData) to R2 and return CDN URL.
  * Called server-side during save flow.
+ * (Dulu uploadFileToMinio — diganti ke R2 saat porting ke Cloudflare.)
  */
-export async function uploadFileToMinio(file: File, folder: string = "general"): Promise<UploadResult> {
+export async function uploadFileToR2(file: File, folder: string = "general"): Promise<UploadResult> {
   const extension =
     file.name
       .split(".")
@@ -21,31 +21,24 @@ export async function uploadFileToMinio(file: File, folder: string = "general"):
       .toLowerCase() ||
     file.type.split("/")[1] ||
     "bin";
-  const objectName = buildMinioObjectName(`${randomUUID()}.${extension}`, folder);
+  const objectName = buildR2ObjectName(`${globalThis.crypto.randomUUID()}.${extension}`, folder);
   const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-  const client = getMinioClient();
-
-  await ensureMinioBucket(client);
-  await client.putObject(getMinioBucketName(), objectName, buffer, buffer.length, {
-    "Content-Type": file.type,
-    "Cache-Control": "public, max-age=31536000, immutable",
-  });
+  await putR2Object(objectName, new Uint8Array(arrayBuffer), file.type);
 
   return {
-    url: buildMinioPublicUrl(objectName),
+    url: buildR2PublicUrl(objectName),
     objectName,
   };
 }
 
 /**
- * Delete an old file from MinIO by its public URL (if it exists).
+ * Delete an old file from R2 by its public URL (if it exists).
  * Safe to call even if url is empty or null.
  */
 export async function deleteOldFile(url: string | null | undefined): Promise<void> {
   if (!url) return;
   try {
-    await deleteMinioObject(url);
+    await deleteR2Object(url);
   } catch {
     // Silently ignore — old file might not exist or be from a different source
   }

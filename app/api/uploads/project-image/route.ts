@@ -1,10 +1,8 @@
-import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
 import { getAuthSession } from "@/auth";
 import { isAdminEmail } from "@/lib/auth";
-import { buildMinioObjectName, buildMinioPublicUrl, ensureMinioBucket, getMinioBucketName, getMinioClient, hasMinioConfig } from "@/lib/minio";
-
-export const runtime = "nodejs";
+import { hasR2Config } from "@/lib/r2";
+import { uploadFileToR2 } from "@/lib/upload";
 
 const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/svg+xml"]);
 const maxFileSize = Number.parseInt(process.env.MENU_IMAGE_MAX_BYTES || "", 10) || 5 * 1024 * 1024;
@@ -17,8 +15,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
     }
 
-    if (!hasMinioConfig()) {
-      return NextResponse.json({ message: "Konfigurasi MinIO belum lengkap di environment." }, { status: 500 });
+    if (!hasR2Config()) {
+      return NextResponse.json({ message: "Konfigurasi R2 belum lengkap di environment." }, { status: 500 });
     }
 
     const formData = await request.formData();
@@ -36,30 +34,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Ukuran file maksimal 5MB." }, { status: 400 });
     }
 
-    const extension =
-      file.name
-        .split(".")
-        .pop()
-        ?.replace(/[^a-zA-Z0-9]/g, "")
-        .toLowerCase() ||
-      file.type.split("/")[1] ||
-      "bin";
-    const objectName = buildMinioObjectName(`${randomUUID()}.${extension}`);
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const client = getMinioClient();
-
-    await ensureMinioBucket(client);
-    await client.putObject(getMinioBucketName(), objectName, buffer, buffer.length, {
-      "Content-Type": file.type,
-      "Cache-Control": "public, max-age=31536000, immutable",
-    });
+    const { objectName, url } = await uploadFileToR2(file, "projects");
 
     return NextResponse.json({
       message: "Image berhasil diupload.",
       data: {
         objectName,
-        url: buildMinioPublicUrl(objectName),
+        url,
         contentType: file.type,
         size: file.size,
       },
@@ -67,6 +48,6 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error(error);
 
-    return NextResponse.json({ message: "Terjadi kesalahan saat upload image ke MinIO." }, { status: 500 });
+    return NextResponse.json({ message: "Terjadi kesalahan saat upload image ke R2." }, { status: 500 });
   }
 }

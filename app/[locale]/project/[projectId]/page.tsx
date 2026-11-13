@@ -1,34 +1,16 @@
-// ISR 60 detik: HTML di-cache supaya halaman project cepat dibuka (dan enak di-crawl Google),
-// tapi tetap fresh ≤1 menit setelah project diubah.
-export const revalidate = 60;
-
-// Pre-render semua halaman project (semua locale) saat build — project baru
-// yang ditambahkan setelah build tetap di-generate on-demand oleh ISR.
-export async function generateStaticParams() {
-  let projects: { productId: string }[] = [];
-  try {
-    projects = await prisma.project.findMany({
-      select: { productId: true },
-      orderBy: { sortOrder: "asc" },
-    });
-  } catch (error) {
-    // DB tidak tersedia saat build (mis. lokal/CI tanpa DATABASE_URL) → jangan
-    // gagalkan build; halaman project tetap di-generate on-demand oleh ISR.
-    console.warn("[generateStaticParams] DB tidak tersedia, pre-render project dilewati:", error);
-  }
-
-  return projects.flatMap((project) =>
-    routing.locales.map((locale) => ({ locale, projectId: project.productId })),
-  );
-}
+// Render dinamis per request (bukan ISR): binding D1 hanya tersedia di runtime
+// Worker, tidak saat build/prerender. generateStaticParams DIHAPUS — di platform
+// ini ia tidak bisa pre-render (tidak ada D1 saat build) dan dengan
+// force-dynamic pun Next tetap mengeksekusinya saat build (terbukti di log
+// build: warning "DB tidak tersedia"). Halaman project dirender on-demand
+// dari D1 di tiap request.
+export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
 import { cache } from "react";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getProjectByProductId } from "@/lib/projects";
-import { prisma } from "@/lib/prisma";
-import { routing } from "@/app/i18n/routing";
 import { getSiteUrl, SITE_LOGO_URL } from "@/lib/site-url";
 import type { ProjectLocale } from "@/app/types/project";
 import ProjectDetail from "../../../views/ProjectDetail";

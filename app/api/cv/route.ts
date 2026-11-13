@@ -3,8 +3,6 @@ import { getAuthSession } from "@/auth";
 import { isAdminEmail } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export const runtime = "nodejs";
-
 export async function GET() {
   try {
     const session = await getAuthSession();

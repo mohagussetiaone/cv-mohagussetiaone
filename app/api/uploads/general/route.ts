@@ -1,10 +1,8 @@
-import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
 import { getAuthSession } from "@/auth";
 import { isAdminEmail } from "@/lib/auth";
-import { buildMinioObjectName, buildMinioPublicUrl, deleteMinioObject, ensureMinioBucket, getMinioBucketName, getMinioClient, hasMinioConfig } from "@/lib/minio";
-
-export const runtime = "nodejs";
+import { deleteR2Object, hasR2Config } from "@/lib/r2";
+import { uploadFileToR2 } from "@/lib/upload";
 
 const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/svg+xml", "application/pdf"]);
 const maxFileSize = Number.parseInt(process.env.MENU_IMAGE_MAX_BYTES || "", 10) || 5 * 1024 * 1024;
@@ -17,8 +15,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
     }
 
-    if (!hasMinioConfig()) {
-      return NextResponse.json({ message: "Konfigurasi MinIO belum lengkap di environment." }, { status: 500 });
+    if (!hasR2Config()) {
+      return NextResponse.json({ message: "Konfigurasi R2 belum lengkap di environment." }, { status: 500 });
     }
 
     const formData = await request.formData();
@@ -42,38 +40,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: `Ukuran file maksimal ${Math.round(maxFileSize / 1024 / 1024)}MB.` }, { status: 400 });
     }
 
-    const extension =
-      file.name
-        .split(".")
-        .pop()
-        ?.replace(/[^a-zA-Z0-9]/g, "")
-        .toLowerCase() ||
-      file.type.split("/")[1] ||
-      "bin";
-    const objectName = buildMinioObjectName(`${randomUUID()}.${extension}`, folder);
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const client = getMinioClient();
-
-    await ensureMinioBucket(client);
-    await client.putObject(getMinioBucketName(), objectName, buffer, buffer.length, {
-      "Content-Type": file.type,
-      "Cache-Control": "public, max-age=31536000, immutable",
-    });
+    const { objectName, url } = await uploadFileToR2(file, folder);
 
     return NextResponse.json({
       message: "File berhasil diupload.",
       data: {
         objectName,
-        url: buildMinioPublicUrl(objectName),
+        url,
         contentType: file.type,
         size: file.size,
         folder,
       },
     });
   } catch (error) {
-    console.error("[MinIO Upload Error]", error);
-    const message = error instanceof Error ? error.message : "Terjadi kesalahan saat upload file ke MinIO.";
+    console.error("[R2 Upload Error]", error);
+    const message = error instanceof Error ? error.message : "Terjadi kesalahan saat upload file ke R2.";
     return NextResponse.json({ message, detail: message }, { status: 500 });
   }
 }
@@ -86,8 +67,8 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
     }
 
-    if (!hasMinioConfig()) {
-      return NextResponse.json({ message: "Konfigurasi MinIO belum lengkap di environment." }, { status: 500 });
+    if (!hasR2Config()) {
+      return NextResponse.json({ message: "Konfigurasi R2 belum lengkap di environment." }, { status: 500 });
     }
 
     const json = await request.json();
@@ -97,14 +78,14 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ message: "URL file wajib diisi." }, { status: 400 });
     }
 
-    await deleteMinioObject(url);
+    await deleteR2Object(url);
 
     return NextResponse.json({
-      message: "File berhasil dihapus dari MinIO.",
+      message: "File berhasil dihapus dari R2.",
     });
   } catch (error) {
-    console.error("[MinIO Delete Error]", error);
-    const message = error instanceof Error ? error.message : "Terjadi kesalahan saat menghapus file dari MinIO.";
+    console.error("[R2 Delete Error]", error);
+    const message = error instanceof Error ? error.message : "Terjadi kesalahan saat menghapus file dari R2.";
     return NextResponse.json({ message, detail: message }, { status: 500 });
   }
 }

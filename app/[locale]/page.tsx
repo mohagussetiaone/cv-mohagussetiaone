@@ -1,6 +1,8 @@
-// ISR 60 detik: HTML di-cache supaya TTFB/LCP cepat, tapi tetap fresh ≤1 menit.
-// (Grid project & konten section tetap di-refresh otomatis oleh JS di sisi klien.)
-export const revalidate = 60;
+// Halaman publik dirender dinamis per request (bukan ISR): binding D1 hanya
+// tersedia di runtime Worker, tidak saat build/prerender. Dampak: tidak ada
+// lagi cache HTML 60 detik — tiap kunjungan membaca D1 (situs CV pribadi,
+// bebannya kecil). Tampilan tidak berubah.
+export const dynamic = "force-dynamic";
 
 // Pre-render semua locale saat build supaya run pertama (Lighthouse/pengunjung)
 // tidak pernah kena render dingin — HTML sudah tersedia sejak deploy.

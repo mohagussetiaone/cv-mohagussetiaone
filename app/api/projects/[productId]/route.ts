@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getAuthSession } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { createNamedIfMissing, prisma } from "@/lib/prisma";
 import { isAdminEmail } from "@/lib/auth";
-import { deleteMinioObject, hasMinioConfig } from "@/lib/minio";
+import { deleteR2Object, hasR2Config } from "@/lib/r2";
 import { getProjectByProductId } from "@/lib/projects";
 import { projectPayloadSchema } from "@/lib/validators/project";
 import type { ProjectLocale } from "@/app/types/project";
@@ -79,15 +79,9 @@ export async function PATCH(request: Request, { params }: RouteContext) {
       }
     }
 
-    await prisma.skill.createMany({
-      data: payload.technologies.map((name) => ({ name })),
-      skipDuplicates: true,
-    });
-
-    await prisma.category.createMany({
-      data: payload.categories.map((name) => ({ name })),
-      skipDuplicates: true,
-    });
+    // SQLite/D1 tidak mendukung skipDuplicates — helper menyaring nama yang sudah ada.
+    await createNamedIfMissing("skill", payload.technologies);
+    await createNamedIfMissing("category", payload.categories);
 
     const updatedProject = await prisma.project.update({
       where: {
@@ -171,12 +165,12 @@ export async function DELETE(request: Request, { params }: RouteContext) {
       return NextResponse.json({ message: "Project tidak ditemukan." }, { status: 404 });
     }
 
-    // Hapus image dari MinIO storage jika ada
-    if (project.image && hasMinioConfig()) {
+    // Hapus image dari R2 storage jika ada
+    if (project.image && hasR2Config()) {
       try {
-        await deleteMinioObject(project.image);
+        await deleteR2Object(project.image);
       } catch (err) {
-        console.error("Gagal hapus image dari MinIO:", err);
+        console.error("Gagal hapus image dari R2:", err);
       }
     }
 

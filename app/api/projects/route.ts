@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { randomUUID } from "node:crypto";
 import { getAuthSession } from "@/auth";
 import { isAdminEmail } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { createNamedIfMissing, prisma } from "@/lib/prisma";
 import { getProjects, getProjectsPage } from "@/lib/projects";
 import type { ProjectLocale } from "@/app/types/project";
 import { projectPayloadSchema } from "@/lib/validators/project";
@@ -43,7 +42,7 @@ export async function POST(request: Request) {
     const payload = projectPayloadSchema.parse(json);
 
     // Auto-generate productId if not provided
-    const productId = payload.productId ?? randomUUID();
+    const productId = payload.productId ?? globalThis.crypto.randomUUID();
 
     if (payload.productId) {
       const existingProject = await prisma.project.findUnique({
@@ -60,15 +59,9 @@ export async function POST(request: Request) {
       }
     }
 
-    await prisma.skill.createMany({
-      data: payload.technologies.map((name) => ({ name })),
-      skipDuplicates: true,
-    });
-
-    await prisma.category.createMany({
-      data: payload.categories.map((name) => ({ name })),
-      skipDuplicates: true,
-    });
+    // SQLite/D1 tidak mendukung skipDuplicates — helper menyaring nama yang sudah ada.
+    await createNamedIfMissing("skill", payload.technologies);
+    await createNamedIfMissing("category", payload.categories);
 
     const project = await prisma.project.create({
       data: {

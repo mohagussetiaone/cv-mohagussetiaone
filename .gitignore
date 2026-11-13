@@ -53,3 +53,10 @@ next-env.d.ts
 AGENTS.md
 CLAUDE.md
 GEMINI.md
+
+# Wrangler local secrets (dummy untuk preview lokal; JANGAN commit secret asli)
+.dev.vars
+
+# Build OpenNext + state Wrangler lokal (artefak, bukan source)
+.open-next/
+.wrangler/

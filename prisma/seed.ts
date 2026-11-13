@@ -1,15 +1,24 @@
 import "dotenv/config";
 import { PrismaClient } from "../lib/generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaD1 } from "@prisma/adapter-d1";
 
-const connectionString = process.env.DATABASE_URL;
+// Seed FALLBACK saja (bukan sumber kebenaran D1 — data produksi berasal dari
+// dump Postgres, lihat ~/workspace/scratch-mycv/MIGRASI-DATA.md).
+// Menulis ke D1 lewat HTTP API: butuh token API Cloudflare dengan izin D1 Edit.
+//   CLOUDFLARE_D1_TOKEN, CLOUDFLARE_ACCOUNT_ID,
+//   CLOUDFLARE_DATABASE_ID (mycv-d1: 7fb49f73-fc4e-4cf3-8cb0-30255a196fdb)
+const { CLOUDFLARE_D1_TOKEN, CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_DATABASE_ID } = process.env;
 
-if (!connectionString) {
-  throw new Error("DATABASE_URL is not defined.");
+if (!CLOUDFLARE_D1_TOKEN || !CLOUDFLARE_ACCOUNT_ID || !CLOUDFLARE_DATABASE_ID) {
+  throw new Error("CLOUDFLARE_D1_TOKEN, CLOUDFLARE_ACCOUNT_ID, dan CLOUDFLARE_DATABASE_ID wajib diatur untuk seed D1.");
 }
 
 const prisma = new PrismaClient({
-  adapter: new PrismaPg({ connectionString }),
+  adapter: new PrismaD1({
+    CLOUDFLARE_D1_TOKEN,
+    CLOUDFLARE_ACCOUNT_ID,
+    CLOUDFLARE_DATABASE_ID,
+  }),
 });
 
 type SeedProject = {
@@ -199,10 +208,16 @@ async function main() {
     where: { productId: { notIn: currentProductIds } },
   });
 
-  await prisma.category.createMany({
-    data: categoryNames.map((name) => ({ name })),
-    skipDuplicates: true,
+  // SQLite/D1 tidak mendukung skipDuplicates — saring nama yang sudah ada dulu.
+  const existingCategories = await prisma.category.findMany({
+    where: { name: { in: categoryNames } },
+    select: { name: true },
   });
+  const existingCategoryNames = new Set(existingCategories.map((category) => category.name));
+  const missingCategories = categoryNames.filter((name) => !existingCategoryNames.has(name));
+  if (missingCategories.length > 0) {
+    await prisma.category.createMany({ data: missingCategories.map((name) => ({ name })) });
+  }
 
   for (const project of projectData) {
     await prisma.project.upsert({

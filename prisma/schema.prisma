@@ -4,10 +4,20 @@
 generator client {
   provider = "prisma-client"
   output   = "../lib/generated/prisma"
+  // WAJIB untuk Cloudflare Workers: client default meng-embed query compiler
+  // sebagai base64 dan mengompilasinya saat runtime via `new WebAssembly.Module()`,
+  // yang DILARANG workerd ("Wasm code generation disallowed by embedder") —
+  // semua query Prisma gagal di Worker (terbukti di preview 13 Nov 2026).
+  // Dengan runtime="workerd", generator menyalin query_compiler_fast_bg.wasm
+  // asli ke output dan client mengimpornya sebagai modul precompiled.
+  // Konsekuensi: client ini TIDAK bisa dieksekusi di Node — semua halaman yang
+  // memakai Prisma WAJIB `dynamic = "force-dynamic"` (sudah) dan tidak boleh
+  // ada generateStaticParams yang menyentuh DB saat build (sudah dihapus).
+  runtime  = "workerd"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 model Project {
