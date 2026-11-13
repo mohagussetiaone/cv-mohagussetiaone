@@ -21,10 +21,12 @@ directory = ".open-next/assets"
 binding = "mycv_d1"
 database_name = "mycv-d1"
 database_id = "7fb49f73-fc4e-4cf3-8cb0-30255a196fdb"
-migrations_dir = "prisma/migrations"
-# Pola Prisma: tiap migrasi di folder sendiri (0001_init/migration.sql).
-# Tanpa ini wrangler hanya mencari prisma/migrations/*.sql dan tidak menemukan apa pun.
-migrations_pattern = "prisma/migrations/*/migration.sql"
+migrations_dir = "d1-migrations"
+# Hanya migrasi D1 (SQLite) yang dibaca dari folder ini. JANGAN arahkan ke
+# prisma/migrations: folder itu berisi 9 migrasi Postgres lama; 0001_init
+# sudah membuat semua tabel, jadi migrasi lama akan gagal "table already
+# exists" bila ikut teraplikasi (terjadi 13 Nov 2026).
+migrations_pattern = "d1-migrations/*/migration.sql"
 
 [[r2_buckets]]
 binding = "mycv_assets"
