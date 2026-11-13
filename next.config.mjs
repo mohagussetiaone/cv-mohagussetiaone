@@ -27,6 +27,11 @@ const r2RemotePattern = r2PublicUrl
 
 const nextConfig = {
   images: {
+    // Semua gambar aset R2 disajikan lewat route same-origin /api/cdn/<key>
+    // (lib/image-loader.ts) — optimizer /_next/image tidak lagi fetch gambar
+    // asal dari hostname CDN, karena fetch itu 403 di domain custom
+    // (lihat lib/cdn-url.ts). remotePatterns dipertahankan untuk jaga-jaga.
+    loaderFile: "./lib/image-loader.ts",
     // Skill stack logos use SVG (devicon / simple-icons). Both CDNs are trusted.
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",

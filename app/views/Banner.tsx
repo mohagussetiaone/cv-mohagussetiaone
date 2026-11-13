@@ -10,6 +10,7 @@ import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { useTranslations, useLocale } from "next-intl";
 import { useSiteContent, getLocalizedContent } from "@/hooks/use-site-content";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import { toLocalCdnUrl } from "@/lib/cdn-url";
 
 const handleDownload = async (cvUrl: string) => {
   try {
@@ -99,7 +100,7 @@ const Banner = ({ locale: propLocale }: BannerProps) => {
         </div>
       </div>
       <Button
-        onClick={() => handleDownload(cvFileUrl)}
+        onClick={() => handleDownload(toLocalCdnUrl(cvFileUrl))}
         className={`${isNeo ? "border-[3px] border-black bg-amber-400 text-black shadow-[4px_4px_0px_0px_black] hover:brightness-110" : isRetro ? "border border-gray-300 bg-white text-black hover:bg-gray-100" : "bg-white hover:bg-gray-300 text-black"} p-4 rounded-full text-lg my-4`}
       >
         Download CV
